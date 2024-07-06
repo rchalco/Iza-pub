@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Iza.Core.Test")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e26ec844a91873557ad155f8eb510ddd4ae6edcc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+63e3d73db6af098191c9a8b15ee8370e93a69679")]
 [assembly: System.Reflection.AssemblyProductAttribute("Iza.Core.Test")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Iza.Core.Test")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
