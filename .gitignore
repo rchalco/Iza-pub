@@ -12,3 +12,5 @@ backend/PlumbingProps/obj/
 backend/.vs/InvoiceService/v17/.suo
 backend/Security.API/bin/
 backend/Security.API/obj/
+backend/Iza.Core.Test/obj/Debug/net8.0/Iza.Core.Test.GeneratedMSBuildEditorConfig.editorconfig
+backend/Iza.Core.Test/obj/Debug/net8.0/Iza.Core.Test.GeneratedMSBuildEditorConfig.editorconfig
