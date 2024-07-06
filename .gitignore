@@ -10,3 +10,5 @@ backend/PlumbingProps/bin/
 backend/PlumbingProps/obj/
 .vs
 backend/.vs/InvoiceService/v17/.suo
+backend/Security.API/bin/
+backend/Security.API/obj/
