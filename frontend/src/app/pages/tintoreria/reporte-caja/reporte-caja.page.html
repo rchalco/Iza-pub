@@ -1,0 +1,62 @@
+<app-custom-header title="Reportes"></app-custom-header>
+<ion-content>
+  <ion-list>
+    <ion-item *ngIf="listaCajas">
+      <ion-label>Cajas</ion-label>
+      <ion-select value="" cancelText="Cancelar" (ionChange)="setCaja($event)">
+        <!-- <ion-select-option value="0">Todos</ion-select-option> -->
+        <ion-select-option
+          *ngFor="let caja of listaCajas"
+          value=" {{caja.idCaja}} "
+          >{{caja.descripcion}}</ion-select-option
+        >
+      </ion-select>
+    </ion-item>
+    <app-custom-calendar
+      [label]='"Fecha"'
+      [id]='"fecIni"'
+      (getValueEmmiter)="setDatetimeIni($event)"
+    ></app-custom-calendar>
+    <ion-item>
+      <ion-button (click)="buscarPedidosEstado()" expand="block">
+        Buscar
+      </ion-button>
+    </ion-item>
+  </ion-list>
+  <ion-row>
+    <ion-col size="8">
+      <ion-item>
+        <ion-label>Monto de Apertura</ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col size="4">
+      <ion-item>
+        <ion-label>{{montoApertura}}</ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="8">
+      <ion-item>
+        <ion-label>Monto de Cierre</ion-label>
+      </ion-item>
+    </ion-col>
+    <ion-col size="4">
+      <ion-item>
+        <ion-label>{{montoCierre}}</ion-label>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-list *ngIf="listaPedidos">
+    <div *ngFor="let cliente of listaPedidos" class="item-pedido">
+      <ion-item>
+        <p>PEDIDO: {{cliente.idPedMaster}}-</p>
+        <ion-label>{{cliente.nombreCliente}}</ion-label>
+        <ion-label>{{cliente.total}}</ion-label>
+      </ion-item>
+    </div>
+    <ion-item>
+      <ion-label>Total: {{total}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

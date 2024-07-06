@@ -1,0 +1,190 @@
+<app-custom-header title="Inventario General - Asignación"></app-custom-header>
+<ion-content fullscreen>
+  <ion-content>
+    <div *ngIf="showCardSearch">
+      <ion-list>
+        <div *ngFor="let producto of productos">
+          <ion-list-header class="text-gotico"
+            >{{producto.categoria}}</ion-list-header
+          >
+          <ion-grid fixed>
+            <ion-row class="cabeceraTabla">
+              <ion-col size="2">Cant.</ion-col>
+              <ion-col size="4">Producto</ion-col>
+              <ion-col size="1"></ion-col>
+            </ion-row>
+            <ion-row
+              class="detalleTabla"
+              *ngFor="let productodet of producto.detalle"
+            >
+              <ion-col size="2">{{productodet.enStock}} </ion-col>
+              <ion-col size="4">{{productodet.nombreProducto}}</ion-col>
+              <ion-col size="4">
+                <ion-button (click)="asignacionInventario(productodet)"
+                  >Asignar
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+      </ion-list>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="verPedido()">
+          <ion-icon name="arrow-redo-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </div>
+
+    <!--asignaciones solicitadas-->
+    <div *ngIf="showCardProductoSelect">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>Detalle de la Asignación</ion-card-subtitle>
+          <ion-button
+            (click)="registrarCompraTotal()"
+            expand="block"
+            fill="outline"
+            shape="round"
+            color="secondary"
+            *ngIf="productosAvender.length > 0"
+          >
+            Terminar Compra Bs {{totalCompra}}
+          </ion-button>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col
+                size="12"
+                size-lg="3"
+                size-md="4"
+                size-sm="6"
+                size-xs="12"
+                *ngFor="let producto of productosAvender"
+              >
+                <ion-item>
+                  <ion-avatar
+                    slot="start"
+                    *ngIf="producto.embase === 'Botella'"
+                  >
+                    <img src="../../../assets/icon/botella.png" />
+                  </ion-avatar>
+                  <ion-avatar slot="start" *ngIf="producto.embase === 'Vaso'">
+                    <img src="../../../assets/icon/vaso.jpg" />
+                  </ion-avatar>
+                  <ion-card>
+                    <ion-card-header>
+                      <ion-card-subtitle>{{producto.embase}}</ion-card-subtitle>
+                      <ion-card-title>
+                        <h3>{{producto.nombreProducto}}</h3>
+                        Total: {{producto.precioTotal}}
+                      </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                      <h3 *ngIf="producto.idTipo===2">
+                        Unidades por Caja: {{producto.cantidadCaja}}
+                      </h3>
+                      <h3 *ngIf="producto.idTipo===2">
+                        Cantidad Cajas: {{producto.cantidadVendida}}
+                      </h3>
+                      <h3 *ngIf="producto.idTipo===1">
+                        Cantidad: {{producto.cantidadVendida}}
+                      </h3>
+
+                      <ion-button
+                        (click)="quitarProducto(producto)"
+                        expand="block"
+                        fill="clear"
+                        color="danger"
+                      >
+                        Quitar
+                      </ion-button>
+                    </ion-card-content>
+                  </ion-card></ion-item
+                ></ion-col
+              >
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="verMenu()">
+          <ion-icon name="arrow-undo-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </div>
+
+    <ion-card *ngIf="!showCardSearch && selectedProducto">
+      <ion-card-header>
+        <ion-item>
+          <ion-button slot="end" color="danger" (click)="cancelarVenta()">
+            Cerrar
+          </ion-button>
+        </ion-item>
+      </ion-card-header>
+      <ion-card-content>
+        <form
+          #formulario="ngForm"
+          (ngSubmit)="registrarCompra(selectedProducto)"
+        >
+          <ion-list>
+            <ion-list-header>
+              <ion-label color="warning"
+                >{{selectedProducto.nombreProducto}}</ion-label
+              >
+            </ion-list-header>
+            <ion-item>
+              <ion-select
+                placeholder="Elija un Tipo"
+                (ionChange)="selectTipo($event)"
+                [value]="tipoCurrent"
+              >
+                <ion-select-option
+                  *ngFor="let producto of tipoProducto"
+                  [value]="producto.idTipo"
+                  >{{producto.descripcion}}</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
+            <ion-item *ngIf="showCantidadCaja">
+              <ion-label position="floating"> Unidades por caja </ion-label>
+              <ion-input
+                type="number"
+                name="cantidadCaja"
+                [(ngModel)]="selectedProducto.cantidadCaja"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">
+                {{descripcionCantidad}}
+              </ion-label>
+              <ion-input
+                type="number"
+                name="cantidad"
+                [(ngModel)]="selectedProducto.cantidadVendida"
+                required="true"
+                (ionBlur)="validarCantidadAsigna()"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Precio de compra</ion-label>
+              <ion-input
+                type="number"
+                name="precioUnitario"
+                [(ngModel)]="selectedProducto.precio"
+                required="true"
+              ></ion-input>
+            </ion-item>
+            <ion-button
+              expand="full"
+              type="submit"
+              [disabled]="!formulario.valid"
+            >
+              Registrar
+            </ion-button>
+          </ion-list>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+</ion-content>

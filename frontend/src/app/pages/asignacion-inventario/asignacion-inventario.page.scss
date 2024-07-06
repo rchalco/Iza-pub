@@ -1,0 +1,27 @@
+.cabeceraTabla {
+  background-color: #1d048b;
+  color: rgb(202, 215, 226);
+  font-weight: bold;
+  border: 1px solid black;
+  border-bottom: 0;
+  border-right: 0;
+  align-items: center;
+  font-size: 11px;
+}
+
+.detalleTabla {
+  border: 1px solid black;
+  border: 1px solid rgb(55, 100, 65);
+  border-right: 0;
+  align-items: left;
+  font-size: 10px;
+  background-color: #7d7a8a;
+  color: #FFFF;
+}
+.numeroTabla {
+  text-align: right;
+}
+
+.tituloInner{
+  color: #a9dabf;
+}

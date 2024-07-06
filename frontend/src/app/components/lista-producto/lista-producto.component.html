@@ -1,0 +1,32 @@
+<ion-list>
+  <div *ngFor="let producto of productos">
+    <ion-list-header>
+      <ion-label>{{ producto.categoria }}</ion-label>
+    </ion-list-header>
+    <ion-item>
+      <ion-grid fixed>
+        <ion-row class="cabeceraTabla">
+          <ion-col size="5">Prod.</ion-col>
+          <ion-col size="3">Stock</ion-col>
+          <ion-col size="4">Cantidad</ion-col>
+        </ion-row>
+        <ion-row
+          class="detalleTabla"
+          *ngFor="let productodet of producto.detalle"
+        >
+          <ion-col size="5">{{ productodet.nombreProducto }}</ion-col>
+          <ion-col size="3">{{ productodet.enStock }}</ion-col>
+          <ion-col size="4">
+            <ion-input
+              type="number"
+              [(ngModel)]="productodet.cantidad"
+              required="true"
+              max="{{ productodet.enStock }}"
+              (ionChange)="verificarStock(productodet)"
+            ></ion-input
+          ></ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </div>
+</ion-list>

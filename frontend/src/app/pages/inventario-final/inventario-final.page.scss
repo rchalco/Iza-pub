@@ -1,0 +1,108 @@
+.cabeceraTabla {
+  background-color: #2c3530;
+  color: rgb(202, 215, 226);
+  font-weight: bold;
+  border: 1px solid black;
+  align-items: center;
+  font-size: 15px;
+  width: 100%;
+  margin: 2px;
+  border: 1px;
+  border-color: #d3ebde;
+}
+
+.detalleTabla {
+  border: 1px solid black;
+  border: 1px solid rgb(55, 100, 65);
+  border-right: 0;
+  align-items: left;
+  font-size: 10px;
+}
+
+.grid-container {
+  min-width: 100%;
+}
+
+.text-detalle {
+  font-size: 12px !important;
+}
+
+input {
+  margin-top: 2px;
+  width: 45px;
+  text-align: right;
+}
+
+.editable {
+  background-color: rgba(166, 232, 236, 0.932);
+  color: #2c3530;
+  font-size: 14px;
+}
+
+.no-editable {
+  background-color: rgba(11, 175, 184, 0.932);
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.barra1 {
+  background-color: #f1d28d;
+}
+
+.barra1-noeditable {
+  background-color: #f5b504;
+}
+
+.barra2 {
+  background-color: #e49e91;
+}
+
+.barra2-noeditable {
+  background-color: #f52004;
+  color: #d3ebde !important;
+}
+
+.barra3 {
+  background-color: #a1f390;
+}
+
+.barra3-noeditable {
+  background-color: #32c215;
+}
+
+.barra-devolucion {
+  background-color: #a4d0ee;
+}
+
+.barra-totaldevolucion-noeditable {
+  background-color: #1a29f3;
+  color: #FFFF;
+}
+
+.cost-unitario {
+  background-color: #fded07f6;
+}
+
+.cost-precioventa {
+  background-color: #fded07f6;
+}
+
+.total-ganado {
+  background-color: #1dfc00fb;
+  color: #0000 !important;
+}
+
+::ng-deep .dx-data-row .cell-locked {
+  background-color: #b9beb8fb !important;
+}
+
+::ng-deep .dx-data-row .cell-total {
+  background-color: #98eb88fb !important;
+}
+
+::ng-deep .dx-data-row .cell-yellow {
+  background-color: #ebe588fb !important;
+}
+::ng-deep #gridContainer {
+  max-height: 100%;
+}

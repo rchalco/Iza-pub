@@ -1,0 +1,254 @@
+<app-custom-header title="Registro de Huellas"></app-custom-header>
+<ion-content fullscreen>
+  <div *ngIf="showMain">
+    <ion-card >
+      <ion-list>
+        <ion-card-header>
+          <ion-card-subtitle>Busqueda </ion-card-subtitle>
+        </ion-card-header>
+        <ion-item  >
+          <ion-label>
+            <h2>CI o Paterno</h2>
+            <ion-input
+              type="text"
+              name="ci"
+              required="true"
+              [(ngModel)]="textoCIBuscar"
+              >
+            </ion-input>
+          </ion-label>
+
+        </ion-item >
+       
+        <ion-button expand="full" type="submit" (click)="buscar()"  >
+          Buscar
+      </ion-button>
+      </ion-list>
+    </ion-card>
+
+    <ion-card >
+      <ion-list>
+        <ion-grid
+          fixed
+
+        >
+          <ion-row class="cabeceraTabla">
+            <ion-col size="4"> Nombre</ion-col>
+            <ion-col size="3"> CI </ion-col>
+            <ion-col size="1"> Modificar </ion-col>
+            <ion-col size="1"></ion-col>
+            <ion-col size="1"></ion-col>
+          </ion-row>
+          <ion-row
+                  class="detalleTabla"
+                  *ngFor="let cliente of listaClientesHuella"
+                >
+                <ion-col size="4" class="text-detalle">
+                  {{cliente.nombres}} {{cliente.apellidoPaterno}}  {{cliente.apellidoMaterno}}
+                </ion-col>
+                <ion-col size="3" class="text-detalle">
+                  {{cliente.documento}}
+                </ion-col>
+
+                <ion-col size="1"
+                  ><ion-button
+                    (click)="modificarDatos(cliente)"
+                    >Modificar Cliente
+                  </ion-button></ion-col
+                >
+                
+
+          </ion-row>
+
+        </ion-grid>
+        <ion-item>
+          <ion-button (click)="nuevoCliente()"> Nuevo Cliente </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card>
+
+  </div>
+
+  <div *ngIf="showModificarCliente">
+    <ion-card >
+      <ion-card-header>
+        <ion-card-subtitle>Datos del Cliente</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <form>
+          <ion-grid fixed>
+
+            <ion-row>
+              <ion-col size="4">
+                <ion-item>
+                  <ion-label>
+                    <h3>Nombre</h3>
+                    <ion-input
+                      type="text"
+                      name="nombre"
+                      required="true"
+                      [(ngModel)]="clienteSeleccionado.nombres"
+                      >
+                    </ion-input>
+                  </ion-label>
+                </ion-item>
+              </ion-col>
+              <ion-col size="4">
+                <ion-item>
+                  <ion-label>
+                    <h3>Paterno</h3>
+                    <ion-input
+                      type="text"
+                      name="apellidoPaterno"
+                      required="true"
+                      [(ngModel)]="clienteSeleccionado.apellidoPaterno"
+                      >
+                    </ion-input>
+                  </ion-label>
+                </ion-item>
+              </ion-col>
+
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="4">
+                <ion-item>
+                  <ion-label>
+                    <h3>Materno</h3>
+                    <ion-input
+                      type="text"
+                      name="apellidoMaterno"
+                      required="true"
+                      [(ngModel)]="clienteSeleccionado.apellidoMaterno"
+                      >
+                    </ion-input>
+                  </ion-label>
+                </ion-item>
+              </ion-col>
+              <ion-col size="4">
+                <ion-item>
+                  <ion-label>
+                    <h3>Documento</h3>
+                    <ion-input
+                      type="text"
+                      name="documento"
+                      required="true"
+                      [(ngModel)]="clienteSeleccionado.documento"
+                      >
+                    </ion-input>
+                  </ion-label>
+                </ion-item>
+              </ion-col>
+
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="4">
+                <ion-item>
+                  <ion-label>
+                    <h3>Celular</h3>
+                    <ion-input
+                    type="text"
+                    name="celular"
+                    required="true"
+                    [(ngModel)]="clienteSeleccionado.celular"
+                    >
+                    </ion-input>
+                  </ion-label>
+                </ion-item>
+              </ion-col>
+              <ion-col size="4">
+                <ion-item>
+                  <ion-label>
+                    <h3>E-Mail</h3>
+                    <ion-input
+                    type="text"
+                    name="email"
+                    required="true"
+                    [(ngModel)]="clienteSeleccionado.email"
+                    >
+                    </ion-input>
+                  </ion-label>
+                </ion-item>
+              </ion-col>
+
+            </ion-row>
+
+            <ion-row>
+              <ion-col size="4">
+                <app-custom-calendar
+                [label]='"Fecha Validez"'
+                [id]='"fechaVigencia"'
+                (getValueEmmiter)="selectfechaVigencia($event)"
+              ></app-custom-calendar>
+              </ion-col>
+              <ion-col size="4">
+                
+              </ion-col>
+
+            </ion-row>
+          </ion-grid>
+            
+        </form>
+      </ion-card-content>
+    </ion-card>
+    <ion-card >
+      <ion-card-header>
+        <ion-card-subtitle>Enrolamiento de Huellas</ion-card-subtitle>
+      </ion-card-header>
+      <ion-grid fixed>
+        <ion-row>
+          <ion-col size="6">
+            <ion-item>
+              <ion-label>
+                <ion-label>Escoja algun dedo</ion-label>
+                <ion-select interface="popover" value="{{ tipoHuellaSeleccionada }}" cancelText="Cancelar"
+                (ionChange)="setTipoHuella($event)">
+                <ion-select-option value="0">Indice Derecho</ion-select-option>
+                <ion-select-option value="1">Indice Izquierda</ion-select-option>
+              </ion-select>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          
+
+         
+        </ion-row>
+        <ion-row>
+         
+          <img height='120' width='120' src="../../../assets/icon/RegistrarHuella.jpg" />
+        </ion-row>
+        <ion-row *ngIf="showHuella25">
+            <img height='35' width='120' src="../../../assets/icon/RegistrarHuella25.jpg" />
+          
+        </ion-row>
+        <ion-row *ngIf="showHuella50">
+            <img height='35' width='120' src="../../../assets/icon/RegistrarHuella50.jpg" />
+          
+        </ion-row>
+        <ion-row *ngIf="showHuella75">
+            <img height='35' width='120' src="../../../assets/icon/RegistrarHuella75.jpg" />
+          
+        </ion-row>
+        <ion-row *ngIf="showHuella100">
+            <img height='35' width='120' src="../../../assets/icon/RegistrarHuella100.jpg" />
+          
+        </ion-row>
+        <ion-row *ngIf="botonCapturarVisible">
+          <app-finger-capture (getValueEmmiter)="setHuella($event)">
+          </app-finger-capture>
+          
+        </ion-row>
+        <ion-row *ngIf="botonEnrolarVisible">
+        
+          <ion-button size="small" color="warning" (click)="enrolarHuella()"> Grabar y Enrrolar Huella </ion-button>
+          
+        </ion-row>
+
+      </ion-grid>
+      
+    </ion-card>
+    <ion-button (click)="cancelar()"> Cancelar </ion-button>
+    <!-- <ion-button (click)="grabarDatos()"> Grabar </ion-button> -->
+  </div>
+</ion-content>

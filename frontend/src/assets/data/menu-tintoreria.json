@@ -1,0 +1,19 @@
+{
+  "Menu": [
+    {
+      "title": "Recepcion",
+      "url": "/venta-tintoreria",
+      "icon": "paper-plane"
+    },
+    {
+      "title": "Entrega",
+      "url": "/tintoreria-entrega",
+      "icon": "paper-plane"
+    },
+    {
+      "title": "Reportes",
+      "url": "/reportes-tintoreria",
+      "icon": "paper-plane"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+<app-custom-header title="Cierre Operativo"></app-custom-header>
+<ion-content>
+  <ion-grid fixed *ngIf="listReporteCierre">
+    <ion-row class="cabeceraTabla">
+      <ion-col size="2">Barra</ion-col>
+      <ion-col size="2">Cajero</ion-col>
+      <ion-col size="2">Forma Pago</ion-col>
+      <ion-col size="2" class="numeroTabla">Monto</ion-col>
+      <ion-col size="2" class="numeroTabla">Declarado</ion-col>
+      <ion-col size="2" class="numeroTabla">Diferencia</ion-col>
+    </ion-row>
+    <ion-row class="detalleTabla" *ngFor="let cierre of listReporteCierre">
+      <ion-col size="2">{{cierre.descripcion}}</ion-col>
+      <ion-col size="2">{{cierre.nombre}}</ion-col>
+      <ion-col size="2">{{cierre.formaDePago}}</ion-col>
+      <ion-col size="2" class="numeroTabla"
+        >{{cierre.monto | number : '1.2-2'}}</ion-col
+      >
+      <ion-col size="2" class="numeroTabla"
+        >{{cierre.montoDeclarado | number : '1.2-2'}}</ion-col
+      >
+      <ion-col size="2" class="numeroTabla"
+        >{{cierre.diferencia | number : '1.2-2'}}</ion-col
+      >
+    </ion-row>
+    <ion-row class="detalleTabla">
+      <ion-col size="2"></ion-col>
+      <ion-col size="2"></ion-col>
+      <ion-col size="2"></ion-col>
+      <ion-col size="2" class="numeroTabla"
+        >{{totalEfec | number : '1.2-2'}}</ion-col
+      >
+      <ion-col size="2" class="numeroTabla"
+        >{{total | number : '1.2-2'}}</ion-col
+      >
+      <ion-col size="2" class="numeroTabla"
+        >{{totalDiferencia | number : '1.2-2'}}</ion-col
+      >
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-button
+          (click)="imprimir()"
+          expand="block"
+          fill="clear"
+          shape="round"
+        >
+          <ion-icon slot="start" name="print-outline"></ion-icon>
+          Imprimir
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,28 @@
+<app-custom-header title="Apertura - Inventario"></app-custom-header>
+<ion-content fullscreen>
+  <ion-content>
+    <ion-card *ngIf="showAperturaInvetario">
+      <ion-card-header>
+        <section>
+          <ion-button expand="block" (click)="abrirInventario()" expand="full" type="submit">Inventario del Día
+          </ion-button>
+        </section>
+      </ion-card-header>
+    </ion-card>
+    <ion-card *ngIf="showDetalleInvetario">
+      <ion-card-content>
+        <ion-list *ngIf="listaInventario">
+          <p>PRODUCTOS</p>
+          <div *ngFor="let cliente of listaInventario" class="item-pedido">
+            <ion-item>
+              <ion-label>{{cliente.nombreProducto}} </ion-label>
+              <ion-label>Cant: {{cliente.cantidad}} </ion-label>
+            </ion-item>
+
+          </div>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+    
+  </ion-content>
+</ion-content>

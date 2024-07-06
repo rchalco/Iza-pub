@@ -1,0 +1,70 @@
+{
+  "Menu": [
+    {
+      "title": "Compras",
+      "url": "/compra",
+      "icon": "paper-plane"
+    },
+    {
+      "title": "Pedidos",
+      "url": "/venta",
+      "icon": "paper-plane"
+    },
+    {
+      "title": "Pedido-Mesa",
+      "url": "/pedido-mesa",
+      "icon": "paper-plane"
+    },
+    {
+      "title": "Apertura Caja",
+      "url": "/apertura-caja",
+      "icon": "paper-plane"
+    },
+    {
+      "title": "Cierre Caja",
+      "url": "/cierre-caja",
+      "icon": "paper-plane"
+    },
+    {
+      "title": "Cambio Contraseña",
+      "url": "/cambio-contrasena",
+      "icon": "paper-plane"
+    },
+    {
+      "title": "Reportes y Tableros",
+      "url": "/reporte-tablero",
+      "icon": "paper-plane"
+    },
+    {
+      "title": "Recepcion",
+      "url": "/venta-tintoreria",
+      "icon": "paper-plane"
+    },
+    {
+      "title": "Entrega",
+      "url": "/tintoreria-entrega",
+      "icon": "paper-plane"
+    },
+    {
+      "title": "Apertura de Inventario",
+      "url": "/apertura-inventario",
+      "icon": "paper-plane"
+    },
+    {
+      "title": "Asignacion Productos",
+      "url": "/asignacion-inventario",
+      "icon": "paper-plane"
+    },
+    {
+      "title": "Inventario General",
+      "url": "/inventario-general",
+      "icon": "paper-plane"
+    }
+    ,
+    {
+      "title": "Entradas-Salidas",
+      "url": "/entradas-salidas",
+      "icon": "paper-plane"
+    }
+  ]
+}

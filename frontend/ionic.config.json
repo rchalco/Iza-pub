@@ -1,0 +1,8 @@
+{
+  "name": "microventas-ui",
+  "integrations": {
+    "capacitor": {},
+    "cordova": {}
+  },
+  "type": "angular"
+}

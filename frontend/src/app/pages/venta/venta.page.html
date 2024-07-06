@@ -1,0 +1,211 @@
+<app-custom-header title="Pedido"></app-custom-header>
+<ion-content fullscreen>
+  <ion-content>
+    <!--menu de tragos-->
+    <div *ngIf="showCardSearch">
+      <!-- <ion-select
+        placeholder="Elija una barra"
+        (ionChange)="selectBarra($event)"
+        [value]="barraCurrent"
+      >
+        <ion-select-option *ngFor="let barra of barras" [value]="barra"
+          >{{barra.descripcion}}</ion-select-option
+        >
+      </ion-select> -->
+      <ion-searchbar
+        animated="true"
+        (ionChange)="buscar($event)"
+        placeholder="Producto"
+      ></ion-searchbar>
+      <ion-list>
+        <div *ngFor="let producto of productos | filtro:textoBusacar:'categoria'">
+          <ion-list-header class="text-gotico"
+            >{{producto.categoria}}</ion-list-header
+          >
+          <ion-item *ngFor="let productodet of producto.detalle">
+            <ion-avatar slot="start" *ngIf="productodet.embase === 'Botella'">
+              <img src="../../../assets/icon/botella.png" />
+            </ion-avatar>
+            <ion-avatar slot="start" *ngIf="productodet.embase === 'Vaso'">
+              <img src="../../../assets/icon/vaso.jpg" />
+            </ion-avatar>
+            <ion-avatar
+              slot="start"
+              *ngIf="productodet.categoria === 'Pócimas'"
+            >
+              <img src="../../../assets/icon/pocima.png" />
+            </ion-avatar>
+            <p>Bs. {{productodet.precio}} {{productodet.nombreProducto}}</p>
+            <ion-button slot="end" (click)="registroVenta(productodet)"
+              >Vender
+            </ion-button>
+          </ion-item>
+        </div>
+      </ion-list>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="verPedido()">
+          <ion-icon name="arrow-redo-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </div>
+
+    <ion-card *ngIf="showStockAgotado">
+      <ion-card-header>
+        <ion-card-subtitle>Detalle de Productos Agotados</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content *ngIf="listDetalleSinStock">
+        <ion-grid fixed>
+          <ion-row class="cabeceraTabla">
+            <ion-col size="2">Id</ion-col>
+            <ion-col size="4">Producto</ion-col>
+            <ion-col size="2">Pedido</ion-col>
+            <ion-col size="2">Saldo</ion-col>
+            <ion-col size="2">Diferencia</ion-col>
+          </ion-row>
+          <ion-row
+            class="detalleTabla"
+            *ngFor="let stock of listDetalleSinStock"
+          >
+            <ion-col size="2">{{stock.idProducto}}</ion-col>
+            <ion-col size="4">{{stock.nombreProducto}}</ion-col>
+            <ion-col size="2">{{stock.pedido}}</ion-col>
+            <ion-col size="2">{{stock.enSTOCK}}</ion-col>
+            <ion-col size="2">{{stock.diferencia}}</ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+    <!--pedidos solicitados-->
+    <div *ngIf="showCardProductoSelect">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>Detalle del Pedido</ion-card-subtitle>
+          <ion-button
+            (click)="registrarVentaTotal()"
+            expand="block"
+            fill="outline"
+            shape="round"
+            color="secondary"
+            *ngIf="productosAvender.length > 0"
+          >
+            Terminar Pedido Bs {{ totalVenta | number : '1.2-2'}}
+          </ion-button>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col
+                size="12"
+                size-lg="3"
+                size-md="4"
+                size-sm="6"
+                size-xs="12"
+                *ngFor="let producto of productosAvender"
+              >
+                <ion-item>
+                  <ion-avatar
+                    slot="start"
+                    *ngIf="producto.embase === 'Botella'"
+                  >
+                    <img src="../../../assets/icon/botella.png" />
+                  </ion-avatar>
+                  <ion-avatar slot="start" *ngIf="producto.embase === 'Vaso'">
+                    <img src="../../../assets/icon/vaso.jpg" />
+                  </ion-avatar>
+                  <ion-card>
+                    <ion-card-header>
+                      <ion-card-subtitle>{{producto.embase}}</ion-card-subtitle>
+                      <ion-card-title>
+                        <h3>{{producto.nombreProducto}}</h3>
+                        Total: {{producto.precioTotal | number : '1.2-2'}}
+                      </ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                      <h3>Cantidad: {{producto.cantidadVendida}}</h3>
+                      <ion-button
+                        (click)="quitarProducto(producto)"
+                        expand="block"
+                        fill="clear"
+                        color="danger"
+                      >
+                        Quitar
+                      </ion-button>
+                    </ion-card-content>
+                  </ion-card></ion-item
+                ></ion-col
+              >
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="verMenu()">
+          <ion-icon name="arrow-undo-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </div>
+
+    <ion-card *ngIf="!showCardSearch && selectedProducto">
+      <ion-card-header>
+        <ion-item>
+          <ion-button slot="end" color="danger" (click)="cancelarVenta()">
+            Cerrar
+          </ion-button>
+        </ion-item>
+      </ion-card-header>
+      <ion-card-content>
+        <form
+          #formulario="ngForm"
+          (ngSubmit)="registrarVenta(selectedProducto)"
+        >
+          <ion-list>
+            <ion-list-header>
+              <ion-label color="warning"
+                >{{selectedProducto.nombreProducto}}</ion-label
+              >
+            </ion-list-header>
+            <ion-item>
+              <ion-label position="floating"> Cantidad </ion-label>
+              <ion-input
+                type="number"
+                name="cantidad"
+                [(ngModel)]="selectedProducto.cantidadVendida"
+                required="true"
+                (ionBlur)="validarCantidadVenta()"
+              ></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label
+                >Precio de venta: {{ selectedProducto.precio | number :
+                '1.2-2'}}</ion-label
+              >
+            </ion-item>
+            <ion-button
+              expand="full"
+              type="submit"
+              [disabled]="!formulario.valid"
+            >
+              Registrar
+            </ion-button>
+          </ion-list>
+        </form>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="showMessageErrorNOCajaAbierta">
+      <ion-card-content>
+        <ion-label color="danger"
+          >Debe abrir su caja y elegir con que barra trabajar para realizar las
+          ventas!</ion-label
+        >
+      </ion-card-content>
+    </ion-card>
+    <app-forma-pago
+      [montoTotal]="totalVenta"
+      (eventCobrar)="realizarPago($event)"
+      (eventCancelar)="cancelarPago()"
+      *ngIf="showCobrar"
+    ></app-forma-pago>
+  </ion-content>
+</ion-content>

@@ -1,0 +1,23 @@
+<app-custom-header title="Reportes - Tableros"></app-custom-header>
+<ion-content>
+  <ion-grid fixed>
+    <ion-row class="cabeceraTabla">
+      <ion-col size="5">Descripcion</ion-col>
+      <ion-col size="3">Usuario</ion-col>
+      <ion-col size="2" class="numeroTabla">Cantidad</ion-col>
+      <ion-col size="2" class="numeroTabla">Monto</ion-col>
+    </ion-row>
+    <ion-row class="detalleTabla" *ngFor="let cierre of listReporteVentas">
+      <ion-col size="5">{{cierre.descripcionMenu}}</ion-col>
+      <ion-col size="3">{{cierre.usuario}}</ion-col>
+      <ion-col size="2" class="numeroTabla">{{cierre.cantidad | number : '1.2-2'}}</ion-col>
+      <ion-col size="2" class="numeroTabla">{{cierre.monto | number : '1.2-2'}}</ion-col>
+    </ion-row>
+    <ion-row class="detalleTabla">
+      <ion-col size="5"></ion-col>
+      <ion-col size="3"></ion-col>
+      <ion-col size="2" class="numeroTabla">{{totalCant | number : '1.2-2'}}</ion-col>
+      <ion-col size="2" class="numeroTabla">{{totalEfect | number : '1.2-2'}}</ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

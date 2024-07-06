@@ -1,0 +1,30 @@
+<app-custom-header title="Entregas"></app-custom-header>
+<ion-content>
+  <ion-searchbar
+    animated="true"
+    (ionChange)="buscarPedidos($event)"
+    placeholder="documento"
+  ></ion-searchbar>
+  <ion-list *ngIf="listaPedidos">
+    <div *ngFor="let cliente of listaPedidos | filtro:textoBusacar:'documento'">
+      <ion-item>
+        <p>PEDIDO: {{cliente.idPedMaster}}-</p>
+        <ion-label>{{cliente.documento}} {{cliente.nombreCliente}}</ion-label>
+      </ion-item>
+      <ion-button
+        (click)="entregarPedido(cliente.idPedMaster)"
+        expand="block"
+        shape="round"
+      >
+        Entregar
+      </ion-button>
+      <ion-card>
+        <ion-item *ngFor="let detalle of cliente.detallePedidosEntregar">
+          <ion-label>{{detalle.producto}}</ion-label>
+          <ion-label>{{detalle.cantidad}}</ion-label>
+          <ion-label>{{detalle.precio}}</ion-label>
+        </ion-item>
+      </ion-card>
+    </div>
+  </ion-list>
+</ion-content>

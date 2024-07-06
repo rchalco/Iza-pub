@@ -1,0 +1,96 @@
+<app-custom-header title="Registro de compras"></app-custom-header>
+<ion-content fullscreen>
+  <ion-card *ngIf="showCardSearch">
+    <ion-card-content>
+      <ion-searchbar
+        animated="true"
+        (ionChange)="buscar($event)"
+        placeholder="nombre del producto"
+      ></ion-searchbar>
+      <ion-list>
+        <ion-item
+          *ngFor="let producto of productos | filtro:textoBusacar:'producto'"
+        >
+          <ion-avatar slot="start">
+            <img [src]="producto.picProducto" />
+          </ion-avatar>
+          <ion-label>
+            <h3>{{producto.producto}}</h3>
+            <h2>{{producto.stock}}</h2>
+          </ion-label>
+          <ion-button slot="end" (click)="comprar(producto)"
+            >comprar</ion-button
+          >
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="!showCardSearch && selectedProducto">
+    <ion-card-header>
+      <ion-item>
+        <ion-button slot="end" color="danger" (click)="cancelarCompra()">
+          Cerrar
+        </ion-button>
+      </ion-item>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-label>Ingrese los datos de compra para</ion-label>
+      <ion-label color="primary" class="producto-titulo">
+        {{selectedProducto.producto}} | stock actual: {{selectedProducto.stock}}
+      </ion-label>
+      <form #formulario="ngForm" (ngSubmit)="grabarCompra()">
+        <ion-list>
+          <ion-list-header>
+            <ion-label color="danger" *ngIf="!formulario.valid"
+              >Por favor complete la informacion</ion-label
+            >
+          </ion-list-header>
+          <ion-item>
+            <ion-label position="floating"> Cantidad </ion-label>
+            <ion-input
+              type="number"
+              name="cantidad"
+              [(ngModel)]="selectedProducto.cantidad"
+              required="true"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating"> Unidad/Caja </ion-label>
+            <ion-select interface="popover" (ionChange)="selectUnidad($event)">
+              <ion-select-option
+                value="{{unidad.valor}}"
+                *ngFor=" let unidad of listaUnidades"
+                >{{unidad.nombre}}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+          <ion-item *ngIf="esCaja">
+            <ion-label position="floating">Unidades x Caja</ion-label>
+            <ion-input
+              type="number"
+              name="unidadesCaja"
+              [(ngModel)]="selectedProducto.unidadesCaja"
+              required="true"
+            ></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Precio</ion-label>
+            <ion-input
+              type="number"
+              name="precioUnitario"
+              [(ngModel)]="selectedProducto.precioUnitario"
+              required="true"
+            ></ion-input>
+          </ion-item>
+          <ion-button
+            expand="full"
+            type="submit"
+            [disabled]="!formulario.valid"
+          >
+            Enviar
+          </ion-button>
+        </ion-list>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

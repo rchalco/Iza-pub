@@ -1,0 +1,25 @@
+<app-custom-header title="Asignación de productos"></app-custom-header>
+<ion-content fullscreen>
+  <ion-item>
+    <ion-label>Origen: </ion-label>
+    <ion-select (ionChange)="selectBarraOrigen($event)">
+      <ion-select-option *ngFor="let barra of barras" [value]="barra.idAlmacen"
+        >{{barra.descripcion}}</ion-select-option
+      >
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Destino: </ion-label>
+    <ion-select (ionChange)="selectBarra($event)">
+      <ion-select-option *ngFor="let barra of barras" [value]="barra"
+        >{{barra.descripcion}}</ion-select-option
+      >
+    </ion-select>
+  </ion-item>
+
+  <app-lista-producto #listaProductoComponent> </app-lista-producto>
+  <ion-button (click)="asignacion()" expand="full" type="submit"
+    >Asignar productos
+  </ion-button>
+</ion-content>

@@ -1,0 +1,36 @@
+<app-custom-header title="Reposición de Productos"></app-custom-header>
+<ion-content fullscreen>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Adición de productos</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <dx-data-grid id="gridContainer" [dataSource]="dataSource" [remoteOperations]="false"
+            [allowColumnReordering]="true" [rowAlternationEnabled]="true" [showBorders]="true"
+            keyExpr="idProducto" (onSaving)="onSaving($event)" (onExporting)="onExporting($event)">
+            <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+            <dxo-editing mode="batch" [allowUpdating]="true" [selectTextOnEditStart]="true">
+            </dxo-editing>
+            <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+            <dxo-paging [pageSize]="25"></dxo-paging>
+            <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[25, 50, 100]"></dxo-pager>
+            <dxo-search-panel [visible]="true" [highlightCaseSensitive]="true"></dxo-search-panel>
+            <dxo-group-panel [visible]="true"></dxo-group-panel>
+            <dxo-grouping [autoExpandAll]="false"></dxo-grouping>
+            <dxi-column dataField="producto" caption="Producto" dataType="string" [allowEditing]="false"
+              width="350"></dxi-column>
+            <dxi-column dataField="cantidadActual" caption="Cantidad Actual" dataType="number" [allowEditing]="false"
+              width="200"></dxi-column>
+            <dxi-column dataField="cantidadAdicional" caption="Cantidad Adicional" dataType="number"  format="#" 
+            [allowEditing]="true" width="200" alignment="right" cssClass="bullet"></dxi-column>
+            <dxi-column dataField="total" caption="Total" dataType="number" [allowEditing]="false"
+              width="200" [calculateCellValue]="calculaCellTotal"></dxi-column>
+            
+          </dx-data-grid>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

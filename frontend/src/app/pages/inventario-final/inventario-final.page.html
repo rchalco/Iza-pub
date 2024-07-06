@@ -1,0 +1,76 @@
+<app-custom-header title="Inventario Final"></app-custom-header>
+<ion-content fullscreen>
+  <ion-card>
+    <ion-card-content>
+
+      <dx-data-grid id="gridContainer" [dataSource]="dataSource" [remoteOperations]="false"
+        [allowColumnReordering]="true" [rowAlternationEnabled]="true" [showBorders]="true" [columnAutoWidth]="false"
+        [columnWidth]="100" keyExpr="idProducto" [repaintChangesOnly]="true" (onRowUpdated)="rowUpdated($event)">
+
+        <dxo-editing mode="cell" [allowUpdating]="true">
+        </dxo-editing>
+
+        <dxo-scrolling showScrollbar="always" useNative="false" scrollByThumb="true"></dxo-scrolling>
+
+
+        <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
+        <dxo-paging [pageSize]="10"></dxo-paging>
+        <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]"></dxo-pager>
+        <dxo-search-panel [visible]="true" [highlightCaseSensitive]="true"></dxo-search-panel>
+
+        <dxi-column dataField="categoria" caption="Categoria" dataType="string" alignment="left" [allowEditing]="false"
+          [width]="100" headerCellTemplate="titleHeaderTemplate"></dxi-column>
+        <dxi-column dataField="nombreProducto" caption="Producto" dataType="string" [allowEditing]="false" [width]="180"
+          headerCellTemplate="titleHeaderTemplate"></dxi-column>
+        <dxi-column dataField="costoUnitario" caption="Cost.Unit. C/IVA" dataType="number" [allowEditing]="true"
+          cssClass="cell-yellow" headerCellTemplate="titleHeaderTemplate"></dxi-column>
+        <dxi-column dataField="almacenCentral" caption="Almacen Central" dataType="number" [allowEditing]="false"
+          cssClass="cell-locked" headerCellTemplate="titleHeaderTemplate"></dxi-column>
+        <dxi-column dataField="almacenOtroProveedor" caption="Almacen O/Proveedor" dataType="number"
+          [allowEditing]="false" cssClass="cell-locked" headerCellTemplate="titleHeaderTemplate"></dxi-column>
+        <dxi-column dataField="saldoTotal" caption="Saldo Total" dataType="number" [allowEditing]="false"
+          cssClass="cell-locked" headerCellTemplate="titleHeaderTemplate"></dxi-column>
+        <dxi-column dataField="ingreso" caption="Ingreso Compras" dataType="number" format="#.#" alignment="right"
+          [allowGrouping]="false" [allowEditing]="true" cssClass="bullet"
+          headerCellTemplate="titleHeaderTemplate"></dxi-column>
+        <dxi-column dataField="totalIngresos" caption="Total Ingreso" dataType="number" [allowEditing]="false"
+          cssClass="cell-locked" headerCellTemplate="titleHeaderTemplate"></dxi-column>
+        <dxi-column dataField="asignacionesBarra1" caption="Asig B1" dataType="number" [allowEditing]="true"
+          headerCellTemplate="titleHeaderTemplate"></dxi-column>
+        <dxi-column dataField="totalAsignacionesBarra1" caption="Total Asig B1" dataType="number" [allowEditing]="false"
+          cssClass="cell-locked" headerCellTemplate="titleHeaderTemplate"></dxi-column>
+        <dxi-column dataField="asignacionesBarra2" caption="Asig B2" dataType="number" [allowEditing]="true"
+          headerCellTemplate="titleHeaderTemplate"></dxi-column>
+        <dxi-column dataField="totalAsignacionesBarra2" caption="Total Asig B2" dataType="number" [allowEditing]="false"
+          cssClass="cell-locked" headerCellTemplate="titleHeaderTemplate"></dxi-column>
+        <dxi-column dataField="asignacionesBarra3" caption="Asig B3" dataType="number" [allowEditing]="true"
+          headerCellTemplate="titleHeaderTemplate"></dxi-column>
+        <dxi-column dataField="totalAsignacionesBarra3" caption="Total Asig B3" dataType="number" [allowEditing]="false"
+          cssClass="cell-locked" headerCellTemplate="titleHeaderTemplate"></dxi-column>
+        <dxi-column dataField="devolucionesB1" caption="DEV B1" dataType="number" [allowEditing]="true"
+          headerCellTemplate="titleHeaderTemplate"></dxi-column>
+        <dxi-column dataField="devolucionesB2" caption="DEV B2" dataType="number" [allowEditing]="true"
+          headerCellTemplate="titleHeaderTemplate"></dxi-column>
+        <dxi-column dataField="devolucionesB3" caption="DEV B3" dataType="number" [allowEditing]="true"
+          headerCellTemplate="titleHeaderTemplate"></dxi-column>
+        <dxi-column dataField="totalDevoluciones" caption="Total Dev" dataType="number" [allowEditing]="false"
+          cssClass="cell-locked" headerCellTemplate="titleHeaderTemplate"></dxi-column>
+        <!-- <dxi-column dataField="precioVenta" caption="Precio Venta" dataType="number" [allowEditing]="true"
+          cssClass="cell-yellow" headerCellTemplate="titleHeaderTemplate"></dxi-column>
+        <dxi-column dataField="valorGanado" caption="Total Ganado" dataType="number" format="#.##"
+          [allowEditing]="false" cssClass="cell-total" headerCellTemplate="titleHeaderTemplate"></dxi-column> -->
+        <div *dxTemplate="let info of 'titleHeaderTemplate'">
+          <p style="white-space: normal !important;">{{info.column.caption}}</p>
+        </div>
+        <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
+      </dx-data-grid>
+    </ion-card-content>
+    <ion-row class="cardfooter">
+      <ion-col>
+        <ion-button (click)="guardar()" expand="block">
+          Guardar
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
+</ion-content>

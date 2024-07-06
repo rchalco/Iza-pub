@@ -1,0 +1,91 @@
+<app-custom-header title="Adm. Usuarios"></app-custom-header>
+
+<ion-content fullscreen>
+  <div *ngIf="showCardusuarios">
+    <ion-list>
+      <ion-grid fixed>
+        <ion-row class="cabeceraTabla">
+          <ion-col size="2">Usuario</ion-col>
+          <ion-col size="4">Rol</ion-col>
+          <ion-col size="1"></ion-col>
+        </ion-row>
+        <ion-row class="detalleTabla" *ngFor="let usuario of usuarios">
+          <ion-col size="2">{{usuario.usuario_vc}} </ion-col>
+          <ion-col size="4">{{usuario.rol_name}}</ion-col>
+          <ion-col size="4">
+            <ion-button (click)="modificaUsuario(usuario)">Modificar
+            </ion-button>
+          </ion-col>
+
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="nuevaUsuario()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
+
+  <!--Usuarios detalle-->
+  <div *ngIf="!showCardusuarios">
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Registro Cliente</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <form>
+          <ion-list>
+            <ion-item>
+              <ion-label>Persona: </ion-label>
+              <ion-select (ionChange)="selectPersona($event)" [value]="idPersonaSeleccionada">
+                <ion-select-option *ngFor="let persona of personas" [value]="persona.idPersona">
+                  {{persona.nombreCompleto}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>Rol: </ion-label>
+              <ion-select (ionChange)="selectRol($event)" [value]="idRolSeleccionado">
+                <ion-select-option *ngFor="let rol of roles" [value]="rol.idRol">{{rol.rol}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h3>Usuario</h3>
+                <ion-input type="text" name="usuario_vc" required="true"
+                  [(ngModel)]="selectedUsuario.usuario_vc">
+                </ion-input>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h3>Password</h3>
+                <ion-input type="password" name="password" required="true"
+                  [(ngModel)]="selectedUsuario.password">
+                </ion-input>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h3>Redigitar Password</h3>
+                <ion-input type="password" name="passwordNuevo" required="true"
+                  [(ngModel)]="selectedUsuario.passwordNuevo">
+                </ion-input>
+              </ion-label>
+            </ion-item>
+            <!-- <app-custom-calendar
+            [label]='"Fecha de Vigencia:"'
+            [id]='"fecApertura"'
+            (getValueEmmiter)="selectFecha($event)"
+            ></app-custom-calendar> -->
+
+            <ion-button (click)="regitrarUsuario()"> Confirmar </ion-button>
+            <ion-button (click)="cancelarRegistro()"> Cancelar </ion-button>
+          </ion-list>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

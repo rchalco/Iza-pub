@@ -1,0 +1,36 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-subtitle>Realizar el Pago</ion-card-subtitle>
+    <section>
+      Total: {{ montoTotal | number: "1.2-2" }}
+      <span class="dangger" *ngIf="diferencia !== 0"
+        >Diferencia {{ diferencia }}</span
+      >
+    </section>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-list *ngIf="listFormasPago">
+      <ion-item *ngFor="let formaPago of listFormasPago">
+        <ion-label>{{ formaPago.formaDePago }}</ion-label>
+        <ion-input
+          type="number"
+          placeholder="monto de pago"
+          [(ngModel)]="formaPago.value"
+          (ionChange)="calcularDifrencia($event)"
+        ></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-button (click)="cobrar()" expand="block" fill="clear" shape="round">
+      Cobrar
+    </ion-button>
+    <ion-button
+      (click)="cancelar()"
+      expand="block"
+      fill="clear"
+      shape="round"
+      color="danger"
+    >
+      Cancelar
+    </ion-button>
+  </ion-card-content>
+</ion-card>

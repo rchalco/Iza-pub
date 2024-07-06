@@ -1,0 +1,170 @@
+<app-custom-header title="Captura datos Tarjeta"></app-custom-header>
+
+<ion-content fullscreen>
+  <ion-content>
+    <div *ngIf="showLeerTarjeta">
+      <ion-card style="width: 800px; height: 600px">
+        <app-reader-card #appreadercard (readCard)="reciveTarjeta($event)"></app-reader-card>
+        <app-finger-capture>
+        </app-finger-capture>
+      </ion-card>
+    </div>
+    <div *ngIf="showDatosTarjeta">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>Datos de la Tarjeta</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          <form>
+            <ion-list>
+              <ion-item *ngIf="!procesoFinalizado">
+                <ion-label>
+                  <div class="img-tintoreria">
+                    <img height="120" width="120" [src]="selectedRegistro.picPersonaB64" />
+                  </div>
+                  <h2>FOTO</h2>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <h2>Nombre Completo</h2>
+                  <h3>
+                    {{selectedRegistro.nombres}}
+                    {{selectedRegistro.apellidoPaterno}}
+                    {{selectedRegistro.apellidoMaterno}}
+                  </h3>
+                </ion-label>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>
+                  <h2>Documento</h2>
+                  <h3>{{selectedRegistro.documento}}</h3>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <h2>Celular</h2>
+                  <h3>{{selectedRegistro.celular}}</h3>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <h2>Saldo</h2>
+                  <h3>Bs.{{selectedRegistro.saldo}}</h3>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <h2>E-Mail</h2>
+                  <h3>{{selectedRegistro.email}}</h3>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <h2>Fecha Registro</h2>
+                  <h3>{{selectedRegistro.fechaRegistro}}</h3>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <h2>Fecha Validez</h2>
+                  <h3>{{selectedRegistro.fechaVigenciaHasta}}</h3>
+                </ion-label>
+              </ion-item>
+              <ion-button (click)="cancelar()"> Cancelar </ion-button>
+              <ion-button (click)="modificar()"> Modificar </ion-button>
+            </ion-list>
+          </form>
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <div *ngIf="showModificarTarjeta">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>Registro de Tarjeta</ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content>
+          <form>
+            <ion-list>
+              <ion-item *ngIf="!procesoFinalizado">
+                <ion-label>
+                  <div class="img-tintoreria">
+                    <app-custom-camera (eventPhoto)="handlePhoto($event)"></app-custom-camera>
+                  </div>
+                </ion-label>
+              </ion-item>
+              <ion-item *ngIf="!procesoFinalizado">
+                <ion-input type="file" id="file" (change)="handleFileInput($event.target['files'])"></ion-input>
+              </ion-item>
+
+              <ion-item *ngIf="procesoFinalizado" [routerLink]="['/']">
+                <ion-label> Foto Cargada </ion-label>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>
+                  <h3>Nombre</h3>
+                  <ion-input type="text" name="nombre" required="true" [(ngModel)]="selectedRegistro.nombres">
+                  </ion-input>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <h3>Paterno</h3>
+                  <ion-input type="text" name="apellidoPaterno" required="true"
+                    [(ngModel)]="selectedRegistro.apellidoPaterno">
+                  </ion-input>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <h3>Materno</h3>
+                  <ion-input type="text" name="apellidoMaterno" required="true"
+                    [(ngModel)]="selectedRegistro.apellidoMaterno">
+                  </ion-input>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <h3>Documento</h3>
+                  <ion-input type="text" name="documento" required="true" [(ngModel)]="selectedRegistro.documento">
+                  </ion-input>
+                </ion-label>
+              </ion-item>
+              <ion-item *ngIf="esTarjetaNueva">
+                <ion-label>
+                  <h3>Saldo</h3>
+                  <ion-input type="text" name="saldo" required="true" [(ngModel)]="selectedRegistro.saldo">
+                  </ion-input>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <h3>Celular</h3>
+                  <ion-input type="text" name="celular" required="true" [(ngModel)]="selectedRegistro.celular">
+                  </ion-input>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <h3>E-Mail</h3>
+                  <ion-input type="text" name="email" required="true" [(ngModel)]="selectedRegistro.email">
+                  </ion-input>
+                </ion-label>
+              </ion-item>
+              <app-custom-calendar [label]='"Fecha Validez"' [id]='"fechaVigencia"'
+                (getValueEmmiter)="selectfechaVigencia($event)"></app-custom-calendar>
+
+              <ion-button (click)="cancelar()"> Cancelar </ion-button>
+              <ion-button (click)="grabar()"> Grabar </ion-button>
+            </ion-list>
+          </form>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-content>
+</ion-content>

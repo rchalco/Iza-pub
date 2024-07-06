@@ -1,0 +1,117 @@
+<app-custom-header title="Adm. Personas"></app-custom-header>
+
+<ion-content fullscreen>
+  <ion-content>
+
+    <div *ngIf="showCardPersonas">
+      <ion-list>
+          <ion-grid fixed>
+            <ion-row class="cabeceraTabla">
+              <ion-col size="2">Nombres</ion-col>
+              <ion-col size="4">Documento</ion-col>
+              <ion-col size="1"></ion-col>
+            </ion-row>
+            <ion-row
+              class="detalleTabla"
+              *ngFor="let persona of personas"
+            >
+              <ion-col size="2">{{persona.nombreCompleto}} </ion-col>
+              <ion-col size="4">{{persona.documentoDeIdentidad}}</ion-col>
+              <ion-col size="4">
+                <ion-button (click)="modificaPersona(persona)"
+                  >Modificar
+                </ion-button>
+              </ion-col>
+
+            </ion-row>
+          </ion-grid>
+      </ion-list>
+      <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button (click)="nuevaPersona()">
+          <ion-icon name="add-circle-outline"></ion-icon>
+        </ion-fab-button>
+      </ion-fab>
+    </div>
+
+     <!--personas detalle-->
+     <div *ngIf="!showCardPersonas">
+
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>Registro Cliente</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <form>
+            <ion-list>
+
+              <ion-item>
+                <ion-label>
+                  <h3>Documento</h3>
+                  <ion-input
+                    type="text"
+                    name="documento"
+                    required="true"
+                    [(ngModel)]="selectedPersona.documentoDeIdentidad"
+                  >
+                  </ion-input>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <h3>Paterno</h3>
+                  <ion-input
+                    type="text"
+                    name="apellidoPaterno"
+                    required="true"
+                    [(ngModel)]="selectedPersona.apellidoPaterno"
+                  >
+                  </ion-input>
+                </ion-label>
+              </ion-item>
+              <ion-item>
+                <ion-label>
+                  <h3>Materno</h3>
+                  <ion-input
+                    type="text"
+                    name="apellidoMaterno"
+                    required="true"
+                    [(ngModel)]="selectedPersona.apellidoMaterno"
+                  >
+                  </ion-input>
+                </ion-label>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>
+                  <h3>Nombres</h3>
+                  <ion-input
+                    type="text"
+                    name="nombres"
+                    required="true"
+                    [(ngModel)]="selectedPersona.nombres"
+                  >
+                  </ion-input>
+                </ion-label>
+              </ion-item>
+
+              <ion-item>
+                <ion-label>
+                  <h3>Numero Celular</h3>
+                  <ion-input
+                    type="text"
+                    name="numCelular"
+                    required="true"
+                    [(ngModel)]="selectedPersona.celular"
+                  >
+                  </ion-input>
+                </ion-label>
+              </ion-item>
+              <ion-button (click)="regitrarPersona()"> Confirmar </ion-button>
+              <ion-button (click)="cancelarRegistro()"> Cancelar </ion-button>
+            </ion-list>
+          </form>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ion-content>
+</ion-content>

@@ -1,0 +1,15 @@
+<ion-item>
+  <ion-label>{{ label }}</ion-label>
+  <ion-input [value]="valueDate" readonly></ion-input>
+  <ion-button fill="clear" [id]="id">
+    <ion-icon icon="calendar"></ion-icon>
+  </ion-button>
+  <ion-popover [trigger]="id" show-backdrop="false">
+    <ng-template>
+      <ion-datetime
+        displayFormat="dd/MM/yyyy"
+        (ionChange)="setValue($event)"
+      ></ion-datetime>
+    </ng-template>
+  </ion-popover>
+</ion-item>

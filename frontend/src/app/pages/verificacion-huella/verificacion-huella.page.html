@@ -1,0 +1,18 @@
+<app-custom-header title="Registro de Huellas"></app-custom-header>
+<ion-content fullscreen color="secondary">
+  <ion-item color="secondary">
+    <h1>1. Coloque su dedo en el lector de huella</h1>
+  </ion-item>
+  <ion-item color="secondary">
+    <h1>{{mensaje1}}</h1>
+  </ion-item>
+  <ion-item color="secondary">
+    <h1 color="success">{{mensaje2}}</h1>
+  </ion-item>
+  <ion-item>
+    <ion-button (click)="capturaHuella()">
+      Verificar huella
+    </ion-button>
+  </ion-item>
+  <img src="/assets/huella/huella_verificacion.jpeg" alt="">
+</ion-content>

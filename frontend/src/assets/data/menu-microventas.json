@@ -1,0 +1,45 @@
+{
+  "Menu": [
+    {
+      "title": "Compras",
+      "url": "/compra",
+      "icon": "paper-plane"
+    },
+    {
+      "title": "Ventas",
+      "url": "/venta",
+      "icon": "paper-plane"
+    },
+    {
+      "title": "Pedido-Mesa",
+      "url": "/pedido-mesa",
+      "icon": "paper-plane"
+    },
+    {
+      "title": "Apertura Caja",
+      "url": "/apertura-caja",
+      "icon": "paper-plane"
+    },
+    {
+      "title": "Cierre Caja",
+      "url": "/cierre-caja",
+      "icon": "paper-plane"
+    },
+    {
+      "title": "Cambio Contraseña",
+      "url": "/cambio-contrasena",
+      "icon": "paper-plane"
+    },
+    {
+      "title": "Reportes y Tableros",
+      "url": "/reporte-tablero",
+      "icon": "paper-plane"
+    },
+    {
+      "title": "Habilitación Cajeros",
+      "url": "/habilita-caja",
+      "icon": "paper-plane"
+    }
+
+  ]
+}

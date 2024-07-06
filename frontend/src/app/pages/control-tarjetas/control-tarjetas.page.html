@@ -1,0 +1,284 @@
+<app-custom-header title="Control de Tarjetas"></app-custom-header>
+<ion-content fullscreen>
+  <div *ngIf="showMain">
+
+
+    <ion-card >
+      <ion-list>
+        <ion-card-header>
+          <ion-card-subtitle>Busqueda </ion-card-subtitle>
+        </ion-card-header>
+        <ion-item  >
+          <ion-label>
+            <h2>CI</h2>
+            <ion-input
+              type="text"
+              name="ci"
+              required="true"
+              [(ngModel)]="textoCIBuscar"
+              >
+            </ion-input>
+          </ion-label>
+
+        </ion-item >
+        <ion-item  >
+          <ion-label>
+            <h2>Paterno</h2>
+            <ion-input
+              type="text"
+              name="paterno"
+              required="true"
+              [(ngModel)]="textoPaternoBusacar"
+              >
+            </ion-input>
+          </ion-label>
+
+        </ion-item >
+        <ion-button expand="full" type="submit" (click)="buscar()"  >
+          Buscar
+      </ion-button>
+      </ion-list>
+    </ion-card>
+    <ion-card >
+      <ion-list>
+        <ion-grid
+          fixed
+
+        >
+          <ion-row class="cabeceraTabla">
+            <ion-col size="4"> Nombre</ion-col>
+            <ion-col size="3"> CI </ion-col>
+            <ion-col size="1"> Modificar </ion-col>
+            <ion-col size="1"></ion-col>
+            <ion-col size="1"></ion-col>
+          </ion-row>
+          <ion-row
+                  class="detalleTabla"
+                  *ngFor="let tarjeta of listaTarjetas"
+                >
+                <ion-col size="4" class="text-detalle">
+                  {{tarjeta.nombres}} {{tarjeta.apellidoPaterno}}  {{tarjeta.apellidoMaterno}}
+                </ion-col>
+                <ion-col size="3" class="text-detalle">
+                  {{tarjeta.documento}}
+                </ion-col>
+
+                <ion-col size="1"
+                  ><ion-button
+                    (click)="modificarDatos(tarjeta)"
+                    >Datos
+                  </ion-button></ion-col
+                >
+                <ion-col size="1"
+                ><ion-button
+                  (click)="modificarSaldo(tarjeta)"
+                  >Saldo
+                </ion-button></ion-col
+              >
+
+          </ion-row>
+        </ion-grid>
+      </ion-list>
+    </ion-card>
+
+
+  </div>
+
+  <div *ngIf="showModificarTarjeta">
+
+    <ion-card >
+
+      <ion-card-header>
+        <ion-card-subtitle>Modificacion Tarjeta</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form>
+          <ion-list>
+
+            <ion-item *ngIf="!procesoFinalizado">
+              <ion-label>
+                <div class="img-tintoreria">
+                  <img height='120' width='120' [src]="tarjetaSeleccioada.picPersonaB64" />
+                </div>
+              </ion-label>
+            </ion-item>
+            <ion-item *ngIf="!procesoFinalizado">
+              <ion-input type="file" id="file" (change)="handleFileInput($event.target['files'])"></ion-input>
+            </ion-item>
+
+            <ion-item *ngIf="procesoFinalizado" [routerLink]="['/']">
+              <ion-label>
+                  Foto Cargada
+                </ion-label>
+            </ion-item>
+
+
+            <ion-item>
+              <ion-label>
+                <h3>Nombre</h3>
+                <ion-input
+                  type="text"
+                  name="nombre"
+                  required="true"
+                  [(ngModel)]="tarjetaSeleccioada.nombres"
+                  >
+                </ion-input>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h3>Paterno</h3>
+                <ion-input
+                  type="text"
+                  name="apellidoPaterno"
+                  required="true"
+                  [(ngModel)]="tarjetaSeleccioada.apellidoPaterno"
+                  >
+                </ion-input>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h3>Materno</h3>
+                <ion-input
+                  type="text"
+                  name="apellidoMaterno"
+                  required="true"
+                  [(ngModel)]="tarjetaSeleccioada.apellidoMaterno"
+                  >
+                </ion-input>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h3>Documento</h3>
+                <ion-input
+                  type="text"
+                  name="documento"
+                  required="true"
+                  [(ngModel)]="tarjetaSeleccioada.documento"
+                  >
+                </ion-input>
+              </ion-label>
+            </ion-item>
+
+            <ion-item>
+              <ion-label>
+                <h3>Celular</h3>
+                <ion-input
+                type="text"
+                name="celular"
+                required="true"
+                [(ngModel)]="tarjetaSeleccioada.celular"
+                >
+                </ion-input>
+              </ion-label>
+            </ion-item>
+            <ion-item>
+              <ion-label>
+                <h3>E-Mail</h3>
+                <ion-input
+                type="text"
+                name="email"
+                required="true"
+                [(ngModel)]="tarjetaSeleccioada.email"
+                >
+                </ion-input>
+              </ion-label>
+            </ion-item>
+            <app-custom-calendar
+              [label]='"Fecha Validez"'
+              [id]='"fechaVigencia"'
+              (getValueEmmiter)="selectfechaVigencia($event)"
+            ></app-custom-calendar>
+
+
+            <ion-button (click)="cancelar()"> Cancelar </ion-button>
+            <ion-button (click)="grabarDatos()"> Grabar </ion-button>
+          </ion-list>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <div *ngIf="showModificarSaldo">
+
+    <ion-card >
+
+      <ion-card-header>
+        <ion-card-subtitle>Actualización de Saldo</ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form>
+          <ion-list>
+
+            <ion-item>
+              <ion-label>
+                <h2>Saldo Actual</h2>
+                <h3>Bs.{{tarjetaSeleccioada.saldo}}</h3>
+              </ion-label>
+            </ion-item>
+            <ion-item >
+              <ion-label>
+                <h3>Monto Operación</h3>
+                <ion-input
+                  type="text"
+                  name="saldo"
+                  required="true"
+                  [(ngModel)]="saldoNuevo"
+                  >
+                </ion-input>
+              </ion-label>
+            </ion-item>
+
+            <ion-button (click)="cancelar()"> Cancelar </ion-button>
+            <ion-button (click)="grabarSaldo()"> Grabar </ion-button>
+          </ion-list>
+        </form>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card >
+      <ion-card-header>
+        <ion-card-subtitle>Historico de la Tarjeta</ion-card-subtitle>
+      </ion-card-header>
+      <ion-list>
+        <ion-grid
+          fixed
+
+        >
+          <ion-row class="cabeceraTabla">
+            <ion-col size="3"> Fecha</ion-col>
+            <ion-col size="2"> Tipo </ion-col>
+            <ion-col size="2"> Monto </ion-col>
+            <ion-col size="2"> Estado </ion-col>
+            <ion-col size="2"> Usuario </ion-col>
+          </ion-row>
+          <ion-row
+                  class="detalleTabla"
+                  *ngFor="let transacion of listaMovimientos"
+                >
+                <ion-col size="3" class="text-detalle">
+                  {{transacion.fechaRegistro}}
+                </ion-col>
+                <ion-col size="2" class="text-detalle">
+                  {{transacion.tipoMovimiento}}
+                </ion-col>
+                <ion-col size="2" class="text-detalle">
+                  {{transacion.monto}}
+                </ion-col>
+                <ion-col size="2" class="text-detalle">
+                  {{transacion.estado}}
+                </ion-col>
+                <ion-col size="2" class="text-detalle">
+                  {{transacion.usuario}}
+                </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-list>
+    </ion-card>
+  </div>
+
+</ion-content>

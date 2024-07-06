@@ -1,0 +1,24 @@
+<ion-slide *ngFor="let producto of products | filtro: textoBusacar:'categoria'">
+  <ion-grid fixed>
+    <ion-row class="cabeceraTabla">
+      <ion-col size="6" class="text-gotico">{{ producto.categoria }}</ion-col>
+      <ion-col size="3">Vaso</ion-col>
+      <ion-col size="3">Botella</ion-col>
+    </ion-row>
+    <ion-row class="detalleTabla" *ngFor="let productodet of producto.detalle">
+      <ion-col size="6" class="text-detalle">
+        {{ productodet.nombreProducto }}</ion-col
+      >
+      <ion-col size="3">
+        <ion-button (click)="clickItem(productodet)"
+          >Bs. {{ productodet.precio }}
+        </ion-button></ion-col
+      >
+      <ion-col size="3"
+        ><ion-button (click)="clickItem(productodet)"
+          >Bs. {{ productodet.precio }}
+        </ion-button></ion-col
+      >
+    </ion-row>
+  </ion-grid>
+</ion-slide>

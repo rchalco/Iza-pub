@@ -1,0 +1,216 @@
+<app-custom-header title="Mesas - Pedidos - Comandas"></app-custom-header>
+
+<ion-content fullscreen>
+  <ion-content>
+    <ion-card *ngIf="showMesasPedido">
+      <ion-card-header>
+        <ion-card-subtitle>Sala - Opciones</ion-card-subtitle>
+        <section>
+          <ion-button size="small" (click)="nuevoPedido()">Nuevo Pedido</ion-button>
+          <ion-button size="small" color="secondary" (click)="adicionarConsumo()">Adicionar Consumo</ion-button>
+          <ion-button size="small" color="warning">Imprimir Comanda</ion-button>
+          <ion-button size="small" color="success" (click)="pagarYFacturar()">Pagar y Facturar</ion-button>
+          <ion-button size="small" color="medium" (click)="cambioMesa()">Cambio de Mesa</ion-button>
+          <ion-button size="small" color="danger">Cancelar Pedido</ion-button>
+        </section>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="10" size-lg="3" size-md="4" size-sm="6" size-xs="12" *ngFor="let lugar of lugarConsumo">
+              <ion-item>
+                <ion-card>
+                  <img [src]="lugar.picMesa" class="img-prod" />
+                  <ion-card-header>
+                    <ion-card-subtitle>{{lugar.descripcion}}</ion-card-subtitle>
+                    <section class="full-width">
+                      <ion-button expand="full" [color]="lugar.colorEstado" (click)="seleccionarLugar(lugar)">
+                        {{lugar.estadoLugar}}</ion-button>
+                    </section>
+                    <ion-card-title>
+                      <h5>Mx Personas:{{lugar.cantidadPersonas}}</h5>
+                      <h5>Consumo Actual: {{lugar.consumoActual}}</h5>
+                    </ion-card-title>
+                  </ion-card-header>
+                </ion-card>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="showCardPedido">
+      <ion-card-header>
+        <ion-card-subtitle>Pedido</ion-card-subtitle>
+        <section>
+          <ion-button size="small" (click)="grabarPedido()" color="success">Grabar</ion-button>
+          <ion-button size="small" color="warning" (click)="imprimirComanda()">Imprimirrrrr</ion-button>
+          <ion-button size="small" (click)="cancelarPedido()" color="danger">Cancelar</ion-button>
+        </section>
+      </ion-card-header>
+      <ion-card-content>
+        <form>
+          <ion-list>
+            <ion-item>
+              <ion-label>Meseros</ion-label>
+              <ion-select interface="popover" (ionChange)="selectMesero($event)" cancelText="NO" okText="OK">
+                <ion-select-option value="{{mesero.idEmpleado}}" *ngFor=" let mesero of listaMeseros">
+                  {{mesero.nombreCompleto}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <app-busca-producto nameButtonSearch="Adicionar a Pedido" (selectProducto)="adicionarAMesa($event)">
+              </app-busca-producto>
+            </ion-item>
+            <ion-item>
+              <ion-grid>
+                <ion-row *ngFor="let prod of listaPedidos">
+                  <ion-col>
+                    <ion-item>
+                      <ion-label>
+                        <h3>Nro.</h3>
+                        <h2>{{prod.nroPedido}}</h2>
+                      </ion-label>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label>
+                        <h3>Producto</h3>
+                        <h2>{{prod.nombreProducto}}</h2>
+                      </ion-label>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label>
+                        <h3>Precio</h3>
+                        <h2>{{prod.precioVenta}}</h2>
+                      </ion-label>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label>
+                        <h3>Disp.</h3>
+                        <h2>{{prod.cantidadDisponible}}</h2>
+                      </ion-label>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">Cant.</ion-label>
+                      <ion-input type="number" name="cantidadPedido" [(ngModel)]="prod.cantidad" required="true">
+                      </ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label position="floating">Observación</ion-label>
+                      <ion-input type="text" name="observacion" [(ngModel)]="prod.observacion" required="true">
+                      </ion-input>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label>
+                        <h3>Total</h3>
+                        <h2>{{prod.total}}</h2>
+                      </ion-label>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-item>
+                      <ion-label>
+                        <h3>Mesero</h3>
+                        <h2>{{prod.mesero}}</h2>
+                      </ion-label>
+                    </ion-item>
+                  </ion-col>
+                  <ion-col>
+                    <ion-button color="danger" expand="full" type="submit" (click)="borrarItem(prod)">
+                      Eliminar
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-item>
+
+          </ion-list>
+
+        </form>
+      </ion-card-content>
+
+    </ion-card>
+
+    <ion-card *ngIf="showCambioMesa">
+      <ion-card-header>
+        <ion-card-subtitle>Cambio de mesa - Opciones</ion-card-subtitle>
+        <section>
+          <ion-button size="small" color="success" (click)="confirmarCambioMesa()">Aceptar</ion-button>
+          <ion-button size="small" color="danger" (click)="cancelarCambioMesa()">Cancelar</ion-button>
+        </section>
+      </ion-card-header>
+      <ion-card-content>
+        <form>
+          <ion-list>
+            <ion-item>
+              <ion-label>Seleccione alguna mesa libre</ion-label>
+              <ion-select interface="popover" (ionChange)="selectMesaNueva($event)" cancelText="NO" okText="OK">
+                <ion-select-option value="{{lugar.idLugarFisico}}" *ngFor=" let lugar of lugarConsumoLibre">
+                  {{lugar.descripcion}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+        </form>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="showFormaPago">
+      <ion-card-header>
+
+        <section>
+
+          <ion-button size="small" color="danger" (click)="cancelarFormaPago()">Cancelar</ion-button>
+        </section>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form>
+          <ion-list>
+            <ion-item>
+              <app-forma-pago (formaPagoFinal)="formaDePagoConfirmada($event)">
+              </app-forma-pago>
+            </ion-item>
+          </ion-list>
+        </form>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card *ngIf="showDatosFactura">
+      <ion-card-header>
+
+        <section>
+          <ion-button size="small" color="success" (click)="finalizarTransaccionPago()">Finalizar Pago</ion-button>
+          <ion-button size="small" color="danger" (click)="cancelarDatosFactura()">Cancelar</ion-button>
+        </section>
+      </ion-card-header>
+
+      <ion-card-content>
+        <form>
+          <ion-list>
+            <ion-item>
+              <app-datos-factura (datosFacturaFinal)="datosFacturaConfirmada($event)">
+              </app-datos-factura>
+            </ion-item>
+
+          </ion-list>
+        </form>
+      </ion-card-content>
+    </ion-card>
+
+  </ion-content>
+
+
+</ion-content>

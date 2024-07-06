@@ -1,0 +1,115 @@
+<app-custom-header title="Cierre de Caja"></app-custom-header>
+<ion-content fullscreen>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Detalle de últimas cajas</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form>
+        <ion-list>
+          <ion-row *ngFor="let caja of ultimasCajas">
+            <ion-col>
+              <ion-item>
+                <ion-label>
+                  <h3>Fecha</h3>
+                  <h2>{{caja.fechaApertura}}</h2>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label>
+                  <h3>Saldo Sistema</h3>
+                  <h2>{{caja.saldoCierre}}</h2>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label>
+                  <h3>Monto Cierre</h3>
+                  <h2>{{caja.saldoUsuario}}</h2>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label>
+                  <h3>Diferencia</h3>
+                  <h2>{{caja.diferencia}}</h2>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label>
+                  <h3>Observacion</h3>
+                  <h2>{{caja.observacion}}</h2>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-list>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="cajaActual">
+    <ion-card-header>
+      <ion-card-title>Datos para cierre de caja</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form #formulario="ngForm">
+        <ion-item>
+          <ion-label>
+            <h3>Fecha</h3>
+            <h2>{{cajaActual.fechaApertura}}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <h3>Saldo Cierre</h3>
+            <h2>{{cajaActual.saldoCierre}}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating"> Monto Cierre </ion-label>
+          <ion-input
+            type="number"
+            name="saldoUsuario"
+            [(ngModel)]="cajaActual.saldoUsuario"
+            required="true"
+          ></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <h3>Diferencia</h3>
+            <h2>{{cajaActual.diferencia}}</h2>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating"> Observación </ion-label>
+          <ion-input
+            type="text"
+            name="observacion"
+            [(ngModel)]="cajaActual.observacion"
+            required="true"
+          ></ion-input>
+        </ion-item>
+
+        <ion-button
+          expand="full"
+          type="submit"
+          (click)="cerrarCaja()"
+          [disabled]="!formulario.valid"
+        >
+          Cerrar Caja
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

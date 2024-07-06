@@ -1,0 +1,51 @@
+<app-custom-header title="Reportes - Tableros"></app-custom-header>
+
+<ion-content [fullscreen]="true" >
+  <ion-card *ngIf="false">
+    <ion-card-header>
+      <ion-card-subtitle>Filtros del Tablero</ion-card-subtitle>
+    </ion-card-header>
+
+    <app-custom-calendar
+      [label]='"Fecha"'
+      [id]='"fecIni"'
+      (getValueEmmiter)="selectFechaIni($event)"
+    ></app-custom-calendar>
+    <!-- <app-custom-calendar
+      [label]='"Fecha de Hasta"'
+      [id]='"fecFin"'
+      (getValueEmmiter)="selectFechaFin($event)"
+    ></app-custom-calendar> -->
+
+    <ion-button expand="full" type="submit" (click)="obtenerDatos()"  >
+        Generar Tablero
+    </ion-button>
+
+  </ion-card>
+
+  <ion-card *ngIf="showTablero">
+    <div class=“ion-canvas”>
+      <ion-card>
+        <ion-card-content>
+          <canvas id='barCanvas' #barCanvas style="position: relative; height:20vh; width:40vw">{{ barChart }}</canvas>
+        </ion-card-content>
+      </ion-card>
+      <!-- <ion-card>
+        <ion-card-content>
+          <canvas id='doughnutCanvas' #doughnutCanvas style="position: relative; height:50; width:50">{{ chart }}</canvas>
+        </ion-card-content>
+      </ion-card> -->
+      <ion-card>
+        <ion-card-content>
+          <canvas id='barCanvasMonto' #barCanvasMonto style="position: relative; height:20vh; width:40vw">{{ lineChart }} </canvas>
+        </ion-card-content>
+      </ion-card>
+      <!-- <ion-button expand="full" (click)="volverFechas()"  >
+        Volver
+      </ion-button> -->
+
+
+    </div>
+  </ion-card>
+  
+</ion-content>

@@ -1,0 +1,59 @@
+<app-custom-header title="Reportes"></app-custom-header>
+<ion-content>
+  <ion-list>
+    <ion-item>
+      <ion-label>Estados</ion-label>
+      <ion-select value="0" cancelText="Cancelar" (ionChange)="setEstado($event)">
+        <ion-select-option value="0">Todos</ion-select-option>
+        <ion-select-option value="1">Pendientes</ion-select-option>
+        <ion-select-option value="2">Entregados</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <app-custom-calendar
+      [label]='"Fecha de Inicio"'
+      [id]='"fecIni"'
+      (getValueEmmiter)="setDatetimeIni($event)"
+    ></app-custom-calendar>
+    <app-custom-calendar
+      [label]='"Fecha de Hasta"'
+      [id]='"fecFin"'
+      (getValueEmmiter)="setDatetimeFin($event)"
+    ></app-custom-calendar>
+    <ion-item>
+      <ion-button (click)="buscarPedidosEstado()" expand="block">
+        Buscar
+      </ion-button>
+    </ion-item>
+    <ion-item *ngIf="listaPedidos">
+      <ion-searchbar
+        animated="true"
+        (ionChange)="buscarPedidos($event)"
+        placeholder="documento"
+      ></ion-searchbar>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="listaPedidos">
+    <div
+      *ngFor="let cliente of listaPedidos | filtro:textoBusacar:'documento'"
+      class="item-pedido"
+    >
+      <ion-item>
+        <p>PEDIDO: {{cliente.idPedMaster}}-</p>
+        <ion-label>{{cliente.documento}} {{cliente.nombreCliente}}</ion-label>
+        <ion-label>{{cliente.fechaRegistro}}</ion-label>
+        <ion-label>{{cliente.estado}}</ion-label>
+      </ion-item>
+      <ion-card>
+        <div
+          *ngFor="let detalle of cliente.detallePedidosEntregar"
+          class="content-detail"
+        >
+          <ion-label>Prod: {{detalle.producto}} </ion-label>
+          <ion-label>Cant: {{detalle.cantidad}} </ion-label>
+          <ion-label>Precio: {{detalle.precio}} </ion-label>
+        </div>
+      </ion-card>
+    </div>
+  </ion-list>
+</ion-content>

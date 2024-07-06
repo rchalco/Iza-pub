@@ -1,0 +1,100 @@
+<app-custom-header title="Cierre Caja"></app-custom-header>
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-item>
+            <ion-label>Elija Un Cajero</ion-label>
+            <ion-select
+              [value]="currentCajero"
+              (ionChange)="obtieneArqueo($event)"
+            >
+              <ion-select-option *ngFor="let cajero of cajeros" [value]="cajero"
+                >{{cajero.usuario}}</ion-select-option
+              >
+            </ion-select>
+          </ion-item>
+          <ion-button (click)="realizarCierre()" expand="block">
+            Realizar Cierre
+          </ion-button>
+        </ion-item>
+      </ion-list>
+      <ion-list *ngIf="currentCajero">
+        <ion-item>
+          <ion-label>Monto Apertura</ion-label>
+          <ion-label>{{montoApertura | number : '1.2-2'}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Total Ventas </ion-label>
+          <ion-label>{{montoTotalVenta | number : '1.2-2'}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Datos Cajero </ion-label>
+          <ion-label
+            >{{currentCajero.ci}} {{currentCajero.nombreCompleto}}</ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label>Barra </ion-label>
+          <ion-label>{{currentCajero.barra}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-input
+            type="text"
+            placeholder="Observaciones"
+            [(ngModel)]="observaciones"
+          ></ion-input>
+        </ion-item>
+        <ion-list-header>
+          <h2 class="tituloInner">Totales por metodo de pago</h2>
+        </ion-list-header>
+        <ion-item>
+          <ion-grid fixed>
+            <ion-row class="cabeceraTabla">
+              <ion-col>Forma de Pago</ion-col>
+              <ion-col>Total</ion-col>
+              <ion-col>Entregado</ion-col>
+              <ion-col>Diferencia</ion-col>
+            </ion-row>
+            <ion-row
+              class="detalleTabla"
+              *ngFor="let formaPago of formasPagosTotales"
+            >
+              <ion-col>{{formaPago.formaDePago}}</ion-col>
+              <ion-col>{{formaPago.totalVendido | number : '1.2-2'}}</ion-col>
+              <ion-col>
+                <ion-input
+                  type="text"
+                  placeholder="0.00"
+                  [(ngModel)]="formaPago.entregado"
+                  (change)="calcularDiferencia(formaPago)"
+                ></ion-input>
+              </ion-col>
+              <ion-col>{{formaPago.diferencia | number : '1.2-2'}}</ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+        <ion-list-header>
+          <h2 class="tituloInner">Detalle por metodo de pago</h2>
+        </ion-list-header>
+        <ion-item>
+          <ion-grid fixed>
+            <ion-row class="cabeceraTabla">
+              <ion-col size="3">#Pedido</ion-col>
+              <ion-col size="4">Forma Pago</ion-col>
+              <ion-col size="5">Monto</ion-col>
+            </ion-row>
+            <ion-row class="detalleTabla" *ngFor="let formaPago of formasPagos">
+              <ion-col size="3">{{formaPago.idPedMaster}}</ion-col>
+              <ion-col size="4">{{formaPago.formaDePago}}</ion-col>
+              <ion-col size="5"
+                >{{formaPago.montoCubierto | number : '1.2-2'}}</ion-col
+              >
+            </ion-row>
+          </ion-grid>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

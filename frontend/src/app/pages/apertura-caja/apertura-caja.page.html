@@ -1,0 +1,56 @@
+<app-custom-header title="Apertura de Caja"></app-custom-header>
+<ion-content fullscreen>
+  <ion-card *ngIf="cajaActual">
+    <ion-card-header>
+      <ion-card-title>Datos para apertura de caja</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <form #formulario="ngForm">
+        <ion-item>
+          <ion-label>
+            <h3>ESTADO DE CAJA</h3>
+            <h2>{{cajaActual.estadoCaja}}</h2>
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating"> Saldo Apertura </ion-label>
+          <ion-input
+            type="number"
+            name="saldoInicial"
+            [(ngModel)]="cajaActual.saldoInicial"
+            required="true"
+          >
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating"> Observacion </ion-label>
+          <ion-input
+            type="text"
+            name="observacion"
+            [(ngModel)]="cajaActual.observacion"
+            required="false"
+          >
+          </ion-input>
+        </ion-item>
+        <ion-select
+          placeholder="Elija una barra"
+          (ionChange)="selectBarra($event)"
+          [value]="barraCurrent"
+        >
+          <ion-select-option *ngFor="let barra of barras" [value]="barra"
+            >{{barra.descripcion}}</ion-select-option
+          >
+        </ion-select>
+
+        <ion-button
+          expand="full"
+          type="submit"
+          (click)="aperturaCaja()"
+          [disabled]="!formulario.valid"
+        >
+          Aperturar Caja
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

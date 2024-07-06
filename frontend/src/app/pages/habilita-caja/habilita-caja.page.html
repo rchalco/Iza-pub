@@ -1,0 +1,28 @@
+<app-custom-header title="Habilitación Cajeros"></app-custom-header>
+<ion-content fullscreen>
+  <div>
+    <ion-list>
+      
+        <ion-grid fixed>
+          <ion-row class="cabeceraTabla">
+            <ion-col size="2">Cajero</ion-col>
+            <ion-col size="4">Habilitado</ion-col>
+            <ion-col size="1"></ion-col>
+          </ion-row>
+          <ion-row
+            class="detalleTabla"
+            *ngFor="let cajero of detalleCajeros"
+          >
+            <ion-col size="2">{{cajero.usuario_vc}} </ion-col>
+            <ion-col size="4">
+              <ion-checkbox [(ngModel)]="cajero.activo" ></ion-checkbox>
+            </ion-col>
+            
+          </ion-row>
+        </ion-grid>
+    </ion-list>
+    <ion-button (click)="grabarCajeros()" expand="full" type="submit">
+      Grabar
+    </ion-button>
+  </div>
+</ion-content>
