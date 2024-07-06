@@ -1,0 +1,13 @@
+src/CoreAccesLayer/bin/
+src/CoreAccesLayer/obj/
+src/Invoice.Core/bin/
+src/Invoice.Core/obj/
+src/Invoice.Core.Test/bin/
+src/Invoice.Core.Test/obj/
+src/InvoiceService/bin/
+src/InvoiceService/obj/
+src/PlumbingProps/bin/
+src/PlumbingProps/obj/
+src/TestSINConsole/obj/
+src/.vs/
+src/TestSINConsole/bin/
