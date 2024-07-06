@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34408.163
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlumbingProps", "PlumbingProps\PlumbingProps.csproj", "{2E3DBBFD-10D3-492C-8D02-1E98CCFC7B0E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1. Infraestructure", "1. Infraestructure", "{87F7A1EF-B148-4989-ABB0-492FA15BE677}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreAccesLayer", "CoreAccesLayer\CoreAccesLayer.csproj", "{7C75DC4F-0B13-4FD0-B417-2EBF9173C2E7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Business.Layers", "2. Business.Layers", "{2E0AAB3E-2BB9-4D6B-B882-3D75FE1C9B05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3. Services", "3. Services", "{55B21222-C202-43A1-9834-8A69943DAE95}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4. Test", "4. Test", "{A6564FCC-C3E2-4510-9070-F352D0886B9A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iza.Core", "Iza.Core\Iza.Core.csproj", "{D570BFA4-C441-4B9B-A781-64080886D911}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iza.Services", "Iza.Services\Iza.Services.csproj", "{26AAC86E-CD16-4032-900E-4A2F1284CD62}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Iza.Core.Test", "Iza.Core.Test\Iza.Core.Test.csproj", "{DC2A3C63-3AEC-4852-97EB-E886120B7CD4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E3DBBFD-10D3-492C-8D02-1E98CCFC7B0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E3DBBFD-10D3-492C-8D02-1E98CCFC7B0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E3DBBFD-10D3-492C-8D02-1E98CCFC7B0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E3DBBFD-10D3-492C-8D02-1E98CCFC7B0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C75DC4F-0B13-4FD0-B417-2EBF9173C2E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C75DC4F-0B13-4FD0-B417-2EBF9173C2E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C75DC4F-0B13-4FD0-B417-2EBF9173C2E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C75DC4F-0B13-4FD0-B417-2EBF9173C2E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D570BFA4-C441-4B9B-A781-64080886D911}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D570BFA4-C441-4B9B-A781-64080886D911}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D570BFA4-C441-4B9B-A781-64080886D911}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D570BFA4-C441-4B9B-A781-64080886D911}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26AAC86E-CD16-4032-900E-4A2F1284CD62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26AAC86E-CD16-4032-900E-4A2F1284CD62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26AAC86E-CD16-4032-900E-4A2F1284CD62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26AAC86E-CD16-4032-900E-4A2F1284CD62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC2A3C63-3AEC-4852-97EB-E886120B7CD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC2A3C63-3AEC-4852-97EB-E886120B7CD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC2A3C63-3AEC-4852-97EB-E886120B7CD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC2A3C63-3AEC-4852-97EB-E886120B7CD4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2E3DBBFD-10D3-492C-8D02-1E98CCFC7B0E} = {87F7A1EF-B148-4989-ABB0-492FA15BE677}
+		{7C75DC4F-0B13-4FD0-B417-2EBF9173C2E7} = {87F7A1EF-B148-4989-ABB0-492FA15BE677}
+		{D570BFA4-C441-4B9B-A781-64080886D911} = {2E0AAB3E-2BB9-4D6B-B882-3D75FE1C9B05}
+		{26AAC86E-CD16-4032-900E-4A2F1284CD62} = {55B21222-C202-43A1-9834-8A69943DAE95}
+		{DC2A3C63-3AEC-4852-97EB-E886120B7CD4} = {A6564FCC-C3E2-4510-9070-F352D0886B9A}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E6A33AB2-A11F-469F-90F9-A5B94E76B830}
+	EndGlobalSection
+EndGlobal

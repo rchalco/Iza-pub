@@ -1,0 +1,82 @@
+﻿<facturaElectronicaServicioBasico xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<cabecera>
+		<nitEmisor>4010898014</nitEmisor>
+		<razonSocialEmisor>Perfecto Express</razonSocialEmisor>
+		<municipio>La Paz</municipio>
+		<telefono>2-225458</telefono>
+		<numeroFactura>1</numeroFactura>
+		<cuf>1126FD0BAAAD086CA55C177D0D69CBA843D115006AA15141CE5D1A8E74</cuf>
+		<cufd>BQW9Cw4lJQkVBN00YzQ0YyMTVEMkY=Qnx8MmNNR0ZZVUJMzMDU5RDdCRTU5N</cufd>
+		<codigoSucursal>0</codigoSucursal>
+		<direccion>Calle Ayacucho</direccion>
+		<codigoPuntoVenta>1</codigoPuntoVenta>
+		<mes>1</mes>
+		<gestion>2024</gestion>
+		<ciudad>LA PAZ</ciudad>
+		<zona>105</zona>
+		<numeroMedidor>201</numeroMedidor>
+		<fechaEmision>2024-05-05T12:33:21.693</fechaEmision>
+		<nombreRazonSocial>Chalco</nombreRazonSocial>
+		<domicilioCliente>hidráulica 01</domicilioCliente>
+		<codigoTipoDocumentoIdentidad>1</codigoTipoDocumentoIdentidad>
+		<numeroDocumento>4010898</numeroDocumento>
+		<complemento />
+		<codigoCliente>000</codigoCliente>
+		<codigoMetodoPago>1</codigoMetodoPago>
+		<numeroTarjeta>0</numeroTarjeta>
+		<montoTotal>17.55</montoTotal>
+		<montoTotalSujetoIva>15.67</montoTotalSujetoIva>
+		<consumoPeriodo>13</consumoPeriodo>
+		<beneficiarioLey1886>0</beneficiarioLey1886>
+		<montoDescuentoLey1886>0.00</montoDescuentoLey1886>
+		<montoDescuentoTarifaDignidad>5.23</montoDescuentoTarifaDignidad>
+		<tasaAseo>0.00</tasaAseo>
+		<tasaAlumbrado>1.88</tasaAlumbrado>
+		<ajusteNoSujetoIva>0.00</ajusteNoSujetoIva>
+		<detalleAjusteNoSujetoIva xsi:nil="true" />
+		<ajusteSujetoIva>0</ajusteSujetoIva>
+		<detalleAjusteSujetoIva xsi:nil="true" />
+		<otrosPagosNoSujetoIva>0.00</otrosPagosNoSujetoIva>
+		<detalleOtrosPagosNoSujetoIva />
+		<otrasTasas>0</otrasTasas>
+		<codigoMoneda>1</codigoMoneda>
+		<tipoCambio>1</tipoCambio>
+		<montoTotalMoneda>17.55</montoTotalMoneda>
+		<descuentoAdicional>0</descuentoAdicional>
+		<codigoExcepcion>0</codigoExcepcion>
+		<cafc xsi:nil="true" />
+		<leyenda>Ley N° 453: El proveedor de servicios debe habilitar medios e instrumentos para efectuar consultas y reclamaciones.</leyenda>
+		<usuario>GAMATEK_SYSTEM_SERVICIO_BASICO</usuario>
+		<codigoDocumentoSector>13</codigoDocumentoSector>
+	</cabecera>
+	<detalle>
+		<actividadEconomica>620000</actividadEconomica>
+		<codigoProductoSin>83131</codigoProductoSin>
+		<codigoProducto>83131</codigoProducto>
+		<descripcion>VENTA ENERGIA</descripcion>
+		<cantidad>1</cantidad>
+		<unidadMedida>58</unidadMedida>
+		<precioUnitario>20.90</precioUnitario>
+		<montoDescuento>5.23</montoDescuento>
+		<subTotal>15.67</subTotal>
+	</detalle>
+	<ds:Signature xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+		<ds:SignedInfo>
+			<ds:CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+			<ds:SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" />
+			<ds:Reference URI="">
+				<ds:Transforms>
+					<ds:Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+				</ds:Transforms>
+				<ds:DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+				<ds:DigestValue>U6Hy11ZQu+tZfzVxaXzFKuscCxMa2b3t9+tT11BAF9Y=</ds:DigestValue>
+			</ds:Reference>
+		</ds:SignedInfo>
+		<ds:SignatureValue>oRWWF36eVBgNhJckhjAOKu00uu7znI/DbnbZDqziZ33ylKT8I3W6v3rG4yBbN9gJ1jEn+vTsR2X5Ug0+UcF7ZhFd8b48PQJEbP8CMvq9r4rpKpPUSFVJzNJ2Z/zPu1vPg2wKUcRwd05usscV1+RzHsNQA+V9+VQs2v4MOjc49PTIoEumVxNzra6+KZeiMR8PyHR7bu13NzD6Lzy3jEdpizDT8jMOvOudqVSpuXXbEI0iEhYPPwGLDlXyR/RG0ZgfMej9eDTsEfmusIEObFfYjtBNyeuDFl33rtVBg3e+aTIxMrmzvc+uAyYaQjJ/h09wU8FnoNDsJ8ogG30S79fzsw==</ds:SignatureValue>
+		<ds:KeyInfo>
+			<ds:X509Data>
+				<ds:X509Certificate>MIIGiDCCBHCgAwIBAgIINPjMM19AJa4wDQYJKoZIhvcNAQELBQAwVDEyMDAGA1UEAwwpRW50aWRhZCBDZXJ0aWZpY2Fkb3JhIEF1dG9yaXphZGEgRGlnaWNlcnQxETAPBgNVBAoMCERpZ2ljZXJ0MQswCQYDVQQGEwJCTzAeFw0yNDAyMTYxNTU4MDBaFw0yNTAyMTUxNTU4MDBaMIHAMQ8wDQYDVQQNDAZOT1JNQUwxCzAJBgNVBC4TAkNJMSYwJAYDVQQDDB1SVUJFTiBNSUdVRUwgQ0hBTEFSIEVTQ0FMQU5URTETMBEGA1UEBRMKNDAxMDg5ODAxNDEYMBYGA1UEDAwPR0VSRU5URSBHRU5FUkFMMSYwJAYDVQQKDB1SVUJFTiBNSUdVRUwgQ0hBTEFSIEVTQ0FMQU5URTELMAkGA1UEBhMCQk8xFDASBgcrBgEBAQEADAc0MDEwODk4MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0I9aGtLuxQsS58g0g/o0q17vbjiTl7oYkz+uwDmk2VmF1nhG0+B+9sIBgh0Urr5+6vaiSCySD5ZdDdUMj7IdpIBQZ2sUKmKQWXCz+sqNH+TdanPG7BA8lFC0KqVmCBdd7P/WEBNbWK/CE6SC14hab+vXjAfoWrGBNRYB2OFXhsYG/oA3B7WyOEuMh/wJI72fFPpezUhorKnYSNCgTeYEqRZ1+aeXvQrrZqz1rqTt0zpw4ZKUn2gnoqqewecoveRQCUrYsLnN7tWHsORcSn6kS+LvGNrQPFbtT0DxMBsjpIHLrS62TfzI/ogZ2+fNasJ70Y2VdvH4c9SF8qgEmbBwnQIDAQABo4IB7zCCAeswCQYDVR0TBAIwADAfBgNVHSMEGDAWgBR5tjp0L9YyuF4QWxPAGMeg3Hku3TBpBggrBgEFBQcBAQRdMFswLwYIKwYBBQUHMAKGI2h0dHA6Ly93d3cuZGlnaWNlcnQuYm8vZGlnaWNlcnQucGVtMCgGCCsGAQUFBzABhhxodHRwOi8vd3d3LmRpZ2ljZXJ0LmJvL29jc3AvMB4GA1UdEQQXMBWBE21jaGFsYXJAZ2FtYXRlay5vcmcwUgYDVR0gBEswSTBHBg9gRAAAAAEOAQIAAgIAAAAwNDAyBggrBgEFBQcCARYmaHR0cDovL3d3dy5kaWdpY2VydC5iby9lY3BkaWdpY2VydC5wZGYwJwYDVR0lBCAwHgYIKwYBBQUHAwIGCCsGAQUFBwMDBggrBgEFBQcDBDCBhQYDVR0fBH4wfDB6oB6gHIYaaHR0cDovL3d3dy5kaWdpY2VydC5iby9jcmyiWKRWMFQxMjAwBgNVBAMMKUVudGlkYWQgQ2VydGlmaWNhZG9yYSBBdXRvcml6YWRhIERpZ2ljZXJ0MREwDwYDVQQKDAhEaWdpY2VydDELMAkGA1UEBhMCQk8wHQYDVR0OBBYEFLJJos2NKzn8Z2ye/h6MzUBn5VwyMA4GA1UdDwEB/wQEAwIE8DANBgkqhkiG9w0BAQsFAAOCAgEAli78VuckMLjOtmahNMQ/Yl/9RcLOhyMJDL6g+YEUFoLA74D/GbeL1Zb9C41Y8KU/EHIRxEjlll1B/P04FMizxhDQpHybr7xP5JieyQRFRJXq1qTHfWnT3xmtMvmWO7sLuQ3ZLds9p+b8JuwV9VBSM9OO8j0qPomWqwUeJ5ZOWH2fF4jMc8LVGQiKcbYt7ODTPfZ6HFw59s93ClwBjqiADZn7XQBsQkCRpFZWlHwtbkaZmABcsfU+Sf9v+146RsIaiFqW1dgrxk2MqFIgp98i1vJCGfVk43cIrVdl0JBKrzQ67cKIR1KTq0U/BZbdhsyr4Thp6PMLdytxm75TNrqpwOqLU8MZNYbq6egfb2/5zrlAzKDxD4oPBVZtXuj3lao40hE0c8QDXtzW4MImmREDwkrvfmxW4bb0E9UDnI8UG5bCrO22qQHvVQ8HDUWGJ0RCd91ehngsTS4e/IRQVzEWJMplXZVmXP3g2OPi/NHakP/RskXjwSh/v1kvpaO0rQFRcqRT/cYVliVOqHutSrbnEGUcVAmTmz1MYfdYoNnU15patmRjwWDpukvDTv0aHHXruOW15cQ5oP3dlWzlON0LM5VCop5Q79H0ppdWpK5MrioKJW5/PV6+DcedgGyx68G7KViS3NCw65Kp177xS2XMR18fcyUodXJ+tn8DgRfE3hE=</ds:X509Certificate>
+			</ds:X509Data>
+		</ds:KeyInfo>
+	</ds:Signature>
+</facturaElectronicaServicioBasico>

@@ -1,0 +1,286 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\GithubPersonal\\Iza-pub\\src\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{26AAC86E-CD16-4032-900E-4A2F1284CD62}|Iza.Services\\Iza.Services.csproj|d:\\githubpersonal\\iza-pub\\src\\iza.services\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{26AAC86E-CD16-4032-900E-4A2F1284CD62}|Iza.Services\\Iza.Services.csproj|solutionrelative:iza.services\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{26AAC86E-CD16-4032-900E-4A2F1284CD62}|Iza.Services\\Iza.Services.csproj|d:\\githubpersonal\\iza-pub\\src\\iza.services\\sevices\\apiventacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{26AAC86E-CD16-4032-900E-4A2F1284CD62}|Iza.Services\\Iza.Services.csproj|solutionrelative:iza.services\\sevices\\apiventacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{26AAC86E-CD16-4032-900E-4A2F1284CD62}|Iza.Services\\Iza.Services.csproj|d:\\githubpersonal\\iza-pub\\src\\iza.services\\sevices\\apiiventariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{26AAC86E-CD16-4032-900E-4A2F1284CD62}|Iza.Services\\Iza.Services.csproj|solutionrelative:iza.services\\sevices\\apiiventariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{26AAC86E-CD16-4032-900E-4A2F1284CD62}|Iza.Services\\Iza.Services.csproj|d:\\githubpersonal\\iza-pub\\src\\iza.services\\sevices\\apibackofficecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{26AAC86E-CD16-4032-900E-4A2F1284CD62}|Iza.Services\\Iza.Services.csproj|solutionrelative:iza.services\\sevices\\apibackofficecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D570BFA4-C441-4B9B-A781-64080886D911}|Iza.Core\\Iza.Core.csproj|d:\\githubpersonal\\iza-pub\\src\\iza.core\\base\\basemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D570BFA4-C441-4B9B-A781-64080886D911}|Iza.Core\\Iza.Core.csproj|solutionrelative:iza.core\\base\\basemanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D570BFA4-C441-4B9B-A781-64080886D911}|Iza.Core\\Iza.Core.csproj|d:\\githubpersonal\\iza-pub\\src\\iza.core\\engine\\ventas\\engineventas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D570BFA4-C441-4B9B-A781-64080886D911}|Iza.Core\\Iza.Core.csproj|solutionrelative:iza.core\\engine\\ventas\\engineventas.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D570BFA4-C441-4B9B-A781-64080886D911}|Iza.Core\\Iza.Core.csproj|d:\\githubpersonal\\iza-pub\\src\\iza.core\\engine\\inventarios\\engineinventarios.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D570BFA4-C441-4B9B-A781-64080886D911}|Iza.Core\\Iza.Core.csproj|solutionrelative:iza.core\\engine\\inventarios\\engineinventarios.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D570BFA4-C441-4B9B-A781-64080886D911}|Iza.Core\\Iza.Core.csproj|d:\\githubpersonal\\iza-pub\\src\\iza.core\\engine\\backoffice\\enginebackoffice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D570BFA4-C441-4B9B-A781-64080886D911}|Iza.Core\\Iza.Core.csproj|solutionrelative:iza.core\\engine\\backoffice\\enginebackoffice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC2A3C63-3AEC-4852-97EB-E886120B7CD4}|Iza.Core.Test\\Iza.Core.Test.csproj|d:\\githubpersonal\\iza-pub\\src\\iza.core.test\\plumbingtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC2A3C63-3AEC-4852-97EB-E886120B7CD4}|Iza.Core.Test\\Iza.Core.Test.csproj|solutionrelative:iza.core.test\\plumbingtests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC2A3C63-3AEC-4852-97EB-E886120B7CD4}|Iza.Core.Test\\Iza.Core.Test.csproj|d:\\githubpersonal\\iza-pub\\src\\iza.core.test\\iza.core.test.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{DC2A3C63-3AEC-4852-97EB-E886120B7CD4}|Iza.Core.Test\\Iza.Core.Test.csproj|solutionrelative:iza.core.test\\iza.core.test.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{26AAC86E-CD16-4032-900E-4A2F1284CD62}|Iza.Services\\Iza.Services.csproj|d:\\githubpersonal\\iza-pub\\src\\iza.services\\iza.services.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{26AAC86E-CD16-4032-900E-4A2F1284CD62}|Iza.Services\\Iza.Services.csproj|solutionrelative:iza.services\\iza.services.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D570BFA4-C441-4B9B-A781-64080886D911}|Iza.Core\\Iza.Core.csproj|d:\\githubpersonal\\iza-pub\\src\\iza.core\\globalsuppressions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D570BFA4-C441-4B9B-A781-64080886D911}|Iza.Core\\Iza.Core.csproj|solutionrelative:iza.core\\globalsuppressions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D570BFA4-C441-4B9B-A781-64080886D911}|Iza.Core\\Iza.Core.csproj|d:\\githubpersonal\\iza-pub\\src\\iza.core\\fortesting\\auxiliartest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D570BFA4-C441-4B9B-A781-64080886D911}|Iza.Core\\Iza.Core.csproj|solutionrelative:iza.core\\fortesting\\auxiliartest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D570BFA4-C441-4B9B-A781-64080886D911}|Iza.Core\\Iza.Core.csproj|d:\\githubpersonal\\iza-pub\\src\\iza.core\\dbentities\\dbpubizacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D570BFA4-C441-4B9B-A781-64080886D911}|Iza.Core\\Iza.Core.csproj|solutionrelative:iza.core\\dbentities\\dbpubizacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 2,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Iza.Core.Test",
+              "DocumentMoniker": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Core.Test\\Iza.Core.Test.csproj",
+              "RelativeDocumentMoniker": "Iza.Core.Test\\Iza.Core.Test.csproj",
+              "ToolTip": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Core.Test\\Iza.Core.Test.csproj",
+              "RelativeToolTip": "Iza.Core.Test\\Iza.Core.Test.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABsAAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-07-06T03:17:07.062Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "PlumbingTests.cs",
+              "DocumentMoniker": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Core.Test\\PlumbingTests.cs",
+              "RelativeDocumentMoniker": "Iza.Core.Test\\PlumbingTests.cs",
+              "ToolTip": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Core.Test\\PlumbingTests.cs",
+              "RelativeToolTip": "Iza.Core.Test\\PlumbingTests.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABYAAAAkAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-06T03:16:21.068Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Services\\Program.cs",
+              "RelativeDocumentMoniker": "Iza.Services\\Program.cs",
+              "ToolTip": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Services\\Program.cs",
+              "RelativeToolTip": "Iza.Services\\Program.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-06T03:11:59.857Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:133:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:134:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Iza.Services",
+              "DocumentMoniker": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Services\\Iza.Services.csproj",
+              "RelativeDocumentMoniker": "Iza.Services\\Iza.Services.csproj",
+              "ToolTip": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Services\\Iza.Services.csproj",
+              "RelativeToolTip": "Iza.Services\\Iza.Services.csproj",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAABIAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-07-06T03:14:18.085Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "APIBackofficeController.cs",
+              "DocumentMoniker": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Services\\Sevices\\APIBackofficeController.cs",
+              "RelativeDocumentMoniker": "Iza.Services\\Sevices\\APIBackofficeController.cs",
+              "ToolTip": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Services\\Sevices\\APIBackofficeController.cs",
+              "RelativeToolTip": "Iza.Services\\Sevices\\APIBackofficeController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-06T03:13:58.158Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "APIIventarioController.cs",
+              "DocumentMoniker": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Services\\Sevices\\APIIventarioController.cs",
+              "RelativeDocumentMoniker": "Iza.Services\\Sevices\\APIIventarioController.cs",
+              "ToolTip": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Services\\Sevices\\APIIventarioController.cs",
+              "RelativeToolTip": "Iza.Services\\Sevices\\APIIventarioController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-06T03:13:34.498Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "APIVentaController.cs",
+              "DocumentMoniker": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Services\\Sevices\\APIVentaController.cs",
+              "RelativeDocumentMoniker": "Iza.Services\\Sevices\\APIVentaController.cs",
+              "ToolTip": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Services\\Sevices\\APIVentaController.cs",
+              "RelativeToolTip": "Iza.Services\\Sevices\\APIVentaController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-06T03:12:38.772Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "GlobalSuppressions.cs",
+              "DocumentMoniker": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Core\\GlobalSuppressions.cs",
+              "RelativeDocumentMoniker": "Iza.Core\\GlobalSuppressions.cs",
+              "ToolTip": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Core\\GlobalSuppressions.cs",
+              "RelativeToolTip": "Iza.Core\\GlobalSuppressions.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-06T03:11:37.2Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "EngineBackoffice.cs",
+              "DocumentMoniker": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Core\\Engine\\Backoffice\\EngineBackoffice.cs",
+              "RelativeDocumentMoniker": "Iza.Core\\Engine\\Backoffice\\EngineBackoffice.cs",
+              "ToolTip": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Core\\Engine\\Backoffice\\EngineBackoffice.cs",
+              "RelativeToolTip": "Iza.Core\\Engine\\Backoffice\\EngineBackoffice.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-06T03:10:57.115Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "EngineInventarios.cs",
+              "DocumentMoniker": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Core\\Engine\\Inventarios\\EngineInventarios.cs",
+              "RelativeDocumentMoniker": "Iza.Core\\Engine\\Inventarios\\EngineInventarios.cs",
+              "ToolTip": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Core\\Engine\\Inventarios\\EngineInventarios.cs",
+              "RelativeToolTip": "Iza.Core\\Engine\\Inventarios\\EngineInventarios.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAvAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-06T03:10:49.214Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "EngineVentas.cs",
+              "DocumentMoniker": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Core\\Engine\\Ventas\\EngineVentas.cs",
+              "RelativeDocumentMoniker": "Iza.Core\\Engine\\Ventas\\EngineVentas.cs",
+              "ToolTip": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Core\\Engine\\Ventas\\EngineVentas.cs",
+              "RelativeToolTip": "Iza.Core\\Engine\\Ventas\\EngineVentas.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-06T03:10:39.8Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "BaseManager.cs",
+              "DocumentMoniker": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Core\\Base\\BaseManager.cs",
+              "RelativeDocumentMoniker": "Iza.Core\\Base\\BaseManager.cs",
+              "ToolTip": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Core\\Base\\BaseManager.cs",
+              "RelativeToolTip": "Iza.Core\\Base\\BaseManager.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABgAAABQAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-06T03:02:59.998Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "DbpubIzaContext.cs",
+              "DocumentMoniker": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Core\\DBEntities\\DbpubIzaContext.cs",
+              "RelativeDocumentMoniker": "Iza.Core\\DBEntities\\DbpubIzaContext.cs",
+              "ToolTip": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Core\\DBEntities\\DbpubIzaContext.cs",
+              "RelativeToolTip": "Iza.Core\\DBEntities\\DbpubIzaContext.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-06T03:08:10.826Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AuxiliarTest.cs",
+              "DocumentMoniker": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Core\\ForTesting\\AuxiliarTest.cs",
+              "RelativeDocumentMoniker": "Iza.Core\\ForTesting\\AuxiliarTest.cs",
+              "ToolTip": "D:\\GithubPersonal\\Iza-pub\\src\\Iza.Core\\ForTesting\\AuxiliarTest.cs",
+              "RelativeToolTip": "Iza.Core\\ForTesting\\AuxiliarTest.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACEAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-06T03:03:17.688Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
