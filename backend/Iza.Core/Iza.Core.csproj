@@ -9,9 +9,6 @@
   <ItemGroup>
     <Folder Include="DBEntities\" />
     <Folder Include="Base\" />
-    <Folder Include="Domain\Backoffice\" />
-    <Folder Include="Domain\Iventario\" />
-    <Folder Include="Domain\Venta\" />
   </ItemGroup>
 
   <ItemGroup>
