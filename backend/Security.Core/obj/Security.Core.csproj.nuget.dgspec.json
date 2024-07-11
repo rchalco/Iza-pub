@@ -1,46 +1,43 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Desarrollo\\GitHub\\Iza-pub\\backend\\Security.Core\\Security.Core.csproj": {}
+    "D:\\Projects\\Github\\Iza-pub\\backend\\Security.Core\\Security.Core.csproj": {}
   },
   "projects": {
-    "D:\\Desarrollo\\GitHub\\Iza-pub\\backend\\CoreAccesLayer\\CoreAccesLayer.csproj": {
+    "D:\\Projects\\Github\\Iza-pub\\backend\\CoreAccesLayer\\CoreAccesLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Desarrollo\\GitHub\\Iza-pub\\backend\\CoreAccesLayer\\CoreAccesLayer.csproj",
+        "projectUniqueName": "D:\\Projects\\Github\\Iza-pub\\backend\\CoreAccesLayer\\CoreAccesLayer.csproj",
         "projectName": "CoreAccesLayer",
-        "projectPath": "D:\\Desarrollo\\GitHub\\Iza-pub\\backend\\CoreAccesLayer\\CoreAccesLayer.csproj",
-        "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
-        "outputPath": "D:\\Desarrollo\\GitHub\\Iza-pub\\backend\\CoreAccesLayer\\obj\\",
+        "projectPath": "D:\\Projects\\Github\\Iza-pub\\backend\\CoreAccesLayer\\CoreAccesLayer.csproj",
+        "packagesPath": "C:\\Users\\Ivan\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\Github\\Iza-pub\\backend\\CoreAccesLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages",
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files\\DevExpress 23.2\\Components\\Offline Packages"
         ],
         "configFilePaths": [
-          "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 20.1.config",
+          "C:\\Users\\Ivan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.1.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.2.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\DevExpress 18.1\\Components\\System\\Components\\Packages": {},
-          "C:\\Program Files (x86)\\DevExpress 20.1\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\DevExpress 23.1\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files\\DevExpress 23.2\\Components\\System\\Components\\Packages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Desarrollo\\GitHub\\Iza-pub\\backend\\PlumbingProps\\PlumbingProps.csproj": {
-                "projectPath": "D:\\Desarrollo\\GitHub\\Iza-pub\\backend\\PlumbingProps\\PlumbingProps.csproj"
+              "D:\\Projects\\Github\\Iza-pub\\backend\\PlumbingProps\\PlumbingProps.csproj": {
+                "projectPath": "D:\\Projects\\Github\\Iza-pub\\backend\\PlumbingProps\\PlumbingProps.csproj"
               }
             }
           }
@@ -49,6 +46,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -112,39 +114,36 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Desarrollo\\GitHub\\Iza-pub\\backend\\PlumbingProps\\PlumbingProps.csproj": {
+    "D:\\Projects\\Github\\Iza-pub\\backend\\PlumbingProps\\PlumbingProps.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Desarrollo\\GitHub\\Iza-pub\\backend\\PlumbingProps\\PlumbingProps.csproj",
+        "projectUniqueName": "D:\\Projects\\Github\\Iza-pub\\backend\\PlumbingProps\\PlumbingProps.csproj",
         "projectName": "PlumbingProps",
-        "projectPath": "D:\\Desarrollo\\GitHub\\Iza-pub\\backend\\PlumbingProps\\PlumbingProps.csproj",
-        "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
-        "outputPath": "D:\\Desarrollo\\GitHub\\Iza-pub\\backend\\PlumbingProps\\obj\\",
+        "projectPath": "D:\\Projects\\Github\\Iza-pub\\backend\\PlumbingProps\\PlumbingProps.csproj",
+        "packagesPath": "C:\\Users\\Ivan\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\Github\\Iza-pub\\backend\\PlumbingProps\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages",
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files\\DevExpress 23.2\\Components\\Offline Packages"
         ],
         "configFilePaths": [
-          "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 20.1.config",
+          "C:\\Users\\Ivan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.1.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.2.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\DevExpress 18.1\\Components\\System\\Components\\Packages": {},
-          "C:\\Program Files (x86)\\DevExpress 20.1\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\DevExpress 23.1\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files\\DevExpress 23.2\\Components\\System\\Components\\Packages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -157,6 +156,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -216,50 +220,47 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Desarrollo\\GitHub\\Iza-pub\\backend\\Security.Core\\Security.Core.csproj": {
+    "D:\\Projects\\Github\\Iza-pub\\backend\\Security.Core\\Security.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Desarrollo\\GitHub\\Iza-pub\\backend\\Security.Core\\Security.Core.csproj",
+        "projectUniqueName": "D:\\Projects\\Github\\Iza-pub\\backend\\Security.Core\\Security.Core.csproj",
         "projectName": "Security.Core",
-        "projectPath": "D:\\Desarrollo\\GitHub\\Iza-pub\\backend\\Security.Core\\Security.Core.csproj",
-        "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
-        "outputPath": "D:\\Desarrollo\\GitHub\\Iza-pub\\backend\\Security.Core\\obj\\",
+        "projectPath": "D:\\Projects\\Github\\Iza-pub\\backend\\Security.Core\\Security.Core.csproj",
+        "packagesPath": "C:\\Users\\Ivan\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\Github\\Iza-pub\\backend\\Security.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\DevExpress 23.1\\Components\\Offline Packages",
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files\\DevExpress 23.2\\Components\\Offline Packages"
         ],
         "configFilePaths": [
-          "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 20.1.config",
+          "C:\\Users\\Ivan\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.1.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\DevExpress 23.2.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\DevExpress 18.1\\Components\\System\\Components\\Packages": {},
-          "C:\\Program Files (x86)\\DevExpress 20.1\\Components\\System\\Components\\Packages": {},
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\DevExpress 23.1\\Components\\System\\Components\\Packages": {},
+          "C:\\Program Files\\DevExpress 23.2\\Components\\System\\Components\\Packages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\Desarrollo\\GitHub\\Iza-pub\\backend\\CoreAccesLayer\\CoreAccesLayer.csproj": {
-                "projectPath": "D:\\Desarrollo\\GitHub\\Iza-pub\\backend\\CoreAccesLayer\\CoreAccesLayer.csproj"
+              "D:\\Projects\\Github\\Iza-pub\\backend\\CoreAccesLayer\\CoreAccesLayer.csproj": {
+                "projectPath": "D:\\Projects\\Github\\Iza-pub\\backend\\CoreAccesLayer\\CoreAccesLayer.csproj"
               },
-              "D:\\Desarrollo\\GitHub\\Iza-pub\\backend\\PlumbingProps\\PlumbingProps.csproj": {
-                "projectPath": "D:\\Desarrollo\\GitHub\\Iza-pub\\backend\\PlumbingProps\\PlumbingProps.csproj"
+              "D:\\Projects\\Github\\Iza-pub\\backend\\PlumbingProps\\PlumbingProps.csproj": {
+                "projectPath": "D:\\Projects\\Github\\Iza-pub\\backend\\PlumbingProps\\PlumbingProps.csproj"
               }
             }
           }
@@ -268,6 +269,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -321,7 +327,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
