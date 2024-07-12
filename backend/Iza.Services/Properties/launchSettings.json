@@ -13,7 +13,8 @@
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,
-      "launchUrl": "http://localhost:5294/api/invoice/index",
+      //"launchUrl": "http://localhost:5294/api/APISeguridad/LoginUsuario",
+      "launchUrl": "http://localhost:5294/swagger/index.html",
       "applicationUrl": "http://localhost:5294",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
