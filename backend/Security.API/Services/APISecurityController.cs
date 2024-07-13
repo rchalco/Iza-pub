@@ -29,10 +29,20 @@ namespace Security.API.Services
 
         [HttpPost("ObtieneMenuPorUsuario")]
         [EnableCors()]
-        public ResponseQuery<MenuGeneralDTO> ObtieneMenuPorUsuario(RequestParametrosGral requestParametros)
+        public ResponseQuery<MenuGeneralDTO> ObtieneMenuPorUsuario(RequestMenuUsuario requestParametros)
         {
             EngineSecurity seguridadManager = new EngineSecurity();
             return seguridadManager.ObtieneMenuPorUsuario(requestParametros);
         }
+
+        //[HttpPost("ObtieneMenuPorUsuario")]
+        //[EnableCors()]
+        //public ResponseQuery<MenuGeneralDTO> ObtieneMenuPorUsuario()
+        //{
+        //    EngineSecurity seguridadManager = new EngineSecurity();
+        //    return seguridadManager.ObtieneMenuPorUsuario(new RequestParametrosGral());
+        //}
+
+
     }
 }

@@ -23,7 +23,8 @@ namespace Security.Core.Engine
                 ParamOut poRespuesta = new ParamOut(false);
                 ParamOut poLogRespuesta = new ParamOut("");
                 poLogRespuesta.Size = 100;
-                response.Data = repositorySecurity.GetDataByProcedure<LoginDTO>("shFabula.spLogin", requestLogin.idEmpresa, requestLogin.usuario, requestLogin.password, requestLogin.version, poRespuesta, poLogRespuesta).FirstOrDefault();
+                //response.Data = repositorySecurity.GetDataByProcedure<LoginDTO>("seguridad.spLogin", requestLogin.idEmpresa, requestLogin.usuario, requestLogin.password, requestLogin.version, poRespuesta, poLogRespuesta).FirstOrDefault();
+                response.Data = repositorySecurity.GetDataByProcedure<LoginDTO>("seguridad.spLogin", requestLogin.idEmpresa, requestLogin.usuario, requestLogin.password, requestLogin.version, poRespuesta, poLogRespuesta).FirstOrDefault();
 
 
                 if (response.Data == null)
@@ -84,14 +85,14 @@ namespace Security.Core.Engine
             return response;
         }
 
-        public ResponseQuery<MenuGeneralDTO> ObtieneMenuPorUsuario(RequestParametrosGral requestGral)
+        public ResponseQuery<MenuGeneralDTO> ObtieneMenuPorUsuario(RequestMenuUsuario requestGral)
         {
             ParamOut poRespuesta = new ParamOut(0);
             ParamOut poLogRespuesta = new ParamOut("");
             ResponseQuery<MenuGeneralDTO> response = new ResponseQuery<MenuGeneralDTO> { Message = "Menu Obtenido", State = ResponseType.Success };
             try
             {
-                response.ListEntities = repositorySecurity.GetDataByProcedure<MenuGeneralDTO>("[shFabula].[spObtieneMenuPorRol]", requestGral.ParametroLong1, requestGral.ParametroLong2, poRespuesta, poLogRespuesta);
+                response.ListEntities = repositorySecurity.GetDataByProcedure<MenuGeneralDTO>("[seguridad].[spObtieneMenuPorRol]", requestGral.IdSesion, requestGral.IdRol, poRespuesta, poLogRespuesta);
                 if (response.ListEntities == null)
                 {
                     response.State = ResponseType.Error;

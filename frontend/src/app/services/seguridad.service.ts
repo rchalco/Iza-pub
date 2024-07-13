@@ -86,17 +86,18 @@ export class SeguridadService extends BaseService {
   async obtieneMenuPorUsuario() {
     const urlQuery = urlSeguridad + 'ObtieneMenuPorUsuario';
 
-    const dataRequest = {
-      ParametroLong1: 0,
-      ParametroLong2: 0,
-      ParametroLong3: 0,
-    };
+     const dataRequest = {
+      IdSesion: 0,
+      IdRol: 0
+     };
 
-    await this.getInfoEviroment().then((env) => {
-      dataRequest.ParametroLong1 = environment.session;
-      dataRequest.ParametroLong2 = environment.idRol;
-    });
+     await this.getInfoEviroment().then((env) => {
+       dataRequest.IdSesion = environment.session;
+       dataRequest.IdRol = environment.idRol;
+     });
 
+    //const dataRequest = {};
+    console.warn('url_query', urlQuery);
     console.log('ObtieneMenuPorUsuario', dataRequest);
 
     this.presentLoader();
@@ -104,14 +105,44 @@ export class SeguridadService extends BaseService {
       .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
       .pipe(
         finalize(() => {
-          console.log('**se termino la llamada Menu');
+          console.log('**se termino la llamada login');
           this.dismissLoader();
         }),
         catchError((error) => {
-          console.error(error);
+          console.error('error del login', error);
           this.showMessageError('No se tiene comunicacion con el servidor');
           return Observable.throw(new Error(error.status));
         })
       );
   }
+
+
+  // obtieneMenuPorUsuario1() {
+  //   const urlQuery = urlSeguridad + 'ObtieneMenuPorUsuario';
+
+  //   console.warn('url_query', urlQuery);
+
+  //   const dataRequest = {
+  //     ParametroLong1: 0,
+  //     ParametroLong2: 0,
+  //     ParametroLong3: 0,
+  //   };
+
+  //   this.presentLoader();
+  //   return this.httpClient
+  //     .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
+  //     .pipe(
+  //       finalize(() => {
+  //         console.log('**se termino la llamada login');
+  //         this.dismissLoader();
+  //       }),
+  //       catchError((error) => {
+  //         console.error('error del login', error);
+  //         this.showMessageError('No se tiene comunicacion con el servidor');
+  //         return Observable.throw(new Error(error.status));
+  //       })
+  //     );
+  // }
+
+
 }

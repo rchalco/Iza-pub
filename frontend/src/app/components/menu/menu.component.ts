@@ -61,12 +61,12 @@ export class MenuComponent implements OnInit {
       });
     });
 
-    // this.http
-    //   .get('../../assets/data/menu-completo.json')
-    //   .subscribe((res) => {
-    //     this.appPages = res['Menu'];
-    //     console.log('***********res', res);
-    //   });
+    // this.baseService.obtieneMenuPorUsuario1()
+    // .subscribe((resul) => {
+      
+    //   console.log('Menu resultado', resul);
+    //     this.appPages = resul.listEntities;
+    // });
     console.log('Menu resultado 2', this.appPages);
     //this.menu.enable(false, 'custom');
   }

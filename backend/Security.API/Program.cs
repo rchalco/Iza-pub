@@ -1,6 +1,6 @@
+using Microsoft.OpenApi.Models;
 using PlumbingProps.Config;
 using System.Net;
-
 
 ///Configuration host
 var MyAllowSpecificOrigins = "MyPolicy";
@@ -28,9 +28,22 @@ if (ConfigManager.GetConfiguration().GetSection("mode").Value.Equals("server"))
 }
 
 builder.Services.AddControllers();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "HiddenVilla_Api", Version = "v1" });
+});
+
 
 ///Configuration application
 var app = builder.Build();
+
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger(options => options.SerializeAsV2 = true);
+    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HiddenVilla_Api v1"));
+}
 
 app.UseCors(builder =>
 {

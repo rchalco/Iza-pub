@@ -43,8 +43,8 @@ export class LoginPage implements OnInit {
     this.seguridadServices
       .loginUsuario(login.Usuario, login.Password, this.version)
       .subscribe((resul) => {
-        this.resulLogin = resul.object;
-        console.log('resulLogin', resul.object);
+        this.resulLogin = resul.data;
+        console.log('resulLogin', resul.data);
         if (resul.state === 3) {
           console.log('error login');
           this.seguridadServices.showMessageResponse(resul);
