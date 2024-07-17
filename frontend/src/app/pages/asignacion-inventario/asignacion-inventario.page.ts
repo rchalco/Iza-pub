@@ -7,6 +7,7 @@ import { InventarioProducto } from 'src/app/interfaces/inventario/InventarioProd
 import { DocumentoService } from 'src/app/services/documento.service';
 import { StockService } from 'src/app/services/stock.service';
 import { VentaService } from 'src/app/services/venta.service';
+import { InventarioService } from 'src/app/services/inventario.service';
 
 @Component({
   selector: 'app-asignacion-inventario',
@@ -31,7 +32,8 @@ export class AsignacionInventarioPage implements OnInit {
     private stockService: StockService,
     private ventaService: VentaService,
     private documentoService: DocumentoService,
-    private navCtri: NavController
+    private navCtri: NavController,
+    private inventarioService: InventarioService
   ) {}
 
   ngOnInit() {
@@ -129,7 +131,7 @@ export class AsignacionInventarioPage implements OnInit {
   }
 
   cargarBarras() {
-    this.ventaService.obtenerAlmacenes().then((resul) => {
+    this.inventarioService.obtenerAlmacenes().then((resul) => {
       resul.subscribe((x) => {
         this.barras = x.listEntities;
         console.log('barras', this.barras);

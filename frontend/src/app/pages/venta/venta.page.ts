@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DetalleVenta } from 'src/app/interfaces/venta/detalleVenta';
 import { ResulProductoPrecioVenta } from 'src/app/interfaces/venta/itemProductoVenta';
-import { StockService } from 'src/app/services/stock.service';
 import { VentaService } from 'src/app/services/venta.service';
+import { InventarioService } from 'src/app/services/inventario.service';
 
 @Component({
   selector: 'app-venta',
@@ -28,7 +28,10 @@ export class VentaPage implements OnInit {
 
   listaDetalleVentas: DetalleVenta[] = [];
 
-  constructor(private ventaService: VentaService) {}
+  constructor(
+    private ventaService: VentaService,
+    private inventarioService: InventarioService
+    ) {}
 
   ngOnInit() {
     ///Validamos si tenemos abierta una caja
@@ -76,7 +79,7 @@ export class VentaPage implements OnInit {
   }
 
   cargarBarras() {
-    this.ventaService.obtenerAlmacenes().then((resul) => {
+    this.inventarioService.obtenerAlmacenes().then((resul) => {
       resul.subscribe((x) => {
         this.barras = x.listEntities;
         console.log('barras', this.barras);

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VentaService } from 'src/app/services/venta.service';
+import { InventarioService } from 'src/app/services/inventario.service';
 
 @Component({
   selector: 'app-cierre-operativo',
@@ -11,14 +12,17 @@ export class CierreOperativoPage implements OnInit {
   barraCurrent;
   barras: any[] = [];
 
-  constructor(private ventaService: VentaService) {}
+  constructor(
+    private ventaService: VentaService,
+    private inventarioService: InventarioService
+    ) {}
 
   ngOnInit() {
     this.cargarBarras();
   }
 
   cargarBarras() {
-    this.ventaService.obtenerAlmacenes().then((resul) => {
+    this.inventarioService.obtenerAlmacenes().then((resul) => {
       resul.subscribe((x) => {
         this.barras = x.listEntities;
         console.log('barras', this.barras);

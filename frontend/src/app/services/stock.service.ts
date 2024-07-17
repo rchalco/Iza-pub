@@ -208,14 +208,23 @@ export class StockService extends BaseService {
       Observacion: _observacion,
       idCaja: environment.idCaja,
       idSesion: environment.session,
-      idEmpresa: environment.idEmpresa,
+      //idEmpresa: environment.idEmpresa,
       idAlmacen: _idAlmacen,
+      nombreCaja: '',
+      FechaCierre: '',
+      SaldoCierre: 0,
+      SaldoUsuario: 0,
+      diferencia: 0,
+      EsCajaActual: false,
+      EstadoCaja: '',
+      idOperacionDiariaCaja: 0
+
     };
 
     await this.getInfoEviroment().then((env) => {
       dataRequest.idCaja = env.idCaja;
       dataRequest.idSesion = env.session;
-      dataRequest.idEmpresa = env.idEmpresa;
+      //dataRequest.idEmpresa = env.idEmpresa;
     });
 
     this.presentLoader();
@@ -1009,5 +1018,7 @@ export class StockService extends BaseService {
       );
     }
   }
+
+  
 
 }

@@ -1,4 +1,6 @@
-﻿using Iza.Core.Domain.Venta.Caja;
+﻿using Iza.Core.Domain.Iventario;
+using Iza.Core.Domain.Venta;
+using Iza.Core.Domain.Venta.Caja;
 using Iza.Core.Engine.Ventas;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
@@ -17,7 +19,7 @@ namespace Iza.Services.Sevices
 
 
         [HttpPost("AperturaCaja")]
-        [EnableCors("MyPolicy")]
+        [EnableCors()]
         public ResponseObject<AperturaCajaResponse> AperturaCaja(SaldoCajaDTO requestAperturaCaja)
         {
             EngineVentas mgrVentas = new EngineVentas();
@@ -25,12 +27,35 @@ namespace Iza.Services.Sevices
         }
 
         [HttpPost("CierreCaja")]
-        [EnableCors("MyPolicy")]
+        [EnableCors()]
         public ResponseObject<SaldoCajaDTO> CierreCaja(SaldoCajaDTO requestCierreCaja)
         {
             EngineVentas mgrVentas = new EngineVentas();
             return mgrVentas.CierreCaja(requestCierreCaja);
         }
+
+
+
+        #endregion
+
+        #region Ventas
+
+        [HttpPost("ObtienePorAlmacen")]
+        [EnableCors()]
+        public ResponseQuery<ResulProductoPrecioVentaComplex> ObtienePorAlmacen(RequestSearchProductAlmacen requestSearchProductAlmacen)
+        {
+            EngineVentas mgrVentas = new EngineVentas();
+            return mgrVentas.ObtienePorAlmacen(requestSearchProductAlmacen);
+        }
+
+        [HttpPost("RegistrarVentas")]
+        [EnableCors()]
+        public Response RegistrarVentas(RequestRegistroVenta requestRegistroVentas)
+        {
+            EngineVentas mgrVentas = new EngineVentas();
+            return mgrVentas.RegistrarVentas(requestRegistroVentas);
+        }
+
 
         #endregion
     }

@@ -14,7 +14,7 @@ import { catchError, finalize } from 'rxjs/operators';
 import { DatabaseService } from './DatabaseService';
 import { async } from '@angular/core/testing';
 
-const urlMicroventa = URL_MIROVENTAOPERACION;
+const urlMicroventa = URL_MIROVENTA;
 const headers = HEADERS_SERVICE;
 
 @Injectable({
@@ -58,40 +58,7 @@ export class VentaService extends BaseService {
     });
   }
 
-  async obtieneProductoAlmacen(_idAlamcen) {
-    const urlQuery = urlMicroventa + 'ObtienePorAlmacen';
-    let dataRequest = {
-      idSesion: 0,
-      idFechaProceso: 0,
-      idAlmacen: _idAlamcen,
-    };
-
-    await this.getInfoEviroment().then((env) => {
-      dataRequest = {
-        idSesion: environment.session,
-        idFechaProceso: environment.idFechaProceso,
-        idAlmacen: _idAlamcen,
-      };
-    });
-
-    console.log('datos enviados para buscar productos', dataRequest);
-
-    this.presentLoader();
-    return this.httpClient
-      .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
-      .pipe(
-        finalize(() => {
-          console.log('**se termino la llamada SearchProduct');
-          this.dismissLoader();
-        }),
-        catchError((error) => {
-          console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
-        })
-      );
-  }
-
+  
   async obtieneProductoInventario(_idAlamcen) {
     const urlQuery = urlMicroventa + 'ObtieneProdcutoInventario';
     let dataRequest = {
@@ -126,6 +93,39 @@ export class VentaService extends BaseService {
       );
   }
 
+  async obtieneProductoAlmacen(_idAlamcen) {
+    const urlQuery = urlMicroventa + 'ObtienePorAlmacen';
+    let dataRequest = {
+      idSesion: 0,
+      idFechaProceso: 0,
+      idAlmacen: _idAlamcen,
+    };
+
+    await this.getInfoEviroment().then((env) => {
+      dataRequest = {
+        idSesion: environment.session,
+        idFechaProceso: environment.idFechaProceso,
+        idAlmacen: _idAlamcen,
+      };
+    });
+
+    console.log('XXXXXXdatos enviados para buscar productos', dataRequest);
+
+    this.presentLoader();
+    return this.httpClient
+      .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
+      .pipe(
+        finalize(() => {
+          console.log('**se termino la llamada SearchProduct');
+          this.dismissLoader();
+        }),
+        catchError((error) => {
+          console.error(error);
+          this.showMessageError('No se tiene comunicacion con el servidor');
+          return Observable.throw(new Error(error.status));
+        })
+      );
+  }
   registrarVenta(pDetalleVentas, pListaFormaDePago, _idAlmacen, _observacion) {
     const urlQuery = urlMicroventa + 'RegistrarVentas';
     console.log('_idAlmacen', _idAlmacen);
@@ -158,26 +158,7 @@ export class VentaService extends BaseService {
     });
   }
 
-  obtenerAlmacenes() {
-    const urlQuery = urlMicroventa + 'SolicitarAmbientes';
-    return this.getInfoEviroment().then((env) => {
-      const dataRequest = {};
-      this.presentLoader();
-      return this.httpClient
-        .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
-        .pipe(
-          finalize(() => {
-            console.log('**se termino la llamada obtenerAlmacenes');
-            this.dismissLoader();
-          }),
-          catchError((error) => {
-            console.error(error);
-            this.showMessageError('No se tiene comunicacion con el servidor');
-            return Observable.throw(new Error(error.status));
-          })
-        );
-    });
-  }
+  
 
   async obtenerFormasDePago() {
     const urlQuery = urlMicroventa + 'ObtieneFormasdePago';

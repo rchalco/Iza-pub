@@ -1,5 +1,7 @@
 ﻿using CoreAccesLayer.Implement.SQLServer;
 using Iza.Core.Base;
+using Iza.Core.Domain.Iventario;
+using Iza.Core.Domain.Venta;
 using Iza.Core.Domain.Venta.Caja;
 using PlumbingProps.Wrapper;
 using System;
@@ -28,7 +30,7 @@ namespace Iza.Core.Engine.Ventas
                 ParamOut FechaProceso = new ParamOut(DateTime.Now);
                 ParamOut idOperacionDiariaCaja = new ParamOut(0);
                 //validamos que no exita una caja abierta en otra fecha 
-                repositoryPub.CallProcedure<AperturaCajaResponse>("shFabula.spAperturaCaja",
+                repositoryPub.CallProcedure<AperturaCajaResponse>("[ventas].[spAperturaCaja]",
                         requestAperturaCajae.idSesion,
                         requestAperturaCajae.idCaja,
                         requestAperturaCajae.idAlmacen,
@@ -88,6 +90,110 @@ namespace Iza.Core.Engine.Ventas
             return response;
         }
 
+        public ResponseQuery<ResulProductoPrecioVentaComplex> ObtienePorAlmacen(RequestSearchProductAlmacen requestSearchProductAlmacen)
+        {
+            ResponseQuery<ResulProductoPrecioVentaComplex> response = new ResponseQuery<ResulProductoPrecioVentaComplex> { Message = "Productos obtenidos correctamente", State = ResponseType.Success };
+            try
+            {
+                response.ListEntities = new List<ResulProductoPrecioVentaComplex>();
+                ParamOut paramOutRespuesta = new ParamOut(true);
+                ParamOut paramOutLogRespuesta = new ParamOut("");
+                paramOutLogRespuesta.Size = 100;
+
+                var resulBD = repositoryPub.GetDataByProcedure<ResulProductoPrecioVenta>("[ventas].[spObtienePreciosAlmacen]",
+                    requestSearchProductAlmacen.idSesion,
+                    requestSearchProductAlmacen.idAlmacen,
+                    "%",
+                    paramOutRespuesta,
+                    paramOutLogRespuesta);
+
+                resulBD.ForEach(x =>
+                {
+                    ResulProductoPrecioVentaComplex resulProductoPrecioVentaComplex;
+                    if (response.ListEntities.Any(y => y.categoria.Equals(x.categoria)))
+                    {
+                        resulProductoPrecioVentaComplex = response.ListEntities.First(y => y.categoria.Equals(x.categoria));
+                    }
+                    else
+                    {
+                        resulProductoPrecioVentaComplex = new ResulProductoPrecioVentaComplex
+                        {
+                            categoria = x.categoria,
+                            etiquetaDerecha = x.etiquetaDerecha,
+                            etiquetaIzquierda = x.etiquetaIzquierda,
+                            slide = x.slide,
+                            detalle = new List<ResulProductoPrecioVenta>()
+                        };
+                        response.ListEntities.Add(resulProductoPrecioVentaComplex);
+                    }
+                    resulProductoPrecioVentaComplex.detalle.Add(x);
+                });
+
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
+        public ResponseQuery<ResulSPVerificaEnStock> RegistrarVentas(RequestRegistroVenta requestRegistroVentas)
+        {
+            ResponseQuery<ResulSPVerificaEnStock> response = new ResponseQuery<ResulSPVerificaEnStock> { Message = "Venta registrada correctamente", State = ResponseType.Success };
+            try
+            {
+
+                ParamOut paramOutRespuesta = new ParamOut(0);
+                ParamOut paramOutLogRespuesta = new ParamOut("");
+                paramOutLogRespuesta.Size = 100;
+
+                /////TODO verificamos antes si existe en stock el producto 
+                //var resulBDExistenciaStock = repositoryPub.GetDataByProcedure<ResulSPVerificaEnStock>("shFabula.spVerificaEnStock",
+                //    requestRegistroVentas.idSesion,
+                //    requestRegistroVentas.idFechaProceso,
+                //    requestRegistroVentas.idAlmancen,
+                //    requestRegistroVentas.detalleVentas,
+                //    paramOutRespuesta,
+                //    paramOutLogRespuesta);
+
+                //if (resulBDExistenciaStock.Count > 0)
+                //{
+                //    response.State = ResponseType.Warning;
+                //    response.Code = "SIN_STOCK";
+                //    response.Message = "Existen producto no disponibles en el stock de la barra solictada!!!";
+                //    response.ListEntities = resulBDExistenciaStock;
+                //    return response;
+                //}
+
+                repositoryPub.CallProcedure<Response>("[ventas].[spAddPedido]",
+                    requestRegistroVentas.idSesion,
+                    requestRegistroVentas.idFechaProceso,
+                    0, //@idMesero
+                    requestRegistroVentas.idAlmancen,
+                    requestRegistroVentas.idOperacionDiariaCaja,
+                    0,//requestRegistroVentas.idAmabiente,
+                    requestRegistroVentas.detalleVentas.Sum(x => x.cantidad * x.PrecioFinal),
+                    requestRegistroVentas.detalleVentas,
+                    requestRegistroVentas.formasDePago.Where(x => x.MontoCubierto > 0).ToList(),
+                    2, //@estadoPedido
+                    requestRegistroVentas.Observaciones, //@Observaciones AHORA ES vKey numero de la tarjeta
+                    0, //@idPedidoMaestro
+                    paramOutRespuesta,
+                    paramOutLogRespuesta);
+
+                repositoryPub.Commit();
+                if (Convert.ToInt32(paramOutRespuesta.Valor) != 0)
+                {
+                    response.State = ResponseType.Warning;
+                    response.Message = Convert.ToString(paramOutLogRespuesta.Valor);
+                }
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
         #endregion
     }
 }

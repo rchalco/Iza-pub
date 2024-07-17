@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ReaderCardComponent } from 'src/app/components/reader-card/reader-card.component';
 import { DatosTarjetaDTO } from 'src/app/interfaces/tarjeta/DatosTarjeta';
 import { DetalleVenta } from 'src/app/interfaces/venta/detalleVenta';
+import { StockService } from 'src/app/services/stock.service';
 import { TarjetaService } from 'src/app/services/tarjeta.service';
 import { VentaService } from 'src/app/services/venta.service';
 
@@ -38,7 +39,11 @@ export class VentaExpressPage implements OnInit {
   mensajeTarjeta = 'Esperando Tarjeta...';
   selectedRegistro: DatosTarjetaDTO;
   showButtonVolver = false;
-  constructor(private ventaService: VentaService,private tarjetaService: TarjetaService) {}
+  constructor(
+    private ventaService: VentaService,
+    private tarjetaService: TarjetaService,
+    private stockService: StockService
+    ) {}
 
   ngOnInit() {
     this.showMain = true;
@@ -53,6 +58,7 @@ export class VentaExpressPage implements OnInit {
       }
     });
   }
+  
   cargarProductos(idBarra) {
     this.ventaService
       .obtieneProductoAlmacen(idBarra)

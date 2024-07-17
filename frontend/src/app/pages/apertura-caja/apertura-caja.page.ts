@@ -4,6 +4,7 @@ import { SaldoCajaDTO } from 'src/app/interfaces/caja/SaldoCaja';
 import { DatabaseService } from 'src/app/services/DatabaseService';
 import { StockService } from 'src/app/services/stock.service';
 import { VentaService } from 'src/app/services/venta.service';
+import { InventarioService } from 'src/app/services/inventario.service';
 import { environment } from 'src/environments/environment';
 
 //import { format, parseISO } from 'date-fns';
@@ -22,7 +23,8 @@ export class AperturaCajaPage implements OnInit {
   constructor(
     private stockService: StockService,
     private databaseService: DatabaseService,
-    private ventaService: VentaService
+    private ventaService: VentaService,
+    private inventarioService: InventarioService
   ) {}
 
   ngOnInit() {
@@ -36,7 +38,7 @@ export class AperturaCajaPage implements OnInit {
   }
 
   cargarBarras() {
-    this.ventaService.obtenerAlmacenes().then((resul) => {
+    this.inventarioService.obtenerAlmacenes().then((resul) => {
       resul.subscribe((x) => {
         this.barras = x.listEntities;
         console.log('barras', this.barras);
