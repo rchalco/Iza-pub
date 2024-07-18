@@ -1,7 +1,9 @@
-﻿using Iza.Core.Base;
+﻿using CoreAccesLayer.Implement.SQLServer;
+using Iza.Core.Base;
 using Iza.Core.Domain.General;
 using Iza.Core.Domain.Iventario;
 using Iza.Core.Domain.Reportes;
+using Iza.Core.Domain.Types;
 using PlumbingProps.Wrapper;
 using System;
 using System.Collections.Generic;
@@ -75,5 +77,58 @@ namespace Iza.Core.Engine.Inventarios
             return response;
         }
 
+        public ResponseObject<InventarioAsignacion> GrabaAsignacionProducto(InventarioAsignacion inventarioAsignacion)
+        {
+
+            ResponseObject<InventarioAsignacion> response = new ResponseObject<InventarioAsignacion> { Message = "Asignación se grabo correctamente", State = ResponseType.Success };
+            try
+            {
+                response.Data = new InventarioAsignacion();
+                List<typeDetailAsignacion> coltypeDetailAsignacion = new List<typeDetailAsignacion>();
+                inventarioAsignacion.detalleProductos.ForEach(x =>
+                {
+                    coltypeDetailAsignacion.Add(new typeDetailAsignacion { idProducto = x.idProducto, cantidad = Convert.ToInt32(x.cantidad) });
+                });
+
+                ParamOut poRespuesta = new ParamOut(false);
+                ParamOut poLogRespuesta = new ParamOut("");
+                poLogRespuesta.Size = 100;
+                
+                //SP grabar pedido
+                repositoryPub.CallProcedure<InventarioAsignacion>("[inventario].[spAsignacionInventario]",
+                    inventarioAsignacion.idSesion,
+                    inventarioAsignacion.idfechaproceso,
+                    inventarioAsignacion.idAlmacenDesde,
+                    inventarioAsignacion.idAlmacenHasta,
+                    "",
+                    coltypeDetailAsignacion,
+                    poRespuesta, poLogRespuesta);
+                repositoryPub.Commit();
+
+                if (response.Data == null)
+                {
+                    response.Message = "Error al grabar el pedido";
+                    response.State = ResponseType.Error;
+                    return response;
+                }
+
+                if ((bool)poRespuesta.Valor)
+                {
+                    response.Message = poLogRespuesta.Valor.ToString();
+                    response.State = ResponseType.Error;
+                    return response;
+                }
+
+
+                response.Data = inventarioAsignacion;
+
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+                
     }
 }
