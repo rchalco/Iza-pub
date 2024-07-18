@@ -16,7 +16,7 @@ namespace Iza.Services.Sevices
     [ApiController]
     public class APIIventarioController : ControllerBase
     {
-        [HttpPost("AsignaProductos")]
+        [HttpPost("ObtenerProductosAlmacenCentral")]
         [EnableCors("MyPolicy")]
         public ResponseQuery<AsignacionDTO> ObtenerProductosAlmacenCentral(RequestObtenerProductosAlmacenCentral requestObtenerProductosAlmacenCentral)
         {

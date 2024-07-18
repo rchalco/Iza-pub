@@ -60,6 +60,37 @@ export class InventarioService extends BaseService {
     });
   }
 
+  async ObtenerProductosAlmacenCentral() {
+    const urlQuery = urlInventario + 'ObtenerProductosAlmacenCentral';
+
+    const dataRequest = {
+      idSesion: 0,
+      idFechaProceso: 0,
+    };
+    await this.getInfoEviroment().then((env) => {
+      dataRequest.idSesion = env.session;
+      dataRequest.idFechaProceso = env.idFechaProceso;
+    });
+
+
+    return this.getInfoEviroment().then((env) => {
+      const dataRequest = {};
+      this.presentLoader();
+      return this.httpClient
+        .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
+        .pipe(
+          finalize(() => {
+            console.log('**se termino la llamada ObtenerProductosAlmacenCentral');
+            this.dismissLoader();
+          }),
+          catchError((error) => {
+            console.error(error);
+            this.showMessageError('No se tiene comunicacion con el servidor');
+            return Observable.throw(new Error(error.status));
+          })
+        );
+    });
+  }
 
   async obtenerDashboardProductos() {
     const urlQuery = urlInventario + 'ObtenerDashboardProductos';
