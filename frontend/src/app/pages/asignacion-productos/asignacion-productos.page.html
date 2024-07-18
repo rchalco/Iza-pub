@@ -8,8 +8,27 @@
       <ion-card-content>
         <ion-list>
           <ion-item>
+            <label>
+              Origen:
+            </label>
+            <ion-select (ionChange)="selectBarraOrigen($event)">
+              <ion-select-option *ngFor="let alamacen of listaAlmancenOrigen" [value]="alamacen">
+                {{alamacen.descripcion}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <label>
+              Destino:
+            </label>
+            <ion-select (ionChange)="selectBarraDestino($event)">
+              <ion-select-option *ngFor="let alamacen of listaDestino" [value]="alamacen">
+                {{alamacen.descripcion}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
             <dx-data-grid id="gridContainer" [dataSource]="dataSource" [remoteOperations]="false"
-              [allowColumnReordering]="true" [rowAlternationEnabled]="true" [showBorders]="true" keyExpr="idProducto">
+              [allowColumnReordering]="true" [rowAlternationEnabled]="true" [showBorders]="true" keyExpr="idProducto"
+              (onSaving)="onSaving($event)">
               <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
               <dxo-editing mode="batch" [allowUpdating]="true" [selectTextOnEditStart]="true">
               </dxo-editing>

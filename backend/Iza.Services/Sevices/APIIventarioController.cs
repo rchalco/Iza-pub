@@ -17,7 +17,7 @@ namespace Iza.Services.Sevices
     public class APIIventarioController : ControllerBase
     {
         [HttpPost("ObtenerProductosAlmacenCentral")]
-        [EnableCors("")]
+        [EnableCors()]
         public ResponseQuery<AsignacionDTO> ObtenerProductosAlmacenCentral(RequestObtenerProductosAlmacenCentral requestObtenerProductosAlmacenCentral)
         {
             EngineInventarios engineInventario = new EngineInventarios();
@@ -41,7 +41,7 @@ namespace Iza.Services.Sevices
         }
 
         [HttpPost("GrabaAsignacionProducto")]
-        [EnableCors("")]
+        [EnableCors()]
         public ResponseObject<InventarioAsignacion> GrabaAsignacionProducto(InventarioAsignacion inventarioAsignacion)
         {
             EngineInventarios engineInventario = new EngineInventarios();
