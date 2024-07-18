@@ -219,6 +219,10 @@ const routes: Routes = [
     path: 'reporte-cierre-global',
     loadChildren: () => import('./pages/reporte-cierre-global/reporte-cierre-global.module').then( m => m.ReporteCierreGlobalPageModule)
   },
+  {
+    path: 'dashboard-productos',
+    loadChildren: () => import('./pages/dashboard-productos/dashboard-productos.module').then( m => m.DashboardProductosPageModule)
+  },
 
 
 
