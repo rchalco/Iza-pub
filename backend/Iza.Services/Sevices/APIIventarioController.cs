@@ -1,5 +1,6 @@
 ﻿using Iza.Core.Domain.General;
 using Iza.Core.Domain.Iventario;
+using Iza.Core.Domain.Reportes;
 using Iza.Core.Domain.Venta;
 using Iza.Core.Domain.Venta.Caja;
 using Iza.Core.Engine.Inventarios;
@@ -30,5 +31,14 @@ namespace Iza.Services.Sevices
             EngineInventarios mgrInventario = new EngineInventarios();
             return mgrInventario.SolicitarAmbientes(requestAperturaCaja);
         }
+
+        [HttpPost("ObtenerDashboardProductos")]
+        [EnableCors()]
+        public ResponseQuery<DashboardProductosDTO> ObtenerDashboardProductos(GeneralRequest1 generalRequest)
+        {
+            EngineInventarios mgrInventario = new EngineInventarios();
+            return mgrInventario.ObtenerDashboardProductos(generalRequest);
+        }
+
     }
 }

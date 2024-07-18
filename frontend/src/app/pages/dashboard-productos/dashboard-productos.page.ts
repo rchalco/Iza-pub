@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import DataSource from 'devextreme/data/data_source';
+import { DashboardProductosDTO } from 'src/app/interfaces/inventario/DashboardProductos';
+import { InventarioService } from 'src/app/services/inventario.service';
+import { StockService } from 'src/app/services/stock.service';
 
 @Component({
   selector: 'app-dashboard-productos',
@@ -7,9 +11,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardProductosPage implements OnInit {
 
-  constructor() { }
+  listaProductos: DashboardProductosDTO[] = [];
+  dataSourceProductos: DataSource = new DataSource(this.listaProductos);
+
+  constructor(private inventarioService: InventarioService) { }
 
   ngOnInit() {
+    this.inventarioService.obtenerDashboardProductos().then((service) => {
+      service.subscribe((response) => {
+        this.listaProductos= response.listEntities;
+        this.dataSourceProductos = response.listEntities;
+      });
+    });
+
   }
 
 }

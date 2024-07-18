@@ -1,6 +1,7 @@
 ﻿using Iza.Core.Base;
 using Iza.Core.Domain.General;
 using Iza.Core.Domain.Iventario;
+using Iza.Core.Domain.Reportes;
 using PlumbingProps.Wrapper;
 using System;
 using System.Collections.Generic;
@@ -50,5 +51,29 @@ namespace Iza.Core.Engine.Inventarios
             }
             return response;
         }
+
+        public ResponseQuery<DashboardProductosDTO> ObtenerDashboardProductos(GeneralRequest1 generalRequest)
+        {
+
+            ResponseQuery<DashboardProductosDTO> response = new ResponseQuery<DashboardProductosDTO> { Message = "Se obtuvo el inventario de forma correcta", State = ResponseType.Success };
+            try
+            {
+                response.ListEntities = new List<DashboardProductosDTO>();
+                response.ListEntities = repositoryPub.GetDataByProcedure<DashboardProductosDTO>("[reportes].[spDashboardProductos]", generalRequest.idSesion, generalRequest.idFechaProceso);
+
+                if (response.ListEntities == null || response.ListEntities.Count == 0)
+                {
+                    response.Message = "No se cuenta con informacion de los productos";
+                    response.State = ResponseType.Warning;
+                    return response;
+                }
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
     }
 }
