@@ -48,5 +48,13 @@ namespace Iza.Services.Sevices
             return engineInventario.GrabaAsignacionProducto(inventarioAsignacion);
         }
 
+        [HttpPost("SolicitarAmbientesCompleto")]
+        [EnableCors()]
+        public ResponseQuery<AlmacenDTO> SolicitarAmbientesCompleto(GeneralRequest1 requestAperturaCaja)
+        {
+            EngineInventarios mgrInventario = new EngineInventarios();
+            return mgrInventario.SolicitarAmbientesCompleto(requestAperturaCaja);
+        }
+
     }
 }

@@ -129,6 +129,22 @@ namespace Iza.Core.Engine.Inventarios
             }
             return response;
         }
-                
+
+        public ResponseQuery<AlmacenDTO> SolicitarAmbientesCompleto(GeneralRequest1 pametros)
+        {
+            ResponseQuery<AlmacenDTO> response = new ResponseQuery<AlmacenDTO> { Message = "Amacenes obtenidos", State = ResponseType.Success };
+            try
+            {
+                response.ListEntities = repositoryPub.GetDataByProcedure<AlmacenDTO>("inventario.spObtAlmacenesPuntosDeVenta", pametros.idSesion, pametros.idFechaProceso);
+
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
+
     }
 }
