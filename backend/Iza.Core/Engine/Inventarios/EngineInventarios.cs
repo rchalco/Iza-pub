@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Iza.Core.Engine.Inventarios
 {
-    public class EngineInventarios: BaseManager
+    public class EngineInventarios : BaseManager
     {
 
         public ResponseQuery<AlmacenDTO> SolicitarAmbientes(GeneralRequest1 pametros)
@@ -19,7 +19,7 @@ namespace Iza.Core.Engine.Inventarios
             try
             {
                 response.ListEntities = repositoryPub.GetDataByProcedure<AlmacenDTO>("[inventario].[spObtAlmacenesPuntosDeVenta]", pametros.idSesion, pametros.idFechaProceso);
-                
+
             }
             catch (Exception ex)
             {
@@ -28,5 +28,27 @@ namespace Iza.Core.Engine.Inventarios
             return response;
         }
 
+        public ResponseQuery<AsignacionDTO> ObtenerProductosAlmacenCentral(RequestObtenerProductosAlmacenCentral requestObtenerProductosAlmacenCentral)
+        {
+
+            ResponseQuery<AsignacionDTO> response = new ResponseQuery<AsignacionDTO> { Message = "Se obtuvo el inventario de forma correcta", State = ResponseType.Success };
+            try
+            {
+                response.ListEntities = new List<AsignacionDTO>();
+                response.ListEntities = repositoryPub.GetDataByProcedure<AsignacionDTO>("[inventario].[spObtProductosDeCentral]", requestObtenerProductosAlmacenCentral.idSesion, requestObtenerProductosAlmacenCentral.idFechaProceso);
+
+                if (response.ListEntities == null || response.ListEntities.Count == 0)
+                {
+                    response.Message = "No se cuenta con informacion del almacen central";
+                    response.State = ResponseType.Warning;
+                    return response;
+                }
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
     }
 }

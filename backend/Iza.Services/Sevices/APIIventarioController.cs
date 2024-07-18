@@ -15,13 +15,13 @@ namespace Iza.Services.Sevices
     [ApiController]
     public class APIIventarioController : ControllerBase
     {
-        //[HttpPost("AsignaProductos")]
-        //[EnableCors("MyPolicy")]
-        //public Response AsignaProductos(MenuItemConfiguracion composicionItemMenu)
-        //{
-        //    EngineInventario mgrInventario = new EngineInventario();
-        //    return mgrInventario.AsignaProductos(composicionItemMenu);
-        //}
+        [HttpPost("AsignaProductos")]
+        [EnableCors("MyPolicy")]
+        public ResponseQuery<AsignacionDTO> ObtenerProductosAlmacenCentral(RequestObtenerProductosAlmacenCentral requestObtenerProductosAlmacenCentral)
+        {
+            EngineInventarios engineInventario = new EngineInventarios();
+            return engineInventario.ObtenerProductosAlmacenCentral(requestObtenerProductosAlmacenCentral);
+        }
 
         [HttpPost("SolicitarAmbientes")]
         [EnableCors()]
@@ -30,8 +30,5 @@ namespace Iza.Services.Sevices
             EngineInventarios mgrInventario = new EngineInventarios();
             return mgrInventario.SolicitarAmbientes(requestAperturaCaja);
         }
-
-       
-
     }
 }
