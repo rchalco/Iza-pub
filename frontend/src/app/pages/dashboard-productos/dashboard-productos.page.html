@@ -1,92 +1,89 @@
 <app-custom-header title="Reporte Productos"></app-custom-header>
 <ion-content fullscreen>
   <div>
-    <ion-card >
+    <ion-card>
       <ion-card-header>
         <ion-card-subtitle>Dashboard detalle de Productos</ion-card-subtitle>
+        <ion-button (click)="actualizarDatos($event)">Actualizar informacion</ion-button>
       </ion-card-header>
       <ion-card-content>
-        
-            <dx-data-grid id="gridContainer" [dataSource]="listaProductos" [remoteOperations]="false"
-            [allowColumnReordering]="false" [rowAlternationEnabled]="true" [showBorders]="true" 
-            [columnAutoWidth]="false"
-            [columnMinWidth]="80">
-            keyExpr="idProducto">
-            <dxo-summary>
-             
-              
-              <dxi-group-item
-                  column="tipoOperacion" 
-                  summaryType="count" displayFormat="Cantidad: {0}">
-              </dxi-group-item>
-              <dxi-group-item
-                  column="monto"
-                  summaryType="sum" displayFormat="Total: {0}"  [valueFormat]="{type:'fixedPoint',precision:2}">
-              </dxi-group-item>
-            </dxo-summary>
+
+        <dx-data-grid id="gridContainer" [dataSource]="listaProductos" [remoteOperations]="false"
+          [allowColumnReordering]="false" [rowAlternationEnabled]="true" [showBorders]="true" [columnAutoWidth]="false"
+          [columnMinWidth]="80">
+          keyExpr="idProducto">
+          <dxo-summary>
 
 
-            <dxo-editing [allowUpdating]="false">
-            </dxo-editing>
-            <!-- <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export> -->
-            <dxo-paging [pageSize]="100"></dxo-paging>
-            <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[100, 200]"></dxo-pager>
-            <dxo-search-panel [visible]="true" [highlightCaseSensitive]="true"></dxo-search-panel>
-            <dxo-group-panel [visible]="true"></dxo-group-panel>
-            <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
-  
-            <dxi-column dataField="clasificador" caption="Grupo" dataType="string" [groupIndex]="0" [width]="100"
-              [allowEditing]="false"></dxi-column>
-            <dxi-column dataField="nombreProducto" caption="Producto" dataType="string" [width]="300"
-              [allowEditing]="false"></dxi-column>
-            <dxi-column dataField="stockAnterior" caption="stockAnterior" dataType="number" format="0#.##" [width]="100"
-              [allowEditing]="false"></dxi-column>
-            
-            <dxi-column dataField="ingresos" caption="ingresos" dataType="number" format="0#.##"  [width]="80"
-              [allowEditing]="false"></dxi-column>
-            <dxi-column dataField="disponibleAlmacenCentral" caption="DisponibleAlmacenCentral" dataType="number" format="0#.##"  [width]="200"
-              [allowEditing]="false"></dxi-column>
-            <dxi-column dataField="asignadoABarra1PV_1" caption="AsignadoABarra1PV_1" dataType="number" format="0#.##"  [width]="180"
-              [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="cantidadVendidaBarra1PV_1" caption="cantidadVendidaBarra1PV_1" dataType="number" format="0#.##"  [width]="200"
-              [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="disponibleBarra1PV_1" caption="disponibleBarra1PV_1" dataType="number" format="0#.##"  [width]="180"
-              [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="asignadoABarra1PV_2" caption="asignadoABarra1PV_2" dataType="number" format="0#.##" [width]="200"
-              [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="cantidadVendidaBarra1PV_2" caption="cantidadVendidaBarra1PV_2" dataType="number" format="0#.##" [width]="200"
-              [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="disponibleBarra1PV_2" caption="disponibleBarra1PV_2" dataType="number" format="0#.##" [width]="200"
-              [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="asignadoABarra2PV_1" caption="asignadoABarra2PV_1" dataType="number" format="0#.##" [width]="200"
-              [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="cantidadVendidaBarra2PV_1" caption="cantidadVendidaBarra2PV_1" dataType="number" format="0#.##" [width]="200"
-              [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="disponibleBarra2PV_1" caption="disponibleBarra2PV_1" dataType="number" format="0#.##" [width]="200"
-              [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="asignadoABarra2PV_2" caption="asignadoABarra2PV_2" dataType="number" format="0#.##" [width]="200"
-              [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="cantidadVendidaBarra2PV_2" caption="cantidadVendidaBarra2PV_2" dataType="number" format="0#.##" [width]="200"
-              [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="disponibleBarra2PV_2" caption="disponibleBarra2PV_2" dataType="number" format="0#.##" [width]="200"
-              [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="asignadoABarra3PV_1" caption="asignadoABarra3PV_1" dataType="number" format="0#.##"
-              [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="cantidadVendidaBarra3PV_1" caption="cantidadVendidaBarra3PV_1" dataType="number" format="0#.##" [width]="200"
-              [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="disponibleBarra3PV_1" caption="disponibleBarra3PV_1" dataType="number" format="0#.##" [width]="200"
-              [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="asignadoABarra3PV_2" caption="asignadoABarra3PV_2" dataType="number" format="0#.##" [width]="200"
-              [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="cantidadVendidaBarra3PV_2" caption="cantidadVendidaBarra3PV_2" dataType="number" format="0#.##" [width]="200"
-              [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="disponibleBarra3PV_2" caption="disponibleBarra3PV_2" dataType="number" format="0#.##" [width]="200"
-              [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="totalDisponible" caption="totalDisponible" dataType="number" format="#.##" [width]="200"
-              [allowEditing]="false"></dxi-column>
-              
-          </dx-data-grid>
- 
+            <dxi-group-item column="tipoOperacion" summaryType="count" displayFormat="Cantidad: {0}">
+            </dxi-group-item>
+            <dxi-group-item column="monto" summaryType="sum" displayFormat="Total: {0}"
+              [valueFormat]="{type:'fixedPoint',precision:2}">
+            </dxi-group-item>
+          </dxo-summary>
+
+
+          <dxo-editing [allowUpdating]="false">
+          </dxo-editing>
+          <!-- <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export> -->
+          <dxo-paging [pageSize]="100"></dxo-paging>
+          <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[100, 200]"></dxo-pager>
+          <dxo-search-panel [visible]="true" [highlightCaseSensitive]="true"></dxo-search-panel>
+          <dxo-group-panel [visible]="true"></dxo-group-panel>
+          <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+
+          <dxi-column dataField="clasificador" caption="Grupo" dataType="string" [groupIndex]="0" [width]="100"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="nombreProducto" caption="Producto" dataType="string" [width]="300"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="stockAnterior" caption="stockAnterior" dataType="number" format="0#.##" [width]="100"
+            [allowEditing]="false"></dxi-column>
+
+          <dxi-column dataField="ingresos" caption="ingresos" dataType="number" format="0#.##" [width]="80"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="disponibleAlmacenCentral" caption="DisponibleAlmacenCentral" dataType="number"
+            format="0#.##" [width]="200" [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="asignadoABarra1PV_1" caption="AsignadoABarra1PV_1" dataType="number" format="0#.##"
+            [width]="180" [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="cantidadVendidaBarra1PV_1" caption="cantidadVendidaBarra1PV_1" dataType="number"
+            format="0#.##" [width]="200" [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="disponibleBarra1PV_1" caption="disponibleBarra1PV_1" dataType="number" format="0#.##"
+            [width]="180" [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="asignadoABarra1PV_2" caption="asignadoABarra1PV_2" dataType="number" format="0#.##"
+            [width]="200" [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="cantidadVendidaBarra1PV_2" caption="cantidadVendidaBarra1PV_2" dataType="number"
+            format="0#.##" [width]="200" [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="disponibleBarra1PV_2" caption="disponibleBarra1PV_2" dataType="number" format="0#.##"
+            [width]="200" [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="asignadoABarra2PV_1" caption="asignadoABarra2PV_1" dataType="number" format="0#.##"
+            [width]="200" [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="cantidadVendidaBarra2PV_1" caption="cantidadVendidaBarra2PV_1" dataType="number"
+            format="0#.##" [width]="200" [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="disponibleBarra2PV_1" caption="disponibleBarra2PV_1" dataType="number" format="0#.##"
+            [width]="200" [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="asignadoABarra2PV_2" caption="asignadoABarra2PV_2" dataType="number" format="0#.##"
+            [width]="200" [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="cantidadVendidaBarra2PV_2" caption="cantidadVendidaBarra2PV_2" dataType="number"
+            format="0#.##" [width]="200" [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="disponibleBarra2PV_2" caption="disponibleBarra2PV_2" dataType="number" format="0#.##"
+            [width]="200" [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="asignadoABarra3PV_1" caption="asignadoABarra3PV_1" dataType="number" format="0#.##"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="cantidadVendidaBarra3PV_1" caption="cantidadVendidaBarra3PV_1" dataType="number"
+            format="0#.##" [width]="200" [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="disponibleBarra3PV_1" caption="disponibleBarra3PV_1" dataType="number" format="0#.##"
+            [width]="200" [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="asignadoABarra3PV_2" caption="asignadoABarra3PV_2" dataType="number" format="0#.##"
+            [width]="200" [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="cantidadVendidaBarra3PV_2" caption="cantidadVendidaBarra3PV_2" dataType="number"
+            format="0#.##" [width]="200" [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="disponibleBarra3PV_2" caption="disponibleBarra3PV_2" dataType="number" format="0#.##"
+            [width]="200" [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="totalDisponible" caption="totalDisponible" dataType="number" format="#.##"
+            [width]="200" [allowEditing]="false"></dxi-column>
+
+        </dx-data-grid>
+
       </ion-card-content>
     </ion-card>
   </div>
