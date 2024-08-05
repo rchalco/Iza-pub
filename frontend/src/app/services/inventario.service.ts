@@ -11,6 +11,7 @@ import {
 import { Observable } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 import { DatabaseService } from './DatabaseService';
+import { InventarioAsignacion } from '../interfaces/inventario/InventarioAsignacion';
 
 const urlInventario = URL_INVENTARIO;
 const headers = HEADERS_SERVICE;
@@ -123,4 +124,59 @@ export class InventarioService extends BaseService {
     });
   }
 
+  async obtenerAlmacenesParaAsignacion() {
+    const urlQuery = urlInventario + 'SolicitarAmbientesCompleto';
+
+    const dataRequest = {
+      idSesion: 0,
+      idFechaProceso: 0,
+    };
+    await this.getInfoEviroment().then((env) => {
+      dataRequest.idSesion = env.session;
+      dataRequest.idFechaProceso = env.idFechaProceso;
+    });
+
+
+    return this.getInfoEviroment().then((env) => {
+      const dataRequest = {};
+      this.presentLoader();
+      return this.httpClient
+        .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
+        .pipe(
+          finalize(() => {
+            console.log('**se termino la llamada obtenerAlmacenes');
+            this.dismissLoader();
+          }),
+          catchError((error) => {
+            console.error(error);
+            this.showMessageError('No se tiene comunicacion con el servidor');
+            return Observable.throw(new Error(error.status));
+          })
+        );
+    });
+  }
+
+  async GrabaAsignacionProducto(inventarioAsignacion: InventarioAsignacion) {
+    const urlQuery = urlInventario + 'GrabaAsignacionProducto';
+    await this.getInfoEviroment().then((env) => {
+      inventarioAsignacion.idSesion = env.session;
+      inventarioAsignacion.idfechaproceso = env.idFechaProceso;
+    });
+    return this.getInfoEviroment().then((env) => {      
+      this.presentLoader();
+      return this.httpClient
+        .post<any>(urlQuery, JSON.stringify(inventarioAsignacion), { headers })
+        .pipe(
+          finalize(() => {
+            console.log('**se termino la llamada obtenerAlmacenes');
+            this.dismissLoader();
+          }),
+          catchError((error) => {
+            console.error(error);
+            this.showMessageError('No se tiene comunicacion con el servidor');
+            return Observable.throw(new Error(error.status));
+          })
+        );
+    });
+  }
 }

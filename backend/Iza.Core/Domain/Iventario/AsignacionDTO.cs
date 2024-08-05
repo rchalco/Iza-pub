@@ -14,6 +14,6 @@ namespace Iza.Core.Domain.Iventario
         public string nombreProducto { get; set; }
         public decimal stockAnterior { get; set; }
         public int ingresos { get; set; }
-        public int disponibleAlmacenCentrals { get; set; }
+        public decimal disponibleAlmacenCentral { get; set; }
     }
 }

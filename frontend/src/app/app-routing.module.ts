@@ -207,7 +207,8 @@ const routes: Routes = [
   {
     path: 'reporte-ventas-consolidado',
     loadChildren: () => import('./pages/reporte-ventas-consolidado/reporte-ventas-consolidado.module').then(m => m.ReporteVentasConsolidadoPageModule)
-  },  {
+  },
+  {
     path: 'registro-huellas',
     loadChildren: () => import('./pages/registro-huellas/registro-huellas.module').then( m => m.RegistroHuellasPageModule)
   },
@@ -223,7 +224,10 @@ const routes: Routes = [
     path: 'dashboard-productos',
     loadChildren: () => import('./pages/dashboard-productos/dashboard-productos.module').then( m => m.DashboardProductosPageModule)
   },
-
+  {
+    path: 'asignacion-productos',
+    loadChildren: () => import('./pages/asignacion-productos/asignacion-productos.module').then( m => m.AsignacionProductosPageModule)
+  },
 
 
 ];

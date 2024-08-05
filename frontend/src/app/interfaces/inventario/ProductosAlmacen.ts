@@ -6,6 +6,6 @@ export class ProductosAlmancen {
     nombreProducto: string;
     stockAnterior: number;
     ingresos: number;
-    disponibleAlmacenCentrals: number;
+    disponibleAlmacenCentral: number;
     cantidadAsignada: number;
 }

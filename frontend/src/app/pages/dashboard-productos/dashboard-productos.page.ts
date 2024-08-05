@@ -19,11 +19,20 @@ export class DashboardProductosPage implements OnInit {
   ngOnInit() {
     this.inventarioService.obtenerDashboardProductos().then((service) => {
       service.subscribe((response) => {
-        this.listaProductos= response.listEntities;
+        this.listaProductos = response.listEntities;
         this.dataSourceProductos = response.listEntities;
       });
     });
 
+  }
+
+  actualizarDatos(event) {
+    this.inventarioService.obtenerDashboardProductos().then((service) => {
+      service.subscribe((response) => {
+        this.listaProductos = response.listEntities;
+        this.dataSourceProductos = response.listEntities;
+      });
+    });
   }
 
 }

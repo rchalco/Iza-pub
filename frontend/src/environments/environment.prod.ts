@@ -59,14 +59,15 @@ export const LogoVoucher = '';
 // export const URL_MIROVENTAOPERACION = 'http://181.188.169.10:8001/api/MicroventaOperacion/';
 
 //SERVER MYKE
-// export const URL_MIROVENTA = 'http://140.82.15.241:8001/api/Microventa/';
-// export const URL_MIROVENTAOPERACION =
-//   'http://140.82.15.241:8001/api/MicroventaOperacion/';
-// export const URL_TINTORERIA =
-//   'http://140.82.15.241:8001/api/Tintoreria/';
-// export const URL_SECURITY = 'http://140.82.15.241:8001/api/Seguridad/';
-// export const URL_PERSON = 'http://140.82.15.241:8001/api/Person/';
-// export const URL_CARDS = 'http://140.82.15.241:8001/api/Tarjeta/';
+export const URL_MIROVENTAOPERACION = 'http://155.138.212.216:8032/api/MicroventaOperacion/';
+export const URL_TINTORERIA = 'http://155.138.212.216:8032/api/Tintoreria/';
+export const URL_SECURITY = 'http://155.138.212.216:8032/api/APISecurity/';
+export const URL_INVENTARIO = 'http://155.138.212.216:8032/api/APIIventario/';
+export const URL_MIROVENTA = 'http://155.138.212.216:8032/api/APIVenta/';
+export const URL_PERSON = 'http://155.138.212.216:8032/api/Person/';
+export const URL_CARDS = 'http://155.138.212.216:8032/api/Tarjeta/';
+export const URL_FINGERS = 'http://155.138.212.216:8032/api/Biometric/';
+
 
 //SERVER MYKE TARJETAS
 export const URL_SECURITY = 'http://155.138.212.216:8033/api/APISecurity/';

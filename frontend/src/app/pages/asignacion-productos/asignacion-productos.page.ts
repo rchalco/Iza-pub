@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import DataSource from 'devextreme/data/data_source';
 import { ProductosAlmancen } from 'src/app/interfaces/inventario/ProductosAlmacen';
 import { InventarioService } from 'src/app/services/inventario.service';
+import DxDataGrid from 'devextreme/ui/data_grid';
+import { InventarioAsignacion } from 'src/app/interfaces/inventario/InventarioAsignacion';
+import { InventarioProducto } from 'src/app/interfaces/inventario/InventarioProducto';
+
 
 @Component({
   selector: 'app-asignacion-productos',
@@ -12,20 +16,86 @@ export class AsignacionProductosPage implements OnInit {
 
   listaProductosAlmacen: ProductosAlmancen[] = [];
   dataSource: DataSource = new DataSource(this.listaProductosAlmacen);
+  listaAlmancenOrigen: [];
+  listaDestino: [];
+  inventarioAsignacion: InventarioAsignacion = new InventarioAsignacion();
+  barraOrigen;
+  barraDestino;
 
   constructor(private inventarioService: InventarioService) {
 
   }
 
   ngOnInit() {
-    console.log("********init");
 
     this.inventarioService.ObtenerProductosAlmacenCentral().then(resul => resul.subscribe(data => {
       this.listaProductosAlmacen = data.listEntities;
-      console.log("Info alamacen central", this.listaProductosAlmacen);
       this.dataSource = new DataSource(this.listaProductosAlmacen);
     }));
-    //this.dataSource.reload();
+
+    this.inventarioService.obtenerAlmacenesParaAsignacion().then(resul => resul.subscribe(data => {
+      this.listaAlmancenOrigen = data.listEntities;
+    }));
+
+    this.inventarioService.obtenerAlmacenesParaAsignacion().then(resul => resul.subscribe(data => {
+      this.listaDestino = data.listEntities;
+    }));
+
   }
 
+  onSaving(e: any) {
+    e.cancel = true;
+
+    if (e.changes.length) {
+      e.promise = this.processBatchRequest(`${URL}/Batch`, JSON.stringify(e.changes), e.component);
+    }
+  }
+
+  async processBatchRequest(url: string, changes: string, component: DxDataGrid): Promise<any> {
+
+    this.inventarioAsignacion.idAlmacenDesde = this.barraOrigen.idAlmacen;
+    this.inventarioAsignacion.idAlmacenHasta = this.barraDestino.idAlmacen;
+    this.inventarioAsignacion.observaciones = '';
+    this.inventarioAsignacion.detalleProductos = [];
+    const listaCamabiada = JSON.parse(changes);
+    console.log('listaCamabiada', listaCamabiada);
+    listaCamabiada.forEach(x => {
+      if (x.data.cantidadAsignada > 0) {
+        const inventarioProducto = new InventarioProducto();
+        inventarioProducto.cantidad = x.data.cantidadAsignada * 100 / 100.00;
+        inventarioProducto.cantidadCaja = 0.00;
+        inventarioProducto.idProducto = x.key.idProducto;
+        inventarioProducto.idProveedor = 0;
+        inventarioProducto.idTipo = 0;
+        inventarioProducto.montoCompra = 0.00;
+        inventarioProducto.montoTotal = 0.00;
+        inventarioProducto.nombreProducto = '';
+        inventarioProducto.categoria = "";
+        inventarioProducto.enStock = 0.00;
+        this.inventarioAsignacion.detalleProductos.push(inventarioProducto);
+      }
+    });
+
+    (await this.inventarioService.GrabaAsignacionProducto(this.inventarioAsignacion)).subscribe(resul => {
+      console.log(resul.message);
+      this.inventarioService.showMessageSucess(resul.message);
+
+      this.inventarioService.ObtenerProductosAlmacenCentral().then(resul => resul.subscribe(data => {
+        this.listaProductosAlmacen = data.listEntities;
+        this.dataSource = new DataSource(this.listaProductosAlmacen);
+      }));
+
+      component.refresh(true);
+      component.cancelEditData();
+    });
+
+  }
+
+  selectBarraOrigen(event) {
+    this.barraOrigen = event.detail.value;
+  }
+
+  selectBarraDestino(event) {
+    this.barraDestino = event.detail.value;
+  }
 }
