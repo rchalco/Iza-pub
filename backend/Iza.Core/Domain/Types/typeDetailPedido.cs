@@ -12,5 +12,7 @@ namespace Iza.Core.Domain.Types
         public int idProducto { get; set; }
         public Nullable<int> cantidad { get; set; }
         public decimal? PrecioFinal { get; set; }
+        public string nombreProducto { get; set; }
+
     }
 }

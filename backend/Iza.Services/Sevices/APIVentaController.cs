@@ -1,4 +1,5 @@
 ﻿using Iza.Core.Domain.Iventario;
+using Iza.Core.Domain.Reportes;
 using Iza.Core.Domain.Venta;
 using Iza.Core.Domain.Venta.Caja;
 using Iza.Core.Engine.Ventas;
@@ -56,6 +57,19 @@ namespace Iza.Services.Sevices
             return mgrVentas.RegistrarVentas(requestRegistroVentas);
         }
 
+
+
+
+        #endregion
+
+        #region Reportes Cola
+        [HttpPost("GetDocumentPending")]
+        [EnableCors()]
+        public ResponseQuery<PrinterLineResponse> GetDocumentPending(PrinterLineRequest printerLineRequest)
+        {
+            EngineVentas mgrVentas = new EngineVentas();
+            return mgrVentas.GetDocumentPending(printerLineRequest);
+        }
 
         #endregion
     }

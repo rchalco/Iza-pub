@@ -1,8 +1,12 @@
 ﻿using CoreAccesLayer.Implement.SQLServer;
+using DevExpress.XtraReports;
+using iText.Layout.Element;
 using Iza.Core.Base;
 using Iza.Core.Domain.Iventario;
+using Iza.Core.Domain.Reportes;
 using Iza.Core.Domain.Venta;
 using Iza.Core.Domain.Venta.Caja;
+using Iza.Core.Reports;
 using PlumbingProps.Wrapper;
 using System;
 using System.Collections.Generic;
@@ -182,6 +186,38 @@ namespace Iza.Core.Engine.Ventas
                     paramOutLogRespuesta);
 
                 repositoryPub.Commit();
+                //Genera el archivo para llevarlo a la base de datos
+                List<PedidoDTO> colPedidoDTO = new List<PedidoDTO>();
+                requestRegistroVentas.detalleVentas.ForEach(x => 
+                {
+                    colPedidoDTO.Add(new PedidoDTO() { idProducto = x.idProducto, producto = x.nombreProducto, cantidad = x.cantidad.Value });
+                });
+                
+                VoucherPedido reporte = new VoucherPedido();
+                string nombreArchivo = "";
+                string reporteBase64 = "";
+
+
+                reporte.PaperKind = DevExpress.Drawing.Printing.DXPaperKind.Custom;
+                reporte.RollPaper = true;
+                reporte.Margins.Left = 0;
+                reporte.Margins.Right = 0;
+                reporte.xrFecha.Text = DateTime.Now.ToString();
+                reporte.xrUsuario.Text = "ivilela";
+
+                reporte.DataSource = colPedidoDTO;
+                string fileName = Path.Combine("c:\\tmp\\", "pedido_" + Guid.NewGuid() + ".pdf");
+                reporte.ExportToPdf(fileName);
+                nombreArchivo = fileName;
+                reporteBase64 = Convert.ToBase64String(File.ReadAllBytes(fileName));
+
+                repositoryPub.CallProcedure<Response>("reportes.spAddImpresion",
+                    requestRegistroVentas.idSesion,
+                    requestRegistroVentas.idOperacionDiariaCaja,
+                    reporteBase64,
+                    nombreArchivo = fileName);
+                repositoryPub.Commit();
+
                 if (Convert.ToInt32(paramOutRespuesta.Valor) != 0)
                 {
                     response.State = ResponseType.Warning;
@@ -195,5 +231,28 @@ namespace Iza.Core.Engine.Ventas
             return response;
         }
         #endregion
+
+
+        #region Reportes Cola
+        public ResponseQuery<PrinterLineResponse> GetDocumentPending(PrinterLineRequest printerLineRequest)
+        {
+            ResponseQuery<PrinterLineResponse> response = new ResponseQuery<PrinterLineResponse> { Message = "Documentos obtenidos", State = ResponseType.Success };
+            try
+            {
+                response.ListEntities = new List<PrinterLineResponse>();
+                response.ListEntities = repositoryPub.GetDataByProcedure<PrinterLineResponse>("reportes.spObtImpresioneaPendientes",
+                    printerLineRequest.PrinterId);
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+
+        }
+
+        #endregion
+
+
     }
 }

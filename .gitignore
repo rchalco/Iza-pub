@@ -14,3 +14,4 @@ backend/Security.API/bin/
 backend/Security.API/obj/
 backend/Security.Core/bin/
 backend/Security.Core/obj/
+backend/Iza.Core.Test/obj/Debug/net8.0/Iza.Core.Test.GeneratedMSBuildEditorConfig.editorconfig
