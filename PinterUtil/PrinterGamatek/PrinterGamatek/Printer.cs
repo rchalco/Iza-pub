@@ -12,12 +12,13 @@ using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Net.NetworkInformation;
+using System.Printing;
 using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-//using jp.co.epson.uposcommon;
+
 
 namespace PrinterGamatek
 {
@@ -33,30 +34,21 @@ namespace PrinterGamatek
 
         private void Printer_Load(object sender, EventArgs e)
         {
-            InitPrinter();
-            //try
-            //{
-            //    //As using the PrintNormal method, send strings to a printer, and print it
-            //    //[\n] is the standard code for starting a new line.
-            //    m_Printer.PrintNormal(PrinterStation.Receipt, "Hola mundo .Net\n");
-            //}
-            //catch (PosControlException ex)
-            //{
-            //    MessageBox.Show($"Imposible imprimir texto {ex.Message}");
-            //}
+
         }
 
-        private void timerPrinter_Tick(object sender, EventArgs e)
+        private async void timerPrinter_Tick(object sender, EventArgs e)
         {
             timerPrinter.Stop();
             timerPrinter.Enabled = false;
             Debug.Print("timer activo");
-            obtenerDocumentosPendientes();
-            timerPrinter.Enabled = true;
-            timerPrinter.Start();
+            await obtenerDocumentosPendientes();
+            imprimirDocumentos();
+            //timerPrinter.Enabled = true;
+            //timerPrinter.Start();
         }
 
-        private async void obtenerDocumentosPendientes()
+        private async Task obtenerDocumentosPendientes()
         {
             ClientHelper clientHelper = new ClientHelper();
             string urlService = ConfigurationManager.AppSettings["urlPrinterLine"];
@@ -77,102 +69,75 @@ namespace PrinterGamatek
             {
                 lstDocument.Items.Add(printerLineResponse.nombreDocumento);
             });
+        }
 
-            //Thread.Sleep(1000);
+        private void imprimirDocumentos()
+        {
             ///Iniciamos la impresion
             string namePrinter = ConfigurationManager.AppSettings["namePrinter"];
 
             for (int i = 0; i < printerLineResponses.Count; i++)
             {
-                string filename = Guid.NewGuid().ToString();
+                string filename = Guid.NewGuid().ToString() + ".pdf";
                 File.WriteAllBytes(filename, Convert.FromBase64String(printerLineResponses[i].documentB64));
+                string fullFilePathForPrintProcess = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), filename);
                 ///TODO aca debo imprimir
-                ///PrintPDF(namePrinter, filename);
-                //Thread.Sleep(1000);
-                //lstDocument.Items.Remove(printerLineResponses[i].nombreDocumento);
+                //PrintUsingSumatraPDF(fullFilePathForPrintProcess, namePrinter, CancellationToken.None);
+                PrintUsingAdobeAcrobat(fullFilePathForPrintProcess, namePrinter);
+                Thread.Sleep(3000);
+                lstDocument.Items.Remove(printerLineResponses[i].nombreDocumento);
                 File.Delete(filename);
             }
-
         }
 
-        public bool PrintPDF(string printer, string filename)
+        public static void PrintUsingAdobeAcrobat(string fullFilePathForPrintProcess, string printerName)
         {
-            try
+            string printApplicationPath = Microsoft.Win32.Registry.LocalMachine
+            .OpenSubKey("Software")
+            .OpenSubKey("Microsoft")
+            .OpenSubKey("Windows")
+            .OpenSubKey("CurrentVersion")
+            .OpenSubKey("App Paths")
+            .OpenSubKey("Acrobat.exe")
+            .GetValue(String.Empty).ToString();
+
+            const string flagNoSplashScreen = "/s";
+            const string flagOpenMinimized = "/h";
+
+            var flagPrintFileToPrinter = string.Format("/t \"{0}\" \"{1}\"", fullFilePathForPrintProcess, printerName);
+
+            var args = string.Format("{0} {1} {2}", flagNoSplashScreen, flagOpenMinimized, flagPrintFileToPrinter);
+
+            var startInfo = new ProcessStartInfo
             {
-                // Create the printer settings for our printer
-                var printerSettings = new PrinterSettings
-                {
-                    PrinterName = printer,
-                    Copies = 1,
-                };
+                FileName = printApplicationPath,
+                Arguments = args,
+                CreateNoWindow = true,
+                ErrorDialog = false,
+                UseShellExecute = false,
+                WindowStyle = ProcessWindowStyle.Hidden
+            };
 
-                // Create our page settings for the paper size selected
-                var pageSettings = new PageSettings(printerSettings)
-                {
-                    Margins = new Margins(0, 0, 0, 0),
-                };
+            var process = Process.Start(startInfo);
+            process.EnableRaisingEvents = true;
 
-                // Now print the PDF document
-                using (var document = PdfDocument.Load(filename))
-                {
-                    using (var printDocument = document.CreatePrintDocument())
-                    {
-                        printDocument.PrinterSettings = printerSettings;
-                        printDocument.DefaultPageSettings = pageSettings;
-                        printDocument.PrintController = new StandardPrintController();
-                        printDocument.Print();
-                    }
-                }
-                return true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-                return false;
-            }
-        }
+            process?.Dispose();
+            //if (process != null)
+            //{
+            //    if (!process.HasExited)
+            //    {
+            //        process.WaitForExit();
+            //        process.WaitForInputIdle();
+            //        process.CloseMainWindow();
+            //    }
 
-        private void InitPrinter()
-        {
-            //<<<step1>>>--Start
-            //Use a Logical Device Name which has been set on the SetupPOS.
-            string strLogicalName = "PosPrinter";
-            try
-            {
-                //Create PosExplorer
-                PosExplorer posExplorer = new PosExplorer();
-
-                DeviceInfo deviceInfo = null;
-
-                try
-                {
-                    deviceInfo = posExplorer.GetDevice(DeviceType.PosPrinter, strLogicalName);
-                    m_Printer = (PosPrinter)posExplorer.CreateInstance(deviceInfo);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Imposible inicar la impresora {ex.Message}");
-                    return;
-                }
-
-                //Open the device
-                m_Printer.Open();
-
-                //Get the exclusive control right for the opened device.
-                //Then the device is disable from other application.
-                m_Printer.Claim(1000);
-
-                //Enable the device.
-                m_Printer.DeviceEnabled = true;
-            }
-            catch (PosControlException ex)
-            {
-                MessageBox.Show($"Imposible inicar la impresora {ex.Message}");
-            }
-            //<<<step1>>>--End
-
+            //    process.Kill();
+            //    process.Dispose();
+            //}
         }
     }
 
-
 }
+
+
+
