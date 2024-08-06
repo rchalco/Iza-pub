@@ -1,5 +1,4 @@
 ﻿using Microsoft.PointOfService;
-using PdfiumViewer;
 using PrinterGamatek.CleintService;
 using System;
 using System.Collections.Generic;
@@ -75,18 +74,18 @@ namespace PrinterGamatek
         {
             ///Iniciamos la impresion
             string namePrinter = ConfigurationManager.AppSettings["namePrinter"];
-
+            int timeFoWait = Convert.ToInt32(ConfigurationManager.AppSettings["timeFoWait"]);
             for (int i = 0; i < printerLineResponses.Count; i++)
             {
                 string filename = Guid.NewGuid().ToString() + ".pdf";
                 File.WriteAllBytes(filename, Convert.FromBase64String(printerLineResponses[i].documentB64));
                 string fullFilePathForPrintProcess = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), filename);
                 ///TODO aca debo imprimir
-                //PrintUsingSumatraPDF(fullFilePathForPrintProcess, namePrinter, CancellationToken.None);
                 PrintUsingAdobeAcrobat(fullFilePathForPrintProcess, namePrinter);
-                Thread.Sleep(3000);
+                //PrintUsingCmd(fullFilePathForPrintProcess, namePrinter);
+                Thread.Sleep(timeFoWait);
                 lstDocument.Items.Remove(printerLineResponses[i].nombreDocumento);
-                File.Delete(filename);
+                //File.Delete(filename);
             }
         }
 
@@ -117,23 +116,26 @@ namespace PrinterGamatek
                 UseShellExecute = false,
                 WindowStyle = ProcessWindowStyle.Hidden
             };
-
             var process = Process.Start(startInfo);
             process.EnableRaisingEvents = true;
-
+            //process.WaitForExit();
             process?.Dispose();
-            //if (process != null)
-            //{
-            //    if (!process.HasExited)
-            //    {
-            //        process.WaitForExit();
-            //        process.WaitForInputIdle();
-            //        process.CloseMainWindow();
-            //    }
+        }
 
-            //    process.Kill();
-            //    process.Dispose();
-            //}
+        public static void PrintUsingCmd(string fullFilePathForPrintProcess, string printerName)
+        {
+            string fileCommand = "powershell.exe";
+            string cmdPrint = $"Start-Process -FilePath \"{fullFilePathForPrintProcess}\" -Verb Print -ArgumentList \"{printerName}\" -PassThru | kill";
+            var startInfo = new ProcessStartInfo()
+            {
+                FileName = fileCommand,
+                Arguments = cmdPrint,
+                UseShellExecute = false
+            };
+            var process = Process.Start(fileCommand, cmdPrint);
+            process.EnableRaisingEvents = true;
+            process.WaitForExit();
+            process?.Dispose();
         }
     }
 
