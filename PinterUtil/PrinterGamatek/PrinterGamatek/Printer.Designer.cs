@@ -44,7 +44,7 @@
             this.lstDocument.FormattingEnabled = true;
             this.lstDocument.Location = new System.Drawing.Point(0, 0);
             this.lstDocument.Name = "lstDocument";
-            this.lstDocument.Size = new System.Drawing.Size(800, 450);
+            this.lstDocument.Size = new System.Drawing.Size(447, 124);
             this.lstDocument.TabIndex = 0;
             // 
             // timerPrinter
@@ -57,7 +57,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(447, 124);
             this.Controls.Add(this.lstDocument);
             this.Name = "Printer";
             this.Text = "Cola de impresion";
