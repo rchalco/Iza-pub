@@ -17,6 +17,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Threading;
 
 
 namespace PrinterGamatek
@@ -42,11 +43,20 @@ namespace PrinterGamatek
             timerPrinter.Enabled = false;
             Debug.Print("timer activo");
             await obtenerDocumentosPendientes();
-            imprimirDocumentos();
-            //timerPrinter.Enabled = true;
-            //timerPrinter.Start();
+            string namePrinter = ConfigurationManager.AppSettings["namePrinter"];
+            int timeFoWait = Convert.ToInt32(ConfigurationManager.AppSettings["timeFoWait"]);
+            int cont = 0;
+            await Task.Delay(5000);
+            while (lstDocument.Items.Count > 0)
+            {
+                lstDocument.Items.RemoveAt(0);
+                imprimirDocumento(printerLineResponses[cont].documentB64, namePrinter);                
+                cont++;                
+                await Task.Delay((int)timeFoWait);
+            }            
+            timerPrinter.Enabled = true;
+            timerPrinter.Start();
         }
-
         private async Task obtenerDocumentosPendientes()
         {
             ClientHelper clientHelper = new ClientHelper();
@@ -70,23 +80,13 @@ namespace PrinterGamatek
             });
         }
 
-        private void imprimirDocumentos()
+        private void imprimirDocumento(string documentB64, string namePrinter)
         {
-            ///Iniciamos la impresion
-            string namePrinter = ConfigurationManager.AppSettings["namePrinter"];
-            int timeFoWait = Convert.ToInt32(ConfigurationManager.AppSettings["timeFoWait"]);
-            for (int i = 0; i < printerLineResponses.Count; i++)
-            {
-                string filename = Guid.NewGuid().ToString() + ".pdf";
-                File.WriteAllBytes(filename, Convert.FromBase64String(printerLineResponses[i].documentB64));
-                string fullFilePathForPrintProcess = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), filename);
-                ///TODO aca debo imprimir
-                PrintUsingAdobeAcrobat(fullFilePathForPrintProcess, namePrinter);
-                //PrintUsingCmd(fullFilePathForPrintProcess, namePrinter);
-                Thread.Sleep(timeFoWait);
-                lstDocument.Items.Remove(printerLineResponses[i].nombreDocumento);
-                //File.Delete(filename);
-            }
+            string filename = Guid.NewGuid().ToString() + ".pdf";
+            File.WriteAllBytes(filename, Convert.FromBase64String(documentB64));
+            string fullFilePathForPrintProcess = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), filename);
+            ///TODO aca debo imprimir
+            PrintUsingAdobeAcrobat(fullFilePathForPrintProcess, namePrinter);
         }
 
         public static void PrintUsingAdobeAcrobat(string fullFilePathForPrintProcess, string printerName)
