@@ -59,7 +59,6 @@ namespace Iza.Services.Sevices
 
 
 
-
         #endregion
 
         #region Reportes Cola

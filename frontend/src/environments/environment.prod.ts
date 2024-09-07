@@ -70,9 +70,9 @@ export const URL_FINGERS = 'http://155.138.212.216:8032/api/Biometric/';
 
 
 //SERVER MYKE TARJETAS
-export const URL_SECURITY = 'http://155.138.212.216:8033/api/APISecurity/';
-export const URL_INVENTARIO = 'http://155.138.212.216:8033/api/APIIventario/';
-export const URL_MIROVENTA = 'http://155.138.212.216:8033/api/APIVenta/';
+//export const URL_SECURITY = 'http://155.138.212.216:8033/api/APISecurity/';
+//export const URL_INVENTARIO = 'http://155.138.212.216:8033/api/APIIventario/';
+//export const URL_MIROVENTA = 'http://155.138.212.216:8033/api/APIVenta/';
 
 //SERVER PRUEBA
 //  export const URL_MIROVENTA = 'http://localhost:8001/api/Microventa/';
