@@ -46,7 +46,7 @@ namespace PrinterGamatek
             string namePrinter = ConfigurationManager.AppSettings["namePrinter"];
             int timeFoWait = Convert.ToInt32(ConfigurationManager.AppSettings["timeFoWait"]);
             int cont = 0;
-            await Task.Delay(5000);
+            await Task.Delay(1000);
             while (lstDocument.Items.Count > 0)
             {
                 lstDocument.Items.RemoveAt(0);
