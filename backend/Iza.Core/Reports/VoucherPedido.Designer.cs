@@ -87,7 +87,7 @@
             // 
             this.xrUsuario.Dpi = 254F;
             this.xrUsuario.Font = new DevExpress.Drawing.DXFont("Tahoma", 8F, DevExpress.Drawing.DXFontStyle.Bold);
-            this.xrUsuario.LocationFloat = new DevExpress.Utils.PointFloat(236.8995F, 62.45668F);
+            this.xrUsuario.LocationFloat = new DevExpress.Utils.PointFloat(266.8995F, 62.45668F);
             this.xrUsuario.Name = "xrUsuario";
             this.xrUsuario.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
             this.xrUsuario.SizeF = new System.Drawing.SizeF(412.1006F, 40.64F);
@@ -98,7 +98,7 @@
             // 
             this.xrFecha.Dpi = 254F;
             this.xrFecha.Font = new DevExpress.Drawing.DXFont("Tahoma", 12F);
-            this.xrFecha.LocationFloat = new DevExpress.Utils.PointFloat(236.8995F, 14.81663F);
+            this.xrFecha.LocationFloat = new DevExpress.Utils.PointFloat(266.8995F, 14.81663F);
             this.xrFecha.Name = "xrFecha";
             this.xrFecha.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
             this.xrFecha.SizeF = new System.Drawing.SizeF(412.1005F, 47.64004F);
@@ -110,7 +110,7 @@
             // 
             this.xrLabel6.Dpi = 254F;
             this.xrLabel6.Font = new DevExpress.Drawing.DXFont("Tahoma", 8F, DevExpress.Drawing.DXFontStyle.Bold);
-            this.xrLabel6.LocationFloat = new DevExpress.Utils.PointFloat(0F, 62.45669F);
+            this.xrLabel6.LocationFloat = new DevExpress.Utils.PointFloat(30F, 62.45669F);
             this.xrLabel6.Name = "xrLabel6";
             this.xrLabel6.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
             this.xrLabel6.SizeF = new System.Drawing.SizeF(236.8995F, 40.64F);
@@ -121,7 +121,7 @@
             // 
             this.xrLabel1.Dpi = 254F;
             this.xrLabel1.Font = new DevExpress.Drawing.DXFont("Tahoma", 12F);
-            this.xrLabel1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 14.81665F);
+            this.xrLabel1.LocationFloat = new DevExpress.Utils.PointFloat(30F, 14.81665F);
             this.xrLabel1.Name = "xrLabel1";
             this.xrLabel1.Padding = new DevExpress.XtraPrinting.PaddingInfo(5, 5, 0, 0, 254F);
             this.xrLabel1.SizeF = new System.Drawing.SizeF(236.8995F, 47.64004F);
@@ -134,7 +134,7 @@
             this.label1.Font = new DevExpress.Drawing.DXFont("Tahoma", 10F);
             this.label1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 111.6639F);
             this.label1.Name = "label1";
-            this.label1.SizeF = new System.Drawing.SizeF(649.0001F, 48.75361F);
+            this.label1.SizeF = new System.Drawing.SizeF(708.2668F, 48.75361F);
             this.label1.StyleName = "Title";
             this.label1.StylePriority.UseFont = false;
             this.label1.StylePriority.UseTextAlignment = false;
@@ -153,11 +153,11 @@
             // table1
             // 
             this.table1.Dpi = 254F;
-            this.table1.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
+            this.table1.LocationFloat = new DevExpress.Utils.PointFloat(30F, 0F);
             this.table1.Name = "table1";
             this.table1.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.tableRow1});
-            this.table1.SizeF = new System.Drawing.SizeF(649.0001F, 36.22549F);
+            this.table1.SizeF = new System.Drawing.SizeF(666F, 36.22549F);
             // 
             // tableRow1
             // 
@@ -189,7 +189,7 @@
             this.tableCell2.StylePriority.UseFont = false;
             this.tableCell2.StylePriority.UseForeColor = false;
             this.tableCell2.Text = "Producto";
-            this.tableCell2.Weight = 0.28671536120487956D;
+            this.tableCell2.Weight = 0.26985195656020983D;
             // 
             // tableCell3
             // 
@@ -215,7 +215,7 @@
             this.tableCell3.StylePriority.UseTextAlignment = false;
             this.tableCell3.Text = "Cant.";
             this.tableCell3.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
-            this.tableCell3.Weight = 0.078096361225511862D;
+            this.tableCell3.Weight = 0.10451562655145864D;
             // 
             // Detail
             // 
@@ -230,12 +230,12 @@
             // table2
             // 
             this.table2.Dpi = 254F;
-            this.table2.LocationFloat = new DevExpress.Utils.PointFloat(0F, 0F);
+            this.table2.LocationFloat = new DevExpress.Utils.PointFloat(29.99997F, 0F);
             this.table2.Name = "table2";
             this.table2.OddStyleName = "DetailData3_Odd";
             this.table2.Rows.AddRange(new DevExpress.XtraReports.UI.XRTableRow[] {
             this.tableRow2});
-            this.table2.SizeF = new System.Drawing.SizeF(649.0001F, 51.20588F);
+            this.table2.SizeF = new System.Drawing.SizeF(666F, 51.20588F);
             // 
             // tableRow2
             // 
@@ -256,7 +256,7 @@
             this.tableCell5.Name = "tableCell5";
             this.tableCell5.StyleName = "DetailData1";
             this.tableCell5.StylePriority.UseFont = false;
-            this.tableCell5.Weight = 0.34726193489382562D;
+            this.tableCell5.Weight = 0.32683745173817136D;
             // 
             // tableCell6
             // 
@@ -269,7 +269,7 @@
             this.tableCell6.StylePriority.UseFont = false;
             this.tableCell6.StylePriority.UseTextAlignment = false;
             this.tableCell6.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
-            this.tableCell6.Weight = 0.094588230580335012D;
+            this.tableCell6.Weight = 0.12658655634096536D;
             // 
             // objectDataSource1
             // 
@@ -343,7 +343,7 @@
             this.DataSource = this.objectDataSource1;
             this.Dpi = 254F;
             this.Font = new DevExpress.Drawing.DXFont("Arial", 9.75F);
-            this.Margins = new DevExpress.Drawing.DXMargins(93F, 38F, 8.833344F, 25.62474F);
+            this.Margins = new DevExpress.Drawing.DXMargins(38F, 21F, 8.833344F, 25.62474F);
             this.PageHeight = 500;
             this.PageWidth = 780;
             this.PaperKind = DevExpress.Drawing.Printing.DXPaperKind.Custom;

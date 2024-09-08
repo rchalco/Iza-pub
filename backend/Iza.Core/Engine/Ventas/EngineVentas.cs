@@ -200,8 +200,8 @@ namespace Iza.Core.Engine.Ventas
 
                 reporte.PaperKind = DevExpress.Drawing.Printing.DXPaperKind.Custom;
                 reporte.RollPaper = true;
-                reporte.Margins.Left = 0;
-                reporte.Margins.Right = 0;
+                reporte.Margins.Left = 10;
+                reporte.Margins.Right = 10;
                 reporte.xrFecha.Text = DateTime.Now.ToString();
                 reporte.xrUsuario.Text = "ivilela";
 

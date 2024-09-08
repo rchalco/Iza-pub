@@ -161,6 +161,8 @@ export class InventarioService extends BaseService {
     await this.getInfoEviroment().then((env) => {
       inventarioAsignacion.idSesion = env.session;
       inventarioAsignacion.idfechaproceso = env.idFechaProceso;
+      inventarioAsignacion.observaciones = env.Usuario;
+      inventarioAsignacion.idOperacionDiariaCaja = env.idOperacionDiaria;
     });
     return this.getInfoEviroment().then((env) => {      
       this.presentLoader();

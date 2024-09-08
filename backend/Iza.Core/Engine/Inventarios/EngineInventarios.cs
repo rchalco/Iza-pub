@@ -4,6 +4,8 @@ using Iza.Core.Domain.General;
 using Iza.Core.Domain.Iventario;
 using Iza.Core.Domain.Reportes;
 using Iza.Core.Domain.Types;
+using Iza.Core.Domain.Venta;
+using Iza.Core.Reports;
 using PlumbingProps.Wrapper;
 using System;
 using System.Collections.Generic;
@@ -118,6 +120,32 @@ namespace Iza.Core.Engine.Inventarios
                     response.State = ResponseType.Error;
                     return response;
                 }
+
+                AsignacionProductos reporte = new AsignacionProductos();
+                string nombreArchivo = "";
+                string reporteBase64 = "";
+                reporte.PaperKind = DevExpress.Drawing.Printing.DXPaperKind.Custom;
+                reporte.RollPaper = true;
+                reporte.Margins.Left = 10;
+                reporte.Margins.Right = 10;
+                reporte.xrDestino.Text = inventarioAsignacion.destino;
+                reporte.xrOrigen.Text = inventarioAsignacion.origen;
+                reporte.xrUsuario.Text = inventarioAsignacion.observaciones;
+                
+                reporte.DataSource = inventarioAsignacion.detalleProductos;
+                string fileName = Path.Combine("c:\\tmp\\", "asignacion_producto_" + Guid.NewGuid() + ".pdf");
+                reporte.ExportToPdf(fileName);
+                nombreArchivo = fileName;
+                reporteBase64 = Convert.ToBase64String(File.ReadAllBytes(fileName));
+
+                repositoryPub.CallProcedure<Response>("reportes.spAddImpresion",
+                    inventarioAsignacion.idSesion,
+                    inventarioAsignacion.idOperacionDiariaCaja,
+                    reporteBase64,
+                    nombreArchivo = fileName);
+                repositoryPub.Commit();
+
+               
 
 
                 response.Data = inventarioAsignacion;

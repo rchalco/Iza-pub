@@ -4,7 +4,7 @@ import { ProductosAlmancen } from 'src/app/interfaces/inventario/ProductosAlmace
 import { InventarioService } from 'src/app/services/inventario.service';
 import DxDataGrid from 'devextreme/ui/data_grid';
 import { InventarioAsignacion } from 'src/app/interfaces/inventario/InventarioAsignacion';
-import { InventarioProducto } from 'src/app/interfaces/inventario/InventarioProducto';
+import { InventarioProducto } from 'src/app/interfaces/inventario/inventarioProducto';
 
 
 @Component({
@@ -56,6 +56,8 @@ export class AsignacionProductosPage implements OnInit {
     this.inventarioAsignacion.idAlmacenDesde = this.barraOrigen.idAlmacen;
     this.inventarioAsignacion.idAlmacenHasta = this.barraDestino.idAlmacen;
     this.inventarioAsignacion.observaciones = '';
+    this.inventarioAsignacion.origen = this.barraOrigen.descripcion;
+    this.inventarioAsignacion.destino = this.barraDestino.descripcion;
     this.inventarioAsignacion.detalleProductos = [];
     const listaCamabiada = JSON.parse(changes);
     console.log('listaCamabiada', listaCamabiada);
@@ -69,7 +71,7 @@ export class AsignacionProductosPage implements OnInit {
         inventarioProducto.idTipo = 0;
         inventarioProducto.montoCompra = 0.00;
         inventarioProducto.montoTotal = 0.00;
-        inventarioProducto.nombreProducto = '';
+        inventarioProducto.nombreProducto = x.key.nombreProducto;
         inventarioProducto.categoria = "";
         inventarioProducto.enStock = 0.00;
         this.inventarioAsignacion.detalleProductos.push(inventarioProducto);
