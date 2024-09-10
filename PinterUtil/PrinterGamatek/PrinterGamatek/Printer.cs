@@ -1,4 +1,5 @@
-﻿using Microsoft.PointOfService;
+﻿using DevExpress.Pdf;
+//using Microsoft.PointOfService;
 using PrinterGamatek.CleintService;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace PrinterGamatek
     public partial class Printer : Form
     {
         public List<PrinterLineResponse> printerLineResponses { get; set; }
-        PosPrinter m_Printer = null;
+        //PosPrinter m_Printer = null;
 
         public Printer()
         {
@@ -50,7 +51,8 @@ namespace PrinterGamatek
             while (lstDocument.Items.Count > 0)
             {
                 lstDocument.Items.RemoveAt(0);
-                imprimirDocumento(printerLineResponses[cont].documentB64, namePrinter);                
+                //imprimirDocumento(printerLineResponses[cont].documentB64, namePrinter);
+                imprimirDocumentoPDF(printerLineResponses[cont].documentB64, namePrinter);                
                 cont++;                
                 await Task.Delay((int)timeFoWait);
             }            
@@ -87,6 +89,42 @@ namespace PrinterGamatek
             string fullFilePathForPrintProcess = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), filename);
             ///TODO aca debo imprimir
             PrintUsingAdobeAcrobat(fullFilePathForPrintProcess, namePrinter);
+        }
+
+        private void imprimirDocumentoPDF(string documentB64, string namePrinter)
+        {
+            try
+            {
+                var settings = new PdfPrinterSettings();
+                //settings.Settings.PrinterName = "Canon G3060 series";
+                settings.Settings.PrinterName = namePrinter;
+                settings.Settings.PrintToFile = true;
+                settings.PageOrientation = PdfPrintPageOrientation.Portrait;
+                settings.ScaleMode = PdfPrintScaleMode.ActualSize;
+
+                string filename = Guid.NewGuid().ToString() + ".pdf";
+                File.WriteAllBytes(filename, Convert.FromBase64String(documentB64));
+                string fullFilePathForPrintProcess = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), filename);
+
+
+                //var pdfFileName = "Demo.pdf";
+                var pdfViewer2 = new DevExpress.Xpf.PdfViewer.PdfViewerControl();
+                pdfViewer2.AsyncDocumentLoad = false;
+                pdfViewer2.OpenDocument(fullFilePathForPrintProcess);
+                pdfViewer2.ShowOpenFileOnStartScreen = false;
+                pdfViewer2.Print(settings);
+                if (pdfViewer2.CloseDocumentCommand != null)
+                {
+                    pdfViewer2.CloseDocumentCommand.Execute(null);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            
+
         }
 
         public static void PrintUsingAdobeAcrobat(string fullFilePathForPrintProcess, string printerName)
