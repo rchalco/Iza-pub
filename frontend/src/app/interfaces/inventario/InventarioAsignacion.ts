@@ -1,4 +1,4 @@
-import { InventarioProducto } from "./inventarioProducto";
+import { InventarioProducto } from "./InventarioProducto";
 export class InventarioAsignacion {
     idSesion: number;
     idfechaproceso: number;

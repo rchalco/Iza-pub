@@ -9,6 +9,8 @@ import { MenuController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { AnyObject } from 'chart.js/types/basic';
 import { MenuGeneralDTO } from 'src/app/interfaces/general/MenuGeneral';
+import { DxListModule, DxRadioGroupModule, DxToolbarModule } from 'devextreme-angular';
+import { DxDrawerModule, DxDrawerComponent } from 'devextreme-angular/ui/drawer';
 
 @Component({
   selector: 'app-menu',
@@ -40,12 +42,23 @@ export class MenuComponent implements OnInit {
   ];
 
   menuPorUsuario: MenuGeneralDTO[] = [];
+  isDrawerOpen = true;
 
   constructor(
     private baseService: SeguridadService,
     private menu: MenuController,
     private http: HttpClient
   ) {}
+
+  toolbarContent = [{
+    widget: 'dxButton',
+    location: 'before',
+    options: {
+      icon: 'menu',
+      stylingMode: 'text',
+      onClick: () => this.isDrawerOpen = !this.isDrawerOpen,
+    },
+  }];
 
   ngOnInit() {
     this.initMenu();

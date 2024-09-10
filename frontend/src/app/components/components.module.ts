@@ -16,6 +16,7 @@ import { ProductsSlidesComponent } from './products-slides/products-slides.compo
 import { ReaderCardComponent } from './reader-card/reader-card.component';
 import { CustomCameraComponent } from './custom-camera/custom-camera.component';
 import { FingerCaptureComponent } from './finger-capture/finger-capture.component';
+import { DxDrawerModule, DxListModule, DxToolbarModule } from 'devextreme-angular';
 
 
 @NgModule({
@@ -47,6 +48,6 @@ import { FingerCaptureComponent } from './finger-capture/finger-capture.componen
     CustomCameraComponent,
     FingerCaptureComponent
   ],
-  imports: [CommonModule, IonicModule, RouterModule, PipesModule, FormsModule],
+  imports: [CommonModule, IonicModule, RouterModule, PipesModule, FormsModule, DxDrawerModule, DxToolbarModule, DxListModule],
 })
 export class ComponentsModule { }

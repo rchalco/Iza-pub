@@ -1,6 +1,6 @@
 {
-  "appId": "fabula.discoteca",
-  "appName": "fabula-discoteca",
+  "appId": "iza.discoteca",
+  "appName": "iza-discoteca",
   "webDir": "www",
   "bundledWebRuntime": false,
   "plugins": {
