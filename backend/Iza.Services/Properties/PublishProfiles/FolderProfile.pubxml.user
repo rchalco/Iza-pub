@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>D:\Desarrollo\GitHub\Iza-pub\backend\Iza.Services\bin\Release\net8.0\publish\</_PublishTargetUrl>
-    <History>True|2024-09-08T00:09:47.9158481Z;True|2024-07-19T00:23:56.3273994-04:00;True|2024-05-27T23:00:36.4966821-04:00;True|2024-05-16T15:38:42.7762017-04:00;</History>
+    <History>True|2024-09-14T13:36:06.2074174Z;True|2024-09-07T20:09:47.9158481-04:00;True|2024-07-19T00:23:56.3273994-04:00;True|2024-05-27T23:00:36.4966821-04:00;True|2024-05-16T15:38:42.7762017-04:00;</History>
     <LastFailureDetails />
   </PropertyGroup>
 </Project>

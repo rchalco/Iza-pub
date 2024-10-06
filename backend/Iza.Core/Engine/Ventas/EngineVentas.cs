@@ -202,8 +202,10 @@ namespace Iza.Core.Engine.Ventas
                 reporte.RollPaper = true;
                 reporte.Margins.Left = 10;
                 reporte.Margins.Right = 10;
+                reporte.Margins.Bottom = 10;
+                reporte.Margins.Bottom = 40;
                 reporte.xrFecha.Text = DateTime.Now.ToString();
-                reporte.xrUsuario.Text = "ivilela";
+                reporte.xrUsuario.Text = requestRegistroVentas.usuario;
 
                 reporte.DataSource = colPedidoDTO;
                 string fileName = Path.Combine("c:\\tmp\\", "pedido_" + Guid.NewGuid() + ".pdf");

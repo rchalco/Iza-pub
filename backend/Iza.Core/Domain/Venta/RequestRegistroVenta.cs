@@ -13,6 +13,7 @@ namespace Iza.Core.Domain.Venta
         public List<typeFormaDePagoPedido> formasDePago { get; set; }
         public long idSesion { get; set; }
         public long idMesero { get; set; }
+        public string usuario { get; set; }
         public long idFechaProceso { get; set; }
         public long idAlmancen { get; set; }
         public long idAmabiente { get; set; }

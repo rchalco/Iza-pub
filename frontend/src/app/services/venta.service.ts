@@ -139,6 +139,7 @@ export class VentaService extends BaseService {
         idFechaProceso: env.idFechaProceso,
         formasDePago: pListaFormaDePago,
         Observaciones: _observacion,
+        usuario: env.Usuario
       };
       this.presentLoader();
       console.log('registrarVenta req', dataRequest);
