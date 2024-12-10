@@ -7,5 +7,6 @@ namespace Iza.Services.Sevices
     [ApiController]
     public class APIBackofficeController : ControllerBase
     {
+
     }
 }

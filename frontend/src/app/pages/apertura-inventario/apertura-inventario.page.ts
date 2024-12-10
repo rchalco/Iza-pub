@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ListaProductoComponent } from 'src/app/components/lista-producto/lista-producto.component';
 import { InventarioProducto } from 'src/app/interfaces/inventario/InventarioProducto';
+import { InventarioService } from 'src/app/services/inventario.service';
 import { StockService } from 'src/app/services/stock.service';
 import { environment } from 'src/environments/environment';
 
@@ -15,7 +16,7 @@ export class AperturaInventarioPage implements OnInit {
   listaInventario: InventarioProducto[];
   @ViewChild('listaProductoComponent') listaProductoComponent: ListaProductoComponent;
 
-  constructor(private stockService: StockService) { }
+  constructor(private inventarioService: InventarioService) { }
 
   ngOnInit() {
     this.showAperturaInvetario = true;
@@ -24,11 +25,11 @@ export class AperturaInventarioPage implements OnInit {
 
   abrirInventario() {
 
-    this.stockService
+    this.inventarioService
       .aperturaInventario()
       .then((productosService) => {
         productosService.subscribe((resul) => {
-          this.stockService.showMessageResponse(resul);
+          this.inventarioService.showMessageResponse(resul);
           this.listaInventario = resul.listEntities as InventarioProducto[];
           console.log('pedidos', this.listaInventario);
           /*

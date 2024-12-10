@@ -1,0 +1,224 @@
+<app-custom-header title="Configuración Menú - Productos - Ingredientes"></app-custom-header>
+<ion-content fullscreen>
+  <div *ngIf="showMain">
+    <ion-card>
+      <ion-card>
+        <dx-data-grid id="gridContainer" [dataSource]="listaMenuMaestro" [remoteOperations]="false"
+          [allowColumnReordering]="true" [rowAlternationEnabled]="true" [showBorders]="true" [columnAutoWidth]="true"
+          keyExpr="idPrecio">
+          <dxo-editing [allowUpdating]="true">
+          </dxo-editing>
+          <!-- <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export> -->
+          <dxo-paging [pageSize]="50"></dxo-paging>
+          <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[50, 100, 200]"></dxo-pager>
+          <dxo-search-panel [visible]="true" [highlightCaseSensitive]="true"></dxo-search-panel>
+          <dxo-group-panel [visible]="true"></dxo-group-panel>
+          <dxo-grouping [autoExpandAll]="false"></dxo-grouping>
+
+          <dxi-column dataField="descripcionMenu" caption="Menu Producto" dataType="string"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="embase" caption="Embase" dataType="string"
+            [allowEditing]="false"></dxi-column>
+
+          <dxi-column dataField="precio" caption="Precio" dataType="string"
+            [allowEditing]="false"></dxi-column>
+
+          <dxi-column type="buttons" caption="Modificar">
+            <dxi-button name="edit" text="Modificar" hint="Clone" icon="edit" [onClick]="modificarIngredientes">
+            </dxi-button>
+          </dxi-column>
+
+          <dxo-master-detail [enabled]="true" template="detail"></dxo-master-detail>
+          <div *dxTemplate="let _item of 'detail'">
+            <div class="master-detail-caption">{{
+              "INGREDIENTES DE " + _item.data.descripcionMenu + " :"
+            }}</div>
+            <app-detalle-ingredientes [listaDetalleIngredientes] = "listaMenuDetalle" [key]="_item.key"></app-detalle-ingredientes>
+          </div>
+
+
+
+        </dx-data-grid>
+      </ion-card>
+    </ion-card>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="nuevoMenu()">
+        <ion-icon name="add-circle-outline"> Nuevo</ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </div>
+
+  <div *ngIf="showProducto">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Registro de Producto</ion-card-subtitle>
+      </ion-card-header>
+
+      <form>
+        <ion-grid fixed>
+          <ion-row>
+            <ion-col size="4">
+              <ion-label position="floating">Categoria:</ion-label>
+              <ion-select interface="popover" (ionChange)="tipoProductoSeleccionado($event)"
+                value="{{ selectTipoProducto.idClasificador }}" cancelText="NO" okText="OK">
+                <ion-select-option expand="full" value="{{ categoria.idClasificador }}" *ngFor="let categoria of listaTipoProducto">
+                  {{ categoria.descripcion }}</ion-select-option>
+              </ion-select>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="4">
+              <ion-item>
+                <ion-label position="floating">Nombre del Producto :</ion-label>
+                <ion-input type="text" name="nombreProducto" required="true"
+                  [(ngModel)]="selectedRegistro.descripcionMenu">
+                 
+                </ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="4">
+              <ion-item>
+                <ion-label position="floating">Marca :</ion-label>
+                <ion-input type="text" name="marca" required="true"
+                  [(ngModel)]="selectedRegistro.marca">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="4">
+              <ion-item>
+                <ion-label position="floating">Contenido :</ion-label>
+                <ion-input type="text" name="contenido" required="true"
+                  [(ngModel)]="selectedRegistro.contenido">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="4">
+              <ion-item>
+                <ion-label position="floating"> Unidades por Embase:</ion-label>
+                <ion-input type="text" name="embaseXunidades" required="true"
+                  [(ngModel)]="selectedRegistro.embaseXUnidades">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+
+          <ion-row>
+            <ion-col size="4">
+              <ion-item>
+                <ion-label position="floating"> Precio Unitario (referencial):</ion-label>
+                <ion-input type="number" name="precioUnitario" required="true"
+                  [(ngModel)]="selectedRegistro.precioUnitario">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="4">
+              <ion-item>
+                <ion-label position="floating"> Precio Venta:</ion-label>
+                <ion-input type="number" name="precio" required="true"
+                  [(ngModel)]="selectedRegistro.precio">
+                </ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+
+          <ion-row>
+            <ion-col size="4">
+              <ion-item>
+                <ion-label position="floating">Es para Menú :</ion-label>
+                <ion-checkbox name="esParaMenu" [(ngModel)]="selectedRegistro.esParaMenu" ></ion-checkbox>
+              </ion-item>
+            </ion-col>
+            <ion-col size="4">
+              <ion-item>
+                <ion-label position="floating"> Despliegue Derecha:</ion-label>
+                <ion-checkbox name="depliegueDerecha" [(ngModel)]="selectedRegistro.depliegueDerecha" ></ion-checkbox>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+            <ion-col size="4">
+              <ion-item>
+                <ion-label position="floating"> Es Producto:</ion-label>
+                <ion-checkbox name="esProducto" [(ngModel)]="selectedRegistro.esProducto" ></ion-checkbox>
+              </ion-item>
+            </ion-col>
+            <ion-col size="4">
+              <ion-item>
+                <ion-label position="floating"> Activo:</ion-label>
+                <ion-checkbox name="activo" [(ngModel)]="selectedRegistro.activo" ></ion-checkbox>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+
+
+        </ion-grid>
+        <ion-button (click)="cancelarRegistro()"> Cancelar </ion-button>
+        <ion-button (click)="siguiente()"> Siguiente </ion-button>
+      </form>
+
+    </ion-card>
+  </div>
+  <div *ngIf="showIngredientes">
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Detalle - Contenido del Producto - {{selectedRegistro.nombreProducto}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <form>
+          <app-busca-producto fullscreen nameButtonSearch="Adicionar a Ingredientes" (selectProducto)="adicionarAProducto($event)">
+          </app-busca-producto>
+        </form>
+        
+      </ion-card-content>
+    </ion-card>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Contenido - Ingredientes</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <form>
+          
+          <dx-data-grid id="gridIngrediente" [dataSource]="listaDetalleProductoAGrabar" [remoteOperations]="false"
+          [allowColumnReordering]="true" [rowAlternationEnabled]="true" [showBorders]="true" [columnAutoWidth]="true"
+          keyExpr="idProducto">
+          <dxo-editing mode="cell" [allowUpdating]="true">
+          </dxo-editing>
+          <!-- <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export> -->
+          <dxo-paging [pageSize]="50"></dxo-paging>
+          <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[50, 100, 200]"></dxo-pager>
+          <dxo-search-panel [visible]="false" [highlightCaseSensitive]="true"></dxo-search-panel>
+          <dxo-group-panel [visible]="true"></dxo-group-panel>
+          <dxo-grouping [autoExpandAll]="false"></dxo-grouping>
+
+          <dxi-column dataField="nombreProducto" caption="Ingrediente" dataType="string"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="medidaUnitaria" caption="Medida Unitaria" dataType="number"
+            [allowEditing]="true"></dxi-column>
+
+          <dxi-column dataField="unidaDeMedida" caption="unidaDeMedida" dataType="string"
+            [allowEditing]="true"></dxi-column>
+
+          <dxi-column type="buttons" caption="Eliminar">
+            <dxi-button name="elimina" text="Eliminar" hint="Clone" icon="remove" [onClick]="eliminarIngredientes">
+            </dxi-button>
+          </dxi-column>
+        </dx-data-grid>
+          <ion-button (click)="cancelarIngrediente()"> Cancelar </ion-button>
+          <ion-button (click)="grabarCompleto()"> Grabar </ion-button>
+        </form>
+        
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+ 
+
+</ion-content>

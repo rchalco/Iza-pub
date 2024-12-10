@@ -2,6 +2,7 @@
 using DevExpress.XtraReports;
 using iText.Layout.Element;
 using Iza.Core.Base;
+using Iza.Core.Domain.General;
 using Iza.Core.Domain.Iventario;
 using Iza.Core.Domain.Reportes;
 using Iza.Core.Domain.Venta;
@@ -66,11 +67,75 @@ namespace Iza.Core.Engine.Ventas
             return response;
         }
 
+        public ResponseQuery<ResponseObtieneCajerosCierre> ObtieneCajerosCierre(GeneralRequest1 requestObtieneCajerosCierre)
+        {
+            ResponseQuery<ResponseObtieneCajerosCierre> response = new ResponseQuery<ResponseObtieneCajerosCierre>
+            {
+                Message = "Reporte obtenido satisfactoriamente.",
+                State = ResponseType.Success
+            };
+            try
+            {
+                ParamOut poRespuesta = new ParamOut(false);
+                ParamOut poLogRespuesta = new ParamOut("");
+                poLogRespuesta.Size = 100;
+
+                response.ListEntities = repositoryPub.GetDataByProcedure<ResponseObtieneCajerosCierre>("ventas.spObtCajerosDeUnaFecha",
+                    requestObtieneCajerosCierre.idSesion,
+                    requestObtieneCajerosCierre.idFechaProceso,
+                    poRespuesta,
+                    poLogRespuesta);
+
+                if ((bool)poRespuesta.Valor)
+                {
+                    response.Message = poLogRespuesta.Valor.ToString();
+                    response.State = ResponseType.Error;
+                    return response;
+                }
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
+        public ResponseQuery<ResponseSPObtPedidosPorFormasDePago> UltimasMovimientos(RequestSPObtPedidosPorFormasDePago requestSPObtPedidosPorFormasDePago)
+        {
+            ParamOut poRespuesta = new ParamOut(false);
+            ParamOut poLogRespuesta = new ParamOut("");
+
+            ResponseQuery<ResponseSPObtPedidosPorFormasDePago> response = new ResponseQuery<ResponseSPObtPedidosPorFormasDePago> { Message = "¨Ultimos Movimientos obtenidos correctamente", State = ResponseType.Success };
+            try
+            {
+                requestSPObtPedidosPorFormasDePago.idEstado = 0;
+                response.ListEntities = repositoryPub.GetDataByProcedure<ResponseSPObtPedidosPorFormasDePago>("ventas.spObtPedidosPorFormasDePago",
+                    requestSPObtPedidosPorFormasDePago.idSesion,
+                    requestSPObtPedidosPorFormasDePago.idFechaProceso,
+                    requestSPObtPedidosPorFormasDePago.idAlmacen,
+                    requestSPObtPedidosPorFormasDePago.idEstado,
+                    requestSPObtPedidosPorFormasDePago.idOperacionDiaria,
+                    poRespuesta, poLogRespuesta);
+                if ((bool)poRespuesta.Valor)
+                {
+                    response.Message = poLogRespuesta.Valor.ToString();
+                    response.State = ResponseType.Error;
+                    return response;
+                }
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
+
         public ResponseObject<SaldoCajaDTO> CierreCaja(SaldoCajaDTO requestAperturaCaja)
         {
             ParamOut poRespuesta = new ParamOut(false);
             ParamOut poLogRespuesta = new ParamOut("");
-            ResponseObject<SaldoCajaDTO> response = new ResponseObject<SaldoCajaDTO> { Message = "¨La caja se cerro correctamente", State = ResponseType.Success };
+            ResponseObject<SaldoCajaDTO> response = new ResponseObject<SaldoCajaDTO> { Message = "La caja se cerro correctamente", State = ResponseType.Success };
             try
             {
 
@@ -94,6 +159,47 @@ namespace Iza.Core.Engine.Ventas
             return response;
         }
 
+        public Response CerrarCaja(RequestSPCierreCajero requestSPCierreCajero)
+        {
+            ParamOut poRespuesta = new ParamOut(false);
+            ParamOut poLogRespuesta = new ParamOut("");
+
+            Response response = new Response { Message = "¨Cierre de Stock Almacen ejecutado correctamente", State = ResponseType.Success };
+            try
+            {
+                requestSPCierreCajero.idEstado = 1;
+                repositoryPub.CallProcedure<Response>("ventas.spCierreCajero",
+                    requestSPCierreCajero.idSesion,
+                    requestSPCierreCajero.idfechaproceso,
+                    requestSPCierreCajero.idOperacionDiariaCaja,
+                    requestSPCierreCajero.detalle,
+                    requestSPCierreCajero.MontoApertura,
+                    requestSPCierreCajero.MontoTotalCierre,
+                    requestSPCierreCajero.idEstado,
+                    requestSPCierreCajero.Observaciones,
+                    poRespuesta,
+                    poLogRespuesta
+                    );
+                repositoryPub.Commit();
+
+                if ((bool)poRespuesta.Valor)
+                {
+                    response.Message = poLogRespuesta.Valor.ToString();
+                    response.State = ResponseType.Error;
+                    return response;
+                }
+            }
+            catch (Exception ex)
+            {
+                repositoryPub.Rollback();
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
+        #endregion
+
+        #region Ventas
         public ResponseQuery<ResulProductoPrecioVentaComplex> ObtienePorAlmacen(RequestSearchProductAlmacen requestSearchProductAlmacen)
         {
             ResponseQuery<ResulProductoPrecioVentaComplex> response = new ResponseQuery<ResulProductoPrecioVentaComplex> { Message = "Productos obtenidos correctamente", State = ResponseType.Success };
@@ -188,16 +294,38 @@ namespace Iza.Core.Engine.Ventas
                 repositoryPub.Commit();
                 //Genera el archivo para llevarlo a la base de datos
                 List<PedidoDTO> colPedidoDTO = new List<PedidoDTO>();
-                requestRegistroVentas.detalleVentas.ForEach(x => 
+                requestRegistroVentas.detalleVentas.ForEach(x =>
                 {
-                    colPedidoDTO.Add(new PedidoDTO() { idProducto = x.idProducto, producto = x.nombreProducto, cantidad = x.cantidad.Value });
+                    colPedidoDTO.Add(new PedidoDTO() { idProducto = x.idProducto, producto = x.nombreProducto, cantidad = x.cantidad.Value, idPedido = (int)paramOutRespuesta.Valor});
                 });
-                
+
                 VoucherPedido reporte = new VoucherPedido();
                 string nombreArchivo = "";
                 string reporteBase64 = "";
 
+                string formaPago = "";
+                requestRegistroVentas.formasDePago.ForEach(x =>
+                {
+                    switch (x.idFormaPago)
+                    {
+                        case 1:
+                            formaPago += formaPago == "" ? "EFECTIVO" : ",EFECTIVO";
+                            break;
+                        case 2:
+                            formaPago += formaPago == "" ? "POS" : ",POS";
+                            break;
+                        case 3:
+                            formaPago += formaPago == "" ? "TICKETS" : ",TICKETS";
+                            break;
+                        case 4:
+                            formaPago += formaPago == "" ? "CORTESIA" : ",CORTESIA";
+                            break;
+                        default:
+                            break;
+                    }
 
+                });
+                reporte.xsFormaPago.Text = formaPago;
                 reporte.PaperKind = DevExpress.Drawing.Printing.DXPaperKind.Custom;
                 reporte.RollPaper = true;
                 reporte.Margins.Left = 10;
@@ -232,8 +360,136 @@ namespace Iza.Core.Engine.Ventas
             }
             return response;
         }
-        #endregion
+        public ResponseQuery<ResulObtieneFormasdePago> ObtieneFormasdePago(GeneralRequest1 requestSPObtFormasDePago)
+        {
+            ResponseQuery<ResulObtieneFormasdePago> response = new ResponseQuery<ResulObtieneFormasdePago> { Message = "Formas de pago obtenidos correctamente", State = ResponseType.Success };
+            try
+            {
+                ParamOut paramOutRespuesta = new ParamOut(true);
+                ParamOut paramOutLogRespuesta = new ParamOut("");
+                paramOutLogRespuesta.Size = 100;
 
+                response.ListEntities = repositoryPub.GetDataByProcedure<ResulObtieneFormasdePago>("ventas.spObtFormasDePago",
+                    requestSPObtFormasDePago.idSesion,
+                    requestSPObtFormasDePago.idFechaProceso,
+                    paramOutRespuesta,
+                    paramOutLogRespuesta);
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
+        public ResponseQuery<DetallePedidosDTO> DetallePedidoPorFormaPago(GeneralRequest1 requestGeneral)
+        {
+            ResponseQuery<DetallePedidosDTO> response = new ResponseQuery<DetallePedidosDTO> { Message = "Detalle de pedidos del dia obtenidos", State = ResponseType.Success };
+            try
+            {
+                ParamOut paramOutRespuesta = new ParamOut(true);
+                ParamOut paramOutLogRespuesta = new ParamOut("");
+                paramOutLogRespuesta.Size = 100;
+
+                response.ListEntities = repositoryPub.GetDataByProcedure<DetallePedidosDTO>("[reportes].[spObtPedidosPorFormaDePago]",
+                    requestGeneral.idSesion,
+                    requestGeneral.idFechaProceso);
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
+        public ResponseQuery<DetallePedidosDTO> ActualizaFormaPagoPedido(PedidoRequest requestPedido)
+        {
+            ParamOut poRespuesta = new ParamOut(false);
+            ParamOut poLogRespuesta = new ParamOut("");
+            ResponseQuery<DetallePedidosDTO> response = new ResponseQuery<DetallePedidosDTO> { Message = "Forma de pago actualizada", State = ResponseType.Success };
+            try
+            {
+
+                repositoryPub.CallProcedure<Response>("[ventas].[spActualizaFormaDePago]", requestPedido.idSesion, requestPedido.idPedidoMaster, requestPedido.idFormaPago, poRespuesta);
+                if ((bool)poRespuesta.Valor)
+                {
+                    response.Message = poLogRespuesta.Valor.ToString();
+                    response.State = ResponseType.Error;
+                    return response;
+                }
+                repositoryPub.Commit();
+                response.ListEntities = repositoryPub.GetDataByProcedure<DetallePedidosDTO>("[reportes].[spObtPedidosPorFormaDePago]",
+                    requestPedido.idSesion,
+                    requestPedido.idFechaProceso);
+
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+                repositoryPub.Rollback();
+            }
+            return response;
+        }
+
+        public ResponseQuery<DetallePedidosDTO> AnulaPedido(PedidoRequest requestPedido)
+        {
+            ParamOut poRespuesta = new ParamOut(false);
+            ParamOut poLogRespuesta = new ParamOut("");
+            ResponseQuery<DetallePedidosDTO> response = new ResponseQuery<DetallePedidosDTO> { Message = "Forma de pago actualizada", State = ResponseType.Success };
+            try
+            {
+
+                repositoryPub.CallProcedure<Response>("[ventas].[spAnulaPedido]", requestPedido.idSesion, requestPedido.idPedidoMaster, poRespuesta);
+                if ((bool)poRespuesta.Valor)
+                {
+                    response.Message = poLogRespuesta.Valor.ToString();
+                    response.State = ResponseType.Error;
+                    repositoryPub.Rollback();
+                    return response;
+                }
+                repositoryPub.Commit();
+                response.ListEntities = repositoryPub.GetDataByProcedure<DetallePedidosDTO>("[reportes].[spObtPedidosPorFormaDePago]",
+                    requestPedido.idSesion,
+                    requestPedido.idFechaProceso);
+
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+                repositoryPub.Rollback();
+
+            }
+            return response;
+        }
+
+        public ResponseQuery<ResulProductoPrecioVenta> ObtieneProductosVenta(GeneralRequest1 request)
+        {
+            ResponseQuery<ResulProductoPrecioVenta> response = new ResponseQuery<ResulProductoPrecioVenta> { Message = "Venta registrada correctamente", State = ResponseType.Success };
+            try
+            {
+                ParamOut paramOutRespuesta = new ParamOut(true);
+                ParamOut paramOutLogRespuesta = new ParamOut("");
+                paramOutLogRespuesta.Size = 100;
+                response.ListEntities = repositoryPub.GetDataByProcedure<ResulProductoPrecioVenta>("inventario.spObtProductos", request.idSesion);
+
+                if ((bool)paramOutRespuesta.Valor)
+                {
+                    response.Message = paramOutLogRespuesta.Valor.ToString();
+                    response.State = ResponseType.Error;
+                    return response;
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
+        #endregion
 
         #region Reportes Cola
         public ResponseQuery<PrinterLineResponse> GetDocumentPending(PrinterLineRequest printerLineRequest)
@@ -255,6 +511,7 @@ namespace Iza.Core.Engine.Ventas
 
         #endregion
 
+       
 
     }
 }

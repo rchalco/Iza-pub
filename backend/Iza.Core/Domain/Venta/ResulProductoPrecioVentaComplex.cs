@@ -11,18 +11,18 @@ namespace Iza.Core.Domain.Venta
     {
         public int idProducto { get; set; }
         public int idPrecio { get; set; }
-        public string Producto { get; set; }
-        public string embase { get; set; }
+        public string Producto { get; set; } = string.Empty;
+        public string embase { get; set; } = string.Empty;
         //public byte[] picProducto { get; set; }
-        public string marca { get; set; }
-        public string contenido { get; set; }
+        public string marca { get; set; } = string.Empty;
+        public string contenido { get; set; } = string.Empty;
         public decimal enStock { get; set; }
         public decimal precio { get; set; }
         public decimal precioUnitario { get; set; }
         public int CantidadCaja { get; set; }
-        public string nombreProducto { get; set; }
-        public string categoria { get; set; }
-        public string NivelStock { get; set; }
+        public string nombreProducto { get; set; } = string.Empty;
+        public string categoria { get; set; } = string.Empty;
+        public string NivelStock { get; set; } = string.Empty;
 
         ////Nuevos campos para probar
         public int idPrecioDerecha { get; set; }
@@ -30,8 +30,10 @@ namespace Iza.Core.Domain.Venta
         public decimal precioDerecha { get; set; }
         public decimal precioIzquierda { get; set; }
         public int slide { get; set; }
-        public string etiquetaDerecha { get; set; }
-        public string etiquetaIzquierda { get; set; }
+        public string etiquetaDerecha { get; set; } = string.Empty;
+        public string etiquetaIzquierda { get; set; } = string.Empty;
+
+
         /// <summary>
         /// NUEVAS PROPIEDADES PARA ABM 
         /// </summary>

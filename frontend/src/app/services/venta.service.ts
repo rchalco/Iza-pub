@@ -126,6 +126,7 @@ export class VentaService extends BaseService {
         })
       );
   }
+  
   registrarVenta(pDetalleVentas, pListaFormaDePago, _idAlmacen, _observacion) {
     const urlQuery = urlMicroventa + 'RegistrarVentas';
     console.log('_idAlmacen', _idAlmacen);
@@ -141,8 +142,11 @@ export class VentaService extends BaseService {
         Observaciones: _observacion,
         usuario: env.Usuario
       };
+      
+      
+
       this.presentLoader();
-      console.log('registrarVenta req', dataRequest);
+      console.log('registrarVenta reqYYYYYYY', dataRequest);
       return this.httpClient
         .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
         .pipe(
@@ -521,5 +525,101 @@ export class VentaService extends BaseService {
         })
       );
   }
+
+  async detallePedidoPorFormaPago() {
+    const urlQuery = urlMicroventa + 'DetallePedidoPorFormaPago';
+    const dataRequest = {
+      idSesion: 0,
+      idFechaProceso: 0,
+    };
+    await this.getInfoEviroment().then((env) => {
+      dataRequest.idSesion = env.session;
+      dataRequest.idFechaProceso = env.idFechaProceso;
+    });
+
+    this.presentLoader();
+
+    return this.httpClient
+      .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
+      .pipe(
+        finalize(() => {
+          console.log('**se termino la llamada obtieneReporteCierreTotal');
+          this.dismissLoader();
+        }),
+        catchError((error) => {
+          console.error(error);
+          this.showMessageError('No se tiene comunicacion con el servidor');
+          return Observable.throw(new Error(error.status));
+        })
+      );
+  }
+
+  async actualizaFormaPagoPedido(_idPedFormaPago, _idFormaPago) {
+    const urlQuery = urlMicroventa + 'ActualizaFormaPagoPedido';
+    const dataRequest = {
+      idSesion: 0,
+      idFechaProceso: 0,
+      idPedidoMaster: _idPedFormaPago,
+      idFormaPago: _idFormaPago
+    };
+    await this.getInfoEviroment().then((env) => {
+      dataRequest.idSesion = env.session;
+      dataRequest.idFechaProceso = env.idFechaProceso;
+      
+    });
+    console.log("actualiza forma de pago", dataRequest);
+    this.presentLoader();
+
+    return this.httpClient
+      .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
+      .pipe(
+        finalize(() => {
+          console.log('**se termino la llamada obtieneReporteCierreTotal');
+          this.dismissLoader();
+        }),
+        catchError((error) => {
+          console.error(error);
+          this.showMessageError('No se tiene comunicacion con el servidor');
+          return Observable.throw(new Error(error.status));
+        })
+      );
+  }
+
+  async anulaPedido(_idPedidoMaster) {
+    const urlQuery = urlMicroventa + 'AnulaPedido';
+    const dataRequest = {
+      idSesion: 0,
+      idFechaProceso: 0,
+      idFormaPago: 0,
+      idPedidoMaster: _idPedidoMaster
+    };
+    await this.getInfoEviroment().then((env) => {
+      dataRequest.idSesion = env.session;
+      dataRequest.idFechaProceso = env.idFechaProceso;
+      
+    });
+
+    console.log('anula pedidoooooooo',dataRequest);
+
+
+    this.presentLoader();
+
+    return this.httpClient
+      .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
+      .pipe(
+        finalize(() => {
+          console.log('**se termino la llamada obtieneReporteCierreTotal');
+          this.dismissLoader();
+        }),
+        catchError((error) => {
+          console.error(error);
+          this.showMessageError('No se tiene comunicacion con el servidor');
+          return Observable.throw(new Error(error.status));
+        })
+      );
+  }
+
+  
+
 
 }

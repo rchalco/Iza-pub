@@ -16,7 +16,8 @@ import { ProductsSlidesComponent } from './products-slides/products-slides.compo
 import { ReaderCardComponent } from './reader-card/reader-card.component';
 import { CustomCameraComponent } from './custom-camera/custom-camera.component';
 import { FingerCaptureComponent } from './finger-capture/finger-capture.component';
-import { DxDrawerModule, DxListModule, DxToolbarModule } from 'devextreme-angular';
+import { DxBulletModule, DxDataGridModule, DxDrawerModule, DxListModule, DxTemplateModule, DxToolbarModule } from 'devextreme-angular';
+import { DetalleIngredientesComponent } from './detalle-ingredientes/detalle-ingredientes.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { DxDrawerModule, DxListModule, DxToolbarModule } from 'devextreme-angula
     ProductsSlidesComponent,
     ReaderCardComponent,
     CustomCameraComponent,
-    FingerCaptureComponent
+    FingerCaptureComponent,
+    DetalleIngredientesComponent,
   ],
   exports: [
     CustomHeaderComponent,
@@ -46,8 +48,10 @@ import { DxDrawerModule, DxListModule, DxToolbarModule } from 'devextreme-angula
     ProductsSlidesComponent,
     ReaderCardComponent,
     CustomCameraComponent,
-    FingerCaptureComponent
+    FingerCaptureComponent,
+    DetalleIngredientesComponent,
   ],
-  imports: [CommonModule, IonicModule, RouterModule, PipesModule, FormsModule, DxDrawerModule, DxToolbarModule, DxListModule],
+  imports: [CommonModule, IonicModule, RouterModule, PipesModule, FormsModule, DxDrawerModule, DxToolbarModule, DxListModule, DxDataGridModule,
+    DxTemplateModule, DxBulletModule],
 })
 export class ComponentsModule { }

@@ -9,6 +9,7 @@ namespace Iza.Core.Domain.Reportes
     public class PedidoDTO
     {
         public int idProducto { get; set; }
+        public int idPedido { get; set; }
         public string producto { get; set; }
         public int cantidad { get; set; }
     }

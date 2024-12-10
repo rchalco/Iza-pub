@@ -12,6 +12,7 @@ import { Observable } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 import { DatabaseService } from './DatabaseService';
 import { InventarioAsignacion } from '../interfaces/inventario/InventarioAsignacion';
+import { IngredientesDeMenuGeneralDTO } from '../interfaces/inventario/IngredientesDeMenuGeneral';
 
 const urlInventario = URL_INVENTARIO;
 const headers = HEADERS_SERVICE;
@@ -43,7 +44,7 @@ export class InventarioService extends BaseService {
 
 
     return this.getInfoEviroment().then((env) => {
-      const dataRequest = {};
+      
       this.presentLoader();
       return this.httpClient
         .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
@@ -75,7 +76,6 @@ export class InventarioService extends BaseService {
 
 
     return this.getInfoEviroment().then((env) => {
-      const dataRequest = {};
       this.presentLoader();
       return this.httpClient
         .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
@@ -106,7 +106,6 @@ export class InventarioService extends BaseService {
     });
 
     return this.getInfoEviroment().then((env) => {
-      const dataRequest = {};
       this.presentLoader();
       return this.httpClient
         .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
@@ -138,7 +137,6 @@ export class InventarioService extends BaseService {
 
 
     return this.getInfoEviroment().then((env) => {
-      const dataRequest = {};
       this.presentLoader();
       return this.httpClient
         .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
@@ -181,4 +179,216 @@ export class InventarioService extends BaseService {
         );
     });
   }
+
+  
+  async productosVendidosPorBarra(_idAlmacen) {
+    const urlQuery = urlInventario + 'ProductosVendidosPorBarra';
+
+    const dataRequest = {
+      idSesion: 0,
+      idFechaProceso: 0,
+      idAlmacen: _idAlmacen,
+    };
+    await this.getInfoEviroment().then((env) => {
+      dataRequest.idSesion = env.session;
+      dataRequest.idFechaProceso = env.idFechaProceso;
+    });
+
+    console.log('parametros', dataRequest);
+
+    return this.getInfoEviroment().then((env) => {
+      this.presentLoader();
+      return this.httpClient
+        .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
+        .pipe(
+          finalize(() => {
+            console.log('**se termino la llamada obtenerAlmacenes');
+            this.dismissLoader();
+          }),
+          catchError((error) => {
+            console.error(error);
+            this.showMessageError('No se tiene comunicacion con el servidor');
+            return Observable.throw(new Error(error.status));
+          })
+        );
+    });
+  }
+
+  async ingredientesDeMenuGeneral() {
+    const urlQuery = urlInventario + 'IngredientesDeMenuGeneral';
+
+    const dataRequest = {
+      idSesion: 0,
+      idFechaProceso: 0,
+    };
+    await this.getInfoEviroment().then((env) => {
+      dataRequest.idSesion = env.session;
+      dataRequest.idFechaProceso = env.idFechaProceso;
+    });
+
+    return this.getInfoEviroment().then((env) => {
+      this.presentLoader();
+      return this.httpClient
+        .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
+        .pipe(
+          finalize(() => {
+            console.log('**se termino la llamada obtenerAlmacenes');
+            this.dismissLoader();
+          }),
+          catchError((error) => {
+            console.error(error);
+            this.showMessageError('No se tiene comunicacion con el servidor');
+            return Observable.throw(new Error(error.status));
+          })
+        );
+    });
+  }
+
+  async grabarMenuGeneralCompleto(menu: IngredientesDeMenuGeneralDTO) {
+    const urlQuery = urlInventario + 'GrabarMenuGeneralCompleto';
+    //menu.nombreProducto = '';
+    //menu.unidaDeMedida = '';
+
+    await this.getInfoEviroment().then((env) => {
+      menu.idSesion = env.session;
+      menu.idFechaProceso = env.idFechaProceso;
+    });
+    console.log('Grabar menu completo',menu);
+    return this.getInfoEviroment().then((env) => {
+      this.presentLoader();
+      return this.httpClient
+        .post<any>(urlQuery, JSON.stringify(menu), { headers })
+        .pipe(
+          finalize(() => {
+            console.log('**se termino la llamada obtenerAlmacenes');
+            this.dismissLoader();
+          }),
+          catchError((error) => {
+            console.error(error);
+            this.showMessageError('No se tiene comunicacion con el servidor');
+            return Observable.throw(new Error(error.status));
+          })
+        );
+    });
+  }
+
+
+  async clasificadorPorTipo(_idClasificadorTipo) {
+    const urlQuery = urlInventario + 'ClasificadorPorTipo';
+
+    const dataRequest = {
+      idSesion: 0,
+      idFechaProceso: _idClasificadorTipo,
+    };
+    await this.getInfoEviroment().then((env) => {
+      dataRequest.idSesion = env.session;
+    });
+
+    return this.getInfoEviroment().then((env) => {
+      this.presentLoader();
+      return this.httpClient
+        .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
+        .pipe(
+          finalize(() => {
+            console.log('**se termino la llamada obtenerAlmacenes');
+            this.dismissLoader();
+          }),
+          catchError((error) => {
+            console.error(error);
+            this.showMessageError('No se tiene comunicacion con el servidor');
+            return Observable.throw(new Error(error.status));
+          })
+        );
+    });
+  }
+
+  async busquedaMenuGeneral(_textoABuscar) {
+    const urlQuery = urlInventario + 'BusquedaMenuGeneral';
+    let dataRequest = {
+      idSesion: 0,
+      textoABuscar: _textoABuscar,
+    };
+
+    await this.getInfoEviroment().then((env) => {
+      dataRequest.idSesion = env.session;
+    });
+
+    this.presentLoader();
+    return this.httpClient
+      .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
+      .pipe(
+        finalize(() => {
+          console.log('**se termino la llamada SearchProduct');
+          this.dismissLoader();
+        }),
+        catchError((error) => {
+          console.error(error);
+          this.showMessageError('No se tiene comunicacion con el servidor');
+          return Observable.throw(new Error(error.status));
+        })
+      );
+  }
+
+  async aperturaInventario() {
+    let url_query = urlInventario + 'AperturaInventario';
+
+    let dataRequest = {
+      idSesion: 0,
+      idFechaProceso: 0,
+    };
+
+    await this.getInfoEviroment().then((env) => {
+      dataRequest.idSesion = env.session;
+      dataRequest.idFechaProceso = env.idFechaProceso
+    });
+
+    this.presentLoader();
+    return this.httpClient
+      .post<any>(url_query, JSON.stringify(dataRequest), { headers })
+      .pipe(
+        finalize(() => {
+          console.log('**se termino la llamada transaccionesDetallePorID');
+          this.dismissLoader();
+        }),
+        catchError((error) => {
+          console.error(error);
+          this.showMessageError('No se tiene comunicacion con el servidor');
+          return Observable.throw(new Error(error.status));
+        })
+      );
+  }
+
+  async cierreInventario() {
+
+    console.log('SERVICIO CIERRE');
+
+    let url_query = urlInventario + 'CierreInventario';
+
+    let dataRequest = {
+      idSesion: 0,
+      idFechaProceso: 0,
+    };
+
+    await this.getInfoEviroment().then((env) => {
+      dataRequest.idSesion = env.session;
+      dataRequest.idFechaProceso = env.idFechaProceso
+    });
+
+    this.presentLoader();
+    return this.httpClient
+      .post<any>(url_query, JSON.stringify(dataRequest), { headers })
+      .pipe(
+        finalize(() => {
+          console.log('**se termino la llamada transaccionesDetallePorID');
+          this.dismissLoader();
+        }),
+        catchError((error) => {
+          console.error(error);
+          this.showMessageError('No se tiene comunicacion con el servidor');
+          return Observable.throw(new Error(error.status));
+        })
+      );
+  }
+
+
 }

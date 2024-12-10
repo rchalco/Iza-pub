@@ -9,4 +9,6 @@ export interface ResulProductoPrecioVenta {
   enStock: number;
   precio: number;
   cantidadCaja: number;
+  nombreProducto: string;
+  embaseXunidades: string;
 }

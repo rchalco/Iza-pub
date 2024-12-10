@@ -1,0 +1,149 @@
+<app-custom-header title="Ventas por Busqueda de Producto"></app-custom-header>
+<ion-content fullscreen>
+  <div *ngIf="showMain">
+    <ion-card>
+      <ion-list>
+        <ion-row>
+          <ion-col size="6">
+            <h2 class="text-total">Total Bs. {{totalVenta}}</h2>
+          </ion-col>
+        </ion-row>
+        <ion-row class="cardfooter">
+          <ion-col>
+            <ion-button color="success" shape="round" (click)="realizarPago(1)">
+              EFE
+            </ion-button>
+            <ion-button color="warning" shape="round" (click)="realizarPago(2)">
+              POS
+            </ion-button>
+            <ion-button color="danger" shape="round" (click)="realizarPago(3)">
+              QR
+            </ion-button>
+            
+            <!--<ion-button color="medium" shape="round" (click)="realizarPago(-1)">
+              MIX
+            </ion-button>
+             <ion-button color="tertiary" shape="round" (click)="realizarPago(5)">
+              POS FAB
+            </ion-button> -->
+          </ion-col>
+        </ion-row>
+      </ion-list>
+    </ion-card>
+    <ion-card>
+        <ion-list>
+          <ion-card-header>
+            <ion-card-subtitle>Busqueda de Productos</ion-card-subtitle>
+          </ion-card-header>
+          <ion-item>
+            <ion-label position="floating">Descripcion, marca o categoria</ion-label>
+            <ion-input type="text" name="ci" required="true" [(ngModel)]="textoBuscar" expand="full">
+            </ion-input>
+          </ion-item>
+          <ion-button expand="full" type="submit" (click)="buscarProductos()">
+            <ion-icon name="search-outline" slot="end"></ion-icon>
+            Buscar
+          </ion-button>
+        </ion-list>
+    </ion-card>
+    <ion-card>
+        <ion-row>
+          <ion-col >
+            <ion-card>
+              <ion-card-header>
+                <ion-card-subtitle>Productos Encontrados </ion-card-subtitle>
+              </ion-card-header>
+  
+              <dx-data-grid id="gridContainer" [dataSource]="productos" [remoteOperations]="false"
+                [allowColumnReordering]="true" [rowAlternationEnabled]="true" [showBorders]="true" [columnAutoWidth]="true"
+                keyExpr="idPrecio">
+                <dxo-editing [allowUpdating]="true" [selectTextOnEditStart]="true" >
+                </dxo-editing>
+                <!-- <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export> -->
+                <dxo-paging [pageSize]="50"></dxo-paging>
+                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[50, 100, 200]"></dxo-pager>
+                <dxo-search-panel [visible]="false" [highlightCaseSensitive]="false"></dxo-search-panel>
+                <dxo-group-panel [visible]="false"></dxo-group-panel>
+                <dxo-grouping [autoExpandAll]="false"></dxo-grouping>
+  
+                <dxi-column dataField="descripcionMenu" caption="Menu Producto" dataType="string"
+                  [allowEditing]="false"></dxi-column>
+                <dxi-column dataField="marca" caption="Marca" dataType="string"
+                  [allowEditing]="false"></dxi-column>
+                <dxi-column dataField="embase" caption="Embase" dataType="string"
+                  [allowEditing]="false"></dxi-column>
+                <dxi-column dataField="contenido" caption="Contenido" dataType="string"
+                  [allowEditing]="false"></dxi-column>
+  
+                <dxi-column dataField="precioUnitario" caption="Precio" dataType="number" format="Bs 0#.#"
+                  [allowEditing]="false"></dxi-column>
+                <!-- <dxi-column dataField="cantidad" caption="Cantidad" dataType="number"
+                  [allowEditing]="true"></dxi-column> -->
+  
+                <dxi-column type="buttons" caption="Adicionar">
+                  <dxi-button name="edit" text="Adicionar" hint="Adicionar" icon="add" [onClick]="adicionarProducto">
+                  </dxi-button>
+                </dxi-column>
+  
+              </dx-data-grid>
+            </ion-card>
+          </ion-col>
+          <ion-col size="5">
+            <ion-card>
+              <ion-card-header>
+                <ion-card-subtitle>Productos a Vender </ion-card-subtitle>
+              </ion-card-header>
+  
+              <dx-data-grid id="gridContainer2" [dataSource]="productosVender" [remoteOperations]="false"
+                [allowColumnReordering]="true" [rowAlternationEnabled]="true" [showBorders]="true" [columnAutoWidth]="true"
+                [repaintChangesOnly]="true"
+                [highlightChanges]="true"
+                keyExpr="idPrecio"
+                (onRowUpdated)="onRecalculaMonto($event)"
+                >
+                <dxo-editing [allowUpdating]="true" [allowDeleting]="true" mode="cell" [useIcons]="true"
+                refreshMode="reshape">
+                </dxo-editing>
+                <!-- <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export> -->
+                <dxo-paging [pageSize]="50"></dxo-paging>
+                <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[50, 100, 200]"></dxo-pager>
+                <dxo-search-panel [visible]="false" [highlightCaseSensitive]="false"></dxo-search-panel>
+                <dxo-group-panel [visible]="false"></dxo-group-panel>
+                <dxo-grouping [autoExpandAll]="false"></dxo-grouping>
+  
+                <dxi-column dataField="descripcionMenu" caption="Menu Producto" dataType="string"
+                  [allowEditing]="false"></dxi-column>
+               
+  
+                <dxi-column dataField="precioUnitario" caption="Precio" dataType="number"
+                  [allowEditing]="false"></dxi-column>
+                <dxi-column dataField="cantidad" caption="Cantidad" dataType="number"
+                  [allowEditing]="true" >
+                    <dxi-validation-rule type="custom"  [validationCallback]="validateNumber" 
+                        message="La cantidad debe ser mayor a cero">
+                    </dxi-validation-rule>  
+                </dxi-column>
+                <dxi-column dataField="subTotal" caption="SubTotal" dataType="decimal" format="Bs #.#"  [calculateCellValue]='subTotalCellValue'
+                  [allowEditing]="false"></dxi-column>
+
+                  <dxo-summary>
+                    <dxi-total-item column="descripcionMenu" summaryType="count"> </dxi-total-item>
+                    <dxi-total-item column="subTotal" summaryType="sum" displayFormat="Total Venta Bs.: {0}" valueFormat="decimal"> </dxi-total-item>
+                  </dxo-summary>
+                  
+              </dx-data-grid>
+  
+            </ion-card>
+
+           
+          </ion-col>
+    
+        </ion-row>
+        
+    </ion-card>
+   
+
+
+
+  </div>
+</ion-content>

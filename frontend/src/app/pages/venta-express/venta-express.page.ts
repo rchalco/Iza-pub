@@ -241,6 +241,7 @@ export class VentaExpressPage implements OnInit {
       detalleventaInstance.precioUnitario = x.precio;
       detalleventaInstance.unidadePorCaja = 1;
       detalleventaInstance.precioCaja = 1;
+      detalleventaInstance.nombreProducto = x.nombreProducto;
       this.listaDetalleVentas.push(detalleventaInstance);
     });
     console.log('idAlmacen', this.idAlmacen);

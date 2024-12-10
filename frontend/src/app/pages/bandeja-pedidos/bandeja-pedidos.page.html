@@ -1,0 +1,123 @@
+<app-custom-header title="Bandeja de Pedidos"></app-custom-header>
+<ion-content fullscreen  >
+  <!-- <div>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Seleccione la Fecha para consultar</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="dx-field-label">Fecha Nacimiento</div>
+        <div class="dx-field-value">
+          <dx-date-box applyValueMode="useButtons" [(value)]="fechaDeNacimiento" displayFormat="dd/MM/yyyy"
+            [min]="min" [max]="now" [inputAttr]="{ 'aria-label': 'Set Birthday' }">
+          </dx-date-box>
+        </div>
+        <ion-button type="submit" (click)="buscarPedidos()">
+          Buscar Facturas
+        </ion-button>
+        
+      </ion-card-content>
+    </ion-card>
+  </div> -->
+  <div *ngIf="showDetalle" >
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Detalle de Pedidos del Dia</ion-card-subtitle>
+        <ion-button (click)="buscarPedidos()">Actualizar informacion</ion-button>
+      </ion-card-header>
+      <ion-card-content id="container">
+
+        <dx-data-grid id="gridContainer" [dataSource]="listaPedidos" [remoteOperations]="false"
+          [allowColumnReordering]="true" [rowAlternationEnabled]="true" [showBorders]="true" [columnAutoWidth]="false"
+          [columnMinWidth]="80">
+          keyExpr="idPedFormaPago">
+          <dxo-editing [allowUpdating]="true">
+          </dxo-editing>
+
+         
+
+          <!-- <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export> -->
+          <dxo-paging [pageSize]="100"></dxo-paging>
+          <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[100, 200]"></dxo-pager>
+          <dxo-search-panel [visible]="true" [highlightCaseSensitive]="true"></dxo-search-panel>
+          <dxo-group-panel [visible]="true"></dxo-group-panel>
+          <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+
+          <dxi-column dataField="idPedMaster" caption="Pedido" dataType="number" [width]="50"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="fechaRegistro" caption="Fecha Hora" dataType="string" [width]="150"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="usuario" caption="Usuario" dataType="string" [width]="150"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="formaDePago" caption="Forma Pago" dataType="string" [width]="150"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="montoCubierto" caption="Monto" dataType="decimal" format="0#.##" [width]="110" 
+            [allowEditing]="false"></dxi-column>
+          <dxi-column dataField="estado" caption="Estado" dataType="string" [width]="150"
+            [allowEditing]="false"></dxi-column>
+          <dxi-column type="buttons" caption="Opciones">
+            <dxi-button name="anular" text="Anular" hint="Anular Pedido" icon="clear" [onClick]="anularPedido">
+            </dxi-button>
+            <dxi-button name="refrescar" text="FormaPAgo" hint="Cambiar forma de Pago" icon="revert" [onClick]="formaPago">
+            </dxi-button>
+          </dxi-column>
+
+          <dxo-summary>
+            <dxi-group-item column="usuario" summaryType="count"> </dxi-group-item>
+            <dxi-group-item column="montoCubierto" summaryType="sum"> </dxi-group-item>
+
+            <dxi-total-item column="usuario" summaryType="count"> </dxi-total-item>
+            <dxi-total-item column="montoCubierto" summaryType="sum" displayFormat="Total Bs.: {0}" valueFormat="decimal"> </dxi-total-item>
+          </dxo-summary>
+
+        </dx-data-grid>
+
+       
+
+      </ion-card-content>
+    </ion-card>
+
+    <dx-popup
+      [width]="300"
+      [height]="280"
+      [showTitle]="true"
+      title="Cambio en Forma de Pago"
+      [dragEnabled]="false"
+      [showCloseButton]="false"
+      container=".dx-viewport"
+      [(visible)]="popupVisible"
+    >
+      <dxi-toolbar-item
+        widget="dxButton"
+        toolbar="bottom"
+        location="after"
+        [options]="closeButtonOptions"
+      >
+      </dxi-toolbar-item>
+      <dxi-toolbar-item
+        widget="dxButton"
+        toolbar="bottom"
+        location="before"
+        [options]="aceptaruttonOptions"
+      >
+
+      </dxi-toolbar-item>
+      <dxo-position at="bottom" my="center" [of]="positionOf" collision="fit">
+      </dxo-position>
+      <div *dxTemplate="let data of 'content'">
+        <p>
+          Forma de Pago:
+          <ion-select interface="popover" value="0" placeholder="Forma de Pago" (ionChange)="setFormaPago($event)">
+            <ion-select-option value="1">Efectivo</ion-select-option>
+            <ion-select-option value="2">POS</ion-select-option>
+            <ion-select-option value="3">Ticket</ion-select-option>
+          </ion-select>
+        </p>
+      
+      </div>
+    </dx-popup>
+
+  </div>
+  
+
+</ion-content>

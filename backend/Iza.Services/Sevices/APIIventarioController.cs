@@ -56,5 +56,63 @@ namespace Iza.Services.Sevices
             return mgrInventario.SolicitarAmbientesCompleto(requestAperturaCaja);
         }
 
+
+        [HttpPost("ProductosVendidosPorBarra")]
+        [EnableCors()]
+        public ResponseQuery<ProductosVendidosPorBarraDTO> ProductosVendidosPorBarra(GeneralRequestAlmacen request)
+        {
+            EngineInventarios mgInventario = new EngineInventarios();
+            return mgInventario.ProductosVendidosPorBarra(request);
+        }
+
+        [HttpPost("IngredientesDeMenuGeneral")]
+        [EnableCors()]
+        public ResponseQuery<IngredientesDeMenuGeneralDTO> IngredientesDeMenuGeneral(GeneralRequest1 request)
+        {
+            EngineInventarios mgInventario = new EngineInventarios();
+            return mgInventario.IngredientesDeMenuGeneral(request);
+        }
+
+        [HttpPost("BusquedaMenuGeneral")]
+        [EnableCors()]
+        public ResponseQuery<IngredientesDeMenuGeneralDTO> BusquedaMenuGeneral(GeneralRequestBusqueda request)
+        {
+            EngineInventarios mgInventario = new EngineInventarios();
+            return mgInventario.BusquedaMenuGeneral(request);
+        }
+
+
+        [HttpPost("GrabarMenuGeneralCompleto")]
+        [EnableCors()]
+        public ResponseQuery<IngredientesDeMenuGeneralDTO> GrabarMenuGeneralCompleto(IngredientesDeMenuGeneralDTO request)
+        {
+            EngineInventarios mgInventario = new EngineInventarios();
+            return mgInventario.GrabarMenuGeneralCompleto(request);
+        }
+
+
+        [HttpPost("ClasificadorPorTipo")]
+        [EnableCors()]
+        public ResponseQuery<ClasificadorDTO> ClasificadorPorTipo(GeneralRequest1 request)
+        {
+            EngineInventarios mgInventario = new EngineInventarios();
+            return mgInventario.ClasificadorPorTipo(request);
+        }
+
+        [HttpPost("AperturaInventario")]
+        [EnableCors()]
+        public ResponseQuery<InventarioProducto> AperturaInventario(GeneralRequest1 requestGral)
+        {
+            EngineInventarios mgInventario = new EngineInventarios();
+            return mgInventario.AperturaInventario(requestGral);
+        }
+
+        [HttpPost("CierreInventario")]
+        [EnableCors()]
+        public ResponseQuery<InventarioProducto> CierreInventario(GeneralRequest1 requestGral)
+        {
+            EngineInventarios mgInventario = new EngineInventarios();
+            return mgInventario.CierreInventario(requestGral);
+        }
     }
 }

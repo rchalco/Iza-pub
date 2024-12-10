@@ -5,6 +5,7 @@ import { InventarioService } from 'src/app/services/inventario.service';
 import DxDataGrid from 'devextreme/ui/data_grid';
 import { InventarioAsignacion } from 'src/app/interfaces/inventario/InventarioAsignacion';
 import { InventarioProducto } from 'src/app/interfaces/inventario/InventarioProducto';
+import { AlmacenDTO } from 'src/app/interfaces/inventario/Almacen';
 
 
 @Component({
@@ -16,11 +17,11 @@ export class AsignacionProductosPage implements OnInit {
 
   listaProductosAlmacen: ProductosAlmancen[] = [];
   dataSource: DataSource = new DataSource(this.listaProductosAlmacen);
-  listaAlmancenOrigen: [];
-  listaDestino: [];
+  listaAlmancenOrigen: AlmacenDTO[]=[];
+  listaDestino: AlmacenDTO[]=[];
   inventarioAsignacion: InventarioAsignacion = new InventarioAsignacion();
-  barraOrigen;
-  barraDestino;
+  barraOrigen = new AlmacenDTO();
+  barraDestino= new AlmacenDTO();
 
   constructor(private inventarioService: InventarioService) {
 
@@ -28,21 +29,33 @@ export class AsignacionProductosPage implements OnInit {
 
   ngOnInit() {
 
+    this.barraOrigen = new AlmacenDTO();
+    this.barraDestino = new AlmacenDTO();
+    
+    this.inventarioService.obtenerAlmacenesParaAsignacion().then(resul => resul.subscribe(data => {
+      this.listaAlmancenOrigen = data.listEntities;
+      //console.log('lista111111', this.listaAlmancenOrigen);
+      //this.selectProductosAlmacenOrig.idAlmacen = 1;
+      //this.barraOrigen.idAlmacen = 1;
+    }));
+
+    this.inventarioService.obtenerAlmacenesParaAsignacion().then(resul => resul.subscribe(data => {
+      this.listaDestino = data.listEntities;
+      //this.selectProductosAlmacenDest.idAlmacen = 11;
+      //this.barraDestino.idAlmacen = 11;
+    }));
+    this.obtieneProductos();
+    this.barraOrigen.idAlmacen = 11;
+    this.barraDestino.idAlmacen = 1;
+  }
+
+  obtieneProductos(){
     this.inventarioService.ObtenerProductosAlmacenCentral().then(resul => resul.subscribe(data => {
       this.listaProductosAlmacen = data.listEntities;
       this.dataSource = new DataSource(this.listaProductosAlmacen);
     }));
 
-    this.inventarioService.obtenerAlmacenesParaAsignacion().then(resul => resul.subscribe(data => {
-      this.listaAlmancenOrigen = data.listEntities;
-    }));
-
-    this.inventarioService.obtenerAlmacenesParaAsignacion().then(resul => resul.subscribe(data => {
-      this.listaDestino = data.listEntities;
-    }));
-
   }
-
   onSaving(e: any) {
     e.cancel = true;
 
@@ -61,6 +74,7 @@ export class AsignacionProductosPage implements OnInit {
     this.inventarioAsignacion.detalleProductos = [];
     const listaCamabiada = JSON.parse(changes);
     console.log('listaCamabiada', listaCamabiada);
+    console.log('listaCamabiadaxxxx', this.listaProductosAlmacen);
     listaCamabiada.forEach(x => {
       if (x.data.cantidadAsignada > 0) {
         const inventarioProducto = new InventarioProducto();
@@ -74,6 +88,12 @@ export class AsignacionProductosPage implements OnInit {
         inventarioProducto.nombreProducto = x.key.nombreProducto;
         inventarioProducto.categoria = "";
         inventarioProducto.enStock = 0.00;
+        if (x.data.fechaDeVencimiento === null)
+          inventarioProducto.fechaDeVencimiento = x.data.fechaDeVencimiento;
+        else
+          inventarioProducto.fechaDeVencimiento = x.key.fechaDeVencimiento;
+        console.log('fecha', inventarioProducto.fechaDeVencimiento);
+        
         this.inventarioAsignacion.detalleProductos.push(inventarioProducto);
       }
     });
@@ -81,7 +101,7 @@ export class AsignacionProductosPage implements OnInit {
     (await this.inventarioService.GrabaAsignacionProducto(this.inventarioAsignacion)).subscribe(resul => {
       console.log(resul.message);
       this.inventarioService.showMessageSucess(resul.message);
-
+      this.listaProductosAlmacen = [];
       this.inventarioService.ObtenerProductosAlmacenCentral().then(resul => resul.subscribe(data => {
         this.listaProductosAlmacen = data.listEntities;
         this.dataSource = new DataSource(this.listaProductosAlmacen);
@@ -93,11 +113,14 @@ export class AsignacionProductosPage implements OnInit {
 
   }
 
-  selectBarraOrigen(event) {
-    this.barraOrigen = event.detail.value;
+  selectBarraOrigen(event: any) {
+    console.log('listaCamabiadaaaaaaa', event.detail);
+    this.barraOrigen = new AlmacenDTO();
+    this.barraOrigen.idAlmacen = event.detail.value;
   }
 
   selectBarraDestino(event) {
-    this.barraDestino = event.detail.value;
+    this.barraDestino = new AlmacenDTO();
+    this.barraDestino.idAlmacen = event.detail.value;
   }
 }

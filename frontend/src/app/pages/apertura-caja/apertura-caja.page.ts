@@ -82,16 +82,17 @@ export class AperturaCajaPage implements OnInit {
       .then((resultPromise) => {
         resultPromise.subscribe((resul) => {
           this.stockService.showMessageResponse(resul);
-          console.log('aperturaCaja: ', resul);
+          console.log('aperturaCaja: ', resul.data);
+          console.log('aperturaCajaaaaaaaa: ', resul.data.idOperacionDiaria);
           if (resul.state === 1) {
             this.databaseService.getItem('enviroment').then((item) => {
               item['idOperacionDiariaCaja'] =
                 environment.idOperacionDiariaCaja =
-                  resul.object.idOperacionDiaria;
+                  resul.data.idOperacionDiaria;
               item['idFechaProceso'] = environment.idFechaProceso =
-                resul.object.idFechaProceso;
+                resul.data.idFechaProceso;
               item['fechaProceso'] = environment.fechaProceso =
-                resul.object.fechaProceso;
+                resul.data.fechaProceso;
               console.log('envNew', item);
               this.databaseService.setItem('enviroment', item);
             });

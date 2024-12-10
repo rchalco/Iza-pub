@@ -1,32 +1,27 @@
   <ion-card style="height: 320px; overflow-y: scroll">
-    <ion-card-header>
-      <ion-card-subtitle>Buscar Producto</ion-card-subtitle>
-    </ion-card-header>
+   
     <ion-card-content>
       <ion-searchbar
         animated="true"
         (ionChange)="buscar($event)"
-        placeholder="Producto"
+        placeholder="Buscar Producto"
       ></ion-searchbar>
       <ion-list>
         <ion-item
-          *ngFor="let producto of productos | filtro: textoBusacar:'producto'"
+          *ngFor="let producto of productos | filtro: textoBusacar:'nombreProducto'"
         >
-          <ion-avatar slot="start">
-            <img [src]="producto.picProducto" />
-          </ion-avatar>
-          <ion-label>
+         <ion-label>
             <h2>
-              {{ producto.producto }} ({{ producto.embase }}), Marca:{{
+              {{ producto.nombreProducto }} ({{ producto.embase }}), Marca:{{
                 producto.marca
-              }}, Precio: {{ producto.precio }}
+              }}
             </h2>
-            <h2>Stock: {{ producto.enStock }}</h2>
+            
           </ion-label>
           <ion-button
             slot="end"
             (click)="clickEventSearchItem(producto)"
-            [disabled]="producto.stock <= 0"
+            
             >{{ nameButtonSearch }}</ion-button
           >
         </ion-item>

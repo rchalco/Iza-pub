@@ -13,7 +13,7 @@ namespace Iza.Services.Sevices
     {
 
         [HttpPost("LoginUsuario")]
-        [EnableCors("MyPolicy")]
+        [EnableCors()]
         public ResponseObject<LoginResponse> LoginUsuario(LoginRequest requestLogin)
         {
             EngineSeguridad seguridadManager = new EngineSeguridad();

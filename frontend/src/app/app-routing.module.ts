@@ -228,6 +228,23 @@ const routes: Routes = [
     path: 'asignacion-productos',
     loadChildren: () => import('./pages/asignacion-productos/asignacion-productos.module').then( m => m.AsignacionProductosPageModule)
   },
+  {
+    path: 'bandeja-pedidos',
+    loadChildren: () => import('./pages/bandeja-pedidos/bandeja-pedidos.module').then( m => m.BandejaPedidosPageModule)
+  },
+  {
+    path: 'configura-menu-ingredientes',
+    loadChildren: () => import('./pages/configura-menu-ingredientes/configura-menu-ingredientes.module').then( m => m.ConfiguraMenuIngredientesPageModule)
+  },  {
+    path: 'venta-busqueda',
+    loadChildren: () => import('./pages/venta-busqueda/venta-busqueda.module').then( m => m.VentaBusquedaPageModule)
+  },
+  {
+    path: 'cierre-inventario',
+    loadChildren: () => import('./pages/cierre-inventario/cierre-inventario.module').then( m => m.CierreInventarioPageModule)
+  },
+
+ 
 
 
 ];

@@ -89,7 +89,7 @@ namespace Iza.Core.Engine.Inventarios
                 List<typeDetailAsignacion> coltypeDetailAsignacion = new List<typeDetailAsignacion>();
                 inventarioAsignacion.detalleProductos.ForEach(x =>
                 {
-                    coltypeDetailAsignacion.Add(new typeDetailAsignacion { idProducto = x.idProducto, cantidad = Convert.ToInt32(x.cantidad) });
+                    coltypeDetailAsignacion.Add(new typeDetailAsignacion { idProducto = x.idProducto, cantidad = Convert.ToInt32(x.cantidad), fechaDeVencimiento = x.fechaDeVencimiento, montoDeCompra = 0 });
                 });
 
                 ParamOut poRespuesta = new ParamOut(false);
@@ -173,6 +173,245 @@ namespace Iza.Core.Engine.Inventarios
             return response;
         }
 
+        public ResponseQuery<ProductosVendidosPorBarraDTO> ProductosVendidosPorBarra(GeneralRequestAlmacen request)
+        {
+            ResponseQuery<ProductosVendidosPorBarraDTO> response = new ResponseQuery<ProductosVendidosPorBarraDTO> { Message = "Formas de pago obtenidos correctamente", State = ResponseType.Success };
+            try
+            {
+                ParamOut paramOutRespuesta = new ParamOut(true);
+                ParamOut paramOutLogRespuesta = new ParamOut("");
+                paramOutLogRespuesta.Size = 100;
+
+                response.ListEntities = repositoryPub.GetDataByProcedure<ProductosVendidosPorBarraDTO>("reportes.spObtProductosVendidosPorBarra",
+                    request.idSesion,
+                    request.idFechaProceso,
+                    request.idAlmacen);
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
+        public ResponseQuery<IngredientesDeMenuGeneralDTO> IngredientesDeMenuGeneral(GeneralRequest1 request)
+        {
+
+            ResponseQuery<IngredientesDeMenuGeneralDTO> response = new ResponseQuery<IngredientesDeMenuGeneralDTO> { Message = "Se obtuvo el menu general", State = ResponseType.Success };
+            try
+            {
+                response.ListEntities = new List<IngredientesDeMenuGeneralDTO>();
+                response.ListEntities = repositoryPub.GetDataByProcedure<IngredientesDeMenuGeneralDTO>("[ventas].[spObtIngredientesDeMenuGeneral]", request.idSesion);
+
+                if (response.ListEntities == null || response.ListEntities.Count == 0)
+                {
+                    response.Message = "No se cuenta con informacion";
+                    response.State = ResponseType.Warning;
+                    return response;
+                }
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
+        public ResponseQuery<IngredientesDeMenuGeneralDTO> BusquedaMenuGeneral(GeneralRequestBusqueda request)
+        {
+
+            ResponseQuery<IngredientesDeMenuGeneralDTO> response = new ResponseQuery<IngredientesDeMenuGeneralDTO> { Message = "Se obtuvo el menu general", State = ResponseType.Success };
+            try
+            {
+                response.ListEntities = new List<IngredientesDeMenuGeneralDTO>();
+                response.ListEntities = repositoryPub.GetDataByProcedure<IngredientesDeMenuGeneralDTO>("[inventario].[spBuscarEnMenu]", request.idSesion, request.textoABuscar);
+
+                if (response.ListEntities == null || response.ListEntities.Count == 0)
+                {
+                    response.Message = "No se cuenta con informacion";
+                    response.State = ResponseType.Warning;
+                    return response;
+                }
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
+
+        public ResponseQuery<IngredientesDeMenuGeneralDTO> GrabarMenuGeneralCompleto(IngredientesDeMenuGeneralDTO request)
+        {
+
+            ResponseQuery<IngredientesDeMenuGeneralDTO> response = new ResponseQuery<IngredientesDeMenuGeneralDTO> { Message = "Datos registrados correctamente", State = ResponseType.Success };
+            try
+            {
+                //List<typeIngredientesDeMenu> typeMeduDetalle = new List<typeIngredientesDeMenu>();
+                /////Grabar menu
+                //if (request.detalle != null)
+                //{
+                //    request.detalle.ForEach(x =>
+                //    {
+                //        typeMeduDetalle.Add(new typeIngredientesDeMenu { idProducto = x.idProducto, medidaPorcentaje = 0, medidaUnitaria = x.medidaUnitaria, unidadDeMedida = x.unidaDeMedida });
+                //    });
+                //}
+                ParamOut paramOutRespuesta = new ParamOut(true);
+                repositoryPub.CallProcedure<Response>("[inventario].[spABMParamPrecio]", 
+                    request.idSesion,
+                    request.esParaMenu ? 1:0,
+                    request.esProducto ? 1 : 0,
+                    request.idPrecio,
+                    request.idCategoria,
+                    request.descripcionMenu,
+                    request.marca,
+                    request.embase,
+                    request.precio,
+                    request.idIngrediente,
+                    request.descripcionMenu,
+                    request.embaseXUnidades,
+                    request.medidaUnitaria,
+                    request.idProducto,
+                    request.marca,
+                    request.contenido,
+                    request.precioUnitario,
+                    request.precio,
+                    0, //clasificador  no se usa
+                    0, //cantidad
+                    1, //orden despliegue
+                    request.depliegueDerecha ? 1 : 0,
+                    request.detalle, //typeMeduDetalle,
+                    paramOutRespuesta
+                    );
+
+                ///respuesta
+                if ((bool)paramOutRespuesta.Valor)
+                {
+                    response.Message = "Error al grabar.";
+                    response.State = ResponseType.Error;
+                    repositoryPub.Rollback();
+                    return response;
+                }
+                repositoryPub.Commit();
+                response.ListEntities = new List<IngredientesDeMenuGeneralDTO>();
+                response.ListEntities = repositoryPub.GetDataByProcedure<IngredientesDeMenuGeneralDTO>("[ventas].[spObtIngredientesDeMenuGeneral]", request.idSesion);
+
+                if (response.ListEntities == null || response.ListEntities.Count == 0)
+                {
+                    response.Message = "No se cuenta con informacion";
+                    response.State = ResponseType.Warning;
+                    return response;
+                }
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
+        public ResponseQuery<InventarioProducto> AperturaInventario(GeneralRequest1 requestGral)
+        {
+
+            ResponseQuery<InventarioProducto> response = new ResponseQuery<InventarioProducto> { Message = "Se aperturo el Inventario del dia", State = ResponseType.Success };
+            try
+            {
+                long id = 0;
+                ParamOut poRespuesta = new ParamOut(false);
+                ParamOut poLogRespuesta = new ParamOut("");
+                ParamOut poFecha = new ParamOut(new DateTime());
+                ParamOut poIdFecha = new ParamOut(id);
+
+                poLogRespuesta.Size = 100;
+                //response.ListEntities = new List<ResulProductoPrecioVenta>();
+
+                response.ListEntities = repositoryPub.GetDataByProcedure<InventarioProducto>("inventario.spAperturaInventarioFechaProceso", requestGral.idSesion, poIdFecha, poFecha, poRespuesta, poLogRespuesta);
+                //repositoryFabula.Commit();
+
+                if (response.ListEntities == null)
+                {
+                    response.State = ResponseType.Error;
+                    response.Message = "No se realizo la apertur del Inventario";
+                }
+
+                if ((bool)poRespuesta.Valor)
+                {
+                    response.Message = poLogRespuesta.Valor.ToString();
+                    response.State = ResponseType.Error;
+                    return response;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
+        public ResponseQuery<InventarioProducto> CierreInventario(GeneralRequest1 requestGral)
+        {
+
+            ResponseQuery<InventarioProducto> response = new ResponseQuery<InventarioProducto> { Message = "Se realico el cierre del Inventario del dia", State = ResponseType.Success };
+            try
+            {
+                long id = 0;
+                ParamOut poRespuesta = new ParamOut(false);
+                ParamOut poLogRespuesta = new ParamOut("");
+                ParamOut poFecha = new ParamOut(new DateTime());
+                ParamOut poIdFecha = new ParamOut(id);
+
+                poLogRespuesta.Size = 100;
+                //response.ListEntities = new List<ResulProductoPrecioVenta>();
+
+                response.ListEntities = repositoryPub.GetDataByProcedure<InventarioProducto>("inventario.spCierreInventarioFechaProceso", requestGral.idSesion, requestGral.idFechaProceso, poRespuesta, poLogRespuesta);
+                //repositoryFabula.Commit();
+
+                if (response.ListEntities == null)
+                {
+                    response.State = ResponseType.Error;
+                    response.Message = "No se realizo la apertura del Inventario";
+                }
+
+                if ((bool)poRespuesta.Valor)
+                {
+                    response.Message = poLogRespuesta.Valor.ToString();
+                    response.State = ResponseType.Error;
+                    return response;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
+
+
+
+        #region Clasificador
+
+        public ResponseQuery<ClasificadorDTO> ClasificadorPorTipo(GeneralRequest1 requestGral)
+        {
+
+            ResponseQuery<ClasificadorDTO> response = new ResponseQuery<ClasificadorDTO> { Message = "Clasificador recuperado", State = ResponseType.Success };
+            try
+            {
+                response.ListEntities = repositoryPub.GetDataByProcedure<ClasificadorDTO>("[ventas].[spObtClasificadorPorTipo]", requestGral.idFechaProceso);
+
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
+        #endregion
 
     }
 }

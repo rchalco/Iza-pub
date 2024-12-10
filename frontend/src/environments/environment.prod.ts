@@ -61,9 +61,10 @@ export const LogoVoucher = '';
 //SERVER MYKE
 export const URL_MIROVENTAOPERACION = 'http://155.138.212.216:8032/api/MicroventaOperacion/';
 export const URL_TINTORERIA = 'http://155.138.212.216:8032/api/Tintoreria/';
-export const URL_SECURITY = 'http://155.138.212.216:8032/api/APISecurity/';
-export const URL_INVENTARIO = 'http://155.138.212.216:8032/api/APIIventario/';
-export const URL_MIROVENTA = 'http://155.138.212.216:8032/api/APIVenta/';
+////El de seguridad no debe cambiar el puerto
+export const URL_SECURITY = 'http://155.138.212.216:8033/api/APISecurity/';
+export const URL_INVENTARIO = 'http://155.138.212.216:8037/api/APIIventario/';
+export const URL_MIROVENTA = 'http://155.138.212.216:8037/api/APIVenta/';
 export const URL_PERSON = 'http://155.138.212.216:8032/api/Person/';
 export const URL_CARDS = 'http://155.138.212.216:8032/api/Tarjeta/';
 export const URL_FINGERS = 'http://155.138.212.216:8032/api/Biometric/';

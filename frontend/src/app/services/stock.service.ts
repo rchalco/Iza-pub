@@ -226,7 +226,7 @@ export class StockService extends BaseService {
       dataRequest.idSesion = env.session;
       //dataRequest.idEmpresa = env.idEmpresa;
     });
-
+    console.log('APERTURA CAJA', dataRequest);
     this.presentLoader();
     return this.httpClient
       .post<any>(url_query, JSON.stringify(dataRequest), { headers })
@@ -514,33 +514,7 @@ export class StockService extends BaseService {
       );
   }
 
-  async aperturaInventario() {
-    let url_query = urlMicroventa + 'AperturaInventario';
-
-    let dataRequest = {
-      ParametroLong1: 0,
-    };
-
-    await this.getInfoEviroment().then((env) => {
-      dataRequest.ParametroLong1 = env.session;
-    });
-
-    this.presentLoader();
-    return this.httpClient
-      .post<any>(url_query, JSON.stringify(dataRequest), { headers })
-      .pipe(
-        finalize(() => {
-          console.log('**se termino la llamada transaccionesDetallePorID');
-          this.dismissLoader();
-        }),
-        catchError((error) => {
-          console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
-        })
-      );
-  }
-
+ 
   async grabaAsignacionProducto(
     idAlmacenOrigen,
     idAlmacenDestino,

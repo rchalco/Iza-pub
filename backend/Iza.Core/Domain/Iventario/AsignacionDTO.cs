@@ -13,7 +13,9 @@ namespace Iza.Core.Domain.Iventario
         public int idProducto { get; set; }
         public string nombreProducto { get; set; }
         public decimal stockAnterior { get; set; }
+        public decimal ventas { get; set; }
         public int ingresos { get; set; }
         public decimal disponibleAlmacenCentral { get; set; }
+        public DateTime fechaDeVencimiento { get; set; }
     }
 }

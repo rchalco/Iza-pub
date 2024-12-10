@@ -4,24 +4,23 @@
     <ion-card>
       <ion-card-header>
         <ion-card-subtitle>Informacion de Almancen Central</ion-card-subtitle>
+        <ion-button (click)="obtieneProductos()">Actualizar informacion</ion-button>
       </ion-card-header>
       <ion-card-content>
         <ion-list>
           <ion-item>
-            <label>
-              Origen:
-            </label>
-            <ion-select (ionChange)="selectBarraOrigen($event)">
-              <ion-select-option *ngFor="let alamacen of listaAlmancenOrigen" [value]="alamacen">
+           
+            <ion-select interface="popover" placeholder="Seleccionar Origen" (ionChange)="selectBarraOrigen($event)"
+                value="{{ barraOrigen.idAlmacen }}">
+              <ion-select-option expand="full" *ngFor="let alamacen of listaAlmancenOrigen" value="{{ alamacen.idAlmacen }}">
                 {{alamacen.descripcion}}</ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item>
-            <label>
-              Destino:
-            </label>
-            <ion-select (ionChange)="selectBarraDestino($event)">
-              <ion-select-option *ngFor="let alamacen of listaDestino" [value]="alamacen">
+           
+            <ion-select interface="popover" placeholder="Seleccionar Destino" (ionChange)="selectBarraDestino($event)"
+                value="{{ barraDestino.idAlmacen }}">
+              <ion-select-option *ngFor="let alamacen of listaDestino" value="{{ alamacen.idAlmacen }}">
                 {{alamacen.descripcion}}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -33,22 +32,21 @@
               <dxo-editing mode="batch" [allowUpdating]="true" [selectTextOnEditStart]="true">
               </dxo-editing>
               <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
-              <dxo-paging [pageSize]="10"></dxo-paging>
-              <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[10, 25, 50, 100]"></dxo-pager>
+              <dxo-paging [pageSize]="50"></dxo-paging>
+              <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[50, 100, 200]"></dxo-pager>
               <dxo-search-panel [visible]="true" [highlightCaseSensitive]="true"></dxo-search-panel>
               <dxo-group-panel [visible]="true"></dxo-group-panel>
               <dxo-grouping [autoExpandAll]="false"></dxo-grouping>
-              <dxi-column dataField="clasificador" caption="Grupo" dataType="string"
-                [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="nombreProducto" caption="Producto" dataType="string"
-                [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="stockAnterior" caption="Stock" dataType="number"
-                [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="ingresos" caption="Ingreso" dataType="number" [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="disponibleAlmacenCentral" caption="Disponible" dataType="number"
-                [allowEditing]="false"></dxi-column>
-              <dxi-column dataField="cantidadAsignada" caption="Asignar" dataType="number"
-                [allowEditing]="true"></dxi-column>
+              <dxi-column dataField="clasificador" caption="Categoria" dataType="string" [allowEditing]="false" [width]="200"></dxi-column> 
+              <dxi-column dataField="nombreProducto" caption="Producto" dataType="string" [allowEditing]="false" [width]="350"></dxi-column>
+              <dxi-column dataField="stockAnterior" caption="Stock" dataType="number" [allowEditing]="false" [width]="100"></dxi-column>
+              <dxi-column dataField="ingresos" caption="Ingreso" dataType="number" [allowEditing]="false" [width]="100"></dxi-column>
+              <dxi-column dataField="ventas" caption="Ventas" dataType="number" [allowEditing]="false" [width]="100"></dxi-column>
+              <dxi-column dataField="disponibleAlmacenCentral" caption="Disponible" dataType="number" [allowEditing]="false" [width]="100"></dxi-column>
+              <dxi-column dataField="cantidadAsignada" caption="Asignar" dataType="number" [allowEditing]="true"[width]="100"></dxi-column>
+              <dxi-column dataField="fechaDeVencimiento" caption="Fecha Vencimiento" dataType="date" displayFormat="dd/MM/yyyy" [allowEditing]="true"></dxi-column>
+
+            
             </dx-data-grid>
           </ion-item>
         </ion-list>

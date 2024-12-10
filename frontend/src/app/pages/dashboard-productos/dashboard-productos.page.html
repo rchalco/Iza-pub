@@ -3,6 +3,19 @@
   <div>
     <ion-card>
       <ion-card-header>
+        <ion-select interface="popover" value="0" placeholder="Seleccionar Reporte" (ionChange)="setReporte($event)">
+          <ion-select-option value="0">Dashboard Productos</ion-select-option>
+          <ion-select-option value="1">Productos Vendidos</ion-select-option>
+          
+        </ion-select>
+      </ion-card-header>
+
+    </ion-card>
+  </div>
+
+  <div *ngIf="tipoReporte === 0">
+    <ion-card>
+      <ion-card-header>
         <ion-card-subtitle>Dashboard detalle de Productos</ion-card-subtitle>
         <ion-button (click)="actualizarDatos($event)">Actualizar informacion</ion-button>
       </ion-card-header>
@@ -87,4 +100,58 @@
       </ion-card-content>
     </ion-card>
   </div>
+
+  <div *ngIf="tipoReporte === 1">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Resumen productos Vendidos por barra</ion-card-subtitle>
+        <ion-list>
+          <ion-item>
+          
+            <ion-select interface="popover" placeholder="Seleccionar Barra" (ionChange)="selectBarraOrigen($event)">
+              <ion-select-option *ngFor="let alamacen of listaAlmancenOrigen" [value]="alamacen">
+                {{alamacen.descripcion}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-button (click)="generarResumenProductos()">Generar</ion-button>
+          </ion-item>
+        </ion-list>
+        
+        
+      </ion-card-header>
+      <ion-card-content>
+
+        <dx-data-grid id="gridContainer1" [dataSource]="listaVendidos" [remoteOperations]="false"
+          [allowColumnReordering]="false" [rowAlternationEnabled]="true" [showBorders]="true" [columnAutoWidth]="false"
+          [columnMinWidth]="80">
+          keyExpr="idProducto">
+         
+
+
+          <dxo-editing [allowUpdating]="false">
+          </dxo-editing>
+          <!-- <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export> -->
+          <dxo-paging [pageSize]="100"></dxo-paging>
+          <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[100, 200]"></dxo-pager>
+          <dxo-search-panel [visible]="true" [highlightCaseSensitive]="true"></dxo-search-panel>
+          <dxo-group-panel [visible]="true"></dxo-group-panel>
+          <dxo-grouping [autoExpandAll]="true"></dxo-grouping>
+          <dxi-column dataField="nombreProducto" caption="Producto" dataType="string" [width]="300"
+            [allowEditing]="false"></dxi-column>
+
+          <dxi-column dataField="enteras" caption="Enteras" dataType="number" format="0#" [width]="100"
+          [allowEditing]="false"></dxi-column>
+
+          <dxi-column dataField="unidades" caption="Unidades" dataType="number" format="0#" [width]="100"
+          [allowEditing]="false"></dxi-column>
+
+
+        </dx-data-grid>
+
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+
 </ion-content>

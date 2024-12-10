@@ -17,7 +17,7 @@ import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
 import { Browser } from '@capacitor/browser';
 
 const urlMicroventa = URL_MIROVENTAOPERACION;
-const urlTintoreria = URL_TINTORERIA;
+const urlTintoreria = URL_MIROVENTA;
 const headers = HEADERS_SERVICE;
 
 @Injectable({
