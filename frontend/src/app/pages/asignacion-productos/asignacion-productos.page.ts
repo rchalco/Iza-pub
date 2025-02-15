@@ -32,14 +32,14 @@ export class AsignacionProductosPage implements OnInit {
     this.barraOrigen = new AlmacenDTO();
     this.barraDestino = new AlmacenDTO();
     
-    this.inventarioService.obtenerAlmacenesParaAsignacion().then(resul => resul.subscribe(data => {
+    this.inventarioService.obtenerAlmacenesParaAsignacion(0).then(resul => resul.subscribe(data => {
       this.listaAlmancenOrigen = data.listEntities;
       //console.log('lista111111', this.listaAlmancenOrigen);
       //this.selectProductosAlmacenOrig.idAlmacen = 1;
       //this.barraOrigen.idAlmacen = 1;
     }));
 
-    this.inventarioService.obtenerAlmacenesParaAsignacion().then(resul => resul.subscribe(data => {
+    this.inventarioService.obtenerAlmacenesParaAsignacion(0).then(resul => resul.subscribe(data => {
       this.listaDestino = data.listEntities;
       //this.selectProductosAlmacenDest.idAlmacen = 11;
       //this.barraDestino.idAlmacen = 11;
@@ -88,10 +88,11 @@ export class AsignacionProductosPage implements OnInit {
         inventarioProducto.nombreProducto = x.key.nombreProducto;
         inventarioProducto.categoria = "";
         inventarioProducto.enStock = 0.00;
+        
         if (x.data.fechaDeVencimiento === null)
-          inventarioProducto.fechaDeVencimiento = x.data.fechaDeVencimiento;
-        else
           inventarioProducto.fechaDeVencimiento = x.key.fechaDeVencimiento;
+        else
+          inventarioProducto.fechaDeVencimiento = x.data.fechaDeVencimiento;
         console.log('fecha', inventarioProducto.fechaDeVencimiento);
         
         this.inventarioAsignacion.detalleProductos.push(inventarioProducto);

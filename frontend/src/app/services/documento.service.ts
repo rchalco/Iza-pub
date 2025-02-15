@@ -36,6 +36,9 @@ export class DocumentoService extends BaseService {
   }
 
   async generarDocumentoMultiPlataforma(dataDocumento: any) {
+
+    
+
     await this.platform.ready().then((resul) => {
       console.log('se cargo la plataforma correctamente');
     });
@@ -61,7 +64,9 @@ export class DocumentoService extends BaseService {
   }
 
   generarDocumento(dataDocumento: any) {
-    let url_query = urlMicroventa + 'GenerarDocumento';
+    
+    console.log('ZZZZZZZZ',dataDocumento);
+    let url_query = urlTintoreria + 'GenerarDocumento';
     this.presentLoader();
     this.httpClient
       .post(url_query, JSON.stringify(dataDocumento), {
@@ -94,6 +99,8 @@ export class DocumentoService extends BaseService {
   }
 
   generarDocumentoPartial(dataDocumento: any) {
+
+
     this.presentLoader();
     return this.httpClient
       .post(urlTintoreria + 'GenerarDocumento', JSON.stringify(dataDocumento), {

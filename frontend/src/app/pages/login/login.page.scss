@@ -1,0 +1,20 @@
+.full-screen {
+    min-width: 100%;
+  }
+  
+  .label-login {
+    color: #a79d9d;
+    font-style: oblique;
+  }
+  
+  .imagen-login {
+    @media only screen and (max-width: 600px) {
+      display: none;
+    }
+    text-align: center;
+  }
+  
+  .imagen-login-fondo {
+    max-height: 640px;
+  }
+  

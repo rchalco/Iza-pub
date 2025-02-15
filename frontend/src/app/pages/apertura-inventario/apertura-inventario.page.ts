@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ListaProductoComponent } from 'src/app/components/lista-producto/lista-producto.component';
 import { InventarioProducto } from 'src/app/interfaces/inventario/InventarioProducto';
+import { DatabaseService } from 'src/app/services/DatabaseService';
 import { InventarioService } from 'src/app/services/inventario.service';
 import { StockService } from 'src/app/services/stock.service';
 import { environment } from 'src/environments/environment';
@@ -16,7 +17,10 @@ export class AperturaInventarioPage implements OnInit {
   listaInventario: InventarioProducto[];
   @ViewChild('listaProductoComponent') listaProductoComponent: ListaProductoComponent;
 
-  constructor(private inventarioService: InventarioService) { }
+  constructor(
+    private inventarioService: InventarioService,
+    private databaseService: DatabaseService
+    ) { }
 
   ngOnInit() {
     this.showAperturaInvetario = true;
@@ -31,7 +35,17 @@ export class AperturaInventarioPage implements OnInit {
         productosService.subscribe((resul) => {
           this.inventarioService.showMessageResponse(resul);
           this.listaInventario = resul.listEntities as InventarioProducto[];
-          console.log('pedidos', this.listaInventario);
+          console.log('fecha apertura inventario', resul.code);
+
+          let itemFecha = this.listaInventario.filter(i => i.idFechaProceso > 0)[0];
+          console.log('REgistro con fecha de proceso', itemFecha);
+          this.databaseService.getItem('enviroment').then((item) => {
+            item['idFechaProceso'] = environment.idFechaProceso =
+            itemFecha.idFechaProceso;
+            item['fechaProceso'] = environment.fechaProceso =
+            itemFecha.fechaProceso;
+            this.databaseService.setItem('enviroment', item);
+          });
           /*
           this.listaPedidos.forEach((zz) => {
             this.total += zz.total;

@@ -14,10 +14,26 @@ namespace Iza.Services.Sevices
 
         [HttpPost("LoginUsuario")]
         [EnableCors()]
-        public ResponseObject<LoginResponse> LoginUsuario(LoginRequest requestLogin)
+        public ResponseObject<LoginDTO> LoginUsuario(RequestLogin requestLogin)
         {
             EngineSeguridad seguridadManager = new EngineSeguridad();
-            return seguridadManager.Login(requestLogin);
+            return seguridadManager.LoginUsuario(requestLogin);
+        }
+
+        [HttpPost("CambioContrasena")]
+        [EnableCors()]
+        public ResponseObject<LoginDTO> CambioContrasena(RequestLogin requestLogin)
+        {
+            EngineSeguridad seguridadManager = new EngineSeguridad();
+            return seguridadManager.CambioContrasena(requestLogin.usuario, requestLogin.password, requestLogin.passwordNuevo);
+        }
+
+        [HttpPost("ObtieneMenuPorUsuario")]
+        [EnableCors()]
+        public ResponseQuery<MenuGeneralDTO> ObtieneMenuPorUsuario(RequestMenuUsuario requestParametros)
+        {
+            EngineSeguridad seguridadManager = new EngineSeguridad();
+            return seguridadManager.ObtieneMenuPorUsuario(requestParametros);
         }
 
     }

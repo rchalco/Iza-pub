@@ -247,13 +247,14 @@ namespace Iza.Core.Engine.Ventas
             return response;
         }
 
-        public ResponseQuery<ResulSPVerificaEnStock> RegistrarVentas(RequestRegistroVenta requestRegistroVentas)
+        public Response RegistrarVentas(RequestRegistroVenta requestRegistroVentas)
         {
-            ResponseQuery<ResulSPVerificaEnStock> response = new ResponseQuery<ResulSPVerificaEnStock> { Message = "Venta registrada correctamente", State = ResponseType.Success };
+            Response response = new Response { Message = "Venta registrada correctamente", State = ResponseType.Success };
             try
             {
 
-                ParamOut paramOutRespuesta = new ParamOut(0);
+                ParamOut paramOutRespuesta = new ParamOut(false);
+                ParamOut paramOutidPedidoMaestro = new ParamOut(0);
                 ParamOut paramOutLogRespuesta = new ParamOut("");
                 paramOutLogRespuesta.Size = 100;
 
@@ -287,16 +288,23 @@ namespace Iza.Core.Engine.Ventas
                     requestRegistroVentas.formasDePago.Where(x => x.MontoCubierto > 0).ToList(),
                     2, //@estadoPedido
                     requestRegistroVentas.Observaciones, //@Observaciones AHORA ES vKey numero de la tarjeta
-                    0, //@idPedidoMaestro
+                    paramOutidPedidoMaestro, //@idPedidoMaestro
                     paramOutRespuesta,
                     paramOutLogRespuesta);
+
+                if ((bool)paramOutRespuesta.Valor)
+                {
+                    response.Message = paramOutLogRespuesta.Valor.ToString();
+                    response.State = ResponseType.Error;
+                    return response;
+                }
 
                 repositoryPub.Commit();
                 //Genera el archivo para llevarlo a la base de datos
                 List<PedidoDTO> colPedidoDTO = new List<PedidoDTO>();
                 requestRegistroVentas.detalleVentas.ForEach(x =>
                 {
-                    colPedidoDTO.Add(new PedidoDTO() { idProducto = x.idProducto, producto = x.nombreProducto, cantidad = x.cantidad.Value, idPedido = (int)paramOutRespuesta.Valor});
+                    colPedidoDTO.Add(new PedidoDTO() { idProducto = x.idProducto, producto = x.nombreProducto, cantidad = x.cantidad.Value, precioUnitario = x.PrecioFinal.Value, idPedido = (int)paramOutidPedidoMaestro.Valor});
                 });
 
                 VoucherPedido reporte = new VoucherPedido();
@@ -341,6 +349,7 @@ namespace Iza.Core.Engine.Ventas
                 nombreArchivo = fileName;
                 reporteBase64 = Convert.ToBase64String(File.ReadAllBytes(fileName));
 
+                response.Code = reporteBase64;
                 repositoryPub.CallProcedure<Response>("reportes.spAddImpresion",
                     requestRegistroVentas.idSesion,
                     requestRegistroVentas.idOperacionDiariaCaja,
@@ -382,7 +391,7 @@ namespace Iza.Core.Engine.Ventas
             return response;
         }
 
-        public ResponseQuery<DetallePedidosDTO> DetallePedidoPorFormaPago(GeneralRequest1 requestGeneral)
+        public ResponseQuery<DetallePedidosDTO> DetallePedidoPorFormaPago(GeneralRequestRangoFecha requestGeneral)
         {
             ResponseQuery<DetallePedidosDTO> response = new ResponseQuery<DetallePedidosDTO> { Message = "Detalle de pedidos del dia obtenidos", State = ResponseType.Success };
             try
@@ -393,7 +402,10 @@ namespace Iza.Core.Engine.Ventas
 
                 response.ListEntities = repositoryPub.GetDataByProcedure<DetallePedidosDTO>("[reportes].[spObtPedidosPorFormaDePago]",
                     requestGeneral.idSesion,
-                    requestGeneral.idFechaProceso);
+                    requestGeneral.fechaProceso.Date,
+                    requestGeneral.fechaProcesoFin.Date);
+                //requestGeneral.idFechaProceso,
+                //requestGeneral.fechaProceso.Date.AddDays(-1));
             }
             catch (Exception ex)
             {

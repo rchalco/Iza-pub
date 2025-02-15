@@ -23,20 +23,36 @@
     <ion-card>
       <ion-card-header>
         <ion-card-subtitle>Detalle de Pedidos del Dia</ion-card-subtitle>
+        <div class="dx-field-label">Fecha Inicial</div>
+        <div class="dx-field-value">
+            <dx-date-box applyValueMode="useButtons" [(value)]="fechaPedido" displayFormat="dd/MM/yyyy"
+              [min]="min" [max]="now" [inputAttr]="{ 'aria-label': 'Set Birthday' }">
+            </dx-date-box>
+        </div>
+
+        <div class="dx-field-label">Fecha Final</div>
+        <div class="dx-field-value">
+            <dx-date-box applyValueMode="useButtons" [(value)]="fechaPedidoFin" displayFormat="dd/MM/yyyy"
+              [min]="min" [max]="now" [inputAttr]="{ 'aria-label': 'Set Birthday' }">
+            </dx-date-box>
+        </div>
+
         <ion-button (click)="buscarPedidos()">Actualizar informacion</ion-button>
       </ion-card-header>
       <ion-card-content id="container">
 
         <dx-data-grid id="gridContainer" [dataSource]="listaPedidos" [remoteOperations]="false"
           [allowColumnReordering]="true" [rowAlternationEnabled]="true" [showBorders]="true" [columnAutoWidth]="false"
-          [columnMinWidth]="80">
-          keyExpr="idPedFormaPago">
+          [columnMinWidth]="80"
+          keyExpr="idPedFormaPago"
+          (onExporting)="onExporting($event)"
+          >
           <dxo-editing [allowUpdating]="true">
           </dxo-editing>
 
          
 
-          <!-- <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export> -->
+          <dxo-export [enabled]="true" [allowExportSelectedData]="true"></dxo-export>
           <dxo-paging [pageSize]="100"></dxo-paging>
           <dxo-pager [showPageSizeSelector]="true" [allowedPageSizes]="[100, 200]"></dxo-pager>
           <dxo-search-panel [visible]="true" [highlightCaseSensitive]="true"></dxo-search-panel>
@@ -51,9 +67,9 @@
             [allowEditing]="false"></dxi-column>
           <dxi-column dataField="formaDePago" caption="Forma Pago" dataType="string" [width]="150"
             [allowEditing]="false"></dxi-column>
-          <dxi-column dataField="montoCubierto" caption="Monto" dataType="decimal" format="0#.##" [width]="110" 
+          <dxi-column dataField="montoCubierto" caption="Monto" dataType="number" format="0#.##" [width]="140" 
             [allowEditing]="false"></dxi-column>
-          <dxi-column dataField="estado" caption="Estado" dataType="string" [width]="150"
+          <dxi-column dataField="estado" caption="Estado" dataType="string" [width]="100" [groupIndex]="0"
             [allowEditing]="false"></dxi-column>
           <dxi-column type="buttons" caption="Opciones">
             <dxi-button name="anular" text="Anular" hint="Anular Pedido" icon="clear" [onClick]="anularPedido">
@@ -67,7 +83,7 @@
             <dxi-group-item column="montoCubierto" summaryType="sum"> </dxi-group-item>
 
             <dxi-total-item column="usuario" summaryType="count"> </dxi-total-item>
-            <dxi-total-item column="montoCubierto" summaryType="sum" displayFormat="Total Bs.: {0}" valueFormat="decimal"> </dxi-total-item>
+            <dxi-total-item column="montoCubierto" summaryType="sum" displayFormat="Total: {0}" [valueFormat]="{type:'fixedPoint',precision:2}"> </dxi-total-item>
           </dxo-summary>
 
         </dx-data-grid>

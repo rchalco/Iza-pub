@@ -26,7 +26,7 @@ namespace Iza.Services.Sevices
 
         [HttpPost("SolicitarAmbientes")]
         [EnableCors()]
-        public ResponseQuery<AlmacenDTO> SolicitarAmbientes(GeneralRequest1 requestAperturaCaja)
+        public ResponseQuery<AlmacenDTO> SolicitarAmbientes(GeneralRequestAlmacen requestAperturaCaja)
         {
             EngineInventarios mgrInventario = new EngineInventarios();
             return mgrInventario.SolicitarAmbientes(requestAperturaCaja);
@@ -50,7 +50,7 @@ namespace Iza.Services.Sevices
 
         [HttpPost("SolicitarAmbientesCompleto")]
         [EnableCors()]
-        public ResponseQuery<AlmacenDTO> SolicitarAmbientesCompleto(GeneralRequest1 requestAperturaCaja)
+        public ResponseQuery<AlmacenDTO> SolicitarAmbientesCompleto(GeneralRequestAlmacen requestAperturaCaja)
         {
             EngineInventarios mgrInventario = new EngineInventarios();
             return mgrInventario.SolicitarAmbientesCompleto(requestAperturaCaja);

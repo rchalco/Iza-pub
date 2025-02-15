@@ -30,12 +30,13 @@ export class InventarioService extends BaseService {
     super(databaseService, httpClient, loadingController, toastController);
   }
 
-  async obtenerAlmacenes() {
+  async obtenerAlmacenes(_tipoAlmacen) {
     const urlQuery = urlInventario + 'SolicitarAmbientes';
-
+    console.log('ssssssssssssss');
     const dataRequest = {
       idSesion: 0,
       idFechaProceso: 0,
+      idAlmacen: _tipoAlmacen
     };
     await this.getInfoEviroment().then((env) => {
       dataRequest.idSesion = env.session;
@@ -123,12 +124,13 @@ export class InventarioService extends BaseService {
     });
   }
 
-  async obtenerAlmacenesParaAsignacion() {
+  async obtenerAlmacenesParaAsignacion(_tipoalmacen) {
     const urlQuery = urlInventario + 'SolicitarAmbientesCompleto';
 
     const dataRequest = {
       idSesion: 0,
       idFechaProceso: 0,
+      idAlmacen: _tipoalmacen
     };
     await this.getInfoEviroment().then((env) => {
       dataRequest.idSesion = env.session;

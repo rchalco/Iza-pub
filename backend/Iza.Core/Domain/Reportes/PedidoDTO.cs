@@ -12,5 +12,7 @@ namespace Iza.Core.Domain.Reportes
         public int idPedido { get; set; }
         public string producto { get; set; }
         public int cantidad { get; set; }
+        public decimal precioUnitario { get; set; }
+
     }
 }

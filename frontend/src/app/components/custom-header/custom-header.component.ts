@@ -12,6 +12,7 @@ import { AppComponent } from 'src/app/app.component';
 export class CustomHeaderComponent implements OnInit {
   @Input() title: string;
   usuarioNombre: string;
+  fechaProcesoActual: string;
   constructor(
     private menu: MenuController,
     private baseServices: StockService,
@@ -23,6 +24,11 @@ export class CustomHeaderComponent implements OnInit {
     this.stockService.getInfoEviroment().then((resul) => {
       console.log('env data header', resul);
       this.usuarioNombre = resul.Usuario;
+      var fecha =  new Date(resul.fechaProceso);
+      var year  = fecha.getFullYear();
+      var month = (fecha.getMonth() + 1).toString().padStart(2, "0");
+      var day   = fecha.getDate().toString().padStart(2, "0");
+      this.fechaProcesoActual = year +'/'+ month +'/'+ day;
     });
   }
   showMenu() {

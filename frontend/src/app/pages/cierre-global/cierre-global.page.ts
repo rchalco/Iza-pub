@@ -83,7 +83,7 @@ export class CierreGlobalPage implements OnInit {
         this.total
     );
     doc.pie =
-      'Reporte Generado para el SISTEMA FABULA, para cualquier consulta escribir a contactos@gamatek.org';
+      'Reporte Generado para el SISTEMA VENTAS, para cualquier consulta escribir a contactos@gamatek.org';
 
     console.log('Documento', doc);
 

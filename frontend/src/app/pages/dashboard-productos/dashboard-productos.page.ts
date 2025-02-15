@@ -30,7 +30,7 @@ export class DashboardProductosPage implements OnInit {
         this.dataSourceProductos = response.listEntities;
       });
     });
-    this.inventarioService.obtenerAlmacenesParaAsignacion().then(resul => resul.subscribe(data => {
+    this.inventarioService.obtenerAlmacenesParaAsignacion(1).then(resul => resul.subscribe(data => {
       this.listaAlmancenOrigen = data.listEntities;
     }));
 

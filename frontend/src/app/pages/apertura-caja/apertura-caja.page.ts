@@ -38,9 +38,17 @@ export class AperturaCajaPage implements OnInit {
   }
 
   cargarBarras() {
-    this.inventarioService.obtenerAlmacenes().then((resul) => {
+    this.inventarioService.obtenerAlmacenes(1).then((resul) => {
       resul.subscribe((x) => {
         this.barras = x.listEntities;
+        if (this.barras.length == 1)
+        {
+          this.barraCurrent = this.barras[0];
+          this.stockService.getInfoEviroment().then((x) => {
+            x.idAlmacen = this.barraCurrent.idAlmacen;
+            this.databaseService.setItem('enviroment', x);
+          });
+        }
         console.log('barras', this.barras);
       });
     });

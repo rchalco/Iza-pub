@@ -131,7 +131,8 @@ export class AsignacionInventarioPage implements OnInit {
   }
 
   cargarBarras() {
-    this.inventarioService.obtenerAlmacenes().then((resul) => {
+   
+    this.inventarioService.obtenerAlmacenes(0).then((resul) => {
       resul.subscribe((x) => {
         this.barras = x.listEntities;
         console.log('barras', this.barras);

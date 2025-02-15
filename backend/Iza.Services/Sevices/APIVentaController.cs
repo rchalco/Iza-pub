@@ -3,6 +3,7 @@ using Iza.Core.Domain.Iventario;
 using Iza.Core.Domain.Reportes;
 using Iza.Core.Domain.Venta;
 using Iza.Core.Domain.Venta.Caja;
+using Iza.Core.Engine.Impresion;
 using Iza.Core.Engine.Inventarios;
 using Iza.Core.Engine.Ventas;
 using Microsoft.AspNetCore.Cors;
@@ -60,7 +61,7 @@ namespace Iza.Services.Sevices
         }
 
         [HttpPost("ObtieneFormasdePago")]
-        [EnableCors("MyPolicy")]
+        [EnableCors()]
         public ResponseQuery<ResulObtieneFormasdePago> ObtieneFormasdePago(GeneralRequest1 requestSPObtFormasDePago)
         {
             EngineVentas mgrVentas = new EngineVentas();
@@ -69,7 +70,7 @@ namespace Iza.Services.Sevices
 
         [HttpPost("DetallePedidoPorFormaPago")]
         [EnableCors()]
-        public ResponseQuery<DetallePedidosDTO> DetallePedidoPorFormaPago(GeneralRequest1 requestGeneral)
+        public ResponseQuery<DetallePedidosDTO> DetallePedidoPorFormaPago(GeneralRequestRangoFecha requestGeneral)
         {
             EngineVentas mgrVentas = new EngineVentas();
             return mgrVentas.DetallePedidoPorFormaPago(requestGeneral);
@@ -132,6 +133,22 @@ namespace Iza.Services.Sevices
         {
             EngineVentas mgrVentas = new EngineVentas();
             return mgrVentas.GetDocumentPending(printerLineRequest);
+        }
+
+        [HttpPost("GenerarDocumento")]
+        [EnableCors()]
+        public IActionResult GenerarDocumento(DataDocumento dataDocumento)
+        {
+            EngineImpresion mangerPrinter = new EngineImpresion();
+            var resulMgr = mangerPrinter.GenerarDocumento(dataDocumento);
+            if (resulMgr.State == ResponseType.Success)
+            {
+                string fileName = resulMgr.Message;
+                fileName = fileName.StartsWith("\\") ? "\\" + fileName : fileName;
+                return new PhysicalFileResult(fileName, System.Net.Mime.MediaTypeNames.Application.Octet);
+            }
+
+            return Problem(resulMgr.Message);
         }
 
 

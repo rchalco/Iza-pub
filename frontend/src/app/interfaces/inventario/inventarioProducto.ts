@@ -10,4 +10,6 @@ export class InventarioProducto {
     idTipo: number;
     montoTotal: number;
     fechaDeVencimiento: Date = new Date();
+    idFechaProceso: number;
+    fechaProceso: Date = new Date();
 }

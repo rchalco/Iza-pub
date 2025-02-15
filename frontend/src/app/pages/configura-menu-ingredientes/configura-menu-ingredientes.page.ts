@@ -113,6 +113,8 @@ export class ConfiguraMenuIngredientesPage implements OnInit {
   }
   siguiente(){
     console.log('CATEGORIA',this.selectTipoProducto.idClasificador);
+    console.log('PRODUCTO XXXXX',this.selectedRegistro);
+    
     if(this.selectTipoProducto.idClasificador ===  0)
     {
       this.inventarioService.showMessageWarning('Debe ingresar la categoria');

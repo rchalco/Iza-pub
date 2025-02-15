@@ -126,7 +126,7 @@ export class VentaService extends BaseService {
         })
       );
   }
-  
+
   registrarVenta(pDetalleVentas, pListaFormaDePago, _idAlmacen, _observacion) {
     const urlQuery = urlMicroventa + 'RegistrarVentas';
     console.log('_idAlmacen', _idAlmacen);
@@ -152,6 +152,7 @@ export class VentaService extends BaseService {
         .pipe(
           finalize(() => {
             console.log('**se termino la llamada RegistrarVentas');
+           
             this.dismissLoader();
           }),
           catchError((error) => {
@@ -159,7 +160,7 @@ export class VentaService extends BaseService {
             this.showMessageError('No se tiene comunicacion con el servidor');
             return Observable.throw(new Error(error.status));
           })
-        );
+        )
     });
   }
 
@@ -526,11 +527,18 @@ export class VentaService extends BaseService {
       );
   }
 
-  async detallePedidoPorFormaPago() {
+  async detallePedidoPorFormaPago(fecha:Date, fechaFin:Date) {
+
+    console.log('FECHA ENVIADA',fecha);
+    const dateValue = new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate());
+    const dateValueFin = new Date(fechaFin.getFullYear(), fechaFin.getMonth(), fechaFin.getDate());
+
     const urlQuery = urlMicroventa + 'DetallePedidoPorFormaPago';
     const dataRequest = {
       idSesion: 0,
       idFechaProceso: 0,
+      fechaProceso:dateValue,
+      fechaProcesoFin:dateValueFin
     };
     await this.getInfoEviroment().then((env) => {
       dataRequest.idSesion = env.session;
@@ -619,6 +627,27 @@ export class VentaService extends BaseService {
       );
   }
 
+
+  downLoadFile(data: any, _type: string) {
+    //const blob = new Blob([data], { type: _type });
+
+    const binaryData = atob(data);
+    const byteArray = new Uint8Array(binaryData.length);
+    for (let i = 0; i < binaryData.length; i++) {
+      byteArray[i] = binaryData.charCodeAt(i);
+    }
+    const blob = new Blob([byteArray], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const pwa = window.open(url);
+    console.log('IMPRIME',blob);
+    if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
+      alert(
+        'Por favor deshabilite los bloqueadores de descarga para continuar.'
+      );
+    }
+  }
+
+ 
   
 
 

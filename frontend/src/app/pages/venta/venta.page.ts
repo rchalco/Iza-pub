@@ -79,7 +79,7 @@ export class VentaPage implements OnInit {
   }
 
   cargarBarras() {
-    this.inventarioService.obtenerAlmacenes().then((resul) => {
+    this.inventarioService.obtenerAlmacenes(1).then((resul) => {
       resul.subscribe((x) => {
         this.barras = x.listEntities;
         console.log('barras', this.barras);

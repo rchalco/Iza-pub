@@ -6,6 +6,7 @@ using Iza.Core.Domain.Reportes;
 using Iza.Core.Domain.Types;
 using Iza.Core.Domain.Venta;
 using Iza.Core.Reports;
+using NPOI.SS.Formula.Functions;
 using PlumbingProps.Wrapper;
 using System;
 using System.Collections.Generic;
@@ -18,12 +19,12 @@ namespace Iza.Core.Engine.Inventarios
     public class EngineInventarios : BaseManager
     {
 
-        public ResponseQuery<AlmacenDTO> SolicitarAmbientes(GeneralRequest1 pametros)
+        public ResponseQuery<AlmacenDTO> SolicitarAmbientes(GeneralRequestAlmacen pametros)
         {
             ResponseQuery<AlmacenDTO> response = new ResponseQuery<AlmacenDTO> { Message = "Barras obtenidas", State = ResponseType.Success };
             try
             {
-                response.ListEntities = repositoryPub.GetDataByProcedure<AlmacenDTO>("[inventario].[spObtAlmacenesPuntosDeVenta]", pametros.idSesion, pametros.idFechaProceso);
+                response.ListEntities = repositoryPub.GetDataByProcedure<AlmacenDTO>("[inventario].[spObtAlmacenesPuntosDeVenta]", pametros.idSesion, pametros.idFechaProceso, pametros.idAlmacen);
 
             }
             catch (Exception ex)
@@ -85,23 +86,23 @@ namespace Iza.Core.Engine.Inventarios
             ResponseObject<InventarioAsignacion> response = new ResponseObject<InventarioAsignacion> { Message = "Asignación se grabo correctamente", State = ResponseType.Success };
             try
             {
-                response.Data = new InventarioAsignacion();
-                List<typeDetailAsignacion> coltypeDetailAsignacion = new List<typeDetailAsignacion>();
-                inventarioAsignacion.detalleProductos.ForEach(x =>
-                {
-                    coltypeDetailAsignacion.Add(new typeDetailAsignacion { idProducto = x.idProducto, cantidad = Convert.ToInt32(x.cantidad), fechaDeVencimiento = x.fechaDeVencimiento, montoDeCompra = 0 });
-                });
+            response.Data = new InventarioAsignacion();
+            List<typeDetailAsignacion> coltypeDetailAsignacion = new List<typeDetailAsignacion>();
+            inventarioAsignacion.detalleProductos.ForEach(x =>
+            {
+                //coltypeDetailAsignacion.Add(new typeDetailAsignacion { idProducto = x.idProducto, cantidad = Convert.ToInt32(x.cantidad), fechaDeVencimiento = x.fechaDeVencimiento.Year < 2000? DateTime.Now.AddDays(180): x.fechaDeVencimiento.Date, montoDeCompra = 0 });
+                coltypeDetailAsignacion.Add(new typeDetailAsignacion { idProducto = x.idProducto, cantidad = Convert.ToInt32(x.cantidad), fechaDeVencimiento = x.fechaDeVencimiento.Year <= 2000 ? new DateTime(2000, 1, 1, 0, 0, 0) : x.fechaDeVencimiento.Date, montoDeCompra = 0 });
+            });
+            ParamOut poRespuesta = new ParamOut(false);
+            ParamOut poLogRespuesta = new ParamOut("");
+            poLogRespuesta.Size = 100;
 
-                ParamOut poRespuesta = new ParamOut(false);
-                ParamOut poLogRespuesta = new ParamOut("");
-                poLogRespuesta.Size = 100;
-                
-                //SP grabar pedido
+            //SP grabar pedido
                 repositoryPub.CallProcedure<InventarioAsignacion>("[inventario].[spAsignacionInventario]",
-                    inventarioAsignacion.idSesion,
-                    inventarioAsignacion.idfechaproceso,
-                    inventarioAsignacion.idAlmacenDesde,
-                    inventarioAsignacion.idAlmacenHasta,
+            inventarioAsignacion.idSesion,
+            inventarioAsignacion.idfechaproceso,
+            inventarioAsignacion.idAlmacenDesde,
+            inventarioAsignacion.idAlmacenHasta,
                     "",
                     coltypeDetailAsignacion,
                     poRespuesta, poLogRespuesta);
@@ -158,12 +159,12 @@ namespace Iza.Core.Engine.Inventarios
             return response;
         }
 
-        public ResponseQuery<AlmacenDTO> SolicitarAmbientesCompleto(GeneralRequest1 pametros)
+        public ResponseQuery<AlmacenDTO> SolicitarAmbientesCompleto(GeneralRequestAlmacen pametros)
         {
             ResponseQuery<AlmacenDTO> response = new ResponseQuery<AlmacenDTO> { Message = "Amacenes obtenidos", State = ResponseType.Success };
             try
             {
-                response.ListEntities = repositoryPub.GetDataByProcedure<AlmacenDTO>("inventario.spObtAlmacenesPuntosDeVenta", pametros.idSesion, pametros.idFechaProceso);
+                response.ListEntities = repositoryPub.GetDataByProcedure<AlmacenDTO>("inventario.spObtAlmacenesPuntosDeVenta", pametros.idSesion, pametros.idFechaProceso, pametros.idAlmacen);
 
             }
             catch (Exception ex)
@@ -316,6 +317,12 @@ namespace Iza.Core.Engine.Inventarios
             ResponseQuery<InventarioProducto> response = new ResponseQuery<InventarioProducto> { Message = "Se aperturo el Inventario del dia", State = ResponseType.Success };
             try
             {
+                //string fechaApertura1 = "";
+                //ParamOut poFecha1 = new ParamOut(new DateTime());
+                //poFecha1.Valor = DateTime.Now;
+                //if (poFecha1.Valor != null)
+                //    fechaApertura1 = Convert.ToDateTime(poFecha1.Valor).ToString("MM/dd/yyyy");
+                //GrabaAsignacionProducto
                 long id = 0;
                 ParamOut poRespuesta = new ParamOut(false);
                 ParamOut poLogRespuesta = new ParamOut("");
@@ -327,7 +334,13 @@ namespace Iza.Core.Engine.Inventarios
 
                 response.ListEntities = repositoryPub.GetDataByProcedure<InventarioProducto>("inventario.spAperturaInventarioFechaProceso", requestGral.idSesion, poIdFecha, poFecha, poRespuesta, poLogRespuesta);
                 //repositoryFabula.Commit();
-
+                string fechaApertura = "";
+                if (poFecha.Valor != null && response.ListEntities != null && response.ListEntities.Count>0)
+                {
+                    response.ListEntities[0].idFechaProceso = Convert.ToInt32(poIdFecha.Valor);
+                    response.ListEntities[0].fechaProceso = Convert.ToDateTime(poFecha.Valor);
+                }
+                //response.Code = fechaApertura;
                 if (response.ListEntities == null)
                 {
                     response.State = ResponseType.Error;

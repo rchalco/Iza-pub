@@ -15,5 +15,6 @@ namespace Iza.Core.Domain.Venta.Caja
         public string FormaDePago { get; set; } = string.Empty;
         public decimal MontoCubierto { get; set; }
         public DateTime FechaRegistro { get; set; }
+        public string fechaTransaccion { get; set; } = string.Empty;
     }
 }

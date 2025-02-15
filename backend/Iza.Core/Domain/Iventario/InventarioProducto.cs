@@ -27,5 +27,12 @@ namespace Iza.Core.Domain.Iventario
 
         public decimal montoTotal { get; set; }
         public DateTime fechaDeVencimiento { get; set; }
+        public int? idFechaProceso { get; set; }
+        public DateTime fechaProceso { get; set; }
+
+
     }
+
+
+
 }

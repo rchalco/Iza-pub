@@ -62,7 +62,7 @@ export const LogoVoucher = '';
 export const URL_MIROVENTAOPERACION = 'http://155.138.212.216:8032/api/MicroventaOperacion/';
 export const URL_TINTORERIA = 'http://155.138.212.216:8032/api/Tintoreria/';
 ////El de seguridad no debe cambiar el puerto
-export const URL_SECURITY = 'http://155.138.212.216:8033/api/APISecurity/';
+export const URL_SECURITY = 'http://155.138.212.216:8037/api/APISeguridad/';
 export const URL_INVENTARIO = 'http://155.138.212.216:8037/api/APIIventario/';
 export const URL_MIROVENTA = 'http://155.138.212.216:8037/api/APIVenta/';
 export const URL_PERSON = 'http://155.138.212.216:8032/api/Person/';

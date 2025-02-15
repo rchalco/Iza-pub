@@ -74,7 +74,7 @@ export class VentaBusquedaPage implements OnInit {
   }
 
   adicionarProducto(e: any) {
-    //console.log(e.row.data);
+    console.log("PRUDUCTO ADICION",e.row.data);
     let ingrediente = new IngredientesDeMenuGeneralDTO();
     ingrediente = e.row.data;
 
@@ -85,7 +85,8 @@ export class VentaBusquedaPage implements OnInit {
     if (lista.length > 0)
       return;
 
-    ingrediente.subTotal = ingrediente.cantidad * ingrediente.precioUnitario
+    ingrediente.subTotal = ingrediente.cantidad * ingrediente.precioUnitario;
+    
     this.productosVender.push(ingrediente);
     //this.mostrarIngredientes(ingrediente);
     
@@ -191,10 +192,11 @@ export class VentaBusquedaPage implements OnInit {
       detalleventaInstance.idProducto = x.idProducto;
       detalleventaInstance.idParamPrecio = x.idPrecio;
       detalleventaInstance.cantidad = x.cantidad;
-      detalleventaInstance.precioUnitario = x.precio;
+      detalleventaInstance.precioUnitario = x.precioUnitario;
+      detalleventaInstance.precioFinal = x.precioUnitario;
       detalleventaInstance.unidadePorCaja = 1;
       detalleventaInstance.precioCaja = 1;
-      detalleventaInstance.nombreProducto = x.nombreProducto;
+      detalleventaInstance.nombreProducto = x.descripcionMenu;
       this.listaDetalleVentas.push(detalleventaInstance);
     });
     console.log('idAlmacen', this.idAlmacen);
@@ -208,12 +210,19 @@ export class VentaBusquedaPage implements OnInit {
     .then((registroService) => {
       registroService.subscribe((resul) => {
         this.ventaService.showMessageResponse(resul);
-        
-          this.productosVender = [];
-          this.listaDetalleVentas = [];
-          this.totalVenta = 0;
-          this.listFormasDePago = [];
-          this.productos=  [];
+        //console.log('BASE 64', resul);
+        this.productosVender = [];
+        this.listaDetalleVentas = [];
+        this.totalVenta = 0;
+        this.listFormasDePago = [];
+        this.productos=  [];
+        ///imprimir
+        if (resul.state ===3)
+        {
+          return;
+        }
+        this.ventaService.downLoadFile(resul.code, "application/pdf");
+       
         
       });
     });
