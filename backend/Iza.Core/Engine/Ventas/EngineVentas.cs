@@ -1,5 +1,7 @@
 ﻿using CoreAccesLayer.Implement.SQLServer;
+using DevExpress.Drawing;
 using DevExpress.XtraReports;
+using DevExpress.XtraReports.UI;
 using iText.Layout.Element;
 using Iza.Core.Base;
 using Iza.Core.Domain.General;
@@ -309,47 +311,60 @@ namespace Iza.Core.Engine.Ventas
 
                 VoucherPedido reporte = new VoucherPedido();
                 string nombreArchivo = "";
-                string reporteBase64 = "";
 
+
+                // TAMAÑO DEL TICKET
+                // 80 mm = 302 (DevExpress usa 0.1mm por unidad)
+
+
+                
+
+
+                reporte.PaperKind = DevExpress.Drawing.Printing.DXPaperKind.Custom;
+               
+                reporte.ReportUnit = ReportUnit.TenthsOfAMillimeter;
+                reporte.PageWidth = 580;     // 80 mm exactos
+                reporte.PageHeight = 1200;   // Se ignora en RollPaper, pero evita errores
+
+                // Impresión de rollo (continuo)
+                reporte.RollPaper = true;
+
+                // Márgenes mínimos (térmicas no usan margen)
+                reporte.Margins.Top = 5;
+                reporte.Margins.Bottom = 5;
+                reporte.Margins.Left = 0;
+                reporte.Margins.Right = 0;
+
+                // Datos dinámicos
                 string formaPago = "";
                 requestRegistroVentas.formasDePago.ForEach(x =>
                 {
                     switch (x.idFormaPago)
                     {
-                        case 1:
-                            formaPago += formaPago == "" ? "EFECTIVO" : ",EFECTIVO";
-                            break;
-                        case 2:
-                            formaPago += formaPago == "" ? "POS" : ",POS";
-                            break;
-                        case 3:
-                            formaPago += formaPago == "" ? "TICKETS" : ",TICKETS";
-                            break;
-                        case 4:
-                            formaPago += formaPago == "" ? "CORTESIA" : ",CORTESIA";
-                            break;
-                        default:
-                            break;
+                        case 1: formaPago += (formaPago == "") ? "EFECTIVO" : ",EFECTIVO"; break;
+                        case 2: formaPago += (formaPago == "") ? "POS" : ",POS"; break;
+                        case 3: formaPago += (formaPago == "") ? "TICKETS" : ",TICKETS"; break;
+                        case 4: formaPago += (formaPago == "") ? "CORTESIA" : ",CORTESIA"; break;
                     }
-
                 });
+
                 reporte.xsFormaPago.Text = formaPago;
-                reporte.PaperKind = DevExpress.Drawing.Printing.DXPaperKind.Custom;
-                reporte.RollPaper = true;
-                reporte.Margins.Left = 10;
-                reporte.Margins.Right = 10;
-                reporte.Margins.Bottom = 10;
-                reporte.Margins.Bottom = 40;
                 reporte.xrFecha.Text = DateTime.Now.ToString();
                 reporte.xrUsuario.Text = requestRegistroVentas.usuario;
 
+                // Data
                 reporte.DataSource = colPedidoDTO;
+
+                // Exportación
                 string fileName = Path.Combine("c:\\tmp\\", "pedido_" + Guid.NewGuid() + ".pdf");
                 reporte.ExportToPdf(fileName);
-                nombreArchivo = fileName;
-                reporteBase64 = Convert.ToBase64String(File.ReadAllBytes(fileName));
 
+                string reporteBase64 = Convert.ToBase64String(File.ReadAllBytes(fileName));
                 response.Code = reporteBase64;
+
+
+
+
                 repositoryPub.CallProcedure<Response>("reportes.spAddImpresion",
                     requestRegistroVentas.idSesion,
                     requestRegistroVentas.idOperacionDiariaCaja,

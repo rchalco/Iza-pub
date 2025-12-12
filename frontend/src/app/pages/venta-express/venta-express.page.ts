@@ -46,11 +46,16 @@ export class VentaExpressPage implements OnInit {
     ) {}
 
   ngOnInit() {
+
     this.showMain = true;
     this.showButtonVolver = false;
     this.formaPagoActual = 0;
+
     this.ventaService.getInfoEviroment().then((x) => {
+      console.log('prueba1', x.idAlmacen);
+      console.log('prueba2', x.idOperacionDiariaCaja);
       if (x.idAlmacen !== 0 && x.idOperacionDiariaCaja !== 0) {
+
         this.cargarProductos(x.idAlmacen);
         this.idAlmacen = x.idAlmacen;
       } else {
@@ -58,8 +63,9 @@ export class VentaExpressPage implements OnInit {
       }
     });
   }
-  
+
   cargarProductos(idBarra) {
+
     this.ventaService
       .obtieneProductoAlmacen(idBarra)
       .then((productosService) => {
@@ -97,9 +103,9 @@ export class VentaExpressPage implements OnInit {
       prod.cantidadVendida++;
       prod.total = prod.cantidadVendida * _precio;
     } else {
-      const newProd  = {idPrecio:  _idPrecio, 
-        cantidadVendida: 1, 
-        total: _precio, 
+      const newProd  = {idPrecio:  _idPrecio,
+        cantidadVendida: 1,
+        total: _precio,
         precio: _precio,
         unidad: _unidad,
         nombreProducto: producto.nombreProducto
@@ -116,7 +122,7 @@ export class VentaExpressPage implements OnInit {
       //console.log('producto nuevo');
     }
 
-    
+
     this.totalVenta += _precio;
     //console.log(this.productosAvender);
   }
@@ -176,7 +182,7 @@ export class VentaExpressPage implements OnInit {
       detalleventaInstance.idProducto = x.idProducto;
       detalleventaInstance.idParamPrecio = x.idPrecio;
       detalleventaInstance.cantidad = x.cantidadVendida;
-      detalleventaInstance.precioUnitario = x.precio;
+      detalleventaInstance.precioFinal = x.precio;
       detalleventaInstance.unidadePorCaja = 1;
       detalleventaInstance.precioCaja = 1;
       detalleventaInstance.nombreProducto = x.nombreProducto;

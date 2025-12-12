@@ -1,20 +1,62 @@
-.full-screen {
-    min-width: 100%;
-  }
-  
-  .label-login {
-    color: #a79d9d;
-    font-style: oblique;
-  }
-  
-  .imagen-login {
-    @media only screen and (max-width: 600px) {
-      display: none;
-    }
-    text-align: center;
-  }
-  
-  .imagen-login-fondo {
-    max-height: 640px;
-  }
-  
+.login-background {
+  --background: none;
+  background-image: url('/assets/Fondo-4.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  padding: 30px;
+
+  /* Marco suave alrededor */
+  border: 8px solid rgba(255, 255, 255, 0.35);
+  border-radius: 20px;
+}
+
+
+// Centrado vertical y horizontal
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 20px;
+}
+
+// Card semitransparente
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  background: rgba(0, 0, 0, 0.45);  // semitransparente oscuro
+  backdrop-filter: blur(6px);       // efecto glass
+  border-radius: 15px;
+  color: white;
+}
+
+.titulo-login {
+  text-align: center;
+  font-size: 1.4rem;
+  color: #fff;
+}
+
+// Inputs semi-transparentes
+.input-transparente {
+  --background: transparent;
+  --highlight-color-focused: #00bcd4;
+  color: white;
+}
+
+ion-label {
+  color: #e0e0e0 !important;
+}
+
+ion-input {
+  color: white;
+}
+
+// Footer versión
+.version-footer {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #cfcfcf;
+}

@@ -11,6 +11,25 @@ namespace Iza.Core.Reports
         public VoucherPedido()
         {
             InitializeComponent();
+            // Unidad en décimas de milímetro
+            //this.ReportUnit = DevExpress.XtraReports.UI.ReportUnit.TenthsOfAMillimeter;
+
+            //// Impresora térmica → ancho 80mm = 800 décimas de mm
+            //this.PaperKind = DevExpress.Drawing.Printing.DXPaperKind.Custom;
+            //this.PageWidth = 620;     // 80 mm exactos
+            //this.PageHeight = 1200;   // Se ignora en RollPaper, pero evita errores
+
+            //// Impresión de rollo (continuo)
+            //this.RollPaper = true;
+
+            //// Márgenes mínimos (térmicas no usan margen)
+            //this.Margins.Top = 5;
+            //this.Margins.Bottom = 5;
+            //this.Margins.Left = 0;
+            //this.Margins.Right = 0;
+
+            //// Sigue siendo vertical
+            //this.Landscape = false;
         }
     }
 }
