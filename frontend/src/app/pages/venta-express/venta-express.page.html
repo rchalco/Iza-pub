@@ -1,15 +1,8 @@
 <app-custom-header title="Pedido"></app-custom-header>
 <ion-content fullscreen>
-  <div *ngIf="showMain">
-  <ion-list class="orden-actual-fixed">
-      <ion-row>
-        <ion-col size="6">
-          <h3>Orden actual</h3>
-        </ion-col>
-        <ion-col size="6">
-          <h2 class="text-total">Total Bs {{totalVenta}}</h2>
-        </ion-col>
-      </ion-row>
+  <!-- Sección fija de orden actual -->
+  <div slot="fixed" class="orden-actual-fixed" *ngIf="showMain">
+    <ion-list>
       <ion-row>
         <ion-col size="12" *ngIf="productosAvender.length === 0">
           NO SE TIENEN PRODUCTOS SELECCIONADOS
@@ -23,10 +16,18 @@
               <ion-col size="5">Producto</ion-col>
               <ion-col size="2">Total</ion-col>
             </ion-row>
-            <ion-row class="detalleTabla" *ngFor="let producto of productosAvender">
+            <ion-row
+              class="detalleTabla"
+              *ngFor="let producto of productosAvender"
+            >
               <ion-col size="1">
                 <div (click)="quitarProducto(producto)">
-                  <ion-icon name="remove-circle-outline" color="danger" class="ico-menos" slot="start"></ion-icon>
+                  <ion-icon
+                    name="remove-circle-outline"
+                    color="danger"
+                    class="ico-menos"
+                    slot="start"
+                  ></ion-icon>
                 </div>
               </ion-col>
               <ion-col size="2" class="text-detalle">
@@ -35,126 +36,184 @@
               <ion-col size="2" class="text-detalle">
                 {{producto.unidad}}
               </ion-col>
-              <ion-col size="5" class="text-detalle">{{producto.nombreProducto}}</ion-col>
-              <ion-col size="2" class="text-detalle">{{producto.total}}</ion-col>
+              <ion-col size="5" class="text-detalle"
+                >{{producto.nombreProducto}}</ion-col
+              >
+              <ion-col size="2" class="text-detalle"
+                >{{producto.total | number:'1.2-2'}}</ion-col
+              >
             </ion-row>
           </ion-grid>
-        </ion-col>
-      </ion-row>
-      <ion-row class="cardfooter">
-        <ion-col>
-          <ion-button color="success" shape="round" (click)="realizarPago(1)">
-            EFE
-          </ion-button>
-          <ion-button color="warning" shape="round" (click)="realizarPago(2)">
-            POS
-          </ion-button>
-          <ion-button color="danger" shape="round" (click)="realizarPago(3)">
-            QR
-          </ion-button>
-          <ion-button color="medium" shape="round" (click)="realizarPago(-1)">
-            MIX
-          </ion-button>
-          <!-- <ion-button color="tertiary" shape="round" (click)="realizarPago(5)">
-            POS FAB
-          </ion-button> -->
         </ion-col>
       </ion-row>
     </ion-list>
-    <ion-searchbar animated="true" (ionChange)="buscar($event)" placeholder="Categoria"></ion-searchbar>
-    <ion-slides mode="ios" pager="ios" scrollbar="ios">
-      <ion-slide>
-        <ion-list>
-          <ion-grid fixed *ngFor="let producto of productsSlides1 | filtro: textoBusacar:'categoria'">
-            <ion-row class="cabeceraTabla">
-              <ion-col size="6" class="text-gotico">{{ producto.categoria }}</ion-col>
-              <ion-col size="3">{{producto.etiquetaIzquierda}}</ion-col>
-              <ion-col size="3">{{producto.etiquetaDerecha}}</ion-col>
-            </ion-row>
-            <ion-row class="detalleTabla" *ngFor="let productodet of producto.detalle">
-              <ion-col size="6" class="text-detalle">
-                {{ productodet.nombreProducto }}</ion-col>
-              <ion-col size="3">
-                <ion-button
-                  (click)="registroVenta(productodet, productodet.idPrecioIzquierda, productodet.precioIzquierda, productodet.etiquetaIzquierda)"
-                  *ngIf="productodet.precioIzquierda  > 0">Bs. {{ productodet.precioIzquierda }}
-                </ion-button></ion-col>
-              <ion-col size="3"><ion-button
-                  (click)="registroVenta(productodet, productodet.idPrecioDerecha, productodet.precioDerecha, productodet.etiquetaDerecha)"
-                  *ngIf="productodet.precioDerecha  > 0">Bs. {{ productodet.precioDerecha }}
-                </ion-button></ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-list>
-      </ion-slide>
-      <ion-slide>
-        <ion-list>
-          <ion-grid fixed *ngFor="let producto of productsSlides2 | filtro: textoBusacar:'categoria'">
-            <ion-row class="cabeceraTabla">
-              <ion-col size="6" class="text-gotico">{{ producto.categoria }}</ion-col>
-              <ion-col size="3">{{producto.etiquetaIzquierda}}</ion-col>
-              <ion-col size="3">{{producto.etiquetaDerecha}}</ion-col>
-            </ion-row>
-            <ion-row class="detalleTabla" *ngFor="let productodet of producto.detalle">
-              <ion-col size="6" class="text-detalle">
-                {{ productodet.nombreProducto }}
-              </ion-col>
-
-              <ion-col size="3">
-                <ion-button
-                  (click)="registroVenta(productodet, productodet.idPrecioIzquierda, productodet.precioIzquierda, productodet.etiquetaIzquierda)"
-                  *ngIf="productodet.precioIzquierda  > 0">Bs. {{ productodet.precioIzquierda }}
-                </ion-button></ion-col>
-              <ion-col size="3"><ion-button
-                  (click)="registroVenta(productodet, productodet.idPrecioDerecha, productodet.precioDerecha, productodet.etiquetaDerecha)"
-                  *ngIf="productodet.precioDerecha  > 0">Bs. {{ productodet.precioDerecha }}
-                </ion-button></ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-list>
-      </ion-slide>
-      <ion-slide>
-        <ion-list class="list-slide">
-          <ion-grid fixed *ngFor="let producto of productsSlides3 | filtro: textoBusacar:'categoria'">
-            <ion-row class="cabeceraTabla">
-              <ion-col size="6" class="text-gotico">{{ producto.categoria }}</ion-col>
-              <ion-col size="3">{{producto.etiquetaIzquierda}}</ion-col>
-              <ion-col size="3">{{producto.etiquetaDerecha}}</ion-col>
-            </ion-row>
-            <ion-row class="detalleTabla" *ngFor="let productodet of producto.detalle">
-              <ion-col size="6" class="text-detalle">
-                {{ productodet.nombreProducto }}xxxx</ion-col>
-              <ion-col size="3">
-                <ion-button
-                  (click)="registroVenta(productodet, productodet.idPrecioIzquierda, productodet.precioIzquierda, productodet.etiquetaIzquierda)"
-                  *ngIf="productodet.precioIzquierda  > 0">Bs. {{ productodet.precioIzquierda }}
-                </ion-button></ion-col>
-              <ion-col size="3"><ion-button
-                  (click)="registroVenta(productodet, productodet.idPrecioDerecha, productodet.precioDerecha, productodet.etiquetaDerecha)"
-                  *ngIf="productodet.precioDerecha  > 0">Bs. {{ productodet.precioDerecha }}
-                </ion-button></ion-col>
-                <ion-col>
-                  {{contadorProd}}
-                </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-list>
-      </ion-slide>
-    </ion-slides>
   </div>
-  <app-forma-pago *ngIf="showCobrar" [montoTotal]="totalVenta" (eventCobrar)="realizarPagoMix($event)"
-    (eventCancelar)="cancelarPago()"></app-forma-pago>
+  <!-- Contenido scrollable -->
+  <div *ngIf="showMain" class="contenido-scrollable">
+    <!-- <ion-searchbar
+      animated="true"
+      (ionChange)="buscar($event)"
+      placeholder="Categoria"
+    ></ion-searchbar> -->
+    <div class="menu-acciones">
+      <div class="total-badge">
+        <h2 class="text-total">Total Bs {{totalVenta | number:'1.2-2'}}</h2>
+        <ion-button
+          fill="clear"
+          class="btn-refresh"
+          (click)="recargarProductos()"
+        >
+          <ion-icon name="refresh-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+      <div class="menu-botones">
+        <ion-button class="btn-pago btn-efe" (click)="realizarPago(1)">
+          <ion-icon name="cash-outline" slot="start"></ion-icon>
+          EFE
+        </ion-button>
+        <ion-button class="btn-pago btn-pos" (click)="realizarPago(2)">
+          <ion-icon name="card-outline" slot="start"></ion-icon>
+          POS
+        </ion-button>
+        <ion-button class="btn-pago btn-qr" (click)="realizarPago(3)">
+          <ion-icon name="qr-code-outline" slot="start"></ion-icon>
+          QR
+        </ion-button>
+        <ion-button class="btn-pago btn-mix" (click)="realizarPago(-1)">
+          <ion-icon name="layers-outline" slot="start"></ion-icon>
+          MIX
+        </ion-button>
+      </div>
+    </div>
+    <ion-row>
+      <ion-list>
+        <ion-grid
+          fixed
+          *ngFor="let producto of productsSlides1 | filtro: textoBusacar:'categoria'"
+        >
+          <ion-row class="cabeceraTabla">
+            <ion-col size="6" class="text-gotico"
+              >{{ producto.categoria }}</ion-col
+            >
+            <ion-col size="3">{{producto.etiquetaDerecha}}</ion-col>
+          </ion-row>
+          <ion-row
+            class="detalleTabla"
+            *ngFor="let productodet of producto.detalle"
+          >
+            <ion-col size="6" class="text-detalle">
+              {{ productodet.nombreProducto }}</ion-col
+            >
+            <ion-col size="3"
+              ><ion-button
+                class="btn-precio"
+                (click)="registroVenta(productodet, productodet.idPrecioDerecha, productodet.precioDerecha, productodet.etiquetaDerecha)"
+                *ngIf="productodet.precioDerecha  > 0"
+                >Bs. {{ productodet.precioDerecha }}
+              </ion-button></ion-col
+            >
+          </ion-row>
+        </ion-grid>
+      </ion-list>
+      <ion-list>
+        <ion-grid
+          fixed
+          *ngFor="let producto of productsSlides2 | filtro: textoBusacar:'categoria'"
+        >
+          <ion-row class="cabeceraTabla">
+            <ion-col size="6" class="text-gotico"
+              >{{ producto.categoria }}</ion-col
+            >
+            <ion-col size="3">{{producto.etiquetaIzquierda}}</ion-col>
+            <ion-col size="3">{{producto.etiquetaDerecha}}</ion-col>
+          </ion-row>
+          <ion-row
+            class="detalleTabla"
+            *ngFor="let productodet of producto.detalle"
+          >
+            <ion-col size="6" class="text-detalle">
+              {{ productodet.nombreProducto }}
+            </ion-col>
+
+            <ion-col size="3">
+              <ion-button
+                class="btn-precio"
+                (click)="registroVenta(productodet, productodet.idPrecioIzquierda, productodet.precioIzquierda, productodet.etiquetaIzquierda)"
+                *ngIf="productodet.precioIzquierda  > 0"
+                >Bs. {{ productodet.precioIzquierda }}
+              </ion-button></ion-col
+            >
+            <ion-col size="3"
+              ><ion-button
+                class="btn-precio"
+                (click)="registroVenta(productodet, productodet.idPrecioDerecha, productodet.precioDerecha, productodet.etiquetaDerecha)"
+                *ngIf="productodet.precioDerecha  > 0"
+                >Bs. {{ productodet.precioDerecha }}
+              </ion-button></ion-col
+            >
+          </ion-row>
+        </ion-grid>
+      </ion-list>
+      <ion-list class="list-slide">
+        <ion-grid
+          fixed
+          *ngFor="let producto of productsSlides3 | filtro: textoBusacar:'categoria'"
+        >
+          <ion-row class="cabeceraTabla">
+            <ion-col size="6" class="text-gotico"
+              >{{ producto.categoria }}</ion-col
+            >
+            <ion-col size="3">{{producto.etiquetaIzquierda}}</ion-col>
+            <ion-col size="3">{{producto.etiquetaDerecha}}</ion-col>
+          </ion-row>
+          <ion-row
+            class="detalleTabla"
+            *ngFor="let productodet of producto.detalle"
+          >
+            <ion-col size="6" class="text-detalle">
+              {{ productodet.nombreProducto }}xxxx</ion-col
+            >
+            <ion-col size="3">
+              <ion-button
+                class="btn-precio"
+                (click)="registroVenta(productodet, productodet.idPrecioIzquierda, productodet.precioIzquierda, productodet.etiquetaIzquierda)"
+                *ngIf="productodet.precioIzquierda  > 0"
+                >Bs. {{ productodet.precioIzquierda }}
+              </ion-button></ion-col
+            >
+            <ion-col size="3"
+              ><ion-button
+                class="btn-precio"
+                (click)="registroVenta(productodet, productodet.idPrecioDerecha, productodet.precioDerecha, productodet.etiquetaDerecha)"
+                *ngIf="productodet.precioDerecha  > 0"
+                >Bs. {{ productodet.precioDerecha }}
+              </ion-button></ion-col
+            >
+            <ion-col> {{contadorProd}} </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-list>
+    </ion-row>
+  </div>
+  <app-forma-pago
+    *ngIf="showCobrar"
+    [montoTotal]="totalVenta"
+    (eventCobrar)="realizarPagoMix($event)"
+    (eventCancelar)="cancelarPago()"
+  ></app-forma-pago>
 
   <div *ngIf="showPOS">
     <ion-card>
-      <app-reader-card #appreadercard (readCard)="reciveTarjeta($event)"></app-reader-card>
+      <app-reader-card
+        #appreadercard
+        (readCard)="reciveTarjeta($event)"
+      ></app-reader-card>
       <ion-label>
         <h3>{{mensajeTarjeta}}</h3>
       </ion-label>
-      <ion-button (click)="cancelarPago()" *ngIf="showButtonVolver">Volver
+      <ion-button (click)="cancelarPago()" *ngIf="showButtonVolver"
+        >Volver
       </ion-button>
     </ion-card>
-
   </div>
-
 </ion-content>

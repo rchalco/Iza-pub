@@ -42,11 +42,10 @@ export class VentaExpressPage implements OnInit {
   constructor(
     private ventaService: VentaService,
     private tarjetaService: TarjetaService,
-    private stockService: StockService
-    ) {}
+    private stockService: StockService,
+  ) {}
 
   ngOnInit() {
-
     this.showMain = true;
     this.showButtonVolver = false;
     this.formaPagoActual = 0;
@@ -55,7 +54,19 @@ export class VentaExpressPage implements OnInit {
       console.log('prueba1', x.idAlmacen);
       console.log('prueba2', x.idOperacionDiariaCaja);
       if (x.idAlmacen !== 0 && x.idOperacionDiariaCaja !== 0) {
+        this.cargarProductos(x.idAlmacen);
+        this.idAlmacen = x.idAlmacen;
+      } else {
+        this.showMessageErrorNOCajaAbierta = true;
+      }
+    });
+  }
 
+  recargarProductos() {
+    this.ventaService.getInfoEviroment().then((x) => {
+      console.log('prueba1', x.idAlmacen);
+      console.log('prueba2', x.idOperacionDiariaCaja);
+      if (x.idAlmacen !== 0 && x.idOperacionDiariaCaja !== 0) {
         this.cargarProductos(x.idAlmacen);
         this.idAlmacen = x.idAlmacen;
       } else {
@@ -65,7 +76,6 @@ export class VentaExpressPage implements OnInit {
   }
 
   cargarProductos(idBarra) {
-
     this.ventaService
       .obtieneProductoAlmacen(idBarra)
       .then((productosService) => {
@@ -95,20 +105,23 @@ export class VentaExpressPage implements OnInit {
     //console.log(unidad);
     //console.log(idPrecio);
     if (
-      this.productosAvender.filter((x) => x.idPrecio === _idPrecio && x.unidad === _unidad).length > 0
+      this.productosAvender.filter(
+        (x) => x.idPrecio === _idPrecio && x.unidad === _unidad,
+      ).length > 0
     ) {
       const prod = this.productosAvender.filter(
-        (x) => x.idPrecio === _idPrecio && x.unidad === _unidad
+        (x) => x.idPrecio === _idPrecio && x.unidad === _unidad,
       )[0];
       prod.cantidadVendida++;
       prod.total = prod.cantidadVendida * _precio;
     } else {
-      const newProd  = {idPrecio:  _idPrecio,
+      const newProd = {
+        idPrecio: _idPrecio,
         cantidadVendida: 1,
         total: _precio,
         precio: _precio,
         unidad: _unidad,
-        nombreProducto: producto.nombreProducto
+        nombreProducto: producto.nombreProducto,
       };
       // newProd.idPrecio = idPrecio;
       // newProd.cantidadVendida = 1;
@@ -122,7 +135,6 @@ export class VentaExpressPage implements OnInit {
       //console.log('producto nuevo');
     }
 
-
     this.totalVenta += _precio;
     //console.log(this.productosAvender);
   }
@@ -134,7 +146,7 @@ export class VentaExpressPage implements OnInit {
       producto.total -= producto.precio;
     } else {
       this.productosAvender = this.productosAvender.filter(
-        (x) => x.idPrecio !== producto.idPrecio
+        (x) => x.idPrecio !== producto.idPrecio,
       );
     }
   }
@@ -142,7 +154,7 @@ export class VentaExpressPage implements OnInit {
   realizarPago(_idFormaPago) {
     if (this.productosAvender.length === 0) {
       this.ventaService.showMessageWarning(
-        'Debe seleccionar productos antes de realizar un pago!'
+        'Debe seleccionar productos antes de realizar un pago!',
       );
       return;
     }
@@ -164,7 +176,6 @@ export class VentaExpressPage implements OnInit {
 
       return;
     }
-
 
     this.listaDetalleVentas = [];
     this.listFormasDePago = [];
@@ -194,7 +205,8 @@ export class VentaExpressPage implements OnInit {
       .registrarVenta(
         this.listaDetalleVentas,
         this.listFormasDePago,
-        this.idAlmacen,''
+        this.idAlmacen,
+        '',
       )
       .then((registroService) => {
         registroService.subscribe((resul) => {
@@ -207,6 +219,7 @@ export class VentaExpressPage implements OnInit {
             this.listaDetalleVentas = [];
             this.totalVenta = 0;
             this.listFormasDePago = [];
+            this.ventaService.downLoadFile(resul.code, 'application/pdf');
           } else if (resul.code === 'SIN_STOCK') {
             this.listDetalleSinStock = resul.listEntities;
             console.log('ingreso al if sin stock', this.listDetalleSinStock);
@@ -233,7 +246,7 @@ export class VentaExpressPage implements OnInit {
       ///TODO para tickets guardamos diferencia
       if (formaDePago.idFormaPago === 3 && formaDePago.montoCubierto > 0) {
         formaDePago.Diferencia = parseFloat(
-          (formaDePago.montoCubierto - this.totalVenta).toString()
+          (formaDePago.montoCubierto - this.totalVenta).toString(),
         );
       }
       this.listFormasDePago.push(formaDePago);
@@ -244,6 +257,7 @@ export class VentaExpressPage implements OnInit {
       detalleventaInstance.idProducto = x.idProducto;
       detalleventaInstance.idParamPrecio = x.idPrecio;
       detalleventaInstance.cantidad = x.cantidadVendida;
+      detalleventaInstance.precioFinal = x.precio;
       detalleventaInstance.precioUnitario = x.precio;
       detalleventaInstance.unidadePorCaja = 1;
       detalleventaInstance.precioCaja = 1;
@@ -256,7 +270,8 @@ export class VentaExpressPage implements OnInit {
       .registrarVenta(
         this.listaDetalleVentas,
         this.listFormasDePago,
-        this.idAlmacen, ''
+        this.idAlmacen,
+        '',
       )
       .then((registroService) => {
         registroService.subscribe((resul) => {
@@ -273,6 +288,7 @@ export class VentaExpressPage implements OnInit {
             this.listaDetalleVentas = [];
             this.totalVenta = 0;
             this.listFormasDePago = [];
+            this.ventaService.downLoadFile(resul.code, 'application/pdf');
           } else if (resul.code === 'SIN_STOCK') {
             this.listDetalleSinStock = resul.listEntities;
             console.log('ingreso al if sin stock', this.listDetalleSinStock);
@@ -291,95 +307,91 @@ export class VentaExpressPage implements OnInit {
   reciveTarjeta(tarjeta) {
     console.log('recibi el siguiente numero de tarjeta:' + tarjeta);
     //logica de la lectura de la tarjeta
-    this.mensajeTarjeta ='Tarjeta leida';
-    this.tarjetaService.verificaTarjetaSimple(tarjeta).then((productosService) => {
-      productosService.subscribe((resul) => {
-        if (resul.state == 4){
-          this.tarjetaService.showMessageWarning(resul.message);
-          this.showButtonVolver = true;
-          return;
-        }
-        else
-        {
-          //this.showLeerTarjeta = false;
-          //this.showDatosTarjeta = true;
-          //this.showModificarTarjeta = false;
-          this.selectedRegistro =  new DatosTarjetaDTO();
-          this.selectedRegistro = resul.object;
-          console.log('this.selectedRegistro:' + this.selectedRegistro);
-          if (this.selectedRegistro.saldo<this.totalVenta)
-          {
-            this.tarjetaService.showMessageWarning('El saldo de la tarjeta es menor al de la venta');
-            this.mensajeTarjeta ='El saldo de la tarjeta es menor a la venta';
+    this.mensajeTarjeta = 'Tarjeta leida';
+    this.tarjetaService
+      .verificaTarjetaSimple(tarjeta)
+      .then((productosService) => {
+        productosService.subscribe((resul) => {
+          if (resul.state == 4) {
+            this.tarjetaService.showMessageWarning(resul.message);
             this.showButtonVolver = true;
-            setTimeout(() => {
-              this.cardInput.initReadCard();
-            }, 1000);
             return;
-          }
-          else
-          {
+          } else {
+            //this.showLeerTarjeta = false;
+            //this.showDatosTarjeta = true;
+            //this.showModificarTarjeta = false;
+            this.selectedRegistro = new DatosTarjetaDTO();
+            this.selectedRegistro = resul.object;
+            console.log('this.selectedRegistro:' + this.selectedRegistro);
+            if (this.selectedRegistro.saldo < this.totalVenta) {
+              this.tarjetaService.showMessageWarning(
+                'El saldo de la tarjeta es menor al de la venta',
+              );
+              this.mensajeTarjeta =
+                'El saldo de la tarjeta es menor a la venta';
+              this.showButtonVolver = true;
+              setTimeout(() => {
+                this.cardInput.initReadCard();
+              }, 1000);
+              return;
+            } else {
+              this.listaDetalleVentas = [];
+              this.listFormasDePago = [];
 
-            this.listaDetalleVentas = [];
-            this.listFormasDePago = [];
+              const formaDePago = {
+                idPedidoMaestro: 0,
+                idFormaPago: this.formaPagoActual,
+                montoCubierto: this.totalVenta,
+                Diferencia: 0,
+              };
+              this.listFormasDePago.push(formaDePago);
 
-            const formaDePago = {
-              idPedidoMaestro: 0,
-              idFormaPago: this.formaPagoActual,
-              montoCubierto: this.totalVenta,
-              Diferencia: 0,
-            };
-            this.listFormasDePago.push(formaDePago);
-
-            this.productosAvender.forEach((x) => {
-              const detalleventaInstance = new DetalleVenta();
-              detalleventaInstance.idProducto = x.idProducto;
-              detalleventaInstance.idParamPrecio = x.idPrecio;
-              detalleventaInstance.cantidad = x.cantidadVendida;
-              detalleventaInstance.precioUnitario = x.precio;
-              detalleventaInstance.unidadePorCaja = 1;
-              detalleventaInstance.precioCaja = 1;
-              this.listaDetalleVentas.push(detalleventaInstance);
-            });
-            console.log('idAlmacen', this.idAlmacen);
-
-            this.ventaService
-              .registrarVenta(
-                this.listaDetalleVentas,
-                this.listFormasDePago,
-                this.idAlmacen,
-                this.selectedRegistro.vkey
-              )
-              .then((registroService) => {
-                registroService.subscribe((resul) => {
-                  this.ventaService.showMessageResponse(resul);
-                  if (resul.state === 1) {
-                    this.showMain = true;
-                    this.showCobrar = false;
-                    this.showPOS = false;
-                    this.showButtonVolver = false;
-                    this.cargarProductos(this.idAlmacen);
-                    this.productosAvender = [];
-                    this.listDetalleSinStock = [];
-                    this.listDetalleSinStock = [];
-                    this.listaDetalleVentas = [];
-                    this.totalVenta = 0;
-                    this.listFormasDePago = [];
-                  } else if (resul.code === 'SIN_STOCK') {
-                    this.listDetalleSinStock = resul.listEntities;
-                    console.log('ingreso al if sin stock', this.listDetalleSinStock);
-                  }
-                });
+              this.productosAvender.forEach((x) => {
+                const detalleventaInstance = new DetalleVenta();
+                detalleventaInstance.idProducto = x.idProducto;
+                detalleventaInstance.idParamPrecio = x.idPrecio;
+                detalleventaInstance.cantidad = x.cantidadVendida;
+                detalleventaInstance.precioUnitario = x.precio;
+                detalleventaInstance.unidadePorCaja = 1;
+                detalleventaInstance.precioCaja = 1;
+                this.listaDetalleVentas.push(detalleventaInstance);
               });
+              console.log('idAlmacen', this.idAlmacen);
 
+              this.ventaService
+                .registrarVenta(
+                  this.listaDetalleVentas,
+                  this.listFormasDePago,
+                  this.idAlmacen,
+                  this.selectedRegistro.vkey,
+                )
+                .then((registroService) => {
+                  registroService.subscribe((resul) => {
+                    this.ventaService.showMessageResponse(resul);
+                    if (resul.state === 1) {
+                      this.showMain = true;
+                      this.showCobrar = false;
+                      this.showPOS = false;
+                      this.showButtonVolver = false;
+                      this.cargarProductos(this.idAlmacen);
+                      this.productosAvender = [];
+                      this.listDetalleSinStock = [];
+                      this.listDetalleSinStock = [];
+                      this.listaDetalleVentas = [];
+                      this.totalVenta = 0;
+                      this.listFormasDePago = [];
+                    } else if (resul.code === 'SIN_STOCK') {
+                      this.listDetalleSinStock = resul.listEntities;
+                      console.log(
+                        'ingreso al if sin stock',
+                        this.listDetalleSinStock,
+                      );
+                    }
+                  });
+                });
+            }
           }
-        }
-
+        });
       });
-    });
-
-
   }
-
-
 }

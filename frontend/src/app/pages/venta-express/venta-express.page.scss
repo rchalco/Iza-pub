@@ -1,3 +1,4 @@
+/* ── General ── */
 ion-card {
   max-height: 100%;
   display: flex;
@@ -7,15 +8,33 @@ ion-card {
 ion-list {
   overflow: hidden;
   overflow-y: auto;
+  width: 100%;
   ::-webkit-scrollbar {
     display: none;
   }
 }
+
 ion-button {
-  font-size: 0.8em;
-  margin: 1px;
+  font-size: 0.75em;
+  margin: 2px;
   padding: 0.5px;
+  --border-radius: 6px;
 }
+
+/* Centrado vertical y horizontal en TODOS los ion-row */
+ion-row {
+  align-items: center;
+  justify-content: center;
+}
+
+ion-col {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* ── Productos vendidos ── */
 .item-vendido {
   margin: 1px;
   color: #a4f473;
@@ -28,67 +47,241 @@ ion-button {
   border-width: 0.2em;
   padding: 6px;
 }
+
+/* ── Tipografía ── */
 .text-gotico {
   font-family: Seagramtfb !important;
-  font-size: 1em;
+  font-size: 1.05em;
+  font-weight: 600;
+  letter-spacing: 0.3px;
 }
 
+.text-detalle {
+  font-size: 0.95em;
+  font-weight: 400;
+  color: #333;
+  letter-spacing: 0.2px;
+}
+
+.text-total {
+  font-size: 1.3em;
+  font-weight: 600;
+  color: rgb(5, 236, 17);
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+/* ── Tabla de orden / catálogo ── */
 .cabeceraTabla {
-  background-color: #2c3530;
-  color: rgb(202, 215, 226);
-  font-weight: bold;
-  border: 1px solid black;
-  border-bottom: 0;
-  border-right: 0;
+  background-color: rgba(44, 53, 48, 0.85);
+  color: rgba(220, 230, 240, 0.9);
+  font-weight: 500;
+  font-size: 0.95em;
+  letter-spacing: 0.3px;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4px 0;
 }
 
 .detalleTabla {
-  border: 1px solid black;
-  border-bottom: 0;
-  border-right: 0;
-  align-items: left;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  align-items: center;
+  justify-content: center;
+  padding: 2px 0;
+  transition: background-color 0.15s ease;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:active {
+    background-color: rgba(255, 255, 255, 0.04);
+  }
 }
+
+/* ── Iconos / utilidades ── */
 .ico-producto {
   height: 20px;
 }
-.text-detalle {
-  font-size: 0.8em;
+
+.ico-menos {
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.15s ease;
+
+  &:hover {
+    opacity: 1;
+  }
 }
-.text-total {
-  font-size: 1.5em;
-  color: rgb(5, 236, 17);
+
+/* ── Botón de precio llamativo ── */
+.btn-precio {
+  --background: linear-gradient(135deg, #1e88e5, #1565c0);
+  --background-hover: linear-gradient(135deg, #1565c0, #0d47a1);
+  --box-shadow: 0 3px 8px rgba(21, 101, 192, 0.4);
+  --border-radius: 8px;
+  --padding-start: 14px;
+  --padding-end: 14px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  font-size: 0.95em;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  min-width: 90px;
+
+  &:active {
+    transform: scale(0.95);
+  }
 }
+
 .list-slide {
   width: 100%;
 }
-.ico-menos {
-  font-size: 20px;
-  font-weight: bold;
+
+/* ── Badge de total ── */
+.total-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #1a2a1f, #2c3530);
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+
+  .text-total {
+    margin: 0;
+    letter-spacing: 0.5px;
+    font-size: 1.3em;
+  }
 }
 
-/* Fixed/sticky order box at top with limited height and internal scroll for mobile */
+/* ── Botón de actualizar ── */
+.btn-refresh {
+  --color: rgba(255, 255, 255, 0.7);
+  font-size: 1.3em;
+  margin: 0;
+  transition: transform 0.2s ease;
+
+  &:active {
+    transform: rotate(180deg);
+  }
+}
+
+/* ── Menú de acciones elegante ── */
+.menu-acciones {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 14px;
+}
+
+.menu-botones {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-pago {
+  --border-radius: 10px;
+  --padding-start: 14px;
+  --padding-end: 14px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  font-size: 0.85em;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  transition: transform 0.12s ease;
+  min-width: 80px;
+
+  &:active {
+    transform: scale(0.93);
+  }
+
+  ion-icon {
+    font-size: 1.1em;
+    margin-right: 4px;
+  }
+}
+
+.btn-efe {
+  --background: linear-gradient(135deg, #43a047, #2e7d32);
+  --box-shadow: 0 3px 8px rgba(46, 125, 50, 0.35);
+}
+
+.btn-pos {
+  --background: linear-gradient(135deg, #ffa726, #f57c00);
+  --box-shadow: 0 3px 8px rgba(245, 124, 0, 0.35);
+}
+
+.btn-qr {
+  --background: linear-gradient(135deg, #ef5350, #c62828);
+  --box-shadow: 0 3px 8px rgba(198, 40, 40, 0.35);
+}
+
+.btn-mix {
+  --background: linear-gradient(135deg, #78909c, #546e7a);
+  --box-shadow: 0 3px 8px rgba(84, 110, 122, 0.35);
+}
+
+/* ── Sección fija: orden actual ── */
 .orden-actual-fixed {
-  /* use sticky so it stays visible while allowing the page to flow naturally */
-  position: -webkit-sticky;
-  position: sticky;
-  top: 56px; /* adjust if your header is a different height */
+  top: 0;
+  left: 0;
+  right: 0;
   z-index: 20;
-  max-height: 180px;
+  max-height: 220px;
   overflow-y: auto;
   background: var(--ion-background-color, #fff);
-  /* keep layout consistent with ion-list default spacing */
-  padding-right: 4px;
-  /* subtle separation */
-  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+  padding: 4px 8px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+
+  ion-list {
+    margin: 0;
+    padding: 0;
+  }
+
+  h3 {
+    margin: 4px 0;
+    font-size: 0.9em;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+    opacity: 0.85;
+  }
 }
 
-.orden-actual-fixed ::-webkit-scrollbar {
-  height: 6px;
-  width: 6px;
+.orden-actual-fixed::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
 }
 
-.orden-actual-fixed ::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.15);
+.orden-actual-fixed::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
+}
+
+/* ── Contenido scrollable debajo de la orden fija ── */
+.contenido-scrollable {
+  margin-top: 220px;
+  padding: 0 4px;
+
+  ion-grid {
+    margin-bottom: 6px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
 }

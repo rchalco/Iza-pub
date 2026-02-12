@@ -350,7 +350,7 @@ namespace Iza.Core.Engine.Ventas
                     {
                         case 1: formaPago += (formaPago == "") ? "EFECTIVO" : ",EFECTIVO"; break;
                         case 2: formaPago += (formaPago == "") ? "POS" : ",POS"; break;
-                        case 3: formaPago += (formaPago == "") ? "TICKETS" : ",TICKETS"; break;
+                        case 3: formaPago += (formaPago == "") ? "QR" : ",QR"; break;
                         case 4: formaPago += (formaPago == "") ? "CORTESIA" : ",CORTESIA"; break;
                     }
                 });
