@@ -1,13 +1,12 @@
 .login-background {
   --background: none;
-  background-image: url('/assets/Fondo-4.png');
+  background-image: url('/assets/Fondo-4.jpeg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 
   padding: 30px;
 
-  /* Marco suave alrededor */
   border: 8px solid rgba(255, 255, 255, 0.35);
   border-radius: 20px;
 }

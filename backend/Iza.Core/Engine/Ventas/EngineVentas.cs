@@ -313,25 +313,32 @@ namespace Iza.Core.Engine.Ventas
                 string nombreArchivo = "";
 
 
+                int rows = colPedidoDTO?.Count ?? 0;
+
+                // estimación en décimas de mm
+                int header = 300;           // 30mm
+                int perRow = 60;            // 6mm por fila
+                int footer = 200;           // 20mm
+                int minH = 800;            // 80mm mínimo
+
+                int height = Math.Max(minH, header + (rows * perRow) + footer);
+
                 // TAMAÑO DEL TICKET
                 // 80 mm = 302 (DevExpress usa 0.1mm por unidad)
-
-
-                
-
-
                 reporte.PaperKind = DevExpress.Drawing.Printing.DXPaperKind.Custom;
                
                 reporte.ReportUnit = ReportUnit.TenthsOfAMillimeter;
-                reporte.PageWidth = 580;     // 80 mm exactos
-                reporte.PageHeight = 1200;   // Se ignora en RollPaper, pero evita errores
+                //reporte.ReportUnit = ReportUnit.HundredthsOfAnInch;
+                reporte.PageWidth = 800;     // 80 mm exactos
+                reporte.PageHeight = height;   // Se ignora en RollPaper, pero evita errores
 
                 // Impresión de rollo (continuo)
-                reporte.RollPaper = true;
+                reporte.Landscape = false;
+                reporte.RollPaper = false;
 
                 // Márgenes mínimos (térmicas no usan margen)
-                reporte.Margins.Top = 5;
-                reporte.Margins.Bottom = 5;
+                reporte.Margins.Top = 0;
+                reporte.Margins.Bottom = 0;
                 reporte.Margins.Left = 0;
                 reporte.Margins.Right = 0;
 
@@ -355,13 +362,20 @@ namespace Iza.Core.Engine.Ventas
                 // Data
                 reporte.DataSource = colPedidoDTO;
 
-                // Exportación
+
+                // Exportación 1
                 string fileName = Path.Combine("c:\\tmp\\", "pedido_" + Guid.NewGuid() + ".pdf");
                 reporte.ExportToPdf(fileName);
-
                 string reporteBase64 = Convert.ToBase64String(File.ReadAllBytes(fileName));
                 response.Code = reporteBase64;
 
+                // Exportación 2// Construye el documento antes del export (reduce comportamientos raros)
+                //reporte.CreateDocument();
+                //using var ms = new MemoryStream();
+                //reporte.ExportToPdf(ms);
+
+                //string reporteBase64 = Convert.ToBase64String(ms.ToArray());
+                //response.Code = reporteBase64;
 
 
 

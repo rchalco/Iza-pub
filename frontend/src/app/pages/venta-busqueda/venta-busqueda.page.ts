@@ -86,32 +86,32 @@ export class VentaBusquedaPage implements OnInit {
       return;
 
     ingrediente.subTotal = ingrediente.cantidad * ingrediente.precioUnitario;
-    
+
     this.productosVender.push(ingrediente);
     //this.mostrarIngredientes(ingrediente);
-    
+
   }
 
-  subTotalCellValue(rowData){  
+  subTotalCellValue(rowData){
     //console.log('cantidad', rowData);
     //this.recalculaTotalPagar();
     //console.log('subtotal', rowData);
     //console.log('prd vender', this.productosVender.length);
-    
+
     //let subT = Math.round((rowData.cantidad * rowData.precioUnitario));
     let subT = (rowData.cantidad * rowData.precioUnitario);
-   
- 
-   //this.totalVenta = 500;
-   
-    return subT;  
-  }  
 
-  onRecalculaMonto(rowData){  
+
+   //this.totalVenta = 500;
+
+    return subT;
+  }
+
+  onRecalculaMonto(rowData){
     this.recalculaTotalPagar();
    console.log('valorrrrrr', rowData);
-   
-  }  
+
+  }
 
   logEvent(eventName) {
     console.log('valorrrrrr', eventName);
@@ -119,7 +119,7 @@ export class VentaBusquedaPage implements OnInit {
 
 
   eliminarProducto(e: any) {
-    
+
     let ingrediente = new IngredientesDeMenuGeneralDTO();
     ingrediente = e.row.data;
     //this.listaDetalleProductoAGrabar
@@ -132,11 +132,11 @@ export class VentaBusquedaPage implements OnInit {
       }
     }
     ///
-    
+
     this.recalculaTotalPagar();
   }
 
-  
+
 
   realizarPago(_idFormaPago) {
     console.log('PAGAR',this.productosVender);
@@ -222,8 +222,8 @@ export class VentaBusquedaPage implements OnInit {
           return;
         }
         this.ventaService.downLoadFile(resul.code, "application/pdf");
-       
-        
+
+
       });
     });
 

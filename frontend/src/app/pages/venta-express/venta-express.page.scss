@@ -66,3 +66,29 @@ ion-button {
   font-size: 20px;
   font-weight: bold;
 }
+
+/* Fixed/sticky order box at top with limited height and internal scroll for mobile */
+.orden-actual-fixed {
+  /* use sticky so it stays visible while allowing the page to flow naturally */
+  position: -webkit-sticky;
+  position: sticky;
+  top: 56px; /* adjust if your header is a different height */
+  z-index: 20;
+  max-height: 180px;
+  overflow-y: auto;
+  background: var(--ion-background-color, #fff);
+  /* keep layout consistent with ion-list default spacing */
+  padding-right: 4px;
+  /* subtle separation */
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.orden-actual-fixed ::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+.orden-actual-fixed ::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.15);
+  border-radius: 10px;
+}

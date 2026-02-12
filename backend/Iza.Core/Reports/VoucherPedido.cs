@@ -10,7 +10,21 @@ namespace Iza.Core.Reports
     {
         public VoucherPedido()
         {
+            
             InitializeComponent();
+
+            ReportUnit = ReportUnit.TenthsOfAMillimeter;
+
+            PaperKind = DevExpress.Drawing.Printing.DXPaperKind.Custom;
+            Landscape = false;
+            RollPaper = true;
+
+            PageWidth = 800;  // 80mm
+            PageHeight = 2000; // alto base para PDF
+
+            Margins = new DevExpress.Drawing.DXMargins(0, 0, 5, 5);
+
+
             // Unidad en décimas de milímetro
             //this.ReportUnit = DevExpress.XtraReports.UI.ReportUnit.TenthsOfAMillimeter;
 
