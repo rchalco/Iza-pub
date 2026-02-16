@@ -30,7 +30,7 @@ const routes: Routes = [
     path: 'apertura-caja',
     loadChildren: () =>
       import('./pages/apertura-caja/apertura-caja.module').then(
-        (m) => m.AperturaCajaPageModule
+        (m) => m.AperturaCajaPageModule,
       ),
     canActivate: [SessioninitGuard],
   },
@@ -38,7 +38,7 @@ const routes: Routes = [
     path: 'cierre-caja',
     loadChildren: () =>
       import('./pages/cierre-caja/cierre-caja.module').then(
-        (m) => m.CierreCajaPageModule
+        (m) => m.CierreCajaPageModule,
       ),
     canActivate: [SessioninitGuard],
   },
@@ -51,7 +51,7 @@ const routes: Routes = [
     path: 'cambio-contrasena',
     loadChildren: () =>
       import('./pages/cambio-contrasena/cambio-contrasena.module').then(
-        (m) => m.CambioContrasenaPageModule
+        (m) => m.CambioContrasenaPageModule,
       ),
     canActivate: [SessioninitGuard],
   },
@@ -59,7 +59,7 @@ const routes: Routes = [
     path: 'pedido-mesa',
     loadChildren: () =>
       import('./pages/pedido-mesa/pedido-mesa.module').then(
-        (m) => m.PedidoMesaPageModule
+        (m) => m.PedidoMesaPageModule,
       ),
     canActivate: [SessioninitGuard],
   },
@@ -67,16 +67,16 @@ const routes: Routes = [
     path: 'reporte-tablero',
     loadChildren: () =>
       import('./pages/reporte-tablero/reporte-tablero.module').then(
-        (m) => m.ReporteTableroPageModule
+        (m) => m.ReporteTableroPageModule,
       ),
     canActivate: [SessioninitGuard],
   },
   {
     path: 'venta-tintoreria',
     loadChildren: () =>
-      import(
-        './pages/tintoreria/venta-tintoreria/venta-tintoreria.module'
-      ).then((m) => m.VentaTintoreriaPageModule),
+      import('./pages/tintoreria/venta-tintoreria/venta-tintoreria.module').then(
+        (m) => m.VentaTintoreriaPageModule,
+      ),
     canActivate: [SessioninitGuard],
   },
   {
@@ -88,16 +88,16 @@ const routes: Routes = [
   {
     path: 'tintoreria-entrega',
     loadChildren: () =>
-      import(
-        './pages/tintoreria/tintoreria-entrega/tintoreria-entrega.module'
-      ).then((m) => m.TintoreriaEntregaPageModule),
+      import('./pages/tintoreria/tintoreria-entrega/tintoreria-entrega.module').then(
+        (m) => m.TintoreriaEntregaPageModule,
+      ),
     canActivate: [SessioninitGuard],
   },
   {
     path: 'reportes-tintoreria',
     loadChildren: () =>
       import('./pages/tintoreria/reportes/reportes.module').then(
-        (m) => m.ReportesPageModule
+        (m) => m.ReportesPageModule,
       ),
     canActivate: [SessioninitGuard],
   },
@@ -105,148 +105,226 @@ const routes: Routes = [
     path: 'reporte-caja',
     loadChildren: () =>
       import('./pages/tintoreria/reporte-caja/reporte-caja.module').then(
-        (m) => m.ReporteCajaPageModule
+        (m) => m.ReporteCajaPageModule,
       ),
   },
   {
     path: 'apertura-inventario',
     loadChildren: () =>
       import('./pages/apertura-inventario/apertura-inventario.module').then(
-        (m) => m.AperturaInventarioPageModule
+        (m) => m.AperturaInventarioPageModule,
       ),
   },
   {
     path: 'asignacion-inventario',
     loadChildren: () =>
       import('./pages/asignacion-inventario/asignacion-inventario.module').then(
-        (m) => m.AsignacionInventarioPageModule
+        (m) => m.AsignacionInventarioPageModule,
       ),
   },
   {
     path: 'arqueo-cajero',
     loadChildren: () =>
       import('./pages/arqueo-cajero/arqueo-cajero.module').then(
-        (m) => m.ArqueoCajeroPageModule
+        (m) => m.ArqueoCajeroPageModule,
       ),
   },
   {
     path: 'cierre-operativo',
     loadChildren: () =>
       import('./pages/cierre-operativo/cierre-operativo.module').then(
-        (m) => m.CierreOperativoPageModule
+        (m) => m.CierreOperativoPageModule,
       ),
   },
   {
     path: 'inventario-general',
     loadChildren: () =>
       import('./pages/inventario-general/inventario-general.module').then(
-        (m) => m.InventarioGeneralPageModule
+        (m) => m.InventarioGeneralPageModule,
       ),
   },
   {
     path: 'cierre-cajero',
-    loadChildren: () => import('./pages/cierre-cajero/cierre-cajero.module').then(m => m.CierreCajeroPageModule)
+    loadChildren: () =>
+      import('./pages/cierre-cajero/cierre-cajero.module').then(
+        (m) => m.CierreCajeroPageModule,
+      ),
   },
   {
     path: 'movimiento-stock',
-    loadChildren: () => import('./pages/movimiento-stock/movimiento-stock.module').then(m => m.MovimientoStockPageModule)
+    loadChildren: () =>
+      import('./pages/movimiento-stock/movimiento-stock.module').then(
+        (m) => m.MovimientoStockPageModule,
+      ),
   },
   {
     path: 'entradas-salidas',
-    loadChildren: () => import('./pages/entradas-salidas/entradas-salidas.module').then(m => m.EntradasSalidasPageModule)
+    loadChildren: () =>
+      import('./pages/entradas-salidas/entradas-salidas.module').then(
+        (m) => m.EntradasSalidasPageModule,
+      ),
   },
   {
     path: 'personas',
-    loadChildren: () => import('./pages/personas/personas.module').then(m => m.PersonasPageModule)
+    loadChildren: () =>
+      import('./pages/personas/personas.module').then(
+        (m) => m.PersonasPageModule,
+      ),
   },
   {
     path: 'abm-usuario',
-    loadChildren: () => import('./pages/abm-usuario/abm-usuario.module').then(m => m.AbmUsuarioPageModule)
+    loadChildren: () =>
+      import('./pages/abm-usuario/abm-usuario.module').then(
+        (m) => m.AbmUsuarioPageModule,
+      ),
   },
   {
     path: 'habilita-caja',
-    loadChildren: () => import('./pages/habilita-caja/habilita-caja.module').then(m => m.HabilitaCajaPageModule)
+    loadChildren: () =>
+      import('./pages/habilita-caja/habilita-caja.module').then(
+        (m) => m.HabilitaCajaPageModule,
+      ),
   },
   {
     path: 'venta-express',
-    loadChildren: () => import('./pages/venta-express/venta-express.module').then(m => m.VentaExpressPageModule)
+    loadChildren: () =>
+      import('./pages/venta-express/venta-express.module').then(
+        (m) => m.VentaExpressPageModule,
+      ),
   },
   {
     path: 'cierre-global',
-    loadChildren: () => import('./pages/cierre-global/cierre-global.module').then(m => m.CierreGlobalPageModule)
+    loadChildren: () =>
+      import('./pages/cierre-global/cierre-global.module').then(
+        (m) => m.CierreGlobalPageModule,
+      ),
   },
   {
     path: 'cierre-detalle-cajero',
-    loadChildren: () => import('./pages/cierre-detalle-cajero/cierre-detalle-cajero.module').then(m => m.CierreDetalleCajeroPageModule)
+    loadChildren: () =>
+      import('./pages/cierre-detalle-cajero/cierre-detalle-cajero.module').then(
+        (m) => m.CierreDetalleCajeroPageModule,
+      ),
   },
   {
     path: 'tarjeta-read',
-    loadChildren: () => import('./pages/tarjeta-read/tarjeta-read.module').then(m => m.TarjetaReadPageModule)
+    loadChildren: () =>
+      import('./pages/tarjeta-read/tarjeta-read.module').then(
+        (m) => m.TarjetaReadPageModule,
+      ),
   },
   {
     path: 'control-tarjetas',
-    loadChildren: () => import('./pages/control-tarjetas/control-tarjetas.module').then(m => m.ControlTarjetasPageModule)
+    loadChildren: () =>
+      import('./pages/control-tarjetas/control-tarjetas.module').then(
+        (m) => m.ControlTarjetasPageModule,
+      ),
   },
   {
     path: 'inventario-final',
-    loadChildren: () => import('./pages/inventario-final/inventario-final.module').then(m => m.InventarioFinalPageModule)
+    loadChildren: () =>
+      import('./pages/inventario-final/inventario-final.module').then(
+        (m) => m.InventarioFinalPageModule,
+      ),
   },
   {
     path: 'configuracion-item-menu',
     loadChildren: () =>
-      import('./pages/configuracion-item-menu/configuracion-item-menu.module').then(m => m.ConfiguracionItemMenuPageModule)
+      import('./pages/configuracion-item-menu/configuracion-item-menu.module').then(
+        (m) => m.ConfiguracionItemMenuPageModule,
+      ),
   },
   {
     path: 'reposicion-producto',
-    loadChildren: () => import('./pages/reposicion-producto/reposicion-producto.module').then(m => m.ReposicionProductoPageModule)
+    loadChildren: () =>
+      import('./pages/reposicion-producto/reposicion-producto.module').then(
+        (m) => m.ReposicionProductoPageModule,
+      ),
   },
   {
     path: 'reposicion-producto2',
-    loadChildren: () => import('./pages/reposicion-producto2/reposicion-producto2.module').then(m => m.ReposicionProducto2PageModule)
+    loadChildren: () =>
+      import('./pages/reposicion-producto2/reposicion-producto2.module').then(
+        (m) => m.ReposicionProducto2PageModule,
+      ),
   },
   {
     path: 'reporte-ventas-consolidado',
-    loadChildren: () => import('./pages/reporte-ventas-consolidado/reporte-ventas-consolidado.module').then(m => m.ReporteVentasConsolidadoPageModule)
+    loadChildren: () =>
+      import('./pages/reporte-ventas-consolidado/reporte-ventas-consolidado.module').then(
+        (m) => m.ReporteVentasConsolidadoPageModule,
+      ),
   },
   {
     path: 'registro-huellas',
-    loadChildren: () => import('./pages/registro-huellas/registro-huellas.module').then( m => m.RegistroHuellasPageModule)
+    loadChildren: () =>
+      import('./pages/registro-huellas/registro-huellas.module').then(
+        (m) => m.RegistroHuellasPageModule,
+      ),
   },
   {
     path: 'verificacion-huella',
-    loadChildren: () => import('./pages/verificacion-huella/verificacion-huella.module').then( m => m.VerificacionHuellaPageModule)
+    loadChildren: () =>
+      import('./pages/verificacion-huella/verificacion-huella.module').then(
+        (m) => m.VerificacionHuellaPageModule,
+      ),
   },
   {
     path: 'reporte-cierre-global',
-    loadChildren: () => import('./pages/reporte-cierre-global/reporte-cierre-global.module').then( m => m.ReporteCierreGlobalPageModule)
+    loadChildren: () =>
+      import('./pages/reporte-cierre-global/reporte-cierre-global.module').then(
+        (m) => m.ReporteCierreGlobalPageModule,
+      ),
   },
   {
     path: 'dashboard-productos',
-    loadChildren: () => import('./pages/dashboard-productos/dashboard-productos.module').then( m => m.DashboardProductosPageModule)
+    loadChildren: () =>
+      import('./pages/dashboard-productos/dashboard-productos.module').then(
+        (m) => m.DashboardProductosPageModule,
+      ),
   },
   {
     path: 'asignacion-productos',
-    loadChildren: () => import('./pages/asignacion-productos/asignacion-productos.module').then( m => m.AsignacionProductosPageModule)
+    loadChildren: () =>
+      import('./pages/asignacion-productos/asignacion-productos.module').then(
+        (m) => m.AsignacionProductosPageModule,
+      ),
   },
   {
     path: 'bandeja-pedidos',
-    loadChildren: () => import('./pages/bandeja-pedidos/bandeja-pedidos.module').then( m => m.BandejaPedidosPageModule)
+    loadChildren: () =>
+      import('./pages/bandeja-pedidos/bandeja-pedidos.module').then(
+        (m) => m.BandejaPedidosPageModule,
+      ),
+  },
+  {
+    path: 'bandeja-pedidos-cajero',
+    loadChildren: () =>
+      import('./pages/bandeja-pedidos-cajero/bandeja-pedidos-cajero.module').then(
+        (m) => m.BandejaPedidosCajeroPageModule,
+      ),
   },
   {
     path: 'configura-menu-ingredientes',
-    loadChildren: () => import('./pages/configura-menu-ingredientes/configura-menu-ingredientes.module').then( m => m.ConfiguraMenuIngredientesPageModule)
-  },  {
+    loadChildren: () =>
+      import('./pages/configura-menu-ingredientes/configura-menu-ingredientes.module').then(
+        (m) => m.ConfiguraMenuIngredientesPageModule,
+      ),
+  },
+  {
     path: 'venta-busqueda',
-    loadChildren: () => import('./pages/venta-busqueda/venta-busqueda.module').then( m => m.VentaBusquedaPageModule)
+    loadChildren: () =>
+      import('./pages/venta-busqueda/venta-busqueda.module').then(
+        (m) => m.VentaBusquedaPageModule,
+      ),
   },
   {
     path: 'cierre-inventario',
-    loadChildren: () => import('./pages/cierre-inventario/cierre-inventario.module').then( m => m.CierreInventarioPageModule)
+    loadChildren: () =>
+      import('./pages/cierre-inventario/cierre-inventario.module').then(
+        (m) => m.CierreInventarioPageModule,
+      ),
   },
-
- 
-
-
 ];
 
 @NgModule({
@@ -255,4 +333,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
