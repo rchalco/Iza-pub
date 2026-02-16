@@ -1,3 +1,60 @@
-.font-header {
-  font-size: 1.2em;
+// ── Toolbar ──────────────────────────────────────────────
+.custom-toolbar {
+  --min-height: 50px;
+  --padding-start: 4px;
+  --padding-end: 8px;
+}
+
+// ── Title ────────────────────────────────────────────────
+.toolbar-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+// ── Menu button ──────────────────────────────────────────
+.menu-btn {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  font-size: 1.3rem;
+}
+
+// ── End section ──────────────────────────────────────────
+.toolbar-end {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 4px;
+}
+
+// ── Info badges ──────────────────────────────────────────
+.toolbar-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 14px;
+  white-space: nowrap;
+
+  ion-icon {
+    font-size: 0.85rem;
+    opacity: 0.85;
+  }
+}
+
+// ── Home button ──────────────────────────────────────────
+.home-btn {
+  --padding-start: 6px;
+  --padding-end: 6px;
+  font-size: 1.25rem;
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 1;
+  }
 }

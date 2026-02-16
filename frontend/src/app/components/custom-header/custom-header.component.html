@@ -1,14 +1,37 @@
 <ion-header>
-  <ion-toolbar color="primary" class="font-header">
-    <ion-button slot="start" color="tertiary" (click)="showMenu()"><ion-icon slot="start"
-        name="menu"></ion-icon></ion-button>
-    <ion-label>{{ title }}</ion-label>
-    <ion-label slot="end">{{ fechaProcesoActual }}|{{ usuarioNombre }} | </ion-label>
-    <!-- <ion-title slot="start">{{ title }}</ion-title> -->
-    <!-- <ion-text color="primary" slot="start">
-      {{ usuarioNombre }}
-    </ion-text> -->
-    <!-- <ion-button slot="end" color="danger" (click)="logout()">salir </ion-button> -->
-    <ion-icon slot="end" name="home" (click)="goHome()"></ion-icon>
+  <ion-toolbar color="primary" class="custom-toolbar">
+    <!-- Menu button -->
+    <ion-button
+      slot="start"
+      fill="clear"
+      color="light"
+      (click)="showMenu()"
+      class="menu-btn"
+    >
+      <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+    </ion-button>
+
+    <!-- Title -->
+    <ion-title class="toolbar-title">{{ title }}</ion-title>
+
+    <!-- Info badges -->
+    <div slot="end" class="toolbar-end">
+      <span class="toolbar-badge">
+        <ion-icon name="calendar-outline"></ion-icon>
+        {{ fechaProcesoActual }}
+      </span>
+      <span class="toolbar-badge">
+        <ion-icon name="person-outline"></ion-icon>
+        {{ usuarioNombre }}
+      </span>
+      <ion-button
+        fill="clear"
+        color="light"
+        (click)="goHome()"
+        class="home-btn"
+      >
+        <ion-icon slot="icon-only" name="home-outline"></ion-icon>
+      </ion-button>
+    </div>
   </ion-toolbar>
 </ion-header>
