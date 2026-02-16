@@ -89,7 +89,7 @@ public partial class DbpubIzaContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Data Source=155.138.212.216;Initial Catalog=DBPubIZA;Persist Security Info=True;User ID=sa;Password=m1k1ches*123;TrustServerCertificate=True");
+        => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=DBPubIZA;Persist Security Info=True;User ID=sa;Password=mikyches*123;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

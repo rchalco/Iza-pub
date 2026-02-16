@@ -59,15 +59,26 @@ export const LogoVoucher = '';
 // export const URL_MIROVENTAOPERACION = 'http://181.188.169.10:8001/api/MicroventaOperacion/';
 
 //SERVER MYKE
-export const URL_MIROVENTAOPERACION = 'http://155.138.212.216:8032/api/MicroventaOperacion/';
-export const URL_TINTORERIA = 'http://155.138.212.216:8032/api/Tintoreria/';
+// export const URL_MIROVENTAOPERACION = 'http://155.138.212.216:8032/api/MicroventaOperacion/';
+// export const URL_TINTORERIA = 'http://155.138.212.216:8032/api/Tintoreria/';
+// ////El de seguridad no debe cambiar el puerto
+// export const URL_SECURITY = 'http://155.138.212.216:9007/api/APISeguridad/';
+// export const URL_INVENTARIO = 'http://155.138.212.216:9007/api/APIIventario/';
+// export const URL_MIROVENTA = 'http://155.138.212.216:9007/api/APIVenta/';
+// export const URL_PERSON = 'http://155.138.212.216:8032/api/Person/';
+// export const URL_CARDS = 'http://155.138.212.216:8032/api/Tarjeta/';
+// export const URL_FINGERS = 'http://155.138.212.216:8032/api/Biometric/';
+
+//SERVER MYKE
+export const URL_MIROVENTAOPERACION = 'http://192.168.0.153:8090/api/MicroventaOperacion/';
+export const URL_TINTORERIA = 'http://192.168.0.153:8090/api/Tintoreria/';
 ////El de seguridad no debe cambiar el puerto
-export const URL_SECURITY = 'http://155.138.212.216:9007/api/APISeguridad/';
-export const URL_INVENTARIO = 'http://155.138.212.216:9007/api/APIIventario/';
-export const URL_MIROVENTA = 'http://155.138.212.216:9007/api/APIVenta/';
-export const URL_PERSON = 'http://155.138.212.216:8032/api/Person/';
-export const URL_CARDS = 'http://155.138.212.216:8032/api/Tarjeta/';
-export const URL_FINGERS = 'http://155.138.212.216:8032/api/Biometric/';
+export const URL_SECURITY = 'http://192.168.0.153:8090/api/APISeguridad/';
+export const URL_INVENTARIO = 'http://192.168.0.153:8090/api/APIIventario/';
+export const URL_MIROVENTA = 'http://192.168.0.153:8090/api/APIVenta/';
+export const URL_PERSON = 'http://192.168.0.153:8090/api/Person/';
+export const URL_CARDS = 'http://192.168.0.153:8090/api/Tarjeta/';
+export const URL_FINGERS = 'http://192.168.0.153:8090/api/Biometric/';
 
 
 //SERVER MYKE TARJETAS

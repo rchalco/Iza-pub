@@ -26,7 +26,7 @@ export class ConfiguraMenuIngredientesPage implements OnInit {
 
   dataSourceMenuMaestro: DataSource = new DataSource(this.listaMenuMaestro);
   dataSourceIngredientes: DataSource = new DataSource(this.listaDetalleProductoAGrabar);
-  
+
   showMain: boolean = true;
   showProducto: boolean = false;
   showIngredientes: boolean = false;
@@ -34,7 +34,7 @@ export class ConfiguraMenuIngredientesPage implements OnInit {
   idTipoProductoSeleccionado: number = 0;
 
   constructor(private inventarioService: InventarioService) {
-    
+
     this.modificarIngredientes = this.modificarIngredientes.bind(this);
     this.eliminarIngredientes = this.eliminarIngredientes.bind(this);
   }
@@ -82,7 +82,7 @@ export class ConfiguraMenuIngredientesPage implements OnInit {
 
   nuevoMenu() {
     //console.log(e.row.data);
-   
+
     console.log('Nuevo menu');
     this.showProducto = true;
     this.showMain = false;
@@ -102,65 +102,65 @@ export class ConfiguraMenuIngredientesPage implements OnInit {
 
 
   cargarDatosInicialesProducto(){
-    
+
     this.inventarioService.clasificadorPorTipo(1).then((productosService) => {
       productosService.subscribe((resul) => {
-        console.log('CATEGORIAS',resul);
+        console.log('CATEGORIASsssss',resul);
         this.listaTipoProducto = resul.listEntities;
-  
+
       });
     });
   }
   siguiente(){
     console.log('CATEGORIA',this.selectTipoProducto.idClasificador);
     console.log('PRODUCTO XXXXX',this.selectedRegistro);
-    
+
     if(this.selectTipoProducto.idClasificador ===  0)
     {
       this.inventarioService.showMessageWarning('Debe ingresar la categoria');
-      return;      
+      return;
     }
 
     if(this.selectedRegistro.descripcionMenu ==  '')
     {
       this.inventarioService.showMessageWarning('Debe ingresar el nombre de producto o menú');
-      return;      
+      return;
     }
 
     if(this.selectedRegistro.marca ==  '')
     {
       this.inventarioService.showMessageWarning('Debe ingresar la Marca');
-      return;      
+      return;
     }
 
     if(this.selectedRegistro.contenido ==  '')
     {
       this.inventarioService.showMessageWarning('Debe ingresar el contenido');
-      return;      
+      return;
     }
 
     if(this.selectedRegistro.embaseXUnidades <=  0)
     {
       this.inventarioService.showMessageWarning('Debe ingresar unidades por embase');
-      return;      
+      return;
     }
 
     if(this.selectedRegistro.precioUnitario <=  0)
     {
       this.inventarioService.showMessageWarning('Debe ingresar el precio unitario');
-      return;      
+      return;
     }
 
     if(this.selectedRegistro.precio <=  0)
     {
       this.inventarioService.showMessageWarning('Debe ingresar el precio de venta');
-      return;      
+      return;
     }
 
     if(!this.selectedRegistro.esParaMenu && !this.selectedRegistro.esProducto)
     {
       this.inventarioService.showMessageWarning('Debe marcar algun item Es Para menu o Es Producto');
-      return;      
+      return;
     }
 
 
@@ -175,12 +175,12 @@ export class ConfiguraMenuIngredientesPage implements OnInit {
         ingrediente.idIngrediente = 0;
         ingrediente.nombreProducto = this.selectedRegistro.descripcionMenu;
         ingrediente.medidaUnitaria = this.selectedRegistro.embaseXUnidades;
-        
+
         //console.log('SIGUIENTE', ingrediente);
         this.listaDetalleProductoAGrabar = [];
         this.listaDetalleProductoAGrabar.push(ingrediente);
       }
-      
+
     }
     //else
     //{
@@ -188,7 +188,7 @@ export class ConfiguraMenuIngredientesPage implements OnInit {
     //}
     this.showIngredientes = true;
     this.showProducto = false;
-    
+
   }
 
   cancelarRegistro() {
@@ -197,7 +197,7 @@ export class ConfiguraMenuIngredientesPage implements OnInit {
     this.showIngredientes = false;
     this.selectedRegistro = new IngredientesDeMenuGeneralDTO();
   }
- 
+
   adicionarAProducto(producto:any) {
     console.log('PRODUCTO', producto);
     let lista: IngredientesDeMenuGeneralDTO[] = [];
@@ -205,7 +205,7 @@ export class ConfiguraMenuIngredientesPage implements OnInit {
     lista = this.listaDetalleProductoAGrabar.filter(x=>x.idProducto == producto.idProducto);
     //console.log('adicionar', lista);
     if (lista.length > 0) return;
-    
+
     productoAdicionar.idProducto = producto.idProducto;
     productoAdicionar.nombreProducto = producto.nombreProducto;
     productoAdicionar.precio = producto.precio;
@@ -222,7 +222,7 @@ export class ConfiguraMenuIngredientesPage implements OnInit {
     if(this.selectedRegistro.idCategoria ===  0)
     {
       this.inventarioService.showMessageWarning('Debe ingresar la categoria');
-      return;      
+      return;
     }
 
     //Se debe adicionar validaciones
@@ -241,7 +241,7 @@ export class ConfiguraMenuIngredientesPage implements OnInit {
 
     console.log('DETALLEVVVV',this.selectedRegistro.detalle);
 
-    
+
     this.inventarioService.grabarMenuGeneralCompleto(this.selectedRegistro).then((service) => {
       service.subscribe((response) => {
         this.cargaMenuInicial(response.listEntities);
@@ -270,7 +270,7 @@ export class ConfiguraMenuIngredientesPage implements OnInit {
 
 
   cancelarIngrediente() {
-   
+
     this.showProducto = true;
     this.showMain = false;
     this.showIngredientes = false;
