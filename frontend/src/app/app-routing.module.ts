@@ -234,7 +234,7 @@ const routes: Routes = [
   },
   {
     path: 'bandeja-pedidos-cajero',
-    loadChildren: () => import('./pages/bandeja-pedidos-cajero/bandeja-pedidos-cajero.module').then( m => m.BandejaPedidosPageModule)
+    loadChildren: () => import('./pages/bandeja-pedidos-cajero/bandeja-pedidos-cajero.module').then( m => m.BandejaPedidosCajeroPageModule)
   },
   {
     path: 'configura-menu-ingredientes',
