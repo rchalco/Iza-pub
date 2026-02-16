@@ -233,9 +233,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/bandeja-pedidos/bandeja-pedidos.module').then( m => m.BandejaPedidosPageModule)
   },
   {
+    path: 'bandeja-pedidos-cajero',
+    loadChildren: () => import('./pages/bandeja-pedidos-cajero/bandeja-pedidos-cajero.module').then( m => m.BandejaPedidosPageModule)
+  },
+  {
     path: 'configura-menu-ingredientes',
     loadChildren: () => import('./pages/configura-menu-ingredientes/configura-menu-ingredientes.module').then( m => m.ConfiguraMenuIngredientesPageModule)
-  },  {
+  },
+  {
     path: 'venta-busqueda',
     loadChildren: () => import('./pages/venta-busqueda/venta-busqueda.module').then( m => m.VentaBusquedaPageModule)
   },
@@ -244,7 +249,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/cierre-inventario/cierre-inventario.module').then( m => m.CierreInventarioPageModule)
   },
 
- 
+
 
 
 ];

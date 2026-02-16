@@ -5,6 +5,9 @@
     <Compile Update="Reports\AsignacionProductos.cs">
       <SubType>XtraReport</SubType>
     </Compile>
+    <Compile Update="Reports\CierreCaja.cs">
+      <SubType>XtraReport</SubType>
+    </Compile>
     <Compile Update="Reports\VoucherPedido.cs">
       <SubType>XtraReport</SubType>
     </Compile>

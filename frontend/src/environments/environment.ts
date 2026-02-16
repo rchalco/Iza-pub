@@ -59,7 +59,7 @@ export const LogoVoucher = '';
 // export const URL_MIROVENTAOPERACION = 'http://181.188.169.10:8001/api/MicroventaOperacion/';
 
 //SERVER OFICIAL
-<<<<<<< HEAD
+
 // export const URL_MIROVENTAOPERACION = 'http://localhost:8001/api/MicroventaOperacion/';
 // export const URL_TINTORERIA = 'http://localhost:8001/api/Tintoreria/';
 // //El de seguridad no debe cambiar el puerto
@@ -93,18 +93,18 @@ export const URL_MIROVENTA = 'http://192.168.0.153:8090/api/APIVenta/';
 export const URL_PERSON = 'http://192.168.0.153:8090/api/Person/';
 export const URL_CARDS = 'http://192.168.0.153:8090/api/Tarjeta/';
 export const URL_FINGERS = 'http://192.168.0.153:8090/api/Biometric/';
-=======
-export const URL_MIROVENTAOPERACION =
-  'http://localhost:8001/api/MicroventaOperacion/';
-export const URL_TINTORERIA = 'http://localhost:8001/api/Tintoreria/';
-//El de seguridad no debe cambiar el puerto
-//export const URL_SECURITY = 'http://155.138.212.216:8033/api/APISecurity/';
-export const URL_SECURITY = 'http://155.138.212.216:8034/api/APISeguridad/';
-export const URL_INVENTARIO = 'http://155.138.212.216:8034/api/APIIventario/';
-export const URL_MIROVENTA = 'http://155.138.212.216:8034/api/APIVenta/';
-export const URL_PERSON = 'http://localhost:8001/api/Person/';
-export const URL_CARDS = 'http://localhost:8001/api/Tarjeta/';
-export const URL_FINGERS = 'http://localhost:8001/api/Biometric/';
+
+// export const URL_MIROVENTAOPERACION =
+//   'http://localhost:8001/api/MicroventaOperacion/';
+// export const URL_TINTORERIA = 'http://localhost:8001/api/Tintoreria/';
+// //El de seguridad no debe cambiar el puerto
+// //export const URL_SECURITY = 'http://155.138.212.216:8033/api/APISecurity/';
+// export const URL_SECURITY = 'http://155.138.212.216:8034/api/APISeguridad/';
+// export const URL_INVENTARIO = 'http://155.138.212.216:8034/api/APIIventario/';
+// export const URL_MIROVENTA = 'http://155.138.212.216:8034/api/APIVenta/';
+// export const URL_PERSON = 'http://localhost:8001/api/Person/';
+// export const URL_CARDS = 'http://localhost:8001/api/Tarjeta/';
+// export const URL_FINGERS = 'http://localhost:8001/api/Biometric/';
 
 //SERVER PRUEBA
 
@@ -117,7 +117,7 @@ export const URL_FINGERS = 'http://localhost:8001/api/Biometric/';
 // export const URL_PERSON = 'http://localhost:8001/api/Person/';
 // export const URL_CARDS = 'http://localhost:8001/api/Tarjeta/';
 // export const URL_FINGERS = 'http://localhost:8001/api/Biometric/';
->>>>>>> e28e3abd2ae61ea2a67e32d5d4d33fc26611398c
+
 // /*
 //  * For easier debugging in development mode, you can import the following file
 //  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
