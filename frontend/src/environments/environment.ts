@@ -59,29 +59,30 @@ export const LogoVoucher = '';
 // export const URL_MIROVENTAOPERACION = 'http://181.188.169.10:8001/api/MicroventaOperacion/';
 
 //SERVER OFICIAL
-// export const URL_MIROVENTAOPERACION = 'http://localhost:8001/api/MicroventaOperacion/';
-// export const URL_TINTORERIA = 'http://localhost:8001/api/Tintoreria/';
-// //El de seguridad no debe cambiar el puerto
-// //export const URL_SECURITY = 'http://155.138.212.216:8033/api/APISecurity/';
-//  export const URL_SECURITY = 'http://155.138.212.216:8034/api/APISeguridad/';
-// export const URL_INVENTARIO = 'http://155.138.212.216:8034/api/APIIventario/';
-// export const URL_MIROVENTA = 'http://155.138.212.216:8034/api/APIVenta/';
-// export const URL_PERSON = 'http://localhost:8001/api/Person/';
-// export const URL_CARDS = 'http://localhost:8001/api/Tarjeta/';
-// export const URL_FINGERS = 'http://localhost:8001/api/Biometric/';
-
-//SERVER PRUEBA
-
 export const URL_MIROVENTAOPERACION =
   'http://localhost:8001/api/MicroventaOperacion/';
 export const URL_TINTORERIA = 'http://localhost:8001/api/Tintoreria/';
-export const URL_SECURITY = 'http://localhost:5294/api/APISeguridad/';
-export const URL_INVENTARIO = 'http://localhost:5294/api/APIIventario/';
-export const URL_MIROVENTA = 'http://localhost:5294/api/APIVenta/';
-//export const URL_SECURITY = 'http://localhost:5294/api/APISeguridad/';
+//El de seguridad no debe cambiar el puerto
+//export const URL_SECURITY = 'http://155.138.212.216:8033/api/APISecurity/';
+export const URL_SECURITY = 'http://155.138.212.216:8039/api/APISeguridad/';
+export const URL_INVENTARIO = 'http://155.138.212.216:8039/api/APIIventario/';
+export const URL_MIROVENTA = 'http://155.138.212.216:8039/api/APIVenta/';
 export const URL_PERSON = 'http://localhost:8001/api/Person/';
 export const URL_CARDS = 'http://localhost:8001/api/Tarjeta/';
 export const URL_FINGERS = 'http://localhost:8001/api/Biometric/';
+
+//SERVER PRUEBA
+
+// export const URL_MIROVENTAOPERACION =
+//   'http://localhost:8001/api/MicroventaOperacion/';
+// export const URL_TINTORERIA = 'http://localhost:8001/api/Tintoreria/';
+// export const URL_SECURITY = 'http://localhost:5294/api/APISeguridad/';
+// export const URL_INVENTARIO = 'http://localhost:5294/api/APIIventario/';
+// export const URL_MIROVENTA = 'http://localhost:5294/api/APIVenta/';
+// //export const URL_SECURITY = 'http://localhost:5294/api/APISeguridad/';
+// export const URL_PERSON = 'http://localhost:8001/api/Person/';
+// export const URL_CARDS = 'http://localhost:8001/api/Tarjeta/';
+// export const URL_FINGERS = 'http://localhost:8001/api/Biometric/';
 
 //SERVER MYKE
 // export const URL_MIROVENTAOPERACION = 'http://192.168.0.153:8090/api/MicroventaOperacion/';
