@@ -124,6 +124,16 @@ namespace Iza.Services.Sevices
             EngineVentas mgrVentas = new EngineVentas();
             return mgrVentas.CerrarCaja(requestSPCierreCajero);
         }
+
+        [HttpPost("ObtieneProdcutoInventario")]
+        [EnableCors()]
+        public ResponseQuery<ResulProductoPrecioVentaComplex> ObtieneProdcutoInventario(RequestSearchProductAlmacen requestSearchProductAlmacen)
+        {
+            EngineVentas mgrVentas = new EngineVentas();
+            return mgrVentas.ObtieneProdcutoInventario(requestSearchProductAlmacen);
+        }
+
+
         #endregion
 
         #region Reportes Cola

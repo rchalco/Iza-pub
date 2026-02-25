@@ -9,7 +9,7 @@
       <ion-card-content>
         <ion-list>
           <ion-item>
-           
+
             <ion-select interface="popover" placeholder="Seleccionar Origen" (ionChange)="selectBarraOrigen($event)"
                 value="{{ barraOrigen.idAlmacen }}">
               <ion-select-option expand="full" *ngFor="let alamacen of listaAlmancenOrigen" value="{{ alamacen.idAlmacen }}">
@@ -17,7 +17,7 @@
             </ion-select>
           </ion-item>
           <ion-item>
-           
+
             <ion-select interface="popover" placeholder="Seleccionar Destino" (ionChange)="selectBarraDestino($event)"
                 value="{{ barraDestino.idAlmacen }}">
               <ion-select-option *ngFor="let alamacen of listaDestino" value="{{ alamacen.idAlmacen }}">
@@ -37,16 +37,17 @@
               <dxo-search-panel [visible]="true" [highlightCaseSensitive]="true"></dxo-search-panel>
               <dxo-group-panel [visible]="true"></dxo-group-panel>
               <dxo-grouping [autoExpandAll]="false"></dxo-grouping>
-              <dxi-column dataField="clasificador" caption="Categoria" dataType="string" [allowEditing]="false" [width]="200"></dxi-column> 
+              <dxi-column dataField="clasificador" caption="Categoria" dataType="string" [allowEditing]="false" [width]="200"></dxi-column>
               <dxi-column dataField="nombreProducto" caption="Producto" dataType="string" [allowEditing]="false" [width]="350"></dxi-column>
-              <dxi-column dataField="stockAnterior" caption="Stock" dataType="number" [allowEditing]="false" [width]="100"></dxi-column>
-              <dxi-column dataField="ingresos" caption="Ingreso" dataType="number" [allowEditing]="false" [width]="100"></dxi-column>
-              <dxi-column dataField="ventas" caption="Ventas" dataType="number" [allowEditing]="false" [width]="100"></dxi-column>
-              <dxi-column dataField="disponibleAlmacenCentral" caption="Disponible" dataType="number" [allowEditing]="false" [width]="100"></dxi-column>
+              <dxi-column dataField="stockAnterior" caption="Stock" dataType="number" [allowEditing]="false" format="#,##0.00"  [width]="100"></dxi-column>
+              <dxi-column dataField="ingresos" caption="Ingreso" dataType="number" [allowEditing]="false" format="#,##0.00" [width]="100"></dxi-column>
+              <dxi-column dataField="egresos" caption="Engreso" dataType="number" [allowEditing]="false" format="#,##0.00" [width]="100"></dxi-column>
+              <dxi-column dataField="ventas" caption="Ventas" dataType="number" [allowEditing]="false" format="#,##0.00" [width]="100"></dxi-column>
+              <dxi-column dataField="disponibleAlmacenCentral" caption="Disponible" dataType="number" [allowEditing]="false" format="#,##0.00" [width]="100"></dxi-column>
               <dxi-column dataField="cantidadAsignada" caption="Asignar" dataType="number" [allowEditing]="true"[width]="100"></dxi-column>
               <dxi-column dataField="fechaDeVencimiento" caption="Fecha Vencimiento" dataType="date" displayFormat="dd/MM/yyyy" [allowEditing]="true"></dxi-column>
 
-            
+
             </dx-data-grid>
           </ion-item>
         </ion-list>

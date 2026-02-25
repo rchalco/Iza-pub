@@ -10,5 +10,6 @@ public class RequestObtenerProductosAlmacenCentral
 {
     public int idSesion { get; set; }
     public int idFechaProceso { get; set; }
+    public int idAlmacen { get; set; }
 
 }

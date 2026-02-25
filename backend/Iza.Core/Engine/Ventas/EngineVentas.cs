@@ -530,6 +530,51 @@ namespace Iza.Core.Engine.Ventas
             return response;
         }
 
+
+        public ResponseQuery<ResulProductoPrecioVentaComplex> ObtieneProdcutoInventario(RequestSearchProductAlmacen requestSearchProductAlmacen)
+        {
+            ResponseQuery<ResulProductoPrecioVentaComplex> response = new ResponseQuery<ResulProductoPrecioVentaComplex> { Message = "Productos obtenidos correctamente", State = ResponseType.Success };
+            try
+            {
+                response.ListEntities = new List<ResulProductoPrecioVentaComplex>();
+                ParamOut paramOutRespuesta = new ParamOut(true);
+                ParamOut paramOutLogRespuesta = new ParamOut("");
+                paramOutLogRespuesta.Size = 100;
+
+                var resulBD = repositoryPub.GetDataByProcedure<ResulProductoPrecioVenta>("shFabula.spObtStockAlmacenFecha",
+                    requestSearchProductAlmacen.idSesion,
+                    requestSearchProductAlmacen.idFechaProceso,
+                    requestSearchProductAlmacen.idAlmacen,
+                    paramOutRespuesta,
+                    paramOutLogRespuesta);
+
+                resulBD.ForEach(x =>
+                {
+                    ResulProductoPrecioVentaComplex resulProductoPrecioVentaComplex;
+                    if (response.ListEntities.Any(y => y.categoria.Equals(x.categoria)))
+                    {
+                        resulProductoPrecioVentaComplex = response.ListEntities.First(y => y.categoria.Equals(x.categoria));
+                    }
+                    else
+                    {
+                        resulProductoPrecioVentaComplex = new ResulProductoPrecioVentaComplex
+                        {
+                            categoria = x.categoria,
+                            detalle = new List<ResulProductoPrecioVenta>()
+                        };
+                        response.ListEntities.Add(resulProductoPrecioVentaComplex);
+                    }
+                    resulProductoPrecioVentaComplex.detalle.Add(x);
+                });
+
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
         #endregion
 
         #region Reportes Cola

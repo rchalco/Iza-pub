@@ -45,7 +45,7 @@ export class InventarioService extends BaseService {
 
 
     return this.getInfoEviroment().then((env) => {
-      
+
       this.presentLoader();
       return this.httpClient
         .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
@@ -63,12 +63,13 @@ export class InventarioService extends BaseService {
     });
   }
 
-  async ObtenerProductosAlmacenCentral() {
+  async ObtenerProductosAlmacenCentral(_idAlmacen) {
     const urlQuery = urlInventario + 'ObtenerProductosAlmacenCentral';
 
     const dataRequest = {
       idSesion: 0,
       idFechaProceso: 0,
+      idAlmacen: _idAlmacen
     };
     await this.getInfoEviroment().then((env) => {
       dataRequest.idSesion = env.session;
@@ -164,7 +165,7 @@ export class InventarioService extends BaseService {
       inventarioAsignacion.observaciones = env.Usuario;
       inventarioAsignacion.idOperacionDiariaCaja = env.idOperacionDiaria;
     });
-    return this.getInfoEviroment().then((env) => {      
+    return this.getInfoEviroment().then((env) => {
       this.presentLoader();
       return this.httpClient
         .post<any>(urlQuery, JSON.stringify(inventarioAsignacion), { headers })
@@ -182,7 +183,7 @@ export class InventarioService extends BaseService {
     });
   }
 
-  
+
   async productosVendidosPorBarra(_idAlmacen) {
     const urlQuery = urlInventario + 'ProductosVendidosPorBarra';
 

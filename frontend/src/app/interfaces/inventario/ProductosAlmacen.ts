@@ -6,10 +6,11 @@ export class ProductosAlmancen {
     nombreProducto: string;
     stockAnterior: number;
     ingresos: number;
+    egresos: number;
     ventas: number;
     disponibleAlmacenCentral: number;
     cantidadAsignada: number;
     fechaDeVencimiento: Date = new Date();
-    
+
 }
 

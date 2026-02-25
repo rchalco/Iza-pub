@@ -31,7 +31,7 @@ export class AsignacionProductosPage implements OnInit {
 
     this.barraOrigen = new AlmacenDTO();
     this.barraDestino = new AlmacenDTO();
-    
+
     this.inventarioService.obtenerAlmacenesParaAsignacion(0).then(resul => resul.subscribe(data => {
       this.listaAlmancenOrigen = data.listEntities;
       //console.log('lista111111', this.listaAlmancenOrigen);
@@ -44,13 +44,13 @@ export class AsignacionProductosPage implements OnInit {
       //this.selectProductosAlmacenDest.idAlmacen = 11;
       //this.barraDestino.idAlmacen = 11;
     }));
-    this.obtieneProductos();
     this.barraOrigen.idAlmacen = 11;
     this.barraDestino.idAlmacen = 1;
+    this.obtieneProductos();
   }
 
   obtieneProductos(){
-    this.inventarioService.ObtenerProductosAlmacenCentral().then(resul => resul.subscribe(data => {
+    this.inventarioService.ObtenerProductosAlmacenCentral(this.barraOrigen.idAlmacen).then(resul => resul.subscribe(data => {
       this.listaProductosAlmacen = data.listEntities;
       this.dataSource = new DataSource(this.listaProductosAlmacen);
     }));
@@ -88,13 +88,13 @@ export class AsignacionProductosPage implements OnInit {
         inventarioProducto.nombreProducto = x.key.nombreProducto;
         inventarioProducto.categoria = "";
         inventarioProducto.enStock = 0.00;
-        
+
         if (x.data.fechaDeVencimiento === null)
           inventarioProducto.fechaDeVencimiento = x.key.fechaDeVencimiento;
         else
           inventarioProducto.fechaDeVencimiento = x.data.fechaDeVencimiento;
         console.log('fecha', inventarioProducto.fechaDeVencimiento);
-        
+
         this.inventarioAsignacion.detalleProductos.push(inventarioProducto);
       }
     });
@@ -103,7 +103,7 @@ export class AsignacionProductosPage implements OnInit {
       console.log(resul.message);
       this.inventarioService.showMessageSucess(resul.message);
       this.listaProductosAlmacen = [];
-      this.inventarioService.ObtenerProductosAlmacenCentral().then(resul => resul.subscribe(data => {
+      this.inventarioService.ObtenerProductosAlmacenCentral(this.barraOrigen.idAlmacen).then(resul => resul.subscribe(data => {
         this.listaProductosAlmacen = data.listEntities;
         this.dataSource = new DataSource(this.listaProductosAlmacen);
       }));
@@ -118,6 +118,9 @@ export class AsignacionProductosPage implements OnInit {
     console.log('listaCamabiadaaaaaaa', event.detail);
     this.barraOrigen = new AlmacenDTO();
     this.barraOrigen.idAlmacen = event.detail.value;
+    this.obtieneProductos();
+    console.log('productos', this.listaProductosAlmacen);
+
   }
 
   selectBarraDestino(event) {

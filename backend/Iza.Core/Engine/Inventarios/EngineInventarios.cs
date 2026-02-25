@@ -41,7 +41,11 @@ namespace Iza.Core.Engine.Inventarios
             try
             {
                 response.ListEntities = new List<AsignacionDTO>();
-                response.ListEntities = repositoryPub.GetDataByProcedure<AsignacionDTO>("[inventario].[spObtProductosDeCentral]", requestObtenerProductosAlmacenCentral.idSesion, requestObtenerProductosAlmacenCentral.idFechaProceso);
+
+                if (requestObtenerProductosAlmacenCentral.idAlmacen == 11) ///CENTRAL O PROVEEDOR
+                    response.ListEntities = repositoryPub.GetDataByProcedure<AsignacionDTO>("[inventario].[spObtProductosDeCentral]", requestObtenerProductosAlmacenCentral.idSesion, requestObtenerProductosAlmacenCentral.idFechaProceso);
+                else
+                    response.ListEntities = repositoryPub.GetDataByProcedure<AsignacionDTO>("[inventario].[spObtProductosDeAlmacen]", requestObtenerProductosAlmacenCentral.idSesion, requestObtenerProductosAlmacenCentral.idFechaProceso, requestObtenerProductosAlmacenCentral.idAlmacen);
 
                 if (response.ListEntities == null || response.ListEntities.Count == 0)
                 {
