@@ -9,25 +9,28 @@
       <ion-card-content>
         <ion-list>
           <ion-item>
-
-            <ion-select interface="popover" placeholder="Seleccionar Origen" (ionChange)="selectBarraOrigen($event)"
-                value="{{ barraOrigen.idAlmacen }}">
-              <ion-select-option expand="full" *ngFor="let alamacen of listaAlmancenOrigen" value="{{ alamacen.idAlmacen }}">
+            <ion-label position="stacked">Origen</ion-label>
+             <ion-select interface="popover"
+                        placeholder="Seleccionar Origen"
+                        (ionChange)="selectBarraOrigen($event)"
+                        [(ngModel)]="barraOrigen.idAlmacen">
+              <ion-select-option expand="full" *ngFor="let alamacen of listaAlmancenOrigen" [value]="alamacen.idAlmacen">
                 {{alamacen.descripcion}}</ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item>
-
+            <ion-label position="stacked">Destino</ion-label>
             <ion-select interface="popover" placeholder="Seleccionar Destino" (ionChange)="selectBarraDestino($event)"
-                value="{{ barraDestino.idAlmacen }}">
-              <ion-select-option *ngFor="let alamacen of listaDestino" value="{{ alamacen.idAlmacen }}">
+                [(ngModel)]="barraDestino.idAlmacen" [disabled]="bloquearDestino">
+              <ion-select-option *ngFor="let alamacen of listaDestino" [value]="alamacen.idAlmacen">
                 {{alamacen.descripcion}}</ion-select-option>
             </ion-select>
           </ion-item>
           <ion-item>
             <dx-data-grid id="gridContainer" [dataSource]="dataSource" [remoteOperations]="false"
               [allowColumnReordering]="true" [rowAlternationEnabled]="true" [showBorders]="true" keyExpr="idProducto"
-              (onSaving)="onSaving($event)">
+              (onSaving)="onSaving($event)"
+              (onRowValidating)="onRowValidating($event)">
               <dxo-scrolling columnRenderingMode="virtual"></dxo-scrolling>
               <dxo-editing mode="batch" [allowUpdating]="true" [selectTextOnEditStart]="true">
               </dxo-editing>
@@ -44,7 +47,17 @@
               <dxi-column dataField="egresos" caption="Engreso" dataType="number" [allowEditing]="false" format="#,##0.00" [width]="100"></dxi-column>
               <dxi-column dataField="ventas" caption="Ventas" dataType="number" [allowEditing]="false" format="#,##0.00" [width]="100"></dxi-column>
               <dxi-column dataField="disponibleAlmacenCentral" caption="Disponible" dataType="number" [allowEditing]="false" format="#,##0.00" [width]="100"></dxi-column>
-              <dxi-column dataField="cantidadAsignada" caption="Asignar" dataType="number" [allowEditing]="true"[width]="100"></dxi-column>
+
+              <dxi-column dataField="cantidadAsignada" caption="Asignar" dataType="number" [allowEditing]="true" [width]="100">
+                <dxi-validation-rule type="range" [min]="0" message="No se permiten valores negativos"></dxi-validation-rule>
+
+                <dxi-validation-rule
+                  type="custom"
+                  [validationCallback]="validarCantidadAsignada"
+                  message="No puede ser mayor al disponible">
+                </dxi-validation-rule>
+              </dxi-column>
+
               <dxi-column dataField="fechaDeVencimiento" caption="Fecha Vencimiento" dataType="date" displayFormat="dd/MM/yyyy" [allowEditing]="true"></dxi-column>
 
 

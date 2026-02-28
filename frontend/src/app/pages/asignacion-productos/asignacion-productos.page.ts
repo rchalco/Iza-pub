@@ -6,6 +6,7 @@ import DxDataGrid from 'devextreme/ui/data_grid';
 import { InventarioAsignacion } from 'src/app/interfaces/inventario/InventarioAsignacion';
 import { InventarioProducto } from 'src/app/interfaces/inventario/InventarioProducto';
 import { AlmacenDTO } from 'src/app/interfaces/inventario/Almacen';
+import { VentaService } from 'src/app/services/venta.service';
 
 
 @Component({
@@ -22,8 +23,11 @@ export class AsignacionProductosPage implements OnInit {
   inventarioAsignacion: InventarioAsignacion = new InventarioAsignacion();
   barraOrigen = new AlmacenDTO();
   barraDestino= new AlmacenDTO();
-
-  constructor(private inventarioService: InventarioService) {
+  bloquearDestino = false;
+  constructor(
+    private inventarioService: InventarioService,
+    private ventaService: VentaService,
+  ) {
 
   }
 
@@ -40,15 +44,33 @@ export class AsignacionProductosPage implements OnInit {
     }));
 
     this.inventarioService.obtenerAlmacenesParaAsignacion(0).then(resul => resul.subscribe(data => {
-      this.listaDestino = data.listEntities;
+      this.listaDestino = data.listEntities.filter(a => a.descripcion?.toLowerCase() !== 'proveedor');
       //this.selectProductosAlmacenDest.idAlmacen = 11;
       //this.barraDestino.idAlmacen = 11;
     }));
     this.barraOrigen.idAlmacen = 11;
     this.barraDestino.idAlmacen = 1;
+    this.bloquearDestino = true;
     this.obtieneProductos();
   }
 
+  onRowValidating(e: any) {
+  // toma nuevo valor si viene en newData, sino conserva el anterior
+  const cantidad = e.newData?.cantidadAsignada ?? e.oldData?.cantidadAsignada ?? 0;
+  const disponible = e.oldData?.disponibleAlmacenCentral ?? 0;
+
+  if (cantidad < 0) {
+    e.isValid = false;
+    e.errorText = "No se permiten valores negativos en 'Asignar'.";
+    return;
+  }
+
+  if (cantidad > disponible) {
+    e.isValid = false;
+    e.errorText = `La cantidad asignada (${cantidad}) no puede ser mayor al disponible (${disponible}).`;
+    return;
+  }
+}
   obtieneProductos(){
     this.inventarioService.ObtenerProductosAlmacenCentral(this.barraOrigen.idAlmacen).then(resul => resul.subscribe(data => {
       this.listaProductosAlmacen = data.listEntities;
@@ -64,13 +86,14 @@ export class AsignacionProductosPage implements OnInit {
     }
   }
 
+
   async processBatchRequest(url: string, changes: string, component: DxDataGrid): Promise<any> {
 
     this.inventarioAsignacion.idAlmacenDesde = this.barraOrigen.idAlmacen;
     this.inventarioAsignacion.idAlmacenHasta = this.barraDestino.idAlmacen;
     this.inventarioAsignacion.observaciones = '';
-    this.inventarioAsignacion.origen = this.barraOrigen.descripcion;
-    this.inventarioAsignacion.destino = this.barraDestino.descripcion;
+    this.inventarioAsignacion.origen = this.listaAlmancenOrigen.find(a => a.idAlmacen === this.barraOrigen.idAlmacen).descripcion;
+    this.inventarioAsignacion.destino = this.listaDestino.find(a => a.idAlmacen === this.barraDestino.idAlmacen).descripcion;
     this.inventarioAsignacion.detalleProductos = [];
     const listaCamabiada = JSON.parse(changes);
     console.log('listaCamabiada', listaCamabiada);
@@ -102,6 +125,11 @@ export class AsignacionProductosPage implements OnInit {
     (await this.inventarioService.GrabaAsignacionProducto(this.inventarioAsignacion)).subscribe(resul => {
       console.log(resul.message);
       this.inventarioService.showMessageSucess(resul.message);
+      //Imprimir voucher
+      if (resul.state === 1) {
+            this.ventaService.downLoadFile(resul.code, 'application/pdf');
+      }
+      ///
       this.listaProductosAlmacen = [];
       this.inventarioService.ObtenerProductosAlmacenCentral(this.barraOrigen.idAlmacen).then(resul => resul.subscribe(data => {
         this.listaProductosAlmacen = data.listEntities;
@@ -115,16 +143,44 @@ export class AsignacionProductosPage implements OnInit {
   }
 
   selectBarraOrigen(event: any) {
-    console.log('listaCamabiadaaaaaaa', event.detail);
+    //console.log('barra origen', event.detail);
+    const idSeleccionado = event.detail.value;
+    //console.log('ID origen', idSeleccionado);
     this.barraOrigen = new AlmacenDTO();
-    this.barraOrigen.idAlmacen = event.detail.value;
+    this.barraOrigen.idAlmacen = idSeleccionado ;
+
+    if (idSeleccionado === 11) { // 11 = Proveedor
+      this.barraDestino.idAlmacen = 1; // 1 = Almacén Central
+      this.bloquearDestino = true;
+    } else {
+      this.bloquearDestino = false;
+    }
     this.obtieneProductos();
-    console.log('productos', this.listaProductosAlmacen);
+    //console.log('bloquearDestino', this.bloquearDestino);
 
   }
 
   selectBarraDestino(event) {
+    if (this.bloquearDestino) return;
     this.barraDestino = new AlmacenDTO();
     this.barraDestino.idAlmacen = event.detail.value;
   }
+
+  validarCantidadAsignada = (e: any): boolean => {
+  const cantidad = e.value;
+
+  // En batch, el disponible está en la fila (data)
+  const disponible = e.data?.disponibleAlmacenCentral ?? 0;
+
+  if (cantidad == null) return true; // si quieres obligatorio, usa required en HTML
+
+  if (cantidad < 0) return false;
+
+  if (cantidad > disponible) return false;
+
+  return true;
+  };
+
+
+
 }

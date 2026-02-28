@@ -159,6 +159,7 @@ export class InventarioService extends BaseService {
 
   async GrabaAsignacionProducto(inventarioAsignacion: InventarioAsignacion) {
     const urlQuery = urlInventario + 'GrabaAsignacionProducto';
+    console.log('datos grabar', inventarioAsignacion);
     await this.getInfoEviroment().then((env) => {
       inventarioAsignacion.idSesion = env.session;
       inventarioAsignacion.idfechaproceso = env.idFechaProceso;

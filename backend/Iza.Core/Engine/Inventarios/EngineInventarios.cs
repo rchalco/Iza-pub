@@ -1,4 +1,5 @@
 ﻿using CoreAccesLayer.Implement.SQLServer;
+using DevExpress.XtraReports.UI;
 using Iza.Core.Base;
 using Iza.Core.Domain.General;
 using Iza.Core.Domain.Iventario;
@@ -42,11 +43,11 @@ namespace Iza.Core.Engine.Inventarios
             {
                 response.ListEntities = new List<AsignacionDTO>();
 
-                if (requestObtenerProductosAlmacenCentral.idAlmacen == 11) ///CENTRAL O PROVEEDOR
+                if (requestObtenerProductosAlmacenCentral.idAlmacen == 11 || requestObtenerProductosAlmacenCentral.idAlmacen == 1) ///CENTRAL O PROVEEDOR
                     response.ListEntities = repositoryPub.GetDataByProcedure<AsignacionDTO>("[inventario].[spObtProductosDeCentral]", requestObtenerProductosAlmacenCentral.idSesion, requestObtenerProductosAlmacenCentral.idFechaProceso);
                 else
                     response.ListEntities = repositoryPub.GetDataByProcedure<AsignacionDTO>("[inventario].[spObtProductosDeAlmacen]", requestObtenerProductosAlmacenCentral.idSesion, requestObtenerProductosAlmacenCentral.idFechaProceso, requestObtenerProductosAlmacenCentral.idAlmacen);
-
+                 
                 if (response.ListEntities == null || response.ListEntities.Count == 0)
                 {
                     response.Message = "No se cuenta con informacion del almacen central";
@@ -129,10 +130,35 @@ namespace Iza.Core.Engine.Inventarios
                 AsignacionProductos reporte = new AsignacionProductos();
                 string nombreArchivo = "";
                 string reporteBase64 = "";
+
+                int rows = inventarioAsignacion.detalleProductos?.Count ?? 0;
+
+                // estimación en décimas de mm
+                int header = 300;           // 30mm
+                int perRow = 60;            // 6mm por fila
+                int footer = 200;           // 20mm
+                int minH = 800;            // 80mm mínimo
+
+                int height = Math.Max(minH, header + (rows * perRow) + footer);
+
+                // TAMAÑO DEL TICKET
+                // 80 mm = 302 (DevExpress usa 0.1mm por unidad)
                 reporte.PaperKind = DevExpress.Drawing.Printing.DXPaperKind.Custom;
-                reporte.RollPaper = true;
-                reporte.Margins.Left = 10;
-                reporte.Margins.Right = 10;
+
+                reporte.ReportUnit = ReportUnit.TenthsOfAMillimeter;
+                //reporte.ReportUnit = ReportUnit.HundredthsOfAnInch;
+                reporte.PageWidth = 800;     // 80 mm exactos
+                reporte.PageHeight = height;   // Se ignora en RollPaper, pero evita errores
+
+                // Impresión de rollo (continuo)
+                reporte.Landscape = false;
+                reporte.RollPaper = false;
+
+                // Márgenes mínimos (térmicas no usan margen)
+                reporte.Margins.Top = 0;
+                reporte.Margins.Bottom = 0;
+                reporte.Margins.Left = 0;
+                reporte.Margins.Right = 0;
                 reporte.xrDestino.Text = inventarioAsignacion.destino;
                 reporte.xrOrigen.Text = inventarioAsignacion.origen;
                 reporte.xrUsuario.Text = inventarioAsignacion.observaciones;
@@ -149,12 +175,8 @@ namespace Iza.Core.Engine.Inventarios
                     reporteBase64,
                     nombreArchivo = fileName);
                 repositoryPub.Commit();
-
-               
-
-
                 response.Data = inventarioAsignacion;
-
+                response.Code = reporteBase64;
             }
             catch (Exception ex)
             {
