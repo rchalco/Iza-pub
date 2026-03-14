@@ -59,17 +59,18 @@ export class AsignacionProductosPage implements OnInit {
   const cantidad = e.newData?.cantidadAsignada ?? e.oldData?.cantidadAsignada ?? 0;
   const disponible = e.oldData?.disponibleAlmacenCentral ?? 0;
 
-  if (cantidad < 0) {
-    e.isValid = false;
-    e.errorText = "No se permiten valores negativos en 'Asignar'.";
-    return;
-  }
+  // if (cantidad < 0) {
+  //   e.isValid = false;
+  //   e.errorText = "No se permiten valores negativos en 'Asignar'.";
+  //   return;
+  // }
 
-  if (cantidad > disponible) {
-    e.isValid = false;
-    e.errorText = `La cantidad asignada (${cantidad}) no puede ser mayor al disponible (${disponible}).`;
-    return;
-  }
+  // if (cantidad > disponible) {
+  //   e.isValid = false;
+  //   e.errorText = `La cantidad asignada (${cantidad}) no puede ser mayor al disponible (${disponible}).`;
+  //   return;
+  // }
+  e.isValid = true;
 }
   obtieneProductos(){
     this.inventarioService.ObtenerProductosAlmacenCentral(this.barraOrigen.idAlmacen).then(resul => resul.subscribe(data => {
