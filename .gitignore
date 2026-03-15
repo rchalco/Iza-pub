@@ -1,20 +1,52 @@
-backend/CoreAccesLayer/bin
-backend/CoreAccesLayer/obj
-backend/Iza.Core/bin/
-backend/Iza.Core/obj/
-backend/Iza.Core.Test/bin/
-backend/Iza.Core.Test/obj/
-backend/Iza.Services/bin/
-backend/Iza.Services/obj/
-backend/PlumbingProps/bin/
-backend/PlumbingProps/obj/
-.vs
-backend/.vs/InvoiceService/v17/.suo
-backend/Security.API/bin/
-backend/Security.API/obj/
-backend/Security.Core/bin/
-backend/Security.Core/obj/
-backend/Iza.Core.Test/obj/Debug/net8.0/Iza.Core.Test.GeneratedMSBuildEditorConfig.editorconfig
-PinterUtil/PrinterGamatek/PrinterGamatek/bin/
-PinterUtil/PrinterGamatek/PrinterGamatek/obj/
-PinterUtil/PrinterGamatek/packages/
+# ──────────────────────────────────────────────
+# .NET / C# – Build outputs
+# ──────────────────────────────────────────────
+**/bin/
+**/obj/
+
+# NuGet packages
+**/packages/
+*.nupkg
+*.snupkg
+project.lock.json
+
+# Visual Studio
+**/.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / JetBrains
+**/.idea/
+
+# ──────────────────────────────────────────────
+# Angular / Ionic / Node
+# ──────────────────────────────────────────────
+**/node_modules/
+**/.angular/
+**/dist/
+**/www/
+**/coverage/
+**/.ionic/
+**/.sass-cache/
+**/.sourcemaps/
+npm-debug.log*
+yarn-error.log*
+package-lock.json
+
+# Electron build output
+**/app/
+**/build/
+
+# ──────────────────────────────────────────────
+# General
+# ──────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+$RECYCLE.BIN/
+*.log
+*.tmp
+*.tmp.*
+*~
+*.sw[mnpcod]

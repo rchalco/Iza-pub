@@ -1,11 +1,2 @@
-CoreAccesLayer/bin/
-CoreAccesLayer/obj/
-Iza.Core/bin/
-Iza.Core/obj/
-Iza.Core.Test/bin/
-Iza.Core.Test/obj/
-Iza.Services/bin/
-Iza.Services/obj/
-PlumbingProps/bin/
-PlumbingProps/obj/
-.vs/
+# Covered by root .gitignore (**/bin/, **/obj/, **/.vs/, etc.)
+# Add backend-specific overrides here if needed.
