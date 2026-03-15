@@ -1,0 +1,117 @@
+// -- Header de usuario ----------------------------------------
+.menu-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 20px 16px 14px;
+
+  &__avatar {
+    ion-icon {
+      font-size: 3rem;
+      color: #4a90c4;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  &__name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1a3a5c;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__role {
+    font-size: 0.75rem;
+    color: #546e7a;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    margin-top: 2px;
+  }
+}
+
+// -- Divisor --------------------------------------------------
+.menu-divider {
+  height: 1px;
+  background: #b0c4d8;
+  margin: 0 12px 8px;
+  opacity: 0.6;
+}
+
+// -- Lista de ítems -------------------------------------------
+.menu-list {
+  padding: 4px 0;
+  background: transparent;
+}
+
+// -- Ítem genérico --------------------------------------------
+.menu-item {
+  --background: rgba(255, 255, 255, 0.55);
+  --background-hover: rgba(255, 255, 255, 0.85);
+  --color: #1a3a5c;
+  --min-height: 46px;
+  --padding-start: 14px;
+  --border-radius: 8px;
+  --inner-border-width: 0;
+  margin: 2px 8px;
+  border-radius: 8px;
+  transition: background 0.15s ease;
+
+  ion-icon {
+    color: #5ba3d4;
+    font-size: 1.25rem;
+    margin-right: 4px;
+    transition: color 0.15s ease;
+  }
+
+  ion-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+  }
+
+  &.selected {
+    --background: rgba(74, 144, 196, 0.2);
+    --color: #1565c0;
+    font-weight: 700;
+
+    ion-icon {
+      color: #1565c0;
+    }
+  }
+
+  // -- Logout -------------------------------------------------
+  &--logout {
+    --background: rgba(239, 83, 80, 0.07);
+    --color: #c62828;
+    margin-top: 4px;
+
+    ion-icon {
+      color: #e53935;
+    }
+
+    &:hover {
+      --background: rgba(239, 83, 80, 0.15);
+    }
+  }
+}
+
+// -- Footer ---------------------------------------------------
+.menu-footer {
+  background: transparent;
+  padding-bottom: env(safe-area-inset-bottom, 8px);
+}
+
+.menu-version {
+  text-align: center;
+  font-size: 0.7rem;
+  color: #90a4ae;
+  margin: 4px 0 8px;
+  letter-spacing: 0.3px;
+}

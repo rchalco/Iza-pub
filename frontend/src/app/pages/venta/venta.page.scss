@@ -1,14 +1,15 @@
 .item-vendido {
   margin: 1px;
-  color: #a4f473;
+  color: #1a3a5c;
 }
 
 .item-vendido div {
-  background-color: #180e0e;
-  border-color: #e69b2b;
+  background-color: #eaf2f8;
+  border-color: #4a90c4;
   border-style: solid;
   border-width: 0.2em;
   padding: 6px;
+  border-radius: 6px;
 }
 ion-content {
   font-family: Seagramtfb !important;
@@ -20,18 +21,28 @@ ion-content {
 }
 
 .cabeceraTabla {
-  background-color: #2c3530;
-  color: rgb(202, 215, 226);
+  background-color: #d6e4f0;
+  color: #1a3a5c;
   font-weight: bold;
-  border: 1px solid black;
+  border: 1px solid #b0c4d8;
   border-bottom: 0;
   border-right: 0;
   align-items: center;
+
+  @media (max-width: 575px) {
+    font-size: 0.75rem;
+    padding: 4px 2px;
+  }
 }
 
 .detalleTabla {
-  border: 1px solid black;
+  border: 1px solid #b0c4d8;
   border-bottom: 0;
   border-right: 0;
   align-items: left;
+
+  @media (max-width: 575px) {
+    font-size: 0.8rem;
+    padding: 3px 2px;
+  }
 }

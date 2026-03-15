@@ -1,25 +1,29 @@
-// ── Toolbar ──────────────────────────────────────────────
+// -- Toolbar --------------------------------------------------
 .custom-toolbar {
   --min-height: 50px;
   --padding-start: 4px;
   --padding-end: 8px;
+  --background: linear-gradient(90deg, #4a90c4 0%, #5ba3d4 60%, #78b8e0 100%);
+  --color: #ffffff;
 }
 
-// ── Title ────────────────────────────────────────────────
+// -- Title ----------------------------------------------------
 .toolbar-title {
   font-size: 1.1rem;
   font-weight: 600;
   letter-spacing: 0.3px;
+  color: #ffffff;
 }
 
-// ── Menu button ──────────────────────────────────────────
+// -- Menu button ----------------------------------------------
 .menu-btn {
   --padding-start: 8px;
   --padding-end: 8px;
   font-size: 1.3rem;
+  --color: #ffffff;
 }
 
-// ── End section ──────────────────────────────────────────
+// -- End section ----------------------------------------------
 .toolbar-end {
   display: flex;
   align-items: center;
@@ -27,12 +31,12 @@
   padding-right: 4px;
 }
 
-// ── Info badges ──────────────────────────────────────────
+// -- Info badges ----------------------------------------------
 .toolbar-badge {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.25);
   color: #fff;
   font-size: 0.78rem;
   font-weight: 500;
@@ -46,12 +50,13 @@
   }
 }
 
-// ── Home button ──────────────────────────────────────────
+// -- Home button ----------------------------------------------
 .home-btn {
   --padding-start: 6px;
   --padding-end: 6px;
   font-size: 1.25rem;
   opacity: 0.9;
+  --color: #ffffff;
   transition: opacity 0.2s ease;
 
   &:hover {

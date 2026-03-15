@@ -1,5 +1,5 @@
 ::ng-deep .header {
-    font-size: 34px;
+    font-size: clamp(1.2rem, 4vw, 34px);
     text-align: center;
   }
   
@@ -14,12 +14,14 @@
   
   ::ng-deep #container ul li {
     display: inline-block;
-    width: 160px;
+    width: clamp(90px, 28vw, 160px);
     margin: 10px;
   }
   
   ::ng-deep #container ul li img {
-    width: 100px;
+    width: 100%;
+    max-width: 100px;
+    height: auto;
   }
   
   ::ng-deep .button-info {

@@ -33,5 +33,86 @@
   src: url("./assets/fonts/Seagramtfb.ttf");
 }
 ion-content {
-  --background: url('/assets/Fondo-5.png') no-repeat center/cover fixed;
+  --background: linear-gradient(160deg, #b0c4d8 0%, #d6e4f0 50%, #eaf2f8 100%);
 }
+
+/* ============================================================
+   RESPONSIVE BREAKPOINTS
+   sm  : >= 576px  (smartphone landscape)
+   md  : >= 768px  (tablet)
+   lg  : >= 1024px (desktop)
+   xl  : >= 1280px (wide desktop)
+   ============================================================ */
+
+/* ── Smartphone (default / mobile-first) ─────────────────── */
+ion-grid {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+/* ── Tablet (>= 768px) ───────────────────────────────────── */
+@media (min-width: 768px) {
+  ion-grid {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  ion-content {
+    --padding-start: 16px;
+    --padding-end: 16px;
+  }
+}
+
+/* ── Desktop (>= 1024px) ─────────────────────────────────── */
+@media (min-width: 1024px) {
+  ion-grid {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  ion-content {
+    --padding-start: 24px;
+    --padding-end: 24px;
+  }
+}
+
+/* ── DevExtreme DataGrid – Mobile ────────────────────────── */
+@media (max-width: 575px) {
+  .dx-datagrid {
+    font-size: 0.75rem !important;
+  }
+
+  .dx-datagrid-headers .dx-header-row td {
+    padding: 6px 4px !important;
+    white-space: normal !important;
+    word-break: break-word;
+  }
+
+  .dx-datagrid-rowsview .dx-row td {
+    padding: 5px 4px !important;
+  }
+
+  /* Oculta columnas marcadas como solo-desktop */
+  .dx-col-desktop {
+    display: none !important;
+  }
+}
+
+/* ── DevExtreme DataGrid – Tablet ────────────────────────── */
+@media (min-width: 576px) and (max-width: 1023px) {
+  .dx-datagrid {
+    font-size: 0.82rem !important;
+  }
+
+  .dx-col-desktop {
+    display: none !important;
+  }
+}
+
+/* ── Imágenes fluidas globales ────────────────────────────── */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+

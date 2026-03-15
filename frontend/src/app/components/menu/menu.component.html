@@ -1,27 +1,39 @@
 <ion-menu contentId="main-content" type="overlay" menuId="custom">
   <ion-content>
-    <ion-list id="inbox-list">
-      <!-- <ion-list-header color="tertiary">IZA DICOTECA</ion-list-header> -->
-      <!-- <ion-list-header color="tertiary">FARMACIA</ion-list-header>-->
-      <ion-list-header color="tertiary">SISTEMA VENTAS</ion-list-header>
-      @for (p of appPages; track p; let i = $index) {
+    <!-- Header de usuario -->
+    <div class="menu-header">
+      <div class="menu-header__avatar">
+        <ion-icon name="person-circle-outline"></ion-icon>
+      </div>
+      <div class="menu-header__info">
+        <span class="menu-header__name">{{ usuario }}</span>
+        <span class="menu-header__role">{{ rol }}</span>
+      </div>
+    </div>
+    <div class="menu-divider"></div>
+
+    <!-- Ítems de navegación -->
+    <ion-list lines="none" class="menu-list">
+      @for (p of appPages; track p) {
         <ion-menu-toggle auto-hide="false">
-          <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected"
-            color="medium" lines="full">
-            <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+          <ion-item routerDirection="root" [routerLink]="[p.url]"
+            detail="false" routerLinkActive="selected" class="menu-item">
+            <ion-icon slot="start" [name]="p.icon + '-outline'"></ion-icon>
             <ion-label>{{ p.title }}</ion-label>
           </ion-item>
         </ion-menu-toggle>
       }
-      <ion-row>
-        <ion-col size="12">
-          <ion-note>
-            <a href="mailto:contactos@gamatek.org">[ contactos&#64;gamatek.org ]</a>
-          </ion-note>
-        </ion-col>
-      </ion-row>
     </ion-list>
   </ion-content>
+
+  <!-- Footer fijo con logout y versión -->
+  <ion-footer class="menu-footer">
+    <div class="menu-divider"></div>
+    <ion-item button detail="false" class="menu-item menu-item--logout"
+      (click)="cerrarSesion()">
+      <ion-icon slot="start" name="log-out-outline"></ion-icon>
+      <ion-label>Cerrar sesión</ion-label>
+    </ion-item>
+    <p class="menu-version">v{{ version }}</p>
+  </ion-footer>
 </ion-menu>
-
-
