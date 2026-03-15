@@ -50,19 +50,20 @@
   color: #1a3a5c;
 }
 
-// Inputs semi-transparentes
+// Inputs semitransparentes (standalone, sin ion-item)
 .input-transparente {
   --background: rgba(255, 255, 255, 0.5);
   --highlight-color-focused: #4a90c4;
-  color: #2c3e50;
+  --color: #2c3e50;
+  --placeholder-color: #34495e;
+  --label-color: #34495e;
+  border-radius: 8px;
+  margin-bottom: 12px;
 }
 
-ion-label {
-  color: #34495e !important;
-}
-
-ion-input {
-  color: #2c3e50;
+// Botón de login
+.login-btn {
+  margin-top: 20px;
 }
 
 // Footer versión

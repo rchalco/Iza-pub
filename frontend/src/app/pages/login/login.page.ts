@@ -1,11 +1,31 @@
-import { SeguridadService } from './../../services/seguridad.service';
-/* eslint-disable @typescript-eslint/naming-convention */
-import { DatabaseService } from './../../services/DatabaseService';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { StockService } from 'src/app/services/stock.service';
-import { environment, verionsApp } from 'src/environments/environment';
+import { Subscription } from 'rxjs';
+
 import { AppComponent } from 'src/app/app.component';
+import { DatabaseService } from 'src/app/services/DatabaseService';
+import { SeguridadService } from 'src/app/services/seguridad.service';
+import { environment, verionsApp } from 'src/environments/environment';
+
+interface LoginCredentials {
+  Usuario: string;
+  Password: string;
+}
+
+interface LoginResult {
+  usuario_vc: string;
+  log_respuesta: string;
+  idOperacionDiariaCaja: number;
+  idSesion: number;
+  idCaja: number;
+  idRol: number;
+  ci: string;
+  nombreCompleto: string;
+  rol_name: string;
+  idFechaProceso: number;
+  fechaProceso: string;
+  idAlmacen: number;
+}
 
 @Component({
   standalone: false,
@@ -13,72 +33,61 @@ import { AppComponent } from 'src/app/app.component';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
-  logidata: any = {
-    IdUsuario: 0,
-    Usuario: '',
-    Password: '',
-    DescripcionError: '',
-  };
-  resulLogin: any = {
-    IdUsuario: 0,
-    usuario_vc: '',
-    Password: '',
-    DescripcionError: '',
-    IdOperacionDiariaCaja: 0,
-    sesion: 0,
-    idCaja: 0,
-  };
+export class LoginPage implements OnInit, OnDestroy {
+  credentials: LoginCredentials = { Usuario: '', Password: '' };
+  isLoading = false;
+  readonly version = verionsApp;
 
-  version = verionsApp;
-  //resulLogin: SaldoCajaDTO ;
+  private loginSub?: Subscription;
+
   constructor(
-    private seguridadServices: SeguridadService,
+    private seguridadService: SeguridadService,
     private router: Router,
     private databaseService: DatabaseService,
-    private appComponent: AppComponent
-  ) { }
+    private appComponent: AppComponent,
+  ) {}
 
-  ngOnInit() { }
-  iniciarsesion(login) {
-    this.seguridadServices
-      .loginUsuario(login.Usuario, login.Password, this.version)
-      .subscribe((resul) => {
-        this.resulLogin = resul.data;
-        console.log('resulLogin', resul.data);
-        if (resul.state === 3) {
-          console.log('error login');
-          this.seguridadServices.showMessageResponse(resul);
-        } else {
-          environment.Usuario = this.resulLogin.usuario_vc;
-          environment.UsuarioLabel = this.resulLogin.log_respuesta;
-          environment.idOperacionDiariaCaja =
-            this.resulLogin.idOperacionDiariaCaja;
-          environment.session = this.resulLogin.idSesion;
-          environment.idCaja = this.resulLogin.idCaja;
-          environment.idRol = this.resulLogin.idRol;
-          environment.ci = this.resulLogin.ci;
-          environment.nombreCompleto = this.resulLogin.nombreCompleto;
-          environment.rol = this.resulLogin.rol_name;
-          environment.idFechaProceso = this.resulLogin.idFechaProceso;
-          environment.fechaProceso = this.resulLogin.fechaProceso;
-          environment.idAlmacen = this.resulLogin.idAlmacen;
-          this.logidata.Usuario = '';
-          this.logidata.Password = '';
-          this.databaseService.setItem('enviroment', environment);
-          console.log('vamos a home');
-          this.appComponent.initMenu();
-          this.router.navigateByUrl('home');
-          // if (environment.idOperacionDiariaCaja === 0) {
-          //   console.log('va a directo a apertura caja');
-          //   this.router.navigateByUrl('apertura-caja');
-          // } else {
-          //   console.log('va a directo a home');
-          //   this.router.navigateByUrl('home');
-          // }
-          
-        }
-        console.log('usuario', environment);
+  ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.loginSub?.unsubscribe();
+  }
+
+  iniciarSesion(): void {
+    if (this.isLoading) { return; }
+    this.isLoading = true;
+
+    this.loginSub = this.seguridadService
+      .loginUsuario(this.credentials.Usuario, this.credentials.Password, this.version)
+      .subscribe({
+        next: (resul) => {
+          if (resul.state === 3) {
+            this.seguridadService.showMessageResponse(resul);
+          } else {
+            this.applySession(resul.data as LoginResult);
+            this.databaseService.setItem('enviroment', environment);
+            this.appComponent.initMenu();
+            this.router.navigateByUrl('home', { replaceUrl: true });
+          }
+          this.credentials = { Usuario: '', Password: '' };
+        },
+        error: () => { this.isLoading = false; },
+        complete: () => { this.isLoading = false; },
       });
+  }
+
+  private applySession(data: LoginResult): void {
+    environment.Usuario               = data.usuario_vc;
+    environment.UsuarioLabel          = data.log_respuesta;
+    environment.idOperacionDiariaCaja = data.idOperacionDiariaCaja;
+    environment.session               = data.idSesion;
+    environment.idCaja                = data.idCaja;
+    environment.idRol                 = data.idRol;
+    environment.ci                    = data.ci;
+    environment.nombreCompleto        = data.nombreCompleto;
+    environment.rol                   = data.rol_name;
+    environment.idFechaProceso        = data.idFechaProceso;
+    environment.fechaProceso          = new Date(data.fechaProceso);
+    environment.idAlmacen             = data.idAlmacen;
   }
 }

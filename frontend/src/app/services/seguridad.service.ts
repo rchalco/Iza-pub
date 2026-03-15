@@ -8,8 +8,8 @@ import {
   HEADERS_SERVICE,
   URL_SECURITY,
 } from 'src/environments/environment';
-import { Observable, throwError } from 'rxjs';
-import { catchError, finalize } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, finalize, tap } from 'rxjs/operators';
 import { DatabaseService } from './DatabaseService';
 
 const urlSeguridad = URL_SECURITY;
@@ -83,33 +83,32 @@ export class SeguridadService extends BaseService {
       );
   }
 
+  private menuCache: any[] | null = null;
+
+  clearMenuCache(): void {
+    this.menuCache = null;
+  }
+
   async obtieneMenuPorUsuario() {
+    if (this.menuCache) {
+      return of({ listEntities: this.menuCache });
+    }
+
     const urlQuery = urlSeguridad + 'ObtieneMenuPorUsuario';
 
-     const dataRequest = {
-      IdSesion: 0,
-      IdRol: 0
-     };
-
-     await this.getInfoEviroment().then((env) => {
-       dataRequest.IdSesion = environment.session;
-       dataRequest.IdRol = environment.idRol;
-     });
-
-    //const dataRequest = {};
-    console.warn('url_query', urlQuery);
-    console.log('ObtieneMenuPorUsuario', dataRequest);
+    const dataRequest = { IdSesion: 0, IdRol: 0 };
+    await this.getInfoEviroment().then(() => {
+      dataRequest.IdSesion = environment.session;
+      dataRequest.IdRol = environment.idRol;
+    });
 
     this.presentLoader();
     return this.httpClient
       .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
       .pipe(
-        finalize(() => {
-          console.log('**se termino la llamada login');
-          this.dismissLoader();
-        }),
+        tap((resul) => { this.menuCache = resul.listEntities; }),
+        finalize(() => { this.dismissLoader(); }),
         catchError((error) => {
-          console.error('error del login', error);
           this.showMessageError('No se tiene comunicacion con el servidor');
           return throwError(() => new Error(error.status));
         })

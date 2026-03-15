@@ -1,2 +1,29 @@
 <app-custom-header title="Inicio"></app-custom-header>
-<ion-content> </ion-content>
+
+<ion-content class="home-content">
+
+  <div class="welcome-banner">
+    <ion-icon name="person-circle-outline" class="welcome-avatar"></ion-icon>
+    <span class="welcome-text">Bienvenido, <strong>{{ usuario }}</strong></span>
+  </div>
+
+  <ion-grid class="menu-grid">
+    <ion-row>
+      @for (item of menuItems; track item.idMenuOpcion) {
+        <ion-col size="6" size-sm="4" size-md="3" size-lg="2">
+          <ion-card button class="menu-card" (click)="navigateTo(item.url)">
+            <ion-card-content class="menu-card__content">
+              <ion-icon [name]="item.icon + '-outline'" class="menu-card__icon"></ion-icon>
+              <p class="menu-card__label">{{ item.title }}</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      }
+    </ion-row>
+  </ion-grid>
+
+  <div *ngIf="menuItems.length === 0" class="empty-state">
+    <ion-spinner name="crescent"></ion-spinner>
+  </div>
+
+</ion-content>

@@ -1,28 +1,42 @@
 <app-custom-header title="Habilitación Cajeros"></app-custom-header>
-<ion-content fullscreen>
-  <div>
-    <ion-list>
 
-      <ion-grid fixed>
-        <ion-row class="cabeceraTabla">
-          <ion-col size="2">Cajero</ion-col>
-          <ion-col size="4">Habilitado</ion-col>
-          <ion-col size="1"></ion-col>
-        </ion-row>
-        @for (cajero of detalleCajeros; track cajero) {
-          <ion-row
-            class="detalleTabla"
-            >
-            <ion-col size="2">{{cajero.usuario_vc}} </ion-col>
-            <ion-col size="4">
-              <ion-checkbox [(ngModel)]="cajero.activo" ></ion-checkbox>
-            </ion-col>
-          </ion-row>
-        }
-      </ion-grid>
+<ion-content class="hc-content">
+
+  <div class="hc-container">
+
+    <div class="hc-section-title">
+      <ion-icon name="people-outline"></ion-icon>
+      <span>Cajeros registrados</span>
+    </div>
+
+    <ion-list class="hc-list" lines="none">
+      @for (cajero of detalleCajeros; track cajero.idUsuario) {
+        <ion-item class="hc-item" [class.hc-item--active]="cajero.activo">
+          <div class="hc-item__avatar" slot="start">
+            <ion-icon name="person-outline"></ion-icon>
+          </div>
+
+          <ion-label class="hc-item__label">
+            <h2>{{ cajero.usuario_vc }}</h2>
+            <p>{{ cajero.activo ? 'Habilitado' : 'Deshabilitado' }}</p>
+          </ion-label>
+
+          <ion-toggle
+            slot="end"
+            [(ngModel)]="cajero.activo"
+            color="primary">
+          </ion-toggle>
+        </ion-item>
+      }
     </ion-list>
-    <ion-button (click)="grabarCajeros()" expand="full" type="submit">
-      Grabar
+
+  </div>
+
+  <div class="hc-footer">
+    <ion-button expand="block" color="primary" class="hc-save-btn" (click)="grabarCajeros()">
+      <ion-icon slot="start" name="save-outline"></ion-icon>
+      Guardar cambios
     </ion-button>
   </div>
+
 </ion-content>

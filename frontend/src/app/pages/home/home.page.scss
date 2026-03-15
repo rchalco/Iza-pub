@@ -1,18 +1,73 @@
-.myphoto {
-  width: auto !important;
-  align-items: center;
-  margin: 2em;
-  display: block;
+.home-content {
+  --background: #f0f4f8;
 }
 
-.img-inner {
-  max-height: 800px;
-  max-width: 100%;
-  margin: 0 auto;
-  display: block;
+// ── Welcome banner ───────────────────────────────────────────
+.welcome-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 16px 8px;
+  color: var(--ion-color-dark);
+}
 
-  @media (max-width: 767px) {
-    max-height: 400px;
-    margin: 0 auto;
+.welcome-avatar {
+  font-size: 2rem;
+  color: var(--ion-color-primary);
+}
+
+.welcome-text {
+  font-size: 0.95rem;
+}
+
+// ── Menu grid ────────────────────────────────────────────────
+.menu-grid {
+  padding: 8px;
+}
+
+.menu-card {
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin: 6px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  background-color: #032a52;
+  color: #f0f4f8;
+  &:active {
+    transform: scale(0.96);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
   }
+}
+
+.menu-card__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 8px 14px;
+  text-align: center;
+}
+
+.menu-card__icon {
+  font-size: 2.2rem;
+  color: #f5c842;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.35));
+}
+
+.menu-card__label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+}
+
+// ── Empty / loading state ─────────────────────────────────────
+.empty-state {
+  display: flex;
+  justify-content: center;
+  padding: 60px 0;
 }

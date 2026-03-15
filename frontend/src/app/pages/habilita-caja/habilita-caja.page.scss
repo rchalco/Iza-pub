@@ -1,0 +1,103 @@
+.hc-content {
+  --background: #f0f4f8;
+}
+
+// ── Scrollable body ───────────────────────────────────────────
+.hc-container {
+  padding: 16px 16px 100px;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+// ── Section title ─────────────────────────────────────────────
+.hc-section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ion-color-medium);
+  margin-bottom: 10px;
+  padding: 0 4px;
+
+  ion-icon { font-size: 1rem; }
+}
+
+// ── List ──────────────────────────────────────────────────────
+.hc-list {
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0;
+}
+
+.hc-item {
+  --background: #ffffff;
+  --border-radius: 14px;
+  --padding-start: 12px;
+  --inner-padding-end: 12px;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+
+  &--active {
+    --background: #fdf7ee;
+    box-shadow: 0 2px 10px rgba(124, 92, 30, 0.15);
+  }
+}
+
+// ── Avatar ────────────────────────────────────────────────────
+.hc-item__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(124, 92, 30, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  flex-shrink: 0;
+
+  ion-icon {
+    font-size: 1.3rem;
+    color: var(--ion-color-primary);
+  }
+}
+
+// ── Label ─────────────────────────────────────────────────────
+.hc-item__label {
+  h2 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--ion-color-dark);
+    margin: 0 0 2px;
+  }
+
+  p {
+    font-size: 0.78rem;
+    color: var(--ion-color-medium);
+    margin: 0;
+  }
+}
+
+// ── Sticky footer button ──────────────────────────────────────
+.hc-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px 16px;
+  background: rgba(240, 244, 248, 0.92);
+  backdrop-filter: blur(6px);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.hc-save-btn {
+  --border-radius: 12px;
+  font-weight: 600;
+  max-width: 640px;
+  margin: 0 auto;
+  display: block;
+}

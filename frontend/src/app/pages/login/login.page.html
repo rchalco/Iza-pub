@@ -8,24 +8,44 @@
       </ion-card-header>
 
       <ion-card-content>
-        <form>
-          <ion-item class="input-transparente">
-            <ion-label position="floating">Usuario</ion-label>
-            <ion-input type="text" [(ngModel)]="logidata.Usuario" name="Usuario" required></ion-input>
-          </ion-item>
+        <form (ngSubmit)="iniciarSesion()">
 
-          <ion-item class="input-transparente">
-            <ion-label position="floating">Contraseña</ion-label>
-            <ion-input type="password" [(ngModel)]="logidata.Password" name="Password" required></ion-input>
-          </ion-item>
+          <ion-input
+            class="input-transparente"
+            label="Usuario"
+            label-placement="floating"
+            type="text"
+            autocomplete="username"
+            [(ngModel)]="credentials.Usuario"
+            name="Usuario"
+            required>
+          </ion-input>
 
-          <ion-button expand="block" color="primary" (click)="iniciarsesion(logidata)">
-            Iniciar Sesión
+          <ion-input
+            class="input-transparente"
+            label="Contraseña"
+            label-placement="floating"
+            type="password"
+            autocomplete="current-password"
+            [(ngModel)]="credentials.Password"
+            name="Password"
+            required>
+          </ion-input>
+
+          <ion-button
+            type="submit"
+            expand="block"
+            color="primary"
+            class="login-btn"
+            [disabled]="isLoading">
+            <ion-spinner *ngIf="isLoading" name="crescent" slot="start"></ion-spinner>
+            {{ isLoading ? 'Ingresando...' : 'Iniciar Sesión' }}
           </ion-button>
+
         </form>
 
         <div class="version-footer">
-          Version {{version}} <br />
+          Versión {{ version }} <br />
           <ion-note>contactos&#64;gamatek.org</ion-note>
         </div>
 
