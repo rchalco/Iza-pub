@@ -1,6 +1,6 @@
 {
-  "appId": "iza.discoteca",
-  "appName": "iza-discoteca",
+  "appId": "gamatek.discotecas",
+  "appName": "gamatek.discotecas",
   "webDir": "www",
   "plugins": {
     "DatePickerPlugin": {
