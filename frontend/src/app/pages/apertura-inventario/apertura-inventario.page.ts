@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ListaProductoComponent } from 'src/app/components/lista-producto/lista-producto.component';
-import { InventarioProducto } from 'src/app/interfaces/inventario/InventarioProducto';
+import { InventarioProducto } from 'src/app/interfaces/inventario/inventarioProducto';
 import { DatabaseService } from 'src/app/services/DatabaseService';
 import { InventarioService } from 'src/app/services/inventario.service';
 import { StockService } from 'src/app/services/stock.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'app-apertura-inventario',
   templateUrl: './apertura-inventario.page.html',
   styleUrls: ['./apertura-inventario.page.scss'],

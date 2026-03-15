@@ -3,6 +3,7 @@ import { ResulProductoPrecioVenta } from 'src/app/interfaces/venta/itemProductoV
 import { VentaService } from 'src/app/services/venta.service';
 
 @Component({
+  standalone: false,
   selector: 'app-busca-producto',
   templateUrl: './busca-producto.component.html',
   styleUrls: ['./busca-producto.component.scss'],

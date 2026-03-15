@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import { AppComponent } from 'src/app/app.component';
 
 @Component({
+  standalone: false,
   selector: 'app-custom-header',
   templateUrl: './custom-header.component.html',
   styleUrls: ['./custom-header.component.scss'],

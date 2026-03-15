@@ -3,13 +3,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { ListaProductoComponent } from 'src/app/components/lista-producto/lista-producto.component';
 import { DataDocumento } from 'src/app/interfaces/general/documento';
-import { InventarioProducto } from 'src/app/interfaces/inventario/InventarioProducto';
+import { InventarioProducto } from 'src/app/interfaces/inventario/inventarioProducto';
 import { DocumentoService } from 'src/app/services/documento.service';
 import { StockService } from 'src/app/services/stock.service';
 import { VentaService } from 'src/app/services/venta.service';
 import { InventarioService } from 'src/app/services/inventario.service';
 
 @Component({
+  standalone: false,
   selector: 'app-asignacion-inventario',
   templateUrl: './asignacion-inventario.page.html',
   styleUrls: ['./asignacion-inventario.page.scss'],

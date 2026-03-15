@@ -1,12 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { DataDocumento } from 'src/app/interfaces/general/documento';
-import { InventarioProducto } from 'src/app/interfaces/inventario/InventarioProducto';
+import { InventarioProducto } from 'src/app/interfaces/inventario/inventarioProducto';
 import { DocumentoService } from 'src/app/services/documento.service';
 import { StockService } from 'src/app/services/stock.service';
 import { VentaService } from 'src/app/services/venta.service';
 
 @Component({
+  standalone: false,
   selector: 'app-inventario-general',
   templateUrl: './inventario-general.page.html',
   styleUrls: ['./inventario-general.page.scss'],

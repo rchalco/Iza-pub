@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-reader-card',
   templateUrl: './reader-card.component.html',
   styleUrls: ['./reader-card.component.scss'],

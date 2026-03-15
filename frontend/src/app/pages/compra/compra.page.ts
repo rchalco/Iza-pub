@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { StockService } from 'src/app/services/stock.service';
 
 @Component({
+  standalone: false,
   selector: 'app-compra',
   templateUrl: './compra.page.html',
   styleUrls: ['./compra.page.scss'],

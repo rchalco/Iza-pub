@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { VentaService } from 'src/app/services/venta.service';
 
 @Component({
+  standalone: false,
   selector: 'app-arqueo-cajero',
   templateUrl: './arqueo-cajero.page.html',
   styleUrls: ['./arqueo-cajero.page.scss'],

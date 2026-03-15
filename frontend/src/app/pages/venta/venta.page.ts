@@ -5,6 +5,7 @@ import { VentaService } from 'src/app/services/venta.service';
 import { InventarioService } from 'src/app/services/inventario.service';
 
 @Component({
+  standalone: false,
   selector: 'app-venta',
   templateUrl: './venta.page.html',
   styleUrls: ['./venta.page.scss'],

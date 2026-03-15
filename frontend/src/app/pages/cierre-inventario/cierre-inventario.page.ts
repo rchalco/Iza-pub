@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { InventarioProducto } from 'src/app/interfaces/inventario/InventarioProducto';
+import { InventarioProducto } from 'src/app/interfaces/inventario/inventarioProducto';
 import { InventarioService } from 'src/app/services/inventario.service';
 
 @Component({
+  standalone: false,
   selector: 'app-cierre-inventario',
   templateUrl: './cierre-inventario.page.html',
   styleUrls: ['./cierre-inventario.page.scss'],

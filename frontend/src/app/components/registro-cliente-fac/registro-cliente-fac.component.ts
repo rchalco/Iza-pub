@@ -1,9 +1,10 @@
-import { CommonModule } from '@angular/common';
+
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { DatosFacturaDTO } from 'src/app/interfaces/general/DatosFactura';
 import { PersonaService } from 'src/app/services/persona.service';
 
 @Component({
+  standalone: false,
   selector: 'app-registro-cliente-fac',
   templateUrl: './registro-cliente-fac.component.html',
   styleUrls: ['./registro-cliente-fac.component.scss'],

@@ -6,6 +6,7 @@ import { VentaService } from 'src/app/services/venta.service';
 import { customFormatter } from 'src/environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'app-cierre-detalle-cajero',
   templateUrl: './cierre-detalle-cajero.page.html',
   styleUrls: ['./cierre-detalle-cajero.page.scss'],

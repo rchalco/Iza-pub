@@ -3,6 +3,7 @@ import { SaldoCajaDTO } from 'src/app/interfaces/caja/SaldoCaja';
 import { StockService } from 'src/app/services/stock.service';
 
 @Component({
+  standalone: false,
   selector: 'app-cierre-caja',
   templateUrl: './cierre-caja.page.html',
   styleUrls: ['./cierre-caja.page.scss'],

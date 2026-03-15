@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  RouterStateSnapshot,
-  UrlTree,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { StockService } from '../services/stock.service';
@@ -12,7 +7,7 @@ import { StockService } from '../services/stock.service';
 @Injectable({
   providedIn: 'root',
 })
-export class SessioninitGuard implements CanActivate {
+export class SessioninitGuard  {
   constructor(
     private baseService: StockService,
     private navCtri: NavController

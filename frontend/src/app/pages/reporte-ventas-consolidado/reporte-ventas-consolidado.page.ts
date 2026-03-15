@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FabulaService } from 'src/app/services/fabula.service';
 
 @Component({
+  standalone: false,
   selector: 'app-reporte-ventas-consolidado',
   templateUrl: './reporte-ventas-consolidado.page.html',
   styleUrls: ['./reporte-ventas-consolidado.page.scss'],

@@ -3,6 +3,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { VentaService } from 'src/app/services/venta.service';
 
 @Component({
+  standalone: false,
   selector: 'app-lista-producto',
   templateUrl: './lista-producto.component.html',
   styleUrls: ['./lista-producto.component.scss'],

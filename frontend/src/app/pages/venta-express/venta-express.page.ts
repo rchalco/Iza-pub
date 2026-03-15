@@ -28,6 +28,7 @@ interface FormaPagoItem {
 }
 
 @Component({
+  standalone: false,
   selector: 'app-venta-express',
   templateUrl: './venta-express.page.html',
   styleUrls: ['./venta-express.page.scss'],

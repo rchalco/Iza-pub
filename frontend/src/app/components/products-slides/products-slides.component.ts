@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
+  standalone: false,
   selector: 'app-products-slides',
   templateUrl: './products-slides.component.html',
   styleUrls: ['./products-slides.component.scss'],

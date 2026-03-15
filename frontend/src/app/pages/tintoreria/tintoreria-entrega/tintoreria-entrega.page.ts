@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TouchSequence } from 'selenium-webdriver';
 import { MDPedidosPorEntregar } from 'src/app/interfaces/tintoreria/ResponsePedidosEntregar';
 import { DetalleVenta } from 'src/app/interfaces/venta/detalleVenta';
 import { ResulProductoPrecioVenta } from 'src/app/interfaces/venta/itemProductoVenta';
@@ -9,6 +8,7 @@ import { TintoreriaService } from 'src/app/services/tintoreria.service';
 import { VentaService } from 'src/app/services/venta.service';
 
 @Component({
+  standalone: false,
   selector: 'app-tintoreria-entrega',
   templateUrl: './tintoreria-entrega.page.html',
   styleUrls: ['./tintoreria-entrega.page.scss'],

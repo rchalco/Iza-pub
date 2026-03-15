@@ -4,6 +4,7 @@ import { DocumentoService } from 'src/app/services/documento.service';
 import { VentaService } from 'src/app/services/venta.service';
 
 @Component({
+  standalone: false,
   selector: 'app-cierre-global',
   templateUrl: './cierre-global.page.html',
   styleUrls: ['./cierre-global.page.scss'],

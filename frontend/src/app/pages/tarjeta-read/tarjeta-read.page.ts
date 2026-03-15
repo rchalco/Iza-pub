@@ -5,6 +5,7 @@ import { DatosTarjetaDTO } from 'src/app/interfaces/tarjeta/DatosTarjeta';
 import { TarjetaService } from 'src/app/services/tarjeta.service';
 
 @Component({
+  standalone: false,
   selector: 'app-tarjeta-read',
   templateUrl: './tarjeta-read.page.html',
   styleUrls: ['./tarjeta-read.page.scss'],

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FabulaService } from 'src/app/services/fabula.service';
 
 @Component({
+  standalone: false,
   selector: 'app-configuracion-item-menu',
   templateUrl: './configuracion-item-menu.page.html',
   styleUrls: ['./configuracion-item-menu.page.scss'],

@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FingerService } from 'src/app/services/finger.service';
 
 @Component({
+  standalone: false,
   selector: 'app-finger-capture',
   templateUrl: './finger-capture.component.html',
   styleUrls: ['./finger-capture.component.scss'],

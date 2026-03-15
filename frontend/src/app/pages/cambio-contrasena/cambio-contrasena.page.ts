@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'app-cambio-contrasena',
   templateUrl: './cambio-contrasena.page.html',
   styleUrls: ['./cambio-contrasena.page.scss'],

@@ -24,36 +24,42 @@
         Buscar
       </ion-button>
     </ion-item>
-    <ion-item *ngIf="listaPedidos">
-      <ion-searchbar
-        animated="true"
-        (ionChange)="buscarPedidos($event)"
-        placeholder="documento"
-      ></ion-searchbar>
-    </ion-item>
+    @if (listaPedidos) {
+      <ion-item>
+        <ion-searchbar
+          animated="true"
+          (ionChange)="buscarPedidos($event)"
+          placeholder="documento"
+        ></ion-searchbar>
+      </ion-item>
+    }
   </ion-list>
 
-  <ion-list *ngIf="listaPedidos">
-    <div
-      *ngFor="let cliente of listaPedidos | filtro:textoBusacar:'documento'"
-      class="item-pedido"
-    >
-      <ion-item>
-        <p>PEDIDO: {{cliente.idPedMaster}}-</p>
-        <ion-label>{{cliente.documento}} {{cliente.nombreCliente}}</ion-label>
-        <ion-label>{{cliente.fechaRegistro}}</ion-label>
-        <ion-label>{{cliente.estado}}</ion-label>
-      </ion-item>
-      <ion-card>
+  @if (listaPedidos) {
+    <ion-list>
+      @for (cliente of listaPedidos | filtro:textoBusacar:'documento'; track cliente) {
         <div
-          *ngFor="let detalle of cliente.detallePedidosEntregar"
-          class="content-detail"
-        >
-          <ion-label>Prod: {{detalle.producto}} </ion-label>
-          <ion-label>Cant: {{detalle.cantidad}} </ion-label>
-          <ion-label>Precio: {{detalle.precio}} </ion-label>
+          class="item-pedido"
+          >
+          <ion-item>
+            <p>PEDIDO: {{cliente.idPedMaster}}-</p>
+            <ion-label>{{cliente.documento}} {{cliente.nombreCliente}}</ion-label>
+            <ion-label>{{cliente.fechaRegistro}}</ion-label>
+            <ion-label>{{cliente.estado}}</ion-label>
+          </ion-item>
+          <ion-card>
+            @for (detalle of cliente.detallePedidosEntregar; track detalle) {
+              <div
+                class="content-detail"
+                >
+                <ion-label>Prod: {{detalle.producto}} </ion-label>
+                <ion-label>Cant: {{detalle.cantidad}} </ion-label>
+                <ion-label>Precio: {{detalle.precio}} </ion-label>
+              </div>
+            }
+          </ion-card>
         </div>
-      </ion-card>
-    </div>
-  </ion-list>
+      }
+    </ion-list>
+  }
 </ion-content>

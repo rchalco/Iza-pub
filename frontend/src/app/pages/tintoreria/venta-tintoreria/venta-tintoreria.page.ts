@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { TouchSequence } from 'selenium-webdriver';
 import { SmallDocument } from 'src/app/interfaces/printer/smalldocument';
 import {
   RequestRegistroPedido,
@@ -14,6 +13,7 @@ import { TintoreriaService } from 'src/app/services/tintoreria.service';
 import { VentaService } from 'src/app/services/venta.service';
 
 @Component({
+  standalone: false,
   selector: 'app-venta-tintoreria',
   templateUrl: './venta-tintoreria.page.html',
   styleUrls: ['./venta-tintoreria.page.scss'],

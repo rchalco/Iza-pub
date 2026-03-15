@@ -1,10 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  RouterStateSnapshot,
-  UrlTree,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -13,7 +8,7 @@ import { StockService } from '../services/stock.service';
 @Injectable({
   providedIn: 'root',
 })
-export class SessionendGuard implements CanActivate {
+export class SessionendGuard  {
   constructor(
     private baseService: StockService,
     private navCtri: NavController

@@ -8,7 +8,7 @@ import {
   HEADERS_SERVICE,
   URL_TINTORERIA,
 } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 import { DatabaseService } from './DatabaseService';
 import { MDPedidosPorEntregar } from '../interfaces/tintoreria/ResponsePedidosEntregar';
@@ -51,7 +51,7 @@ export class TintoreriaService extends BaseService {
           catchError((error) => {
             console.error(error);
             this.showMessageError('No se tiene comunicacion con el servidor');
-            return Observable.throw(new Error(error.status));
+            return throwError(() => new Error(error.status));
           })
         );
     });
@@ -77,7 +77,7 @@ export class TintoreriaService extends BaseService {
           catchError((error) => {
             console.error(error);
             this.showMessageError('No se tiene comunicacion con el servidor');
-            return Observable.throw(new Error(error.status));
+            return throwError(() => new Error(error.status));
           })
         );
     });
@@ -105,7 +105,7 @@ export class TintoreriaService extends BaseService {
           catchError((error) => {
             console.error(error);
             this.showMessageError('No se tiene comunicacion con el servidor');
-            return Observable.throw(new Error(error.status));
+            return throwError(() => new Error(error.status));
           })
         );
     });
@@ -136,7 +136,7 @@ export class TintoreriaService extends BaseService {
           catchError((error) => {
             console.error(error);
             this.showMessageError('No se tiene comunicacion con el servidor');
-            return Observable.throw(new Error(error.status));
+            return throwError(() => new Error(error.status));
           })
         );
     });
@@ -164,7 +164,7 @@ export class TintoreriaService extends BaseService {
           catchError((error) => {
             console.error(error);
             this.showMessageError('No se tiene comunicacion con el servidor');
-            return Observable.throw(new Error(error.status));
+            return throwError(() => new Error(error.status));
           })
         );
     });
@@ -198,7 +198,7 @@ export class TintoreriaService extends BaseService {
           catchError((error) => {
             console.error(error);
             this.showMessageError('No se tiene comunicacion con el servidor');
-            return Observable.throw(new Error(error.status));
+            return throwError(() => new Error(error.status));
           })
         );
     });
@@ -229,7 +229,7 @@ export class TintoreriaService extends BaseService {
           catchError((error) => {
             console.error(error);
             this.showMessageError('No se tiene comunicacion con el servidor');
-            return Observable.throw(new Error(error.status));
+            return throwError(() => new Error(error.status));
           })
         );
     });
@@ -258,7 +258,7 @@ export class TintoreriaService extends BaseService {
           catchError((error) => {
             console.error(error);
             this.showMessageError('No se tiene comunicacion con el servidor');
-            return Observable.throw(new Error(error.status));
+            return throwError(() => new Error(error.status));
           })
         );
     });

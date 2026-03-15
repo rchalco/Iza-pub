@@ -2,7 +2,6 @@
   "appId": "iza.discoteca",
   "appName": "iza-discoteca",
   "webDir": "www",
-  "bundledWebRuntime": false,
   "plugins": {
     "DatePickerPlugin": {
       "mode": "date",

@@ -11,6 +11,7 @@ import { VentaService } from 'src/app/services/venta.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'app-bandeja-pedidos-cajero',
   templateUrl: './bandeja-pedidos-cajero.page.html',
   styleUrls: ['./bandeja-pedidos-cajero.page.scss'],

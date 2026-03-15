@@ -4,12 +4,13 @@ import { ProductosAlmancen } from 'src/app/interfaces/inventario/ProductosAlmace
 import { InventarioService } from 'src/app/services/inventario.service';
 import DxDataGrid from 'devextreme/ui/data_grid';
 import { InventarioAsignacion } from 'src/app/interfaces/inventario/InventarioAsignacion';
-import { InventarioProducto } from 'src/app/interfaces/inventario/InventarioProducto';
+import { InventarioProducto } from 'src/app/interfaces/inventario/inventarioProducto';
 import { AlmacenDTO } from 'src/app/interfaces/inventario/Almacen';
 import { VentaService } from 'src/app/services/venta.service';
 
 
 @Component({
+  standalone: false,
   selector: 'app-asignacion-productos',
   templateUrl: './asignacion-productos.page.html',
   styleUrls: ['./asignacion-productos.page.scss'],

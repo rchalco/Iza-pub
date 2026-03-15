@@ -10,20 +10,24 @@
         <ion-list>
           <ion-item>
             <ion-label position="stacked">Origen</ion-label>
-             <ion-select interface="popover"
-                        placeholder="Seleccionar Origen"
-                        (ionChange)="selectBarraOrigen($event)"
-                        [(ngModel)]="barraOrigen.idAlmacen">
-              <ion-select-option expand="full" *ngFor="let alamacen of listaAlmancenOrigen" [value]="alamacen.idAlmacen">
+            <ion-select interface="popover"
+              placeholder="Seleccionar Origen"
+              (ionChange)="selectBarraOrigen($event)"
+              [(ngModel)]="barraOrigen.idAlmacen">
+              @for (alamacen of listaAlmancenOrigen; track alamacen) {
+                <ion-select-option expand="full" [value]="alamacen.idAlmacen">
                 {{alamacen.descripcion}}</ion-select-option>
+              }
             </ion-select>
           </ion-item>
           <ion-item>
             <ion-label position="stacked">Destino</ion-label>
             <ion-select interface="popover" placeholder="Seleccionar Destino" (ionChange)="selectBarraDestino($event)"
-                [(ngModel)]="barraDestino.idAlmacen" [disabled]="bloquearDestino">
-              <ion-select-option *ngFor="let alamacen of listaDestino" [value]="alamacen.idAlmacen">
+              [(ngModel)]="barraDestino.idAlmacen" [disabled]="bloquearDestino">
+              @for (alamacen of listaDestino; track alamacen) {
+                <ion-select-option [value]="alamacen.idAlmacen">
                 {{alamacen.descripcion}}</ion-select-option>
+              }
             </ion-select>
           </ion-item>
           <ion-item>

@@ -17,75 +17,76 @@
               (ionChange)="tipoDocumnetoSeleccionada($event)"
               cancelText="NO"
               okText="OK"
-            >
-              <ion-select-option
-                expand="full"
-                value="{{ documento.idClasificador }}"
-                *ngFor="let documento of listaTipoDocumento"
               >
-                {{ documento.nombre }}</ion-select-option
-              >
-            </ion-select>
-          </ion-label>
-        </ion-item>
+              @for (documento of listaTipoDocumento; track documento) {
+                <ion-select-option
+                  expand="full"
+                  value="{{ documento.idClasificador }}"
+                  >
+                  {{ documento.nombre }}</ion-select-option
+                  >
+                }
+              </ion-select>
+            </ion-label>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>
-            <h3>Documento</h3>
-            <ion-input
-              type="text"
-              name="nroDocumento"
-              required="true"
-              (ionBlur)="documentoLostFocus()"
-              [(ngModel)]="nroDocumento"
-            >
-            </ion-input>
-          </ion-label>
-        </ion-item>
+          <ion-item>
+            <ion-label>
+              <h3>Documento</h3>
+              <ion-input
+                type="text"
+                name="nroDocumento"
+                required="true"
+                (ionBlur)="documentoLostFocus()"
+                [(ngModel)]="nroDocumento"
+                >
+              </ion-input>
+            </ion-label>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>
-            <h3>Nombre Factura</h3>
-            <ion-input
-              type="text"
-              name="nombreFactura"
-              required="true"
-              [(ngModel)]="nombreFactura"
-            >
-            </ion-input>
-          </ion-label>
-        </ion-item>
+          <ion-item>
+            <ion-label>
+              <h3>Nombre Factura</h3>
+              <ion-input
+                type="text"
+                name="nombreFactura"
+                required="true"
+                [(ngModel)]="nombreFactura"
+                >
+              </ion-input>
+            </ion-label>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>
-            <h3>E-Mail</h3>
-            <ion-input
-              type="text"
-              name="email"
-              required="true"
-              [(ngModel)]="email"
-            >
-            </ion-input>
-          </ion-label>
-        </ion-item>
+          <ion-item>
+            <ion-label>
+              <h3>E-Mail</h3>
+              <ion-input
+                type="text"
+                name="email"
+                required="true"
+                [(ngModel)]="email"
+                >
+              </ion-input>
+            </ion-label>
+          </ion-item>
 
-        <ion-item>
-          <ion-label>
-            <h3>Numero Celular</h3>
-            <ion-input
-              type="text"
-              name="email"
-              required="true"
-              [(ngModel)]="email"
-            >
-            </ion-input>
-          </ion-label>
-        </ion-item>
+          <ion-item>
+            <ion-label>
+              <h3>Numero Celular</h3>
+              <ion-input
+                type="text"
+                name="email"
+                required="true"
+                [(ngModel)]="email"
+                >
+              </ion-input>
+            </ion-label>
+          </ion-item>
 
-        <ion-button expand="full" (click)="confirmarDatosFactura()">
-          Confirmar Datos Factura
-        </ion-button>
-      </ion-list>
-    </form>
-  </ion-card-content>
-</ion-card>
+          <ion-button expand="full" (click)="confirmarDatosFactura()">
+            Confirmar Datos Factura
+          </ion-button>
+        </ion-list>
+      </form>
+    </ion-card-content>
+  </ion-card>

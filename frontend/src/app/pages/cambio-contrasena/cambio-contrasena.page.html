@@ -1,7 +1,7 @@
 
 <app-custom-header title="Cambio de Contraseña"></app-custom-header>
 <ion-content>
-  <form #formulario="ngForm"> 
+  <form #formulario="ngForm">
     <ion-item lines="full">
       <ion-label position="floating">Usuario</ion-label>
       <ion-input type="text" name="Usuario" [(ngModel)] = "logidata.Usuario" required="true" readonly="true"></ion-input>
@@ -23,18 +23,20 @@
     <ion-row>
       <ion-col>
         <ion-button type="submit" color="danger" (click)="cambiarcontrasena(logidata)" expand="block" [disabled]="!formulario.valid">Cambiar Contraseña</ion-button>
-        
+
         <!-- <a [routerLink]="['/forgot-password']" class="small-text">Forgot Password?</a> -->
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-label color="danger" *ngIf="!validForm"
-          >La contraseña regiditada no es la misma</ion-label
-        >
-      </ion-col>
-    </ion-row>
+        @if (!validForm) {
+          <ion-label color="danger"
+            >La contraseña regiditada no es la misma</ion-label
+            >
+          }
+        </ion-col>
+      </ion-row>
 
-  </form>
-</ion-content>
+    </form>
+  </ion-content>

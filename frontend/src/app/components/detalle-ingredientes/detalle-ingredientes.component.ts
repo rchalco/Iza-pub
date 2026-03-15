@@ -5,6 +5,7 @@ import { IngredientesDeMenuGeneralDTO } from 'src/app/interfaces/inventario/Ingr
 import { InventarioService } from 'src/app/services/inventario.service';
 
 @Component({
+  standalone: false,
   selector: 'app-detalle-ingredientes',
   templateUrl: './detalle-ingredientes.component.html',
   styleUrls: ['./detalle-ingredientes.component.scss'],

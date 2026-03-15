@@ -8,7 +8,7 @@ import {
   HEADERS_SERVICE,
   URL_SECURITY,
 } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 import { DatabaseService } from './DatabaseService';
 
@@ -53,7 +53,7 @@ export class SeguridadService extends BaseService {
         catchError((error) => {
           console.error('error del login', error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -78,7 +78,7 @@ export class SeguridadService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -111,7 +111,7 @@ export class SeguridadService extends BaseService {
         catchError((error) => {
           console.error('error del login', error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -139,7 +139,7 @@ export class SeguridadService extends BaseService {
   //       catchError((error) => {
   //         console.error('error del login', error);
   //         this.showMessageError('No se tiene comunicacion con el servidor');
-  //         return Observable.throw(new Error(error.status));
+  //         return throwError(() => new Error(error.status));
   //       })
   //     );
   // }

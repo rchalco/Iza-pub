@@ -8,7 +8,7 @@ import {
   URL_CARDS,
   URL_SECURITY,
 } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 import { DatabaseService } from './DatabaseService';
 
@@ -53,7 +53,7 @@ export class TarjetaService extends BaseService {
           catchError((error) => {
             console.error(error);
             this.showMessageError('No se tiene comunicacion con el servidor');
-            return Observable.throw(new Error(error.status));
+            return throwError(() => new Error(error.status));
           })
         );
     }
@@ -81,7 +81,7 @@ export class TarjetaService extends BaseService {
           catchError((error) => {
             console.error(error);
             this.showMessageError('No se tiene comunicacion con el servidor');
-            return Observable.throw(new Error(error.status));
+            return throwError(() => new Error(error.status));
           })
         );
     }
@@ -102,7 +102,7 @@ export class TarjetaService extends BaseService {
           catchError((error) => {
             console.error(error);
             this.showMessageError('Error al cargar el archivo ' + error.error);
-            return Observable.throw(new Error(error.status));
+            return throwError(() => new Error(error.status));
           })
         );
     }
@@ -144,7 +144,7 @@ export class TarjetaService extends BaseService {
           catchError((error) => {
             console.error(error);
             this.showMessageError('No se tiene comunicacion con el servidor');
-            return Observable.throw(new Error(error.status));
+            return throwError(() => new Error(error.status));
           })
         );
     }
@@ -174,7 +174,7 @@ export class TarjetaService extends BaseService {
           catchError((error) => {
             console.error(error);
             this.showMessageError('No se tiene comunicacion con el servidor');
-            return Observable.throw(new Error(error.status));
+            return throwError(() => new Error(error.status));
           })
         );
     }
@@ -202,7 +202,7 @@ export class TarjetaService extends BaseService {
           catchError((error) => {
             console.error(error);
             this.showMessageError('No se tiene comunicacion con el servidor');
-            return Observable.throw(new Error(error.status));
+            return throwError(() => new Error(error.status));
           })
         );
     }
@@ -232,7 +232,7 @@ export class TarjetaService extends BaseService {
           catchError((error) => {
             console.error(error);
             this.showMessageError('No se tiene comunicacion con el servidor');
-            return Observable.throw(new Error(error.status));
+            return throwError(() => new Error(error.status));
           })
         );
     }
@@ -273,7 +273,7 @@ export class TarjetaService extends BaseService {
           catchError((error) => {
             console.error(error);
             this.showMessageError('No se tiene comunicacion con el servidor');
-            return Observable.throw(new Error(error.status));
+            return throwError(() => new Error(error.status));
           })
         );
     }
@@ -302,7 +302,7 @@ export class TarjetaService extends BaseService {
           catchError((error) => {
             console.error(error);
             this.showMessageError('No se tiene comunicacion con el servidor');
-            return Observable.throw(new Error(error.status));
+            return throwError(() => new Error(error.status));
           })
         );
     }

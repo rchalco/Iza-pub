@@ -13,6 +13,7 @@ import { DxListModule, DxRadioGroupModule, DxToolbarModule } from 'devextreme-an
 import { DxDrawerModule, DxDrawerComponent } from 'devextreme-angular/ui/drawer';
 
 @Component({
+  standalone: false,
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],

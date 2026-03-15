@@ -9,10 +9,10 @@ import {
   HEADERS_SERVICE,
   URL_MIROVENTA,
 } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 import { DatabaseService } from './DatabaseService';
-import { async } from '@angular/core/testing';
+import { waitForAsync } from '@angular/core/testing';
 
 const urlMicroventa = URL_MIROVENTA;
 const headers = HEADERS_SERVICE;
@@ -52,7 +52,7 @@ export class VentaService extends BaseService {
           catchError((error) => {
             console.error(error);
             this.showMessageError('No se tiene comunicacion con el servidor');
-            return Observable.throw(new Error(error.status));
+            return throwError(() => new Error(error.status));
           })
         );
     });
@@ -88,7 +88,7 @@ export class VentaService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -122,7 +122,7 @@ export class VentaService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -158,7 +158,7 @@ export class VentaService extends BaseService {
           catchError((error) => {
             console.error(error);
             this.showMessageError('No se tiene comunicacion con el servidor');
-            return Observable.throw(new Error(error.status));
+            return throwError(() => new Error(error.status));
           })
         )
     });
@@ -188,7 +188,7 @@ export class VentaService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -221,7 +221,7 @@ export class VentaService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -253,7 +253,7 @@ export class VentaService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -281,7 +281,7 @@ export class VentaService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -312,7 +312,7 @@ export class VentaService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -340,7 +340,7 @@ export class VentaService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -368,7 +368,7 @@ export class VentaService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -396,7 +396,7 @@ export class VentaService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -428,7 +428,7 @@ export class VentaService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -467,7 +467,7 @@ export class VentaService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -495,7 +495,7 @@ export class VentaService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -522,7 +522,7 @@ export class VentaService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -557,7 +557,7 @@ export class VentaService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -588,7 +588,7 @@ export class VentaService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -622,7 +622,7 @@ export class VentaService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }

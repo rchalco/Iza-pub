@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 //import { format, parseISO } from 'date-fns';
 
 @Component({
+  standalone: false,
   selector: 'app-apertura-caja',
   templateUrl: './apertura-caja.page.html',
   styleUrls: ['./apertura-caja.page.scss'],

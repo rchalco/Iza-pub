@@ -4,6 +4,7 @@ import { SeguridadService } from 'src/app/services/seguridad.service';
 
 
 @Component({
+  standalone: false,
   selector: 'app-custom-camera',
   templateUrl: './custom-camera.component.html',
   styleUrls: ['./custom-camera.component.scss'],

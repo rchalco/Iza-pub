@@ -6,6 +6,7 @@ import { InventarioService } from 'src/app/services/inventario.service';
 import { StockService } from 'src/app/services/stock.service';
 
 @Component({
+  standalone: false,
   selector: 'app-dashboard-productos',
   templateUrl: './dashboard-productos.page.html',
   styleUrls: ['./dashboard-productos.page.scss'],

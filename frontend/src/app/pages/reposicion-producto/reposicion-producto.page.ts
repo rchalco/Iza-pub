@@ -8,6 +8,7 @@ import { StockService } from 'src/app/services/stock.service';
 import { Workbook } from 'exceljs';
 
 @Component({
+  standalone: false,
   selector: 'app-reposicion-producto',
   templateUrl: './reposicion-producto.page.html',
   styleUrls: ['./reposicion-producto.page.scss'],

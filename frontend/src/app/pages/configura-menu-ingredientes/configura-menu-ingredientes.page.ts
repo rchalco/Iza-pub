@@ -7,6 +7,7 @@ import { typeIngredientesDeMenu } from 'src/app/interfaces/inventario/typeIngred
 import { InventarioService } from 'src/app/services/inventario.service';
 
 @Component({
+  standalone: false,
   selector: 'app-configura-menu-ingredientes',
   templateUrl: './configura-menu-ingredientes.page.html',
   styleUrls: ['./configura-menu-ingredientes.page.scss'],

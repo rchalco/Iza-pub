@@ -7,6 +7,7 @@ import { ResponseCierreGlobalDetalle } from 'src/app/interfaces/venta/cierreGlob
 import { VentaService } from 'src/app/services/venta.service';
 
 @Component({
+  standalone: false,
   selector: 'app-reporte-cierre-global',
   templateUrl: './reporte-cierre-global.page.html',
   styleUrls: ['./reporte-cierre-global.page.scss'],

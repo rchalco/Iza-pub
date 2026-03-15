@@ -5,6 +5,7 @@ import { MovimientoDTO } from 'src/app/interfaces/tarjeta/Movimiento';
 import { TarjetaService } from 'src/app/services/tarjeta.service';
 
 @Component({
+  standalone: false,
   selector: 'app-control-tarjetas',
   templateUrl: './control-tarjetas.page.html',
   styleUrls: ['./control-tarjetas.page.scss'],

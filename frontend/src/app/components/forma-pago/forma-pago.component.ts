@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { VentaService } from 'src/app/services/venta.service';
 
 @Component({
+  standalone: false,
   selector: 'app-forma-pago',
   templateUrl: './forma-pago.component.html',
   styleUrls: ['./forma-pago.component.scss'],

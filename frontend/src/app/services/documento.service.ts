@@ -1,4 +1,4 @@
-import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { FileOpener } from '@capacitor-community/file-opener';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BaseService } from './baseService';
@@ -9,7 +9,7 @@ import {
   URL_MIROVENTA,
   URL_TINTORERIA,
 } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
 import { DatabaseService } from './DatabaseService';
 import { URL_MIROVENTAOPERACION } from './../../environments/environment';
@@ -29,7 +29,6 @@ export class DocumentoService extends BaseService {
     public httpClient: HttpClient,
     public loadingController: LoadingController,
     public toastController: ToastController,
-    private fileOpener: FileOpener,
     public platform: Platform
   ) {
     super(databaseService, httpClient, loadingController, toastController);
@@ -80,7 +79,7 @@ export class DocumentoService extends BaseService {
         }),
         catchError((error) => {
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       )
       .subscribe((x) => {
@@ -118,7 +117,7 @@ export class DocumentoService extends BaseService {
             'error en generarDocumentoPartial',
             JSON.stringify(error)
           );
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -152,11 +151,10 @@ export class DocumentoService extends BaseService {
 
     const fileFullName =
       'file:///storage/emulated/0/' + Directory.Documents + '/' + fileName;
-    this.fileOpener
-      .open(
-        fileFullName, // You can also use a Cordova-style file uri: cdvfile://localhost/persistent/Downloads/starwars.pdf
-        'application/pdf'
-      )
+    FileOpener.open({
+      filePath: fileFullName,
+      contentType: 'application/pdf',
+    })
       .then(() => {
         console.log('archivo abierto', fileFullName);
       })

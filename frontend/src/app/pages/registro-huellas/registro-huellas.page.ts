@@ -5,6 +5,7 @@ import { FingerService } from 'src/app/services/finger.service';
 import { TarjetaService } from 'src/app/services/tarjeta.service';
 
 @Component({
+  standalone: false,
   selector: 'app-registro-huellas',
   templateUrl: './registro-huellas.page.html',
   styleUrls: ['./registro-huellas.page.scss'],

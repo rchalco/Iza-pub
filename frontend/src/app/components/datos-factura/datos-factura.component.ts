@@ -4,6 +4,7 @@ import { DatosFacturaDTO } from 'src/app/interfaces/general/DatosFactura';
 import { StockService } from 'src/app/services/stock.service';
 
 @Component({
+  standalone: false,
   selector: 'app-datos-factura',
   templateUrl: './datos-factura.component.html',
   styleUrls: ['./datos-factura.component.scss'],

@@ -8,6 +8,7 @@ import { environment, verionsApp } from 'src/environments/environment';
 import { AppComponent } from 'src/app/app.component';
 
 @Component({
+  standalone: false,
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],

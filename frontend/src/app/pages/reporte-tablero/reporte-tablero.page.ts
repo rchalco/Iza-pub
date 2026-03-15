@@ -12,6 +12,7 @@ import { StockService } from 'src/app/services/stock.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
+  standalone: false,
   selector: 'app-reporte-tablero',
   templateUrl: './reporte-tablero.page.html',
   styleUrls: ['./reporte-tablero.page.scss'],

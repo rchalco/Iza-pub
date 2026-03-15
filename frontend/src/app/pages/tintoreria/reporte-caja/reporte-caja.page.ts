@@ -4,6 +4,7 @@ import { PersonaService } from 'src/app/services/persona.service';
 import { TintoreriaService } from 'src/app/services/tintoreria.service';
 
 @Component({
+  standalone: false,
   selector: 'app-reporte-caja',
   templateUrl: './reporte-caja.page.html',
   styleUrls: ['./reporte-caja.page.scss'],

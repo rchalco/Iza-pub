@@ -3,6 +3,7 @@ import { PersonaDTO } from 'src/app/interfaces/general/PersonaDTO';
 import { StockService } from 'src/app/services/stock.service';
 
 @Component({
+  standalone: false,
   selector: 'app-personas',
   templateUrl: './personas.page.html',
   styleUrls: ['./personas.page.scss'],

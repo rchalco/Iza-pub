@@ -3,6 +3,7 @@ import { VentaService } from 'src/app/services/venta.service';
 import { InventarioService } from 'src/app/services/inventario.service';
 
 @Component({
+  standalone: false,
   selector: 'app-cierre-operativo',
   templateUrl: './cierre-operativo.page.html',
   styleUrls: ['./cierre-operativo.page.scss'],

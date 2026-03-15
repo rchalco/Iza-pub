@@ -8,6 +8,7 @@ import { Workbook } from 'exceljs';
 import { saveAs } from 'file-saver-es';
 
 @Component({
+  standalone: false,
   selector: 'app-bandeja-pedidos',
   templateUrl: './bandeja-pedidos.page.html',
   styleUrls: ['./bandeja-pedidos.page.scss'],

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { StockService } from 'src/app/services/stock.service';
 
 @Component({
+  standalone: false,
   selector: 'app-movimiento-stock',
   templateUrl: './movimiento-stock.page.html',
   styleUrls: ['./movimiento-stock.page.scss'],

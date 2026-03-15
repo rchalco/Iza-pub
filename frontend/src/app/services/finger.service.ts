@@ -5,7 +5,7 @@ import { LoadingController, ToastController } from '@ionic/angular';
 import { BaseService } from './baseService';
 import { HEADERS_SERVICE, URL_FINGERS } from 'src/environments/environment';
 import { catchError, finalize } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 const headers = HEADERS_SERVICE;
 const urlBiometric = URL_FINGERS;
@@ -48,7 +48,7 @@ export class FingerService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -78,7 +78,7 @@ export class FingerService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -110,7 +110,7 @@ export class FingerService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }
@@ -142,7 +142,7 @@ export class FingerService extends BaseService {
         catchError((error) => {
           console.error(error);
           this.showMessageError('No se tiene comunicacion con el servidor');
-          return Observable.throw(new Error(error.status));
+          return throwError(() => new Error(error.status));
         })
       );
   }

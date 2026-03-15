@@ -15,6 +15,7 @@ import { HttpClient } from '@angular/common/http';
 import { StockService } from 'src/app/services/stock.service';
 
 @Component({
+  standalone: false,
   selector: 'app-inventario-final',
   templateUrl: './inventario-final.page.html',
   styleUrls: ['./inventario-final.page.scss'],

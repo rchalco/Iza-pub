@@ -12,6 +12,7 @@ import { DocumentoService } from 'src/app/services/documento.service';
 import { DataDocumento } from 'src/app/interfaces/general/documento';
 
 @Component({
+  standalone: false,
   selector: 'app-pedido-mesa',
   templateUrl: './pedido-mesa.page.html',
   styleUrls: ['./pedido-mesa.page.scss'],

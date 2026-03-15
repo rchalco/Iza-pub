@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FingerService } from 'src/app/services/finger.service';
 
 @Component({
+  standalone: false,
   selector: 'app-verificacion-huella',
   templateUrl: './verificacion-huella.page.html',
   styleUrls: ['./verificacion-huella.page.scss'],

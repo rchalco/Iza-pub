@@ -1,11 +1,12 @@
 <!-- <ion-text color="primary">
-  <h1>{{ carNumber }}</h1>
+<h1>{{ carNumber }}</h1>
 </ion-text> -->
-<ion-input
-  type="password"
-  #cardInput
-  placeholder=""
-  (change)="eventChangeInput($event)"
-  [(ngModel)]="carNumber"
-  *ngIf="showCardInput"
-></ion-input>
+@if (showCardInput) {
+  <ion-input
+    type="password"
+    #cardInput
+    placeholder=""
+    (change)="eventChangeInput($event)"
+    [(ngModel)]="carNumber"
+  ></ion-input>
+}

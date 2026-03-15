@@ -1,5 +1,7 @@
 <ion-app>
-  <app-menu *ngIf="enabledMenu" #menu></app-menu>
+  @if (enabledMenu) {
+    <app-menu #menu></app-menu>
+  }
   <ion-split-pane contentId="main-content">
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
