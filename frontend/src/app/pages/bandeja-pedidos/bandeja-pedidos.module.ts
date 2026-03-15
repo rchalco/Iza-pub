@@ -11,6 +11,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 
 import { DxBulletModule, DxButtonModule, DxDataGridModule, DxDateBoxModule, DxPopupModule, DxTemplateModule } from 'devextreme-angular';
+import { DxiPopupToolbarItemModule } from 'devextreme-angular/ui/popup/nested';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { DxBulletModule, DxButtonModule, DxDataGridModule, DxDateBoxModule, DxPo
     DxBulletModule,
     DxDateBoxModule,
     DxPopupModule,
-    DxButtonModule
+    DxButtonModule,
+    DxiPopupToolbarItemModule
   ],
   declarations: [BandejaPedidosPage]
 })

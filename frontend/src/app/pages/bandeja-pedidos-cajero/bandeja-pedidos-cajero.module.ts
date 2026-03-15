@@ -18,6 +18,7 @@ import {
   DxPopupModule,
   DxTemplateModule,
 } from 'devextreme-angular';
+import { DxiPopupToolbarItemModule } from 'devextreme-angular/ui/popup/nested';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import {
     DxDateBoxModule,
     DxPopupModule,
     DxButtonModule,
+    DxiPopupToolbarItemModule,
   ],
   declarations: [BandejaPedidosCajeroPage],
 })

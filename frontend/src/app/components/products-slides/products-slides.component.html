@@ -1,5 +1,5 @@
 @for (producto of products | filtro: textoBusacar:'categoria'; track producto) {
-  <ion-slide>
+  <div>
     <ion-grid fixed>
       <ion-row class="cabeceraTabla">
         <ion-col size="6" class="text-gotico">{{ producto.categoria }}</ion-col>
@@ -24,5 +24,5 @@
             </ion-row>
           }
         </ion-grid>
-      </ion-slide>
+      </div>
     }

@@ -150,20 +150,20 @@
         container=".dx-viewport"
         [(visible)]="popupVisible"
         >
-        <dxi-toolbar-item
+        <dxi-popup-toolbar-item
           widget="dxButton"
           toolbar="bottom"
           location="after"
           [options]="closeButtonOptions"
           >
-        </dxi-toolbar-item>
-        <dxi-toolbar-item
+        </dxi-popup-toolbar-item>
+        <dxi-popup-toolbar-item
           widget="dxButton"
           toolbar="bottom"
           location="before"
           [options]="aceptarButtonOptions"
           >
-        </dxi-toolbar-item>
+        </dxi-popup-toolbar-item>
         <dxo-position at="center" my="center" collision="fit"> </dxo-position>
         <div *dxTemplate="let data of 'content'">
           <div class="popup-forma-pago">

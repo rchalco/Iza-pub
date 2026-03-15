@@ -26,6 +26,7 @@ export class BandejaPedidosPage implements OnInit {
   closeButtonOptions: Record<string, unknown>;
   aceptarButtonOptions: Record<string, unknown>;
   aceptaruttonOptions: Record<string, unknown>;
+  positionOf: string | Element | undefined;
   //fechaPedido: any = new Date();
   min: Date = new Date(2024, 11, 1);
   now: Date = new Date();

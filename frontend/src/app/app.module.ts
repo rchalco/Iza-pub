@@ -10,7 +10,6 @@ import { ComponentsModule } from './components/components.module';
 import { PipesModule } from './pipes/pipes.module';
 import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage-angular';
-import { Chart } from 'chart.js';
 @NgModule({ declarations: [AppComponent],
     bootstrap: [AppComponent], imports: [BrowserModule,
         IonicModule.forRoot(),

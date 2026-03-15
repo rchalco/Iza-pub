@@ -19,7 +19,7 @@ export class DashboardProductosPage implements OnInit {
   listaVendidos: ProductosVendidosPorBarraDTO[] = [];
   dataSourceVendidos: DataSource = new DataSource(this.listaVendidos);
 
-  listaAlmancenOrigen: [];
+  listaAlmancenOrigen: any[] = [];
   tipoReporte = 0;
   barraOrigen;
   constructor(private inventarioService: InventarioService) { }
