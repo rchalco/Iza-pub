@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Platform } from '@ionic/angular';
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import { Share } from '@capacitor/share';
 
 import { ReaderCardComponent } from 'src/app/components/reader-card/reader-card.component';
 import { DatosTarjetaDTO } from 'src/app/interfaces/tarjeta/DatosTarjeta';
@@ -71,6 +74,7 @@ export class VentaExpressPage implements OnInit {
     private ventaService: VentaService,
     private tarjetaService: TarjetaService,
     private stockService: StockService,
+    private platform: Platform,
   ) {}
 
   // ══════════════════════════════════════════════════════════
@@ -335,7 +339,7 @@ export class VentaExpressPage implements OnInit {
 
           if (resul.state === 1) {
             this.limpiarPostVenta();
-            this.ventaService.downLoadFile(resul.code, 'application/pdf');
+            this.guardarYCompartirPDF(resul.code);
           } else if (resul.code === 'SIN_STOCK') {
             this.listDetalleSinStock = resul.listEntities;
           }
@@ -352,5 +356,59 @@ export class VentaExpressPage implements OnInit {
     this.listFormasDePago = [];
     this.listDetalleSinStock = [];
     this.totalVenta = 0;
+  }
+
+  /**
+   * En móvil: guarda el PDF en Documents y abre el diálogo de compartir
+   * (el usuario puede elegir WhatsApp u otra app).
+   * En web: abre el PDF en una nueva pestaña (comportamiento anterior).
+   */
+  private async guardarYCompartirPDF(base64: string): Promise<void> {
+    if (this.platform.is('android') || this.platform.is('ios')) {
+      const fileName = `comprobante_${Date.now()}.pdf`;
+      try {
+        await Filesystem.writeFile({
+          path: fileName,
+          data: base64,
+          directory: Directory.Documents,
+          recursive: true,
+        });
+
+        const { uri } = await Filesystem.getUri({
+          path: fileName,
+          directory: Directory.Documents,
+        });
+
+        const { value: canShare } = await Share.canShare();
+        if (canShare) {
+          await Share.share({
+            title: 'Comprobante de venta',
+            text: 'Comprobante de venta IZA',
+            files: [uri],
+            dialogTitle: 'Guardar o compartir comprobante',
+          });
+        }
+      } catch (e) {
+        console.error('Error al guardar/compartir PDF:', e);
+        // Fallback: abrir como blob
+        this.abrirPDFEnWeb(base64);
+      }
+      return;
+    }
+
+    // Web
+    this.abrirPDFEnWeb(base64);
+  }
+
+  /** Abre el PDF base64 como blob en una nueva pestaña (web/fallback). */
+  private abrirPDFEnWeb(base64: string): void {
+    const binaryData = atob(base64);
+    const byteArray = new Uint8Array(binaryData.length);
+    for (let i = 0; i < binaryData.length; i++) {
+      byteArray[i] = binaryData.charCodeAt(i);
+    }
+    const blob = new Blob([byteArray], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    window.open(url);
   }
 }

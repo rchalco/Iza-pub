@@ -14,7 +14,6 @@ import { catchError, finalize } from 'rxjs/operators';
 import { DatabaseService } from './DatabaseService';
 import { URL_MIROVENTAOPERACION } from './../../environments/environment';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
-import { Browser } from '@capacitor/browser';
 
 const urlMicroventa = URL_MIROVENTAOPERACION;
 const urlTintoreria = URL_MIROVENTA;
