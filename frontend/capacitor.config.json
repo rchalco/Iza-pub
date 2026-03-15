@@ -2,6 +2,11 @@
   "appId": "gamatek.discotecas",
   "appName": "gamatek.discotecas",
   "webDir": "www",
+  "server": {
+    "androidScheme": "http",
+    "allowNavigation": ["155.138.212.216"],
+    "cleartext": true
+  },
   "plugins": {
     "DatePickerPlugin": {
       "mode": "date",
