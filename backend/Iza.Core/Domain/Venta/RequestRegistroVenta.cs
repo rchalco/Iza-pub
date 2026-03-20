@@ -22,5 +22,6 @@ namespace Iza.Core.Domain.Venta
         public string Observaciones { get; set; }
         public long idPedidoMaestro { get; set; }
         public long idOperacionDiariaCaja { get; set; }
+        public string fechaRegistro { get; set; } = "";
     }
 }

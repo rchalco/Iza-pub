@@ -1,5 +1,5 @@
 <app-custom-header title="Pedido"></app-custom-header>
-<ion-content fullscreen>
+<ion-content fullscreen class="venta-page">
   <!-- ═══════════════════════════════════════════════════════ -->
   <!--  Sección fija: orden actual                            -->
   <!-- ═══════════════════════════════════════════════════════ -->
@@ -114,7 +114,7 @@
                         class="catalogo__grupo"
                         >
                         <ion-row class="catalogo__header">
-                          <ion-col size="6">{{ producto.categoria }}</ion-col>
+                          <ion-col size="9">{{ producto.categoria }}</ion-col>
                           <ion-col size="3">{{ producto.etiquetaDerecha }}</ion-col>
                         </ion-row>
                         @for (det of producto.detalle; track det) {
@@ -146,9 +146,8 @@
                             class="catalogo__grupo"
                             >
                             <ion-row class="catalogo__header">
-                              <ion-col size="6">{{ producto.categoria }}</ion-col>
+                              <ion-col size="9">{{ producto.categoria }}</ion-col>
                               <ion-col size="3">{{ producto.etiquetaIzquierda }}</ion-col>
-                              <ion-col size="3">{{ producto.etiquetaDerecha }}</ion-col>
                             </ion-row>
                             @for (det of producto.detalle; track det) {
                               <ion-row class="catalogo__item">
@@ -188,9 +187,8 @@
                                   class="catalogo__grupo"
                                   >
                                   <ion-row class="catalogo__header">
-                                    <ion-col size="6">{{ producto.categoria }}</ion-col>
+                                    <ion-col size="9">{{ producto.categoria }}</ion-col>
                                     <ion-col size="3">{{ producto.etiquetaIzquierda }}</ion-col>
-                                    <ion-col size="3">{{ producto.etiquetaDerecha }}</ion-col>
                                   </ion-row>
                                   @for (det of producto.detalle; track det) {
                                     <ion-row class="catalogo__item">

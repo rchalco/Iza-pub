@@ -1,57 +1,68 @@
-<ion-content class="login-background">
+<ion-content class="login-page" [fullscreen]="true">
+  <div class="login-overlay"></div>
 
-  <div class="login-container">
+  <div class="login-wrapper">
+    <div class="login-panel">
 
-    <ion-card class="login-card">
-      <ion-card-header>
-        <ion-card-title class="titulo-login">Iniciar Sesión</ion-card-title>
-      </ion-card-header>
+      <div class="login-brand">
+        <!-- Si luego quieres logo, descomenta esta línea -->
+        <!-- <img src="assets/img/logo-gamatek.png" alt="Gamatek" class="brand-logo" /> -->
+        <div class="brand-badge">Sistema Institucional</div>
+        <h1>Bienvenido</h1>
+        <p>Accede con tus credenciales para continuar</p>
+      </div>
 
-      <ion-card-content>
-        <form (ngSubmit)="iniciarSesion()">
+      <ion-card class="login-card">
+        <ion-card-header>
+          <ion-card-title class="titulo-login">Iniciar Sesión</ion-card-title>
+        </ion-card-header>
 
-          <ion-input
-            class="input-transparente"
-            label="Usuario"
-            label-placement="floating"
-            type="text"
-            autocomplete="username"
-            [(ngModel)]="credentials.Usuario"
-            name="Usuario"
-            required>
-          </ion-input>
+        <ion-card-content>
+          <form (ngSubmit)="iniciarSesion()" class="login-form">
 
-          <ion-input
-            class="input-transparente"
-            label="Contraseña"
-            label-placement="floating"
-            type="password"
-            autocomplete="current-password"
-            [(ngModel)]="credentials.Password"
-            name="Password"
-            required>
-          </ion-input>
+            <div class="input-group">
+              <ion-input
+                class="custom-input"
+                label="Usuario"
+                label-placement="stacked"
+                type="text"
+                autocomplete="username"
+                [(ngModel)]="credentials.Usuario"
+                name="Usuario"
+                required>
+              </ion-input>
+            </div>
 
-          <ion-button
-            type="submit"
-            expand="block"
-            color="primary"
-            class="login-btn"
-            [disabled]="isLoading">
-            <ion-spinner *ngIf="isLoading" name="crescent" slot="start"></ion-spinner>
-            {{ isLoading ? 'Ingresando...' : 'Iniciar Sesión' }}
-          </ion-button>
+            <div class="input-group">
+              <ion-input
+                class="custom-input"
+                label="Contraseña"
+                label-placement="stacked"
+                type="password"
+                autocomplete="current-password"
+                [(ngModel)]="credentials.Password"
+                name="Password"
+                required>
+              </ion-input>
+            </div>
 
-        </form>
+            <ion-button
+              type="submit"
+              expand="block"
+              class="login-btn"
+              [disabled]="isLoading">
+              <ion-spinner *ngIf="isLoading" name="crescent" slot="start"></ion-spinner>
+              {{ isLoading ? 'Ingresando...' : 'Iniciar Sesión' }}
+            </ion-button>
+          </form>
 
-        <div class="version-footer">
-          Versión {{ version }} <br />
-          <ion-note>contactos&#64;gamatek.org</ion-note>
-        </div>
+          <div class="version-footer">
+            <span>Versión {{ version }}</span>
+            <ion-note>contactos&#64;gamatek.org</ion-note>
+          </div>
+        </ion-card-content>
+      </ion-card>
 
-      </ion-card-content>
-    </ion-card>
-
+    </div>
   </div>
-
 </ion-content>

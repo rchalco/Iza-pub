@@ -60,6 +60,14 @@ namespace Iza.Services.Sevices
             return mgrVentas.RegistrarVentas(requestRegistroVentas);
         }
 
+        [HttpPost("ReImprimirVoucherVenta")]
+        [EnableCors()]
+        public Response ReImprimirVoucherVenta(PedidoRequest requestPedido)
+        {
+            EngineVentas mgrVentas = new EngineVentas();
+            return mgrVentas.ReImprimirVoucherVenta(requestPedido);
+        }
+
         [HttpPost("ObtieneFormasdePago")]
         [EnableCors()]
         public ResponseQuery<ResulObtieneFormasdePago> ObtieneFormasdePago(GeneralRequest1 requestSPObtFormasDePago)

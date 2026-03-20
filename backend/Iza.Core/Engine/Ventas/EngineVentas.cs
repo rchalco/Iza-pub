@@ -7,9 +7,11 @@ using Iza.Core.Base;
 using Iza.Core.Domain.General;
 using Iza.Core.Domain.Iventario;
 using Iza.Core.Domain.Reportes;
+using Iza.Core.Domain.Types;
 using Iza.Core.Domain.Venta;
 using Iza.Core.Domain.Venta.Caja;
 using Iza.Core.Reports;
+using NLog.LayoutRenderers.Wrappers;
 using PlumbingProps.Wrapper;
 using System;
 using System.Collections.Generic;
@@ -277,6 +279,7 @@ namespace Iza.Core.Engine.Ventas
                 //    response.ListEntities = resulBDExistenciaStock;
                 //    return response;
                 //}
+                requestRegistroVentas.fechaRegistro = DateTime.Now.ToString();
 
                 repositoryPub.CallProcedure<Response>("[ventas].[spAddPedido]",
                     requestRegistroVentas.idSesion,
@@ -303,6 +306,7 @@ namespace Iza.Core.Engine.Ventas
 
                 repositoryPub.Commit();
                 //Genera el archivo para llevarlo a la base de datos
+                /*
                 List<PedidoDTO> colPedidoDTO = new List<PedidoDTO>();
                 requestRegistroVentas.detalleVentas.ForEach(x =>
                 {
@@ -391,6 +395,9 @@ namespace Iza.Core.Engine.Ventas
                     response.State = ResponseType.Warning;
                     response.Message = Convert.ToString(paramOutLogRespuesta.Valor);
                 }
+                */
+                requestRegistroVentas.idPedidoMaestro = (int)paramOutidPedidoMaestro.Valor;
+                response = ImprimirVoucherVenta(requestRegistroVentas, response.Message);
             }
             catch (Exception ex)
             {
@@ -398,6 +405,133 @@ namespace Iza.Core.Engine.Ventas
             }
             return response;
         }
+
+        public Response ReImprimirVoucherVenta(PedidoRequest requestPedido)
+        {
+            Response response = new Response { Message = "Venta registrada correctamente", State = ResponseType.Success };
+            try
+            {
+                RequestRegistroVenta objRegistroVentas = new RequestRegistroVenta();
+                ///Logiça para traer todos los datos del pedido
+                ///tPedidoMaster
+                ///tPedidoDetail
+                ///FormaPago
+                objRegistroVentas.detalleVentas = new List<typeDetailPedido>();
+                objRegistroVentas.detalleVentas.Add(new Domain.Types.typeDetailPedido { idProducto = 1, cantidad = 3, nombreProducto = "Producto Prueba", PrecioFinal = 500 });
+                objRegistroVentas.formasDePago = new List<typeFormaDePagoPedido>();
+                objRegistroVentas.formasDePago.Add(new Domain.Types.typeFormaDePagoPedido { idFormaPago = 1, MontoCubierto = 500 });
+                objRegistroVentas.usuario = "mikyches";
+                objRegistroVentas.fechaRegistro = DateTime.Now.ToString(); ///Traer la fecha de registro del pedido
+                objRegistroVentas.idOperacionDiariaCaja = 12;//Traer el idOperacionDiariaCaja del pedido
+                objRegistroVentas.idSesion = requestPedido.idSesion;
+                objRegistroVentas.idPedidoMaestro = requestPedido.idPedidoMaster;
+                response = ImprimirVoucherVenta(objRegistroVentas, "ReImpresion de Voucher");
+
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
+        private Response ImprimirVoucherVenta(RequestRegistroVenta requestRegistroVentas, string mensaje)
+        {
+            Response response = new Response { Message = mensaje, State = ResponseType.Success };
+            ParamOut paramOutRespuesta = new ParamOut(false);
+            ParamOut paramOutLogRespuesta = new ParamOut("");
+            //ParamOut paramOutidPedidoMaestro = new ParamOut(0);
+            List<PedidoDTO> colPedidoDTO = new List<PedidoDTO>();
+            requestRegistroVentas.detalleVentas.ForEach(x =>
+            {
+                colPedidoDTO.Add(new PedidoDTO() { idProducto = x.idProducto, producto = x.nombreProducto, cantidad = x.cantidad.Value, precioUnitario = x.PrecioFinal.Value, idPedido = (int)requestRegistroVentas.idPedidoMaestro});
+            });
+
+            VoucherPedido reporte = new VoucherPedido();
+            string nombreArchivo = "";
+
+
+            int rows = colPedidoDTO?.Count ?? 0;
+
+            // estimación en décimas de mm
+            int header = 300;           // 30mm
+            int perRow = 60;            // 6mm por fila
+            int footer = 200;           // 20mm
+            int minH = 800;            // 80mm mínimo
+
+            int height = Math.Max(minH, header + (rows * perRow) + footer);
+
+            // TAMAÑO DEL TICKET
+            // 80 mm = 302 (DevExpress usa 0.1mm por unidad)
+            reporte.PaperKind = DevExpress.Drawing.Printing.DXPaperKind.Custom;
+
+            reporte.ReportUnit = ReportUnit.TenthsOfAMillimeter;
+            //reporte.ReportUnit = ReportUnit.HundredthsOfAnInch;
+            reporte.PageWidth = 800;     // 80 mm exactos
+            reporte.PageHeight = height;   // Se ignora en RollPaper, pero evita errores
+
+            // Impresión de rollo (continuo)
+            reporte.Landscape = false;
+            reporte.RollPaper = false;
+
+            // Márgenes mínimos (térmicas no usan margen)
+            reporte.Margins.Top = 0;
+            reporte.Margins.Bottom = 0;
+            reporte.Margins.Left = 0;
+            reporte.Margins.Right = 0;
+
+            // Datos dinámicos
+            string formaPago = "";
+            requestRegistroVentas.formasDePago.ForEach(x =>
+            {
+                switch (x.idFormaPago)
+                {
+                    case 1: formaPago += (formaPago == "") ? "EFECTIVO" : ",EFECTIVO"; break;
+                    case 2: formaPago += (formaPago == "") ? "POS" : ",POS"; break;
+                    case 3: formaPago += (formaPago == "") ? "QR" : ",QR"; break;
+                    case 4: formaPago += (formaPago == "") ? "CORTESIA" : ",CORTESIA"; break;
+                }
+            });
+
+            reporte.xsFormaPago.Text = formaPago;
+            reporte.xrFecha.Text = requestRegistroVentas.fechaRegistro;
+            reporte.xrUsuario.Text = requestRegistroVentas.usuario;
+
+            // Data
+            reporte.DataSource = colPedidoDTO;
+
+
+            // Exportación 1
+            string fileName = Path.Combine("c:\\tmp\\", "pedido_" + Guid.NewGuid() + ".pdf");
+            reporte.ExportToPdf(fileName);
+            string reporteBase64 = Convert.ToBase64String(File.ReadAllBytes(fileName));
+            response.Code = reporteBase64;
+
+            // Exportación 2// Construye el documento antes del export (reduce comportamientos raros)
+            //reporte.CreateDocument();
+            //using var ms = new MemoryStream();
+            //reporte.ExportToPdf(ms);
+
+            //string reporteBase64 = Convert.ToBase64String(ms.ToArray());
+            //response.Code = reporteBase64;
+
+
+
+            repositoryPub.CallProcedure<Response>("reportes.spAddImpresion",
+                requestRegistroVentas.idSesion,
+                requestRegistroVentas.idOperacionDiariaCaja,
+                reporteBase64,
+                nombreArchivo = fileName);
+            repositoryPub.Commit();
+
+            if (Convert.ToInt32(paramOutRespuesta.Valor) != 0)
+            {
+                response.State = ResponseType.Warning;
+                response.Message = Convert.ToString(paramOutLogRespuesta.Valor);
+            }
+            return response;
+        }
+
         public ResponseQuery<ResulObtieneFormasdePago> ObtieneFormasdePago(GeneralRequest1 requestSPObtFormasDePago)
         {
             ResponseQuery<ResulObtieneFormasdePago> response = new ResponseQuery<ResulObtieneFormasdePago> { Message = "Formas de pago obtenidos correctamente", State = ResponseType.Success };

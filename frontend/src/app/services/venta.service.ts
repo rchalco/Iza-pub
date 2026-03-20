@@ -58,7 +58,7 @@ export class VentaService extends BaseService {
     });
   }
 
-  
+
   async obtieneProductoInventario(_idAlamcen) {
     const urlQuery = urlMicroventa + 'ObtieneProdcutoInventario';
     let dataRequest = {
@@ -142,8 +142,8 @@ export class VentaService extends BaseService {
         Observaciones: _observacion,
         usuario: env.Usuario
       };
-      
-      
+
+
 
       this.presentLoader();
       console.log('registrarVenta reqYYYYYYY', dataRequest);
@@ -152,7 +152,7 @@ export class VentaService extends BaseService {
         .pipe(
           finalize(() => {
             console.log('**se termino la llamada RegistrarVentas');
-           
+
             this.dismissLoader();
           }),
           catchError((error) => {
@@ -164,7 +164,7 @@ export class VentaService extends BaseService {
     });
   }
 
-  
+
 
   async obtenerFormasDePago() {
     const urlQuery = urlMicroventa + 'ObtieneFormasdePago';
@@ -573,7 +573,7 @@ export class VentaService extends BaseService {
     await this.getInfoEviroment().then((env) => {
       dataRequest.idSesion = env.session;
       dataRequest.idFechaProceso = env.idFechaProceso;
-      
+
     });
     console.log("actualiza forma de pago", dataRequest);
     this.presentLoader();
@@ -604,12 +604,42 @@ export class VentaService extends BaseService {
     await this.getInfoEviroment().then((env) => {
       dataRequest.idSesion = env.session;
       dataRequest.idFechaProceso = env.idFechaProceso;
-      
+
     });
 
     console.log('anula pedidoooooooo',dataRequest);
 
 
+    this.presentLoader();
+
+    return this.httpClient
+      .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
+      .pipe(
+        finalize(() => {
+          console.log('**se termino la llamada obtieneReporteCierreTotal');
+          this.dismissLoader();
+        }),
+        catchError((error) => {
+          console.error(error);
+          this.showMessageError('No se tiene comunicacion con el servidor');
+          return throwError(() => new Error(error.status));
+        })
+      );
+  }
+
+  async reImprimirVoucher(_idPedidoMaster) {
+    const urlQuery = urlMicroventa + 'ReImprimirVoucherVenta';
+    const dataRequest = {
+      idSesion: 0,
+      idFechaProceso: 0,
+      idFormaPago: 0,
+      idPedidoMaster: _idPedidoMaster
+    };
+    await this.getInfoEviroment().then((env) => {
+      dataRequest.idSesion = env.session;
+      dataRequest.idFechaProceso = env.idFechaProceso;
+    });
+    console.log('reimrrime',dataRequest);
     this.presentLoader();
 
     return this.httpClient
@@ -647,8 +677,8 @@ export class VentaService extends BaseService {
     }
   }
 
- 
-  
+
+
 
 
 }
