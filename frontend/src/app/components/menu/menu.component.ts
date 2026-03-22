@@ -35,6 +35,7 @@ export class MenuComponent implements OnInit {
     this.baseService.obtieneMenuPorUsuario().then((resulPromise) => {
       resulPromise.subscribe((resul) => {
         this.appPages = resul.listEntities;
+        console.log('menu por usuario', resul.listEntities);
       });
     });
   }
