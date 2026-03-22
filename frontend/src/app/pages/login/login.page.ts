@@ -47,7 +47,9 @@ export class LoginPage implements OnInit, OnDestroy {
     private appComponent: AppComponent,
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.seguridadService.clearMenuCache();
+  }
 
   ngOnDestroy(): void {
     this.loginSub?.unsubscribe();

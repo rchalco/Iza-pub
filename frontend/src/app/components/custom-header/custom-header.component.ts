@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MenuController, NavController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { AppComponent } from 'src/app/app.component';
+import { SeguridadService } from 'src/app/services/seguridad.service';
 
 @Component({
   standalone: false,
@@ -19,7 +20,8 @@ export class CustomHeaderComponent implements OnInit {
     private baseServices: StockService,
     private navCtri: NavController,
     private stockService: StockService,
-    private appComponent: AppComponent
+    private appComponent: AppComponent,
+    private seguridadService: SeguridadService
   ) {}
   ngOnInit() {
     this.stockService.getInfoEviroment().then((resul) => {
@@ -40,6 +42,7 @@ export class CustomHeaderComponent implements OnInit {
     });
   }
   logout() {
+    this.seguridadService.clearMenuCache();
     this.baseServices.deleteSession();
     this.menu.enable(false, 'custom');
     this.navCtri.navigateRoot('login');
