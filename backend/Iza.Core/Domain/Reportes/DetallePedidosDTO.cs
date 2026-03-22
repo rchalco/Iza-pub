@@ -15,6 +15,12 @@ namespace Iza.Core.Domain.Reportes
         public string formaDePago { get; set; } = string.Empty;
         public decimal montoCubierto { get; set; }
         public string estado { get; set; } = string.Empty;
+        public int cantidad { get; set; } 
+        public decimal precioDetalle { get; set; } 
+        public string producto { get; set; } = string.Empty;
+        public long idOperacionDiariaCaja { get; set; }
+        
+
 
     }
 }

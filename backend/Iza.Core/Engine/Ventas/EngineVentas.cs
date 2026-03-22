@@ -397,6 +397,7 @@ namespace Iza.Core.Engine.Ventas
                 }
                 */
                 requestRegistroVentas.idPedidoMaestro = (int)paramOutidPedidoMaestro.Valor;
+                requestRegistroVentas.formaPago = null;
                 response = ImprimirVoucherVenta(requestRegistroVentas, response.Message);
             }
             catch (Exception ex)
@@ -412,17 +413,31 @@ namespace Iza.Core.Engine.Ventas
             try
             {
                 RequestRegistroVenta objRegistroVentas = new RequestRegistroVenta();
+                List<DetallePedidosDTO> colDetallePedidos = new List<DetallePedidosDTO>();
+
+                colDetallePedidos = repositoryPub.GetDataByProcedure<DetallePedidosDTO>("[reportes].[spObtPedidosPorIdPedidoMaster]",
+                    requestPedido.idSesion,
+                    requestPedido.idPedidoMaster
+                    );
+
                 ///Logiça para traer todos los datos del pedido
                 ///tPedidoMaster
+
                 ///tPedidoDetail
                 ///FormaPago
+
                 objRegistroVentas.detalleVentas = new List<typeDetailPedido>();
-                objRegistroVentas.detalleVentas.Add(new Domain.Types.typeDetailPedido { idProducto = 1, cantidad = 3, nombreProducto = "Producto Prueba", PrecioFinal = 500 });
-                objRegistroVentas.formasDePago = new List<typeFormaDePagoPedido>();
-                objRegistroVentas.formasDePago.Add(new Domain.Types.typeFormaDePagoPedido { idFormaPago = 1, MontoCubierto = 500 });
-                objRegistroVentas.usuario = "mikyches";
-                objRegistroVentas.fechaRegistro = DateTime.Now.ToString(); ///Traer la fecha de registro del pedido
-                objRegistroVentas.idOperacionDiariaCaja = 12;//Traer el idOperacionDiariaCaja del pedido
+
+                colDetallePedidos.ForEach(x => 
+                {
+                    objRegistroVentas.detalleVentas.Add(new Domain.Types.typeDetailPedido { idProducto = (int)x.idPedMaster, cantidad = x.cantidad, nombreProducto = x.producto, PrecioFinal = x.precioDetalle });
+                });
+
+
+                objRegistroVentas.formaPago = colDetallePedidos[0].formaDePago;
+                objRegistroVentas.usuario = colDetallePedidos[0].usuario;
+                objRegistroVentas.fechaRegistro = colDetallePedidos[0].fechaRegistro; ///Traer la fecha de registro del pedido
+                objRegistroVentas.idOperacionDiariaCaja = colDetallePedidos[0].idOperacionDiariaCaja;//Traer el idOperacionDiariaCaja del pedido
                 objRegistroVentas.idSesion = requestPedido.idSesion;
                 objRegistroVentas.idPedidoMaestro = requestPedido.idPedidoMaster;
                 response = ImprimirVoucherVenta(objRegistroVentas, "ReImpresion de Voucher");
@@ -482,17 +497,23 @@ namespace Iza.Core.Engine.Ventas
 
             // Datos dinámicos
             string formaPago = "";
-            requestRegistroVentas.formasDePago.ForEach(x =>
+            if (requestRegistroVentas.formasDePago != null)
             {
-                switch (x.idFormaPago)
+                requestRegistroVentas.formasDePago.ForEach(x =>
                 {
-                    case 1: formaPago += (formaPago == "") ? "EFECTIVO" : ",EFECTIVO"; break;
-                    case 2: formaPago += (formaPago == "") ? "POS" : ",POS"; break;
-                    case 3: formaPago += (formaPago == "") ? "QR" : ",QR"; break;
-                    case 4: formaPago += (formaPago == "") ? "CORTESIA" : ",CORTESIA"; break;
-                }
-            });
+                    switch (x.idFormaPago)
+                    {
+                        case 1: formaPago += (formaPago == "") ? "EFECTIVO" : ",EFECTIVO"; break;
+                        case 2: formaPago += (formaPago == "") ? "POS" : ",POS"; break;
+                        case 3: formaPago += (formaPago == "") ? "QR" : ",QR"; break;
+                        case 4: formaPago += (formaPago == "") ? "CORTESIA" : ",CORTESIA"; break;
 
+                    }
+                });
+            }
+            else
+                formaPago = requestRegistroVentas.formaPago; //SOLO CASO DE REIMPRESION PARA NO TRAER TODO 
+            
             reporte.xsFormaPago.Text = formaPago;
             reporte.xrFecha.Text = requestRegistroVentas.fechaRegistro;
             reporte.xrUsuario.Text = requestRegistroVentas.usuario;
@@ -565,8 +586,7 @@ namespace Iza.Core.Engine.Ventas
 
                 response.ListEntities = repositoryPub.GetDataByProcedure<DetallePedidosDTO>("[reportes].[spObtPedidosPorFormaDePago]",
                     requestGeneral.idSesion,
-                    requestGeneral.fechaProceso.Date,
-                    requestGeneral.fechaProcesoFin.Date);
+                    requestGeneral.idFechaProceso);
                 //requestGeneral.idFechaProceso,
                 //requestGeneral.fechaProceso.Date.AddDays(-1));
             }
@@ -576,6 +596,31 @@ namespace Iza.Core.Engine.Ventas
             }
             return response;
         }
+
+        public ResponseQuery<DetallePedidosDTO> DetallePedidoFormaPagoPorFechas(GeneralRequestRangoFecha requestGeneral)
+        {
+            ResponseQuery<DetallePedidosDTO> response = new ResponseQuery<DetallePedidosDTO> { Message = "Detalle de pedidos del dia obtenidos", State = ResponseType.Success };
+            try
+            {
+                ParamOut paramOutRespuesta = new ParamOut(true);
+                ParamOut paramOutLogRespuesta = new ParamOut("");
+                paramOutLogRespuesta.Size = 100;
+
+                response.ListEntities = repositoryPub.GetDataByProcedure<DetallePedidosDTO>("[reportes].[spObtPedidosFormaDePagoPorFechas]",
+                    requestGeneral.idSesion,
+                    requestGeneral.fechaProceso,
+                    requestGeneral.fechaProcesoFin
+                    );
+               ;
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
+
 
         public ResponseQuery<DetallePedidosDTO> ActualizaFormaPagoPedido(PedidoRequest requestPedido)
         {

@@ -23,5 +23,6 @@ namespace Iza.Core.Domain.Venta
         public long idPedidoMaestro { get; set; }
         public long idOperacionDiariaCaja { get; set; }
         public string fechaRegistro { get; set; } = "";
+        public string formaPago { get; set; } = "";
     }
 }

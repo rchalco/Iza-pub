@@ -84,6 +84,14 @@ namespace Iza.Services.Sevices
             return mgrVentas.DetallePedidoPorFormaPago(requestGeneral);
         }
 
+        [HttpPost("DetallePedidoFormaPagoPorFechas")]
+        [EnableCors()]
+        public ResponseQuery<DetallePedidosDTO> DetallePedidoFormaPagoPorFechas(GeneralRequestRangoFecha requestGeneral)
+        {
+            EngineVentas mgrVentas = new EngineVentas();
+            return mgrVentas.DetallePedidoFormaPagoPorFechas(requestGeneral);
+        }
+
         [HttpPost("ActualizaFormaPagoPedido")]
         [EnableCors()]
         public ResponseQuery<DetallePedidosDTO> ActualizaFormaPagoPedido(PedidoRequest requestPedido)

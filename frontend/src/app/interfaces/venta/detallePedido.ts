@@ -5,4 +5,8 @@ export class DetallePedidosDTO {
     usuario: string;
     formaDePago: string;
     montoCubierto: number;
+    cantidad: number;
+    precioDetalle: number;
+    formaproductoDePago: string;
+
 }

@@ -32,7 +32,7 @@ export class BandejaPedidosPage implements OnInit {
   now: Date = new Date();
 
 
-  constructor(private ventaService: VentaService) { 
+  constructor(private ventaService: VentaService) {
 
     this.closeButtonOptions = {
       text: 'Close',
@@ -49,8 +49,8 @@ export class BandejaPedidosPage implements OnInit {
       text: 'Cambiar',
       onClick: () => {
         this.cambiarFormaPago(this.idformaPago);
-        
-        
+
+
         const message = 'Se realizo la forma de pago';
         notify({
           message,
@@ -81,7 +81,7 @@ export class BandejaPedidosPage implements OnInit {
 
     this.listaPedidos = [];
     this.showDetalle = true;
-    this.ventaService.detallePedidoPorFormaPago(this.fechaPedido, this.fechaPedidoFin).then((service) => {
+    this.ventaService.detallePedidoFormaPagoPorFechas(this.fechaPedido, this.fechaPedidoFin).then((service) => {
       service.subscribe((resul) => {
         this.listaPedidos = resul.listEntities;
         this.dataSourcePedidos = resul.listEntities;
@@ -96,7 +96,7 @@ export class BandejaPedidosPage implements OnInit {
     let pedido = new DetallePedidosDTO();
     pedido = e.row.data;
     this.anular(pedido);
-   
+
   }
 
   anular(pedido: DetallePedidosDTO) {
@@ -154,7 +154,7 @@ export class BandejaPedidosPage implements OnInit {
 
     //console.log('fecha inicial',  new Date(this.fechaPedido).getFullYear());
     console.log('fecha inicial',  fecha.getFullYear());
-    
+
     const workbook = new Workbook();
     const worksheet = workbook.addWorksheet('Pedidos_del_Dia');
 
@@ -180,7 +180,7 @@ export class BandejaPedidosPage implements OnInit {
 
       headerRow1.getCell(1).value = 'DESDE ' +fecha.getFullYear() + "/"
         + (fecha.getMonth() + 1)
-        + "/" + fecha.getDate() 
+        + "/" + fecha.getDate()
         + ' HASTA ' +fechaFin.getFullYear() + "/"
         + (fechaFin.getMonth() + 1)
         + "/" + fechaFin.getDate() ;
