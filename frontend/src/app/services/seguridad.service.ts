@@ -89,6 +89,21 @@ export class SeguridadService extends BaseService {
     this.menuCache = null;
   }
 
+  clearSessionData(): void {
+    environment.Usuario               = '';
+    environment.UsuarioLabel          = '';
+    environment.nombreCompleto        = '';
+    environment.rol                   = '';
+    environment.ci                    = '';
+    environment.idRol                 = 0;
+    environment.session               = 0;
+    environment.idCaja                = 0;
+    environment.idAlmacen             = 0;
+    environment.idOperacionDiariaCaja = 0;
+    environment.idFechaProceso        = 0;
+    environment.fechaProceso          = new Date();
+  }
+
   async obtieneMenuPorUsuario() {
     console.log('obteniendo menu por usuario');
     if (this.menuCache) {

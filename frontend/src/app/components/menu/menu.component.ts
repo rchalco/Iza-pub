@@ -30,6 +30,8 @@ export class MenuComponent implements OnInit {
   }
 
   initMenu() {
+    this.usuario = environment.UsuarioLabel || environment.Usuario;
+    this.rol = environment.rol;
     this.baseService.obtieneMenuPorUsuario().then((resulPromise) => {
       resulPromise.subscribe((resul) => {
         this.appPages = resul.listEntities;
