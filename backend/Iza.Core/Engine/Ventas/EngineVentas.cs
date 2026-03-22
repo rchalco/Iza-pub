@@ -7,6 +7,7 @@ using Iza.Core.Base;
 using Iza.Core.Domain.General;
 using Iza.Core.Domain.Iventario;
 using Iza.Core.Domain.Reportes;
+using Iza.Core.Domain.Seguridad;
 using Iza.Core.Domain.Types;
 using Iza.Core.Domain.Venta;
 using Iza.Core.Domain.Venta.Caja;
@@ -753,6 +754,35 @@ namespace Iza.Core.Engine.Ventas
             }
             return response;
         }
+
+        public ResponseQuery<LoginDTO> ObtieneListaCajeroCompleto(GeneralRequest1 request)
+        {
+
+            ResponseQuery<LoginDTO> response = new ResponseQuery<LoginDTO> { Message = "Datos Obtenidos", State = ResponseType.Success };
+            try
+            {
+                long id = 0;
+                ParamOut poRespuesta = new ParamOut(false);
+                ParamOut poLogRespuesta = new ParamOut("");
+                poLogRespuesta.Size = 100;
+
+                response.ListEntities = repositoryPub.GetDataByProcedure<LoginDTO>("[ventas].[spObtUsuariosCajeroActivos]", request.idSesion, poRespuesta, poLogRespuesta);
+
+
+                if ((bool)poRespuesta.Valor)
+                {
+                    response.Message = poLogRespuesta.Valor.ToString();
+                    response.State = ResponseType.Error;
+                    return response;
+                }
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
 
         #endregion
 

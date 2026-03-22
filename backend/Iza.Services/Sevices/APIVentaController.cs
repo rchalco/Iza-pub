@@ -1,6 +1,7 @@
 ﻿using Iza.Core.Domain.General;
 using Iza.Core.Domain.Iventario;
 using Iza.Core.Domain.Reportes;
+using Iza.Core.Domain.Seguridad;
 using Iza.Core.Domain.Venta;
 using Iza.Core.Domain.Venta.Caja;
 using Iza.Core.Engine.Impresion;
@@ -149,6 +150,13 @@ namespace Iza.Services.Sevices
             return mgrVentas.ObtieneProdcutoInventario(requestSearchProductAlmacen);
         }
 
+        [HttpPost("ObtieneListaCajeroCompleto")]
+        [EnableCors()]
+        public ResponseQuery<LoginDTO> ObtieneListaCajeroCompleto(GeneralRequest1 request)
+        {
+            EngineVentas mgrVentas = new EngineVentas();
+            return mgrVentas.ObtieneListaCajeroCompleto(request);
+        }
 
         #endregion
 
