@@ -91,9 +91,9 @@ export class SeguridadService extends BaseService {
 
   async obtieneMenuPorUsuario() {
     console.log('obteniendo menu por usuario');
-    //if (this.menuCache) {
-    //  return of({ listEntities: this.menuCache });
-    //}
+    if (this.menuCache) {
+      return of({ listEntities: this.menuCache });
+    }
 
     const urlQuery = urlSeguridad + 'ObtieneMenuPorUsuario';
 

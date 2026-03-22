@@ -38,6 +38,7 @@ export class MenuComponent implements OnInit {
   }
 
   async cerrarSesion() {
+    this.baseService.clearMenuCache();
     await this.menuCtrl.close('custom');
     this.router.navigate(['/login']);
   }
