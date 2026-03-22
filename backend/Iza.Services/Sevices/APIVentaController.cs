@@ -158,6 +158,13 @@ namespace Iza.Services.Sevices
             return mgrVentas.ObtieneListaCajeroCompleto(request);
         }
 
+        [HttpPost("ActualizaCajerosActivos")]
+        [EnableCors()]
+        public ResponseObject<LoginDTO> ActualizaCajerosActivos(RequestCajerosActivos requestGral)
+        {
+            EngineVentas mgrVentas = new EngineVentas();
+            return mgrVentas.ActualizaCajerosActivos(requestGral);
+        }
         #endregion
 
         #region Reportes Cola

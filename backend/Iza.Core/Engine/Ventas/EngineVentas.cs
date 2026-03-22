@@ -783,6 +783,50 @@ namespace Iza.Core.Engine.Ventas
             return response;
         }
 
+        public ResponseObject<LoginDTO> ActualizaCajerosActivos(RequestCajerosActivos requestGral)
+        {
+
+            ResponseObject<LoginDTO> response = new ResponseObject<LoginDTO> { Message = "Cajeros Actualizados.", State = ResponseType.Success };
+            try
+            {
+                response.Data = new LoginDTO();
+                List<typeCajerosActivos> coltypeCajerosActivos = new List<typeCajerosActivos>();
+                requestGral.detalleCajeros.ForEach(x =>
+                {
+                    coltypeCajerosActivos.Add(new typeCajerosActivos
+                    {
+                        idUsuarios = x.idUsuario,
+                        Estado = x.activo == true ? 1 : 0
+                    });
+                });
+
+                ParamOut poRespuesta = new ParamOut(false);
+                ParamOut poLogRespuesta = new ParamOut("");
+                ParamOut poAsignacionMaster = new ParamOut(0);
+                poLogRespuesta.Size = 100;
+                ////Verificar que exite cantidades.
+                repositoryPub.CallProcedure<LoginDTO>("ventas.spActualizaCajeroActivos",
+                   requestGral.idSesion,
+                   poRespuesta,
+                   coltypeCajerosActivos,
+                   poLogRespuesta);
+                repositoryPub.Commit();
+
+                if ((bool)poRespuesta.Valor)
+                {
+                    response.Message = poLogRespuesta.Valor.ToString();
+                    response.State = ResponseType.Error;
+                    return response;
+                }
+                //response.Object = inventarioAsignacion;
+
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
 
         #endregion
 

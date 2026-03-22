@@ -514,7 +514,7 @@ export class StockService extends BaseService {
       );
   }
 
- 
+
   async grabaAsignacionProducto(
     idAlmacenOrigen,
     idAlmacenDestino,
@@ -858,6 +858,7 @@ export class StockService extends BaseService {
   async actualizaCajerosActivos(
     _detalleCajeros
   ) {
+    console.log('detalle cajeros', _detalleCajeros);
     let url_query = urlMicroventa + 'ActualizaCajerosActivos';
 
     let dataRequest = {
@@ -993,6 +994,6 @@ export class StockService extends BaseService {
     }
   }
 
-  
+
 
 }

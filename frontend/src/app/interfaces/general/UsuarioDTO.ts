@@ -1,9 +1,9 @@
 export class UsuarioDTO {
   idUsuario: number;
   usuario_vc: string;
-  password: string;
-  passwordNuevo: string;
-  log_respuesta: string;
+  password: string = '';
+  passwordNuevo: string = '';
+  log_respuesta: string = '';
   idSesion: number;
   idRol: number;
   idOperacionDiariaCaja: number;
