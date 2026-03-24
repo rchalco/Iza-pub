@@ -1,19 +1,17 @@
 ﻿using CoreAccesLayer.Interface;
 using CoreAccesLayer.Wraper;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
+using PlumbingProps.CrossUtil;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using Microsoft.EntityFrameworkCore;
 using System.Reflection;
-using System.Data;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Data.SqlClient;
-using PlumbingProps.CrossUtil;
-using System.Collections;
-using Microsoft.EntityFrameworkCore;
-using iText.Commons.Actions.Contexts;
+using System.Text;
 
 namespace CoreAccesLayer.Implement.SQLServer
 {
