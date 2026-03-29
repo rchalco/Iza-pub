@@ -1,4 +1,6 @@
-<app-custom-header title="Pedido"></app-custom-header>
+@if (!showBuscador) {
+  <app-custom-header title="Pedido"></app-custom-header>
+}
 <ion-content fullscreen class="venta-page">
   <!-- ═══════════════════════════════════════════════════════ -->
   <!--  Sección fija: orden actual                            -->
@@ -114,7 +116,7 @@
               }
               <!-- Popup buscador -->
               @if (showBuscador) {
-                <div class="buscador-overlay" (click)="cerrarBuscador()">
+                <div class="buscador-overlay">
                   <div class="buscador-popup" (click)="$event.stopPropagation()">
                     <div class="buscador-popup__header">
                       <ion-searchbar

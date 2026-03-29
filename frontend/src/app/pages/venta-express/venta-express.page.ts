@@ -148,6 +148,11 @@ export class VentaExpressPage implements OnInit {
     precio: number,
     unidad: string,
   ): void {
+    if (this.showBuscador) {
+      this.textoBusacar = '';
+      this.showBuscador = false;
+    }
+
     const existente = this.productosAvender.find(
       (p) => p.idPrecio === idPrecio && p.unidad === unidad,
     );
