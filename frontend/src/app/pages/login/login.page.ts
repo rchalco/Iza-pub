@@ -50,6 +50,7 @@ export class LoginPage implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.seguridadService.clearMenuCache();
     this.seguridadService.clearSessionData();
+    this.databaseService.removeItem('enviroment');
   }
 
   ngOnDestroy(): void {
