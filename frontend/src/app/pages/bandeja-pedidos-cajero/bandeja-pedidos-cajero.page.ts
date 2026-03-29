@@ -41,6 +41,7 @@ export class BandejaPedidosCajeroPage implements OnInit {
   // ── Forma de pago ─────────────────────────────────────────
   idFormaPago = 0;
   idPedidoFormaPago = 0;
+  idPedidoMaster = 0;
 
   // ── Opciones de botones del popup ─────────────────────────
   closeButtonOptions: Record<string, unknown>;
@@ -110,16 +111,17 @@ export class BandejaPedidosCajeroPage implements OnInit {
     }
     const pedido: DetallePedidosDTO = e.row.data;
     this.idPedidoFormaPago = pedido.idPedFormaPago;
+    this.idPedidoMaster = pedido.idPedMaster;
     this.popupVisible = true;
   }
 
   setFormaPago(event: any): void {
-    this.idFormaPago = parseInt(event.detail.value, 10);
+    this.idFormaPago = parseInt(event.target.value, 10);
   }
 
   cambiarFormaPago(): void {
     this.ventaService
-      .actualizaFormaPagoPedido(this.idPedidoFormaPago, this.idFormaPago)
+      .actualizaFormaPagoPedido(this.idPedidoMaster, this.idFormaPago)
       .then((service) => {
         service.subscribe((resul) => {
           this.listaPedidos = resul.listEntities;

@@ -1,4 +1,4 @@
-import { enableProdMode, provideZoneChangeDetection } from '@angular/core';
+import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
@@ -13,5 +13,5 @@ if (environment.production) {
 if (licenseKey?.trim()) {
   config({ licenseKey });
 }
-platformBrowserDynamic().bootstrapModule(AppModule, { applicationProviders: [provideZoneChangeDetection()], })
+platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.log(err));
