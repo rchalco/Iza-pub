@@ -541,6 +541,151 @@ namespace CoreAccesLayer.Implement.SQLServer
             return vListado;
         }
 
+        public DataSet GetDataSetByProcedure(string nameProcedure, params object[] param)
+        {
+            DataSet dataSet = new DataSet();
+            string sqlLog = string.Empty;
+            try
+            {
+                SqlCommand sqlCommand = new SqlCommand();
+                SqlConnection sqlConnection = (SqlConnection)Context.Database.GetDbConnection();
+                sqlCommand.Connection = sqlConnection;
+
+                sqlCommand.CommandText = "exec " + nameProcedure + " ";
+                string nomParametro = "parametro";
+                int a = 0;
+                Dictionary<int, SqlParameter> parametroSalida = new Dictionary<int, SqlParameter>();
+
+                foreach (object item in param)
+                {
+                    sqlCommand.CommandText += "@" + nomParametro + a.ToString();
+
+                    SqlParameter parametro = null;
+
+                    if (item == null)
+                    {
+                        parametro = new SqlParameter
+                        {
+                            ParameterName = "@" + nomParametro + a.ToString(),
+                            Value = null
+                        };
+                        a++;
+                        sqlCommand.Parameters.Add(parametro);
+                        sqlCommand.CommandText += ",";
+                        continue;
+                    }
+
+                    parametro = new SqlParameter
+                    {
+                        ParameterName = "@" + nomParametro + a.ToString(),
+                        Direction = item.GetType() == typeof(ParamOut) ? ParameterDirection.Output : ParameterDirection.Input
+                    };
+
+                    if (item.GetType() == typeof(ParamOut))
+                    {
+                        switch ((item as ParamOut).InOut)
+                        {
+                            case ParamOut.Type.Out:
+                                parametro.Direction = ParameterDirection.Output;
+                                break;
+                            case ParamOut.Type.InOut:
+                                parametro.Direction = ParameterDirection.InputOutput;
+                                break;
+                            case ParamOut.Type.In:
+                                parametro.Direction = ParameterDirection.Input;
+                                break;
+                            default:
+                                parametro.Direction = ParameterDirection.Input;
+                                break;
+                        }
+                    }
+
+                    string typeParameter = item.GetType().Equals(typeof(ParamOut))
+                        ? (item as ParamOut).Valor.GetType().Name
+                        : item.GetType().Name;
+
+                    switch (typeParameter)
+                    {
+                        case "Int32":
+                            parametro.SqlDbType = SqlDbType.Int;
+                            parametro.Value = item.GetType() == typeof(ParamOut) ? (item as ParamOut).Valor : item;
+                            break;
+                        case "Int64":
+                            parametro.SqlDbType = SqlDbType.BigInt;
+                            parametro.Value = item.GetType() == typeof(ParamOut) ? (item as ParamOut).Valor : Convert.ToInt64(item);
+                            break;
+                        case "Decimal":
+                            parametro.SqlDbType = SqlDbType.Decimal;
+                            parametro.Value = item.GetType() == typeof(ParamOut) ? (item as ParamOut).Valor : Math.Round(Convert.ToDecimal(item), 2);
+                            parametro.Precision = 10;
+                            parametro.Scale = 2;
+                            break;
+                        case "String":
+                            parametro.SqlDbType = SqlDbType.VarChar;
+                            parametro.Value = item.GetType() == typeof(ParamOut) ? (item as ParamOut).Valor : item;
+                            break;
+                        case "Boolean":
+                            parametro.SqlDbType = SqlDbType.Bit;
+                            parametro.Value = Convert.ToBoolean(item.GetType() == typeof(ParamOut) ? (item as ParamOut).Valor : item);
+                            break;
+                        case "DateTime":
+                            parametro.SqlDbType = SqlDbType.Date;
+                            parametro.Value = item.GetType() == typeof(ParamOut) ? (item as ParamOut).Valor : item;
+                            break;
+                        case "Byte[]":
+                            parametro.SqlDbType = SqlDbType.VarBinary;
+                            parametro.Value = item.GetType() == typeof(ParamOut) ? (item as ParamOut).Valor : item;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if (item.GetType() == typeof(ParamOut))
+                    {
+                        parametro.Size = (item as ParamOut).Size;
+                        parametroSalida.Add(a, parametro);
+                        sqlCommand.CommandText += " out,";
+                    }
+                    else if (item.GetType().IsGenericType && item.GetType().GetGenericTypeDefinition() == typeof(List<>))
+                    {
+                        parametro.SqlDbType = SqlDbType.Structured;
+                        parametro.TypeName = item.GetType().GetGenericArguments()[0].Name;
+                        parametro.Value = CustomListExtension.ToDataTable((item as IList), item.GetType().GetGenericArguments()[0].UnderlyingSystemType);
+                        sqlCommand.CommandText += " ,";
+                    }
+                    else
+                    {
+                        sqlCommand.CommandText += ",";
+                    }
+
+                    a++;
+                    sqlCommand.Parameters.Add(parametro);
+                }
+
+                sqlLog = sqlCommand.CommandText = sqlCommand.CommandText.Substring(0, sqlCommand.CommandText.Length - 1);
+
+                if (sqlConnection.State != ConnectionState.Open)
+                    sqlConnection.Open();
+
+                SqlDataAdapter da = new SqlDataAdapter(sqlCommand);
+                da.Fill(dataSet);
+
+                foreach (var item in parametroSalida)
+                {
+                    (param[item.Key] as ParamOut).Valor = item.Value.Value;
+                }
+
+                if (ReleaseRepository != null)
+                    ReleaseRepository(this);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error en la ejecucion del procedimiento almacenado: " + nameProcedure + "( " + sqlLog + " )", ex);
+            }
+
+            return dataSet;
+        }
+
         private void DisposeConnection()
         {
             try

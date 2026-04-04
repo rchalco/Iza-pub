@@ -47,6 +47,11 @@ namespace CoreAccesLayer.Implement.MySQL
             return mysqlDataInterface.GetListByProcedure<T>(nameProcedure, parameters);
         }
 
+        public System.Data.DataSet GetDataSetByProcedure(string nameProcedure, params object[] parameters)
+        {
+            throw new NotImplementedException("GetDataSetByProcedure no está implementado para MySQL.");
+        }
+
         public bool Rollback()
         {
             return true;
