@@ -51,3 +51,4 @@ $RECYCLE.BIN/
 *~
 *.sw[mnpcod]
 /backend
+backend/Iza.Services/Properties/PublishProfiles/FolderProfile.pubxml.user
