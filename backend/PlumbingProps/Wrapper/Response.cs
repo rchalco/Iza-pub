@@ -33,13 +33,15 @@ namespace PlumbingProps.Wrapper
         {
             State = ResponseType.None;
         }
+
         [DataMember]
         public ResponseType State { get; set; }
 
         [DataMember]
-        public string Message { get; set; }
+        public string Message { get; set; } = string.Empty;
+
         [DataMember]
-        public string Code { get; set; }
+        public string Code { get; set; } = string.Empty;
     }
 
     [DataContract(IsReference = true)]
@@ -47,7 +49,7 @@ namespace PlumbingProps.Wrapper
     public class ResponseQuery : Response
     {
         [DataMember]
-        public IList ListEntities { get; set; }
+        public IList ListEntities { get; set; } = new ArrayList();
     }
 
     [DataContract]
@@ -55,7 +57,7 @@ namespace PlumbingProps.Wrapper
     public class ResponseQuery<T> : Response where T : class
     {
         [DataMember]
-        public List<T> ListEntities { get; set; }
+        public List<T> ListEntities { get; set; } = [];
     }
 
     [DataContract]
@@ -63,7 +65,7 @@ namespace PlumbingProps.Wrapper
     public class ResponseObject<T> : Response
     {
         [DataMember]
-        public T Data { get; set; }
+        public T Data { get; set; } = default!;
     }
 
 }

@@ -1,59 +1,58 @@
-using Microsoft.OpenApi.Models;
 using PlumbingProps.Config;
 using System.Net;
 
-///Configuration host
-var MyAllowSpecificOrigins = "MyPolicy";
+const string CorsPolicyName = "MyPolicy";
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: MyAllowSpecificOrigins,
-                      policy =>
-                      {
-                          policy.AllowAnyHeader()
-                            .AllowAnyMethod()
-                            .AllowAnyOrigin();
-                      });
+    options.AddPolicy(CorsPolicyName, policy =>
+    {
+        policy.AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowAnyOrigin();
+    });
 });
 
-if (ConfigManager.GetConfiguration().GetSection("mode").Value.Equals("server"))
+ConfigureServerEndpoint(builder);
+
+builder.Services.AddControllers();
+builder.Services.AddSwaggerGen();
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
 {
-    IPAddress iPAddress = IPAddress.Parse(ConfigManager.GetConfiguration().GetSection("iplookup").Value!);
-    int portServer = Convert.ToInt32(ConfigManager.GetConfiguration().GetSection("port").Value!);
-    builder.WebHost.ConfigureKestrel((context, serverOptions) =>
+    app.UseSwagger();
+    app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "HiddenVilla_Api v1"));
+}
+
+app.UseCors(CorsPolicyName);
+app.UseAuthorization();
+app.MapControllers();
+app.Run();
+
+static void ConfigureServerEndpoint(WebApplicationBuilder webBuilder)
+{
+    var config = ConfigManager.GetConfiguration();
+    var mode = config.GetSection("mode").Value;
+
+    if (!string.Equals(mode, "server", StringComparison.OrdinalIgnoreCase))
     {
-        serverOptions.Listen(iPAddress, portServer);
+        return;
+    }
+
+    var ipText = config.GetSection("iplookup").Value;
+    var portText = config.GetSection("port").Value;
+
+    if (!IPAddress.TryParse(ipText, out var ipAddress) || !int.TryParse(portText, out var port))
+    {
+        return;
+    }
+
+    webBuilder.WebHost.ConfigureKestrel((_, serverOptions) =>
+    {
+        serverOptions.Listen(ipAddress, port);
     });
 }
 
-builder.Services.AddControllers();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "HiddenVilla_Api", Version = "v1" });
-});
-
-
-///Configuration application
-var app = builder.Build();
-
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger(options => options.SerializeAsV2 = true);
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "HiddenVilla_Api v1"));
-}
-
-app.UseCors(builder =>
-{
-    builder.AllowAnyOrigin()
-           .AllowAnyMethod()
-           .AllowAnyHeader();
-});
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();

@@ -1,9 +1,11 @@
-<app-custom-header title="Pedido"></app-custom-header>
+@if (!showBuscador) {
+  <app-custom-header title="Pedido"></app-custom-header>
+}
 <ion-content fullscreen class="venta-page">
   <!-- ═══════════════════════════════════════════════════════ -->
   <!--  Sección fija: orden actual                            -->
   <!-- ═══════════════════════════════════════════════════════ -->
-  @if (showMain) {
+  @if (showMain && !showBuscador) {
     <div slot="fixed" class="orden-actual-fixed">
       <!-- Estado vacío -->
       @if (productosAvender.length === 0) {
@@ -62,8 +64,9 @@
           <!--  Contenido scrollable                                  -->
           <!-- ═══════════════════════════════════════════════════════ -->
           @if (showMain) {
-            <div class="contenido-scrollable">
+            <div class="contenido-scrollable" [class.sin-carrito]="showBuscador">
               <!-- Barra de acciones: total + pagos -->
+              @if (!showBuscador) {
               <div class="barra-acciones">
                 <div class="barra-acciones__total">
                   <span class="total-label">Total</span>
@@ -75,6 +78,22 @@
                     >
                     <ion-icon name="refresh-outline" slot="icon-only"></ion-icon>
                   </ion-button>
+                  <ion-button
+                    fill="clear"
+                    class="btn-search"
+                    (click)="abrirBuscador()"
+                    >
+                    <ion-icon name="search-outline" slot="icon-only"></ion-icon>
+                  </ion-button>
+                  @if (textoBusacar) {
+                    <ion-button
+                      fill="clear"
+                      class="btn-clear-search"
+                      (click)="limpiarBusqueda()"
+                      >
+                      <ion-icon name="list-outline" slot="icon-only"></ion-icon>
+                    </ion-button>
+                  }
                 </div>
                 <div class="barra-acciones__pagos">
                   <ion-button class="btn-pago btn-efe" (click)="realizarPago(1)">
@@ -94,15 +113,34 @@
                   </ion-button>
                 </div>
               </div>
-              <!-- Buscador -->
-              <ion-searchbar
-                animated="true"
-                (ionChange)="buscar($event)"
-                placeholder="Buscar producto o categoría..."
-                class="buscador"
-                debounce="300"
-                mode="ios"
-              ></ion-searchbar>
+              }
+              <!-- Popup buscador -->
+              @if (showBuscador) {
+                <div class="buscador-overlay">
+                  <div class="buscador-popup" (click)="$event.stopPropagation()">
+                    <div class="buscador-popup__header">
+                      <ion-searchbar
+                        #searchbar
+                        animated="true"
+                        [value]="textoBusacar"
+                        (ionInput)="buscar($event)"
+                        (ionClear)="limpiarBusqueda()"
+                        placeholder="Buscar producto o categoría..."
+                        class="buscador"
+                        debounce="300"
+                        mode="ios"
+                        showClearButton="always"
+                      ></ion-searchbar>
+                    </div>
+                    <div class="buscador-popup__footer">
+                      <ion-button expand="block" color="medium" fill="solid" class="buscador-popup__btn-cerrar" (click)="cerrarBuscador()">
+                        <ion-icon name="close-circle-outline" slot="start"></ion-icon>
+                        Cerrar
+                      </ion-button>
+                    </div>
+                  </div>
+                </div>
+              }
               <!-- Catálogo de productos -->
               <div class="catalogo">
                 <!-- Slide 1: una columna de precio -->

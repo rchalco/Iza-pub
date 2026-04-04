@@ -78,7 +78,6 @@ export const LogoVoucher = '';
 // export const URL_SECURITY = 'http://localhost:5294/api/APISeguridad/';
 // export const URL_INVENTARIO = 'http://localhost:5294/api/APIIventario/';
 // export const URL_MIROVENTA = 'http://localhost:5294/api/APIVenta/';
-// //export const URL_SECURITY = 'http://localhost:5294/api/APISeguridad/';
 // export const URL_PERSON = 'http://localhost:8001/api/Person/';
 // export const URL_CARDS = 'http://localhost:8001/api/Tarjeta/';
 // export const URL_FINGERS = 'http://localhost:8001/api/Biometric/';
@@ -93,6 +92,7 @@ export const LogoVoucher = '';
 // export const URL_PERSON = 'http://192.168.0.153:8090/api/Person/';
 // export const URL_CARDS = 'http://192.168.0.153:8090/api/Tarjeta/';
 // export const URL_FINGERS = 'http://192.168.0.153:8090/api/Biometric/';
+
 //SERVER PROD
 export const URL_MIROVENTAOPERACION ='http://localhost:8001/api/MicroventaOperacion/';
 export const URL_TINTORERIA = 'http://localhost:8001/api/Tintoreria/';

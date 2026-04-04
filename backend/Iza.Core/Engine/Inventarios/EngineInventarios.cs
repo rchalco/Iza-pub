@@ -11,6 +11,7 @@ using NPOI.SS.Formula.Functions;
 using PlumbingProps.Wrapper;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -54,6 +55,76 @@ namespace Iza.Core.Engine.Inventarios
                     response.State = ResponseType.Warning;
                     return response;
                 }
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
+        public ResponseObject<DashboardConsolidadoDTO> ObtenerDashboardConsolidado(GeneralRequest1 request)
+        {
+            var response = new ResponseObject<DashboardConsolidadoDTO>
+            {
+                Message = "Dashboard consolidado obtenido correctamente",
+                State = ResponseType.Success
+            };
+            try
+            {
+                ParamOut poCodRespuesta = new ParamOut(0) { InOut = ParamOut.Type.Out, Size = 4 };
+                ParamOut poLogRespuesta = new ParamOut("") { InOut = ParamOut.Type.Out, Size = 100 };
+
+                DataSet ds = repositoryPub.GetDataSetByProcedure(
+                    "[reportes].[spDashboardConsolidado]",
+                    request.idSesion,
+                    request.idFechaProceso,
+                    poCodRespuesta,
+                    poLogRespuesta);
+
+                var consolidado = new DashboardConsolidadoDTO();
+
+                // Set 1: Ventas por forma de pago
+                if (ds.Tables.Count > 0)
+                    consolidado.FormasDePago = ds.Tables[0].AsEnumerable()
+                        .Select(r => new DashboardFormaPagoDTO
+                        {
+                            FormaDePago = r["Forma de Pago"]?.ToString(),
+                            monto = r["monto"]?.ToString()
+                        }).ToList();
+
+                // Set 2: Ventas por menú y cajero
+                if (ds.Tables.Count > 1)
+                    consolidado.VentasPorMenuYCajero = ds.Tables[1].AsEnumerable()
+                        .Select(r => new DashboardMenuUsuarioDTO
+                        {
+                            Menu = r["Menú"]?.ToString(),
+                            Usuario = r["Usuario"]?.ToString(),
+                            monto = r["monto"]?.ToString()
+                        }).ToList();
+
+                // Set 3: Ventas por precio de menú (ranking)
+                if (ds.Tables.Count > 2)
+                    consolidado.VentasPorPrecio = ds.Tables[2].AsEnumerable()
+                        .Select(r => new DashboardMenuPrecioDTO
+                        {
+                            idPrecio = Convert.ToInt64(r["idPrecio"]),
+                            Menu = r["Menú"]?.ToString(),
+                            Cantidad = Convert.ToInt32(r["Cantidad"]),
+                            monto = r["monto"]?.ToString()
+                        }).ToList();
+
+                // Set 4: Ingredientes consumidos
+                if (ds.Tables.Count > 3)
+                    consolidado.IngredientesConsumidos = ds.Tables[3].AsEnumerable()
+                        .Select(r => new DashboardIngredienteDTO
+                        {
+                            idProducto = Convert.ToInt64(r["idProducto"]),
+                            nombreProducto = r["nombreProducto"]?.ToString(),
+                            cantidad = r["cantidad"]?.ToString()
+                        }).ToList();
+
+                response.Data = consolidado;
             }
             catch (Exception ex)
             {

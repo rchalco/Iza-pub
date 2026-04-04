@@ -32,6 +32,14 @@ namespace Iza.Services.Sevices
             return mgrInventario.SolicitarAmbientes(requestAperturaCaja);
         }
 
+        [HttpPost("ObtenerDashboardConsolidado")]
+        [EnableCors()]
+        public ResponseObject<DashboardConsolidadoDTO> ObtenerDashboardConsolidado(GeneralRequest1 request)
+        {
+            EngineInventarios mgrInventario = new EngineInventarios();
+            return mgrInventario.ObtenerDashboardConsolidado(request);
+        }
+
         [HttpPost("ObtenerDashboardProductos")]
         [EnableCors()]
         public ResponseQuery<DashboardProductosDTO> ObtenerDashboardProductos(GeneralRequest1 generalRequest)

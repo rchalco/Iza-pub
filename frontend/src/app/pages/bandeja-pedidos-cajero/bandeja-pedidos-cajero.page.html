@@ -151,7 +151,6 @@
         title="Cambio en Forma de Pago"
         [dragEnabled]="true"
         [showCloseButton]="true"
-        container=".dx-viewport"
         [(visible)]="popupVisible"
         >
         <dxi-popup-toolbar-item
@@ -174,17 +173,15 @@
             <ion-label class="popup-forma-pago__label"
               >Seleccione la forma de pago:</ion-label
               >
-              <ion-select
-                interface="popover"
-                value="0"
-                placeholder="Forma de Pago"
-                (ionChange)="setFormaPago($event)"
+              <select
                 class="popup-forma-pago__select"
+                (change)="setFormaPago($event)"
                 >
-                <ion-select-option value="1">Efectivo</ion-select-option>
-                <ion-select-option value="2">POS</ion-select-option>
-                <ion-select-option value="3">QR</ion-select-option>
-              </ion-select>
+                <option value="0" disabled selected>Forma de Pago</option>
+                <option value="1">Efectivo</option>
+                <option value="2">POS</option>
+                <option value="3">QR</option>
+              </select>
             </div>
           </div>
         </dx-popup>

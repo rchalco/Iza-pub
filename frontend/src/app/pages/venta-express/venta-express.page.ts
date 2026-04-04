@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Share } from '@capacitor/share';
@@ -67,6 +67,7 @@ export class VentaExpressPage implements OnInit {
   showCardProductoSelect = false;
   showMessageErrorNOCajaAbierta = false;
   showButtonVolver = false;
+  showBuscador = false;
   esCaja = false;
   barras: any[] = [];
 
@@ -117,7 +118,28 @@ export class VentaExpressPage implements OnInit {
   // ══════════════════════════════════════════════════════════
 
   buscar(event: any): void {
-    this.textoBusacar = event.detail.value;
+    this.textoBusacar = event.detail.value ?? '';
+    if (!this.textoBusacar) {
+      this.textoBusacar = '';
+    }
+  }
+
+  limpiarBusqueda(): void {
+    this.textoBusacar = '';
+  }
+
+  abrirBuscador(): void {
+    this.showBuscador = true;
+    setTimeout(() => {
+      const searchbar = document.querySelector('.buscador-popup ion-searchbar');
+      if (searchbar) {
+        (searchbar as any).setFocus();
+      }
+    }, 300);
+  }
+
+  cerrarBuscador(): void {
+    this.showBuscador = false;
   }
 
   registroVenta(
@@ -126,6 +148,11 @@ export class VentaExpressPage implements OnInit {
     precio: number,
     unidad: string,
   ): void {
+    if (this.showBuscador) {
+      this.textoBusacar = '';
+      this.showBuscador = false;
+    }
+
     const existente = this.productosAvender.find(
       (p) => p.idPrecio === idPrecio && p.unidad === unidad,
     );

@@ -1,13 +1,10 @@
 ﻿using CoreAccesLayer.Interface;
 using CoreAccesLayer.Wraper;
-using iText.Commons.Actions.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CoreAccesLayer.Implement.MySQL
 {
@@ -48,6 +45,11 @@ namespace CoreAccesLayer.Implement.MySQL
         public List<T> GetDataByProcedure<T>(string nameProcedure, params object[] parameters) where T : class, new()
         {
             return mysqlDataInterface.GetListByProcedure<T>(nameProcedure, parameters);
+        }
+
+        public System.Data.DataSet GetDataSetByProcedure(string nameProcedure, params object[] parameters)
+        {
+            throw new NotImplementedException("GetDataSetByProcedure no está implementado para MySQL.");
         }
 
         public bool Rollback()
