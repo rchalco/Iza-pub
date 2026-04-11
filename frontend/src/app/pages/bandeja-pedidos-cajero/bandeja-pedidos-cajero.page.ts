@@ -80,6 +80,7 @@ export class BandejaPedidosCajeroPage implements OnInit {
       .then((service) => {
         service.subscribe((resul) => {
           this.listaPedidos = resul.listEntities;
+          console.log('PEDIDOS', this.listaPedidos);
           this.aplicarFiltroUsuario();
           this.ventaService.showMessageResponse(resul);
         });
@@ -266,6 +267,8 @@ export class BandejaPedidosCajeroPage implements OnInit {
 
   private initUsuario(): void {
     this.usuarioActual = environment.Usuario;
+    console.log('ENVIROMENT', environment); // Verificar que se obtiene el usuario desde
+
   }
 
   private initPopupButtons(): void {
@@ -303,6 +306,7 @@ export class BandejaPedidosCajeroPage implements OnInit {
    */
   private aplicarFiltroUsuario(): void {
     const usuario = this.usuarioActual?.toUpperCase();
+    console.log('USUARIO ACTUAL', usuario);
     this.listaPedidosFiltrados = this.listaPedidos.filter(
       (p) => p.usuario?.toUpperCase() === usuario,
     );
