@@ -1,18 +1,8 @@
-<<<<<<< Updated upstream
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Controller_SelectedScaffolderID>ApiControllerEmptyScaffolder</Controller_SelectedScaffolderID>
-    <Controller_SelectedScaffolderCategoryPath>root/Common/Api</Controller_SelectedScaffolderCategoryPath>
-    <NameOfLastUsedPublishProfile>D:\GithubPersonal\Iza-pub\backend\Iza.Services\Properties\PublishProfiles\FolderProfile.pubxml</NameOfLastUsedPublishProfile>
-  </PropertyGroup>
-=======
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Controller_SelectedScaffolderID>ApiControllerEmptyScaffolder</Controller_SelectedScaffolderID>
-    <Controller_SelectedScaffolderCategoryPath>root/Common/Api</Controller_SelectedScaffolderCategoryPath>
-    <NameOfLastUsedPublishProfile>C:\Desarrollo\GitHub\Iza-pub\backend\Iza.Services\Properties\PublishProfiles\FolderProfile.pubxml</NameOfLastUsedPublishProfile>
-  </PropertyGroup>
->>>>>>> Stashed changes
+	<PropertyGroup>
+		<Controller_SelectedScaffolderID>ApiControllerEmptyScaffolder</Controller_SelectedScaffolderID>
+		<Controller_SelectedScaffolderCategoryPath>root/Common/Api</Controller_SelectedScaffolderCategoryPath>
+		<NameOfLastUsedPublishProfile>D:\GithubPersonal\Iza-pub\backend\Iza.Services\Properties\PublishProfiles\FolderProfile1.pubxml</NameOfLastUsedPublishProfile>
+	</PropertyGroup>
 </Project>
