@@ -195,19 +195,9 @@ export class VentaTintoreriaPage implements OnInit {
                   vPrecioFinal.toString()
               );
             });
-            this.documentoService
-              .generarDocumentoPartial(this.documento)
-              .subscribe((yyy) => {
-                const base64String = btoa(
-                  String.fromCharCode(...new Uint8Array(yyy))
-                );
-                console.log('info del documento generado: ', base64String);
-                this.documentoService
-                  .writeFilePDF('/vouchers/voucher.pdf', base64String)
-                  .then((a) => {
-                    this.documentoService.openFilePDF('/vouchers/voucher.pdf');
-                  });
-              });
+            this.documentoService.generarDocumentoMultiPlataforma(
+              this.documento,
+            );
           }
 
           ///TODO limpiamos el panel de ventas

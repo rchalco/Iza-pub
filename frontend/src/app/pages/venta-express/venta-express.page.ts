@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { Filesystem, Directory } from '@capacitor/filesystem';
-import { Share } from '@capacitor/share';
+import { Router } from '@angular/router';
 
 import { ReaderCardComponent } from 'src/app/components/reader-card/reader-card.component';
+import { PrinterHelper } from 'src/app/helpers/printer.helper';
 import { DatosTarjetaDTO } from 'src/app/interfaces/tarjeta/DatosTarjeta';
 import { DetalleVenta } from 'src/app/interfaces/venta/detalleVenta';
 import { StockService } from 'src/app/services/stock.service';
@@ -76,6 +76,7 @@ export class VentaExpressPage implements OnInit {
     private tarjetaService: TarjetaService,
     private stockService: StockService,
     private platform: Platform,
+    private router: Router,
   ) {}
 
   // ══════════════════════════════════════════════════════════
@@ -366,7 +367,7 @@ export class VentaExpressPage implements OnInit {
 
           if (resul.state === 1) {
             this.limpiarPostVenta();
-            this.guardarYCompartirPDF(resul.code);
+            this.imprimirComprobante(resul.code);
           } else if (resul.code === 'SIN_STOCK') {
             this.listDetalleSinStock = resul.listEntities;
           }
@@ -385,46 +386,37 @@ export class VentaExpressPage implements OnInit {
     this.totalVenta = 0;
   }
 
-  /**
-   * En móvil: guarda el PDF en Documents y abre el diálogo de compartir
-   * (el usuario puede elegir WhatsApp u otra app).
-   * En web: abre el PDF en una nueva pestaña (comportamiento anterior).
-   */
-  private async guardarYCompartirPDF(base64: string): Promise<void> {
-    if (this.platform.is('android') || this.platform.is('ios')) {
-      const fileName = `comprobante_${Date.now()}.pdf`;
-      try {
-        await Filesystem.writeFile({
-          path: fileName,
-          data: base64,
-          directory: Directory.Documents,
-          recursive: true,
-        });
-
-        const { uri } = await Filesystem.getUri({
-          path: fileName,
-          directory: Directory.Documents,
-        });
-
-        const { value: canShare } = await Share.canShare();
-        if (canShare) {
-          await Share.share({
-            title: 'Comprobante de venta',
-            text: 'Comprobante de venta IZA',
-            files: [uri],
-            dialogTitle: 'Guardar o compartir comprobante',
-          });
-        }
-      } catch (e) {
-        console.error('Error al guardar/compartir PDF:', e);
-        // Fallback: abrir como blob
-        this.abrirPDFEnWeb(base64);
-      }
+  private async imprimirComprobante(base64: string): Promise<void> {
+    if (!(this.platform.is('android') || this.platform.is('ios'))) {
+      this.abrirPDFEnWeb(base64);
       return;
     }
 
-    // Web
-    this.abrirPDFEnWeb(base64);
+    const preferredPrinter = PrinterHelper.getPreferredPrinter().address;
+
+    if (!preferredPrinter) {
+      this.guardarImpresionPendiente(base64);
+      this.ventaService.showMessageWarning(
+        'Configura una impresora para continuar con la impresion.',
+      );
+      this.router.navigate(['/config-printer']);
+      return;
+    }
+
+    try {
+      await PrinterHelper.printPdfBase64(base64, preferredPrinter);
+    } catch (e) {
+      console.error('Error al imprimir comprobante:', e);
+      this.guardarImpresionPendiente(base64);
+      this.ventaService.showMessageWarning(
+        'No se pudo imprimir. Verifica la impresora y vuelve a configurar.',
+      );
+      this.router.navigate(['/config-printer']);
+    }
+  }
+
+  private guardarImpresionPendiente(base64: string): void {
+    PrinterHelper.savePendingSalePrint(base64);
   }
 
   /** Abre el PDF base64 como blob en una nueva pestaña (web/fallback). */

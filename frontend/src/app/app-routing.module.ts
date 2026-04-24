@@ -248,11 +248,13 @@ const routes: Routes = [
     path: 'cierre-inventario',
     loadChildren: () => import('./pages/cierre-inventario/cierre-inventario.module').then( m => m.CierreInventarioPageModule)
   },
-
-
-
-
+  {
+    path: 'config-printer',
+    loadChildren: () => import('./pages/config-printer/config-printer.module').then(m => m.ConfigPrinterPageModule),
+    canActivate: [SessioninitGuard],
+  },
 ];
+
 
 @NgModule({
   imports: [

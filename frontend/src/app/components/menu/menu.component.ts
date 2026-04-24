@@ -14,6 +14,12 @@ import { MenuGeneralDTO } from 'src/app/interfaces/general/MenuGeneral';
 })
 export class MenuComponent implements OnInit {
   appPages: MenuGeneralDTO[] = [];
+  private readonly configPrinterMenuOption: MenuGeneralDTO = {
+    idMenuOpcion: -1,
+    title: 'Configurar impresora',
+    url: '/config-printer',
+    icon: 'print-outline',
+  };
   version = verionsApp;
   usuario = environment.UsuarioLabel || environment.Usuario;
   rol = environment.rol;
@@ -34,10 +40,22 @@ export class MenuComponent implements OnInit {
     this.rol = environment.rol;
     this.baseService.obtieneMenuPorUsuario().then((resulPromise) => {
       resulPromise.subscribe((resul) => {
-        this.appPages = resul.listEntities;
+        this.appPages = this.addDefaultMenuOptions(resul.listEntities || []);
         console.log('menu por usuario', resul.listEntities);
       });
     });
+  }
+
+  private addDefaultMenuOptions(menuItems: MenuGeneralDTO[]): MenuGeneralDTO[] {
+    const hasConfigPrinterOption = menuItems.some(
+      (item) => item.url === this.configPrinterMenuOption.url
+    );
+
+    if (hasConfigPrinterOption) {
+      return menuItems;
+    }
+
+    return [...menuItems, this.configPrinterMenuOption];
   }
 
   async cerrarSesion() {

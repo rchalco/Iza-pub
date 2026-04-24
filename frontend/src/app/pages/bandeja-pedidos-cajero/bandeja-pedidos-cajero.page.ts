@@ -6,12 +6,12 @@ import notify from 'devextreme/ui/notify';
 import { Workbook } from 'exceljs';
 import { saveAs } from 'file-saver-es';
 import { Platform } from '@ionic/angular';
+import { Router } from '@angular/router';
 
+import { PrinterHelper } from 'src/app/helpers/printer.helper';
 import { DetallePedidosDTO } from 'src/app/interfaces/venta/detallePedido';
 import { VentaService } from 'src/app/services/venta.service';
 import { environment } from 'src/environments/environment';
-import { Directory, Filesystem } from '@capacitor/filesystem';
-import { Share } from '@capacitor/share';
 
 @Component({
   standalone: false,
@@ -49,6 +49,7 @@ export class BandejaPedidosCajeroPage implements OnInit {
 
   constructor(private ventaService: VentaService,
     private platform: Platform,
+    private router: Router,
   ) {
     this.initPopupButtons();
   }
@@ -138,46 +139,38 @@ export class BandejaPedidosCajeroPage implements OnInit {
     this.ventaService.reImprimirVoucher(pedido.idPedMaster).then((service) => {
       service.subscribe((resul) => {
         this.ventaService.showMessageResponse(resul);
-        this.guardarYCompartirPDF(resul.code);
+        this.imprimirComprobante(resul.code);
       });
     });
   }
 
-   private async guardarYCompartirPDF(base64: string): Promise<void> {
-    if (this.platform.is('android') || this.platform.is('ios')) {
-      const fileName = `comprobante_${Date.now()}.pdf`;
-      try {
-        await Filesystem.writeFile({
-          path: fileName,
-          data: base64,
-          directory: Directory.Documents,
-          recursive: true,
-        });
-
-        const { uri } = await Filesystem.getUri({
-          path: fileName,
-          directory: Directory.Documents,
-        });
-
-        const { value: canShare } = await Share.canShare();
-        if (canShare) {
-          await Share.share({
-            title: 'Comprobante de venta',
-            text: 'Comprobante de venta IZA',
-            files: [uri],
-            dialogTitle: 'Guardar o compartir comprobante',
-          });
-        }
-      } catch (e) {
-        console.error('Error al guardar/compartir PDF:', e);
-        // Fallback: abrir como blob
-        this.abrirPDFEnWeb(base64);
-      }
+   private async imprimirComprobante(base64: string): Promise<void> {
+    if (!(this.platform.is('android') || this.platform.is('ios'))) {
+      this.abrirPDFEnWeb(base64);
       return;
     }
 
-    // Web
-    this.abrirPDFEnWeb(base64);
+    const preferredPrinter = PrinterHelper.getPreferredPrinter().address;
+
+    if (!preferredPrinter) {
+      PrinterHelper.savePendingSalePrint(base64);
+      this.ventaService.showMessageWarning(
+        'Configura una impresora para continuar con la impresion.',
+      );
+      this.router.navigate(['/config-printer']);
+      return;
+    }
+
+    try {
+      await PrinterHelper.printPdfBase64(base64, preferredPrinter);
+    } catch (error: unknown) {
+      console.error('Error al reimprimir comprobante:', error);
+      PrinterHelper.savePendingSalePrint(base64);
+      this.ventaService.showMessageWarning(
+        'No se pudo imprimir. Verifica la impresora y vuelve a configurar.',
+      );
+      this.router.navigate(['/config-printer']);
+    }
   }
 
   /** Abre el PDF base64 como blob en una nueva pestaña (web/fallback). */

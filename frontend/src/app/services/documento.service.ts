@@ -1,6 +1,7 @@
 import { FileOpener } from '@capacitor-community/file-opener';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { BaseService } from './baseService';
 import { LoadingController, Platform, ToastController } from '@ionic/angular';
 import {
@@ -14,6 +15,7 @@ import { catchError, finalize } from 'rxjs/operators';
 import { DatabaseService } from './DatabaseService';
 import { URL_MIROVENTAOPERACION } from './../../environments/environment';
 import { Filesystem, Directory, Encoding } from '@capacitor/filesystem';
+import { PrinterHelper } from 'src/app/helpers/printer.helper';
 
 const urlMicroventa = URL_MIROVENTAOPERACION;
 const urlTintoreria = URL_MIROVENTA;
@@ -28,41 +30,60 @@ export class DocumentoService extends BaseService {
     public httpClient: HttpClient,
     public loadingController: LoadingController,
     public toastController: ToastController,
-    public platform: Platform
+    public platform: Platform,
+    private router: Router,
   ) {
     super(databaseService, httpClient, loadingController, toastController);
   }
 
   async generarDocumentoMultiPlataforma(dataDocumento: any) {
 
-    
+
 
     await this.platform.ready().then((resul) => {
       console.log('se cargo la plataforma correctamente');
     });
-    if (this.platform.is('android') === true) {
+    if (this.platform.is('android') || this.platform.is('ios')) {
       console.log('generarDocumentoMultiPlataforma android');
       this.generarDocumentoPartial(dataDocumento).subscribe(async (resul) => {
         console.log('generarDocumentoPartial terminado');
         const base64String = btoa(
           String.fromCharCode(...new Uint8Array(resul))
         );
-        const nombreDocumento =
-          'vouchers/reporte' +
-          Math.floor(100000 + Math.random() * 900000) +
-          '.pdf';
-        console.log('se pide guardar el pdf' + nombreDocumento);
-        await this.writeFilePDF(nombreDocumento, base64String).then((doc) => {
-          this.openFilePDF(nombreDocumento);
-        });
+
+        await this.imprimirDocumentoMovil(base64String);
       });
     } else {
       this.generarDocumento(dataDocumento);
     }
   }
 
+  private async imprimirDocumentoMovil(base64: string): Promise<void> {
+    const preferredPrinter = PrinterHelper.getPreferredPrinter().address;
+
+    if (!preferredPrinter) {
+      PrinterHelper.savePendingSalePrint(base64);
+      await this.showMessageWarning(
+        'Configura una impresora para continuar con la impresion.',
+      );
+      this.router.navigate(['/config-printer']);
+      return;
+    }
+
+    try {
+      await PrinterHelper.printPdfBase64(base64, preferredPrinter);
+    } catch (error: unknown) {
+      console.error('Error al imprimir documento:', error);
+      PrinterHelper.savePendingSalePrint(base64);
+      await this.showMessageWarning(
+        'No se pudo imprimir. Verifica la impresora y vuelve a configurar.',
+      );
+      this.router.navigate(['/config-printer']);
+    }
+  }
+
   generarDocumento(dataDocumento: any) {
-    
+
     console.log('ZZZZZZZZ',dataDocumento);
     let url_query = urlTintoreria + 'GenerarDocumento';
     this.presentLoader();
