@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -76,7 +76,11 @@ export class VentaExpressPage implements OnInit {
     private tarjetaService: TarjetaService,
     private stockService: StockService,
     private platform: Platform,
+<<<<<<< Updated upstream
     private router: Router,
+=======
+    private cdr: ChangeDetectorRef,
+>>>>>>> Stashed changes
   ) {}
 
   // ══════════════════════════════════════════════════════════
@@ -110,6 +114,8 @@ export class VentaExpressPage implements OnInit {
             p.embase = p.embase ? p.embase.toUpperCase() : 'UNIDAD';
             p.picProducto = 'data:image/jpeg;base64,' + p.picProducto;
           });
+          console.log('Productos cargados', this.productos);
+          this.cdr.detectChanges();
         });
       });
   }
