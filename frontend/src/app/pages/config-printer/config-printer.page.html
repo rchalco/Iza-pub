@@ -1,0 +1,203 @@
+<app-custom-header title="Configurar impresora"></app-custom-header>
+
+<ion-content fullscreen class="printer-page">
+  <div class="contenido-scrollable">
+    <section class="panel panel--status">
+      <div class="panel__header">
+        <h2>Estado de conexion</h2>
+        @if (!isScanning) {
+          <ion-button fill="outline" class="btn-scan" (click)="startScan()">
+            <ion-icon slot="start" name="search"></ion-icon>
+            Buscar dispositivos
+          </ion-button>
+        } @else {
+          <ion-button fill="outline" color="warning" class="btn-scan" (click)="stopScan()">
+            <ion-icon slot="start" name="stop-circle"></ion-icon>
+            Detener busqueda
+          </ion-button>
+        }
+      </div>
+
+      <div class="status-pills">
+        <span class="pill" [class.pill--ok]="isConnected" [class.pill--warn]="!isConnected">
+          <ion-icon [name]="isConnected ? 'checkmark-circle' : 'alert-circle'"></ion-icon>
+          {{ isConnected ? 'Impresora conectada' : 'Sin conexion' }}
+        </span>
+        @if (preferredPrinterAddress) {
+          <span class="pill pill--saved">
+            <ion-icon name="bookmark"></ion-icon>
+            {{ preferredPrinterName || 'Impresora guardada' }}
+          </span>
+        }
+        <span class="pill" [class.pill--scan]="isScanning">
+          <ion-icon [name]="isScanning ? 'sync' : 'bluetooth'"></ion-icon>
+          {{ isScanning ? 'Escaneando...' : 'Escaneo detenido' }}
+        </span>
+      </div>
+
+      @if (preferredPrinterAddress) {
+        <div class="saved-printer-info">
+          <ion-icon name="print"></ion-icon>
+          <span>{{ preferredPrinterAddress }}</span>
+        </div>
+      }
+
+      @if (isScanning) {
+        <div class="scan-loader">
+          <ion-spinner color="primary"></ion-spinner>
+          <span>Buscando impresoras Bluetooth</span>
+        </div>
+      }
+
+      @if (isConnected) {
+        <ion-button fill="outline" color="danger" class="btn-disconnect" (click)="disconnect()">
+          <ion-icon slot="start" name="power"></ion-icon>
+          Desconectar
+        </ion-button>
+      }
+    </section>
+
+    <section class="panel panel--devices">
+      <div class="panel__header">
+        <h2>Dispositivos encontrados</h2>
+        <span class="device-count">{{ devices.length }}</span>
+      </div>
+
+      @if (devices.length === 0 && !isScanning) {
+        <div class="empty-state">
+          <ion-icon name="print-outline"></ion-icon>
+          <p>No hay impresoras detectadas todavia.</p>
+        </div>
+      }
+
+      <ion-list class="devices" lines="none">
+        @for (device of devices; track device.address) {
+          <ion-item (click)="connectDevice(device)" class="device" detail="false" [button]="true">
+            <ion-icon slot="start" name="print"></ion-icon>
+            <div class="device-wrapper">
+              <ion-label>{{ device.name || 'Impresora sin nombre' }}</ion-label>
+              <ion-note>{{ device.address }}</ion-note>
+              @if (device.address === preferredPrinterAddress) {
+                <ion-note color="success">Impresora configurada</ion-note>
+              }
+            </div>
+          </ion-item>
+        }
+      </ion-list>
+    </section>
+
+    <section class="panel panel--actions">
+      <div class="panel__header">
+        <h2>Pruebas de impresion</h2>
+      </div>
+
+      <div class="actions-grid">
+        <ion-button color="primary" (click)="printImage()">
+          <ion-icon slot="start" name="image"></ion-icon>
+          Imagen
+        </ion-button>
+        <ion-button color="primary" (click)="printPdf()">
+          <ion-icon slot="start" name="document"></ion-icon>
+          PDF
+        </ion-button>
+        <ion-button color="primary" (click)="textModal.present()">
+          <ion-icon slot="start" name="text"></ion-icon>
+          Texto
+        </ion-button>
+        <ion-button color="primary" (click)="dataCodeModal.present()">
+          <ion-icon slot="start" name="qr-code"></ion-icon>
+          QR / Barras
+        </ion-button>
+        <ion-button color="primary" (click)="cutPaper()">
+          <ion-icon slot="start" name="cut"></ion-icon>
+          Cortar
+        </ion-button>
+        <ion-button color="primary" (click)="beep()">
+          <ion-icon slot="start" name="musical-note"></ion-icon>
+          Beep
+        </ion-button>
+      </div>
+
+      <ion-button class="btn-showcase" color="medium" fill="outline" (click)="printShowcase()">
+        <ion-icon slot="start" name="sparkles"></ion-icon>
+        Mostrar impresion
+      </ion-button>
+    </section>
+  </div>
+</ion-content>
+
+<ion-modal #textModal>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="textModal.dismiss()">
+            <ion-label>Cancelar</ion-label>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Texto</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="printText(textInput.value)">
+            <ion-icon name="print"></ion-icon>
+            <ion-label>Imprimir</ion-label>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-item>
+        <ion-textarea type="text" placeholder="Texto a imprimir" #textInput rows="5"></ion-textarea>
+      </ion-item>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<ion-modal #dataCodeModal>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="dataCodeModal.dismiss()">
+            <ion-label>Cancelar</ion-label>
+          </ion-button>
+        </ion-buttons>
+        <ion-title>Código QR / Código de barras</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="printDataCode($any(dataInput.value), barcodeTextPlacementSelect.value)">
+            <ion-icon name="print"></ion-icon>
+            <ion-label>Imprimir</ion-label>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-item>
+          <ion-select
+            label="Tipo de código"
+            interface="action-sheet"
+            [(ngModel)]="selectedDataCodeType"
+            [ngModelOptions]="{ standalone: true }"
+          >
+          @for (type of DataCodeTypes; track type) {
+            <ion-select-option [value]="type">{{ type }}</ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+      <ion-item [ngStyle]="{ display: selectedDataCodeType === 'QR' ? 'none' : 'block' }">
+        <ion-select
+          label="Ubicación del texto"
+          interface="action-sheet"
+          value="below"
+          #barcodeTextPlacementSelect
+        >
+          @for (placement of BarcodeTextPlacements; track placement) {
+            <ion-select-option [value]="placement">{{ placement[0].toUpperCase() + placement.slice(1) }}</ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-input type="text" placeholder="Datos" #dataInput></ion-input>
+      </ion-item>
+    </ion-content>
+  </ng-template>
+</ion-modal>

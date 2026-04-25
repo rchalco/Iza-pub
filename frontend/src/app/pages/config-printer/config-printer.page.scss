@@ -1,0 +1,252 @@
+:host {
+	--cp-bg: #eef4f9;
+	--cp-surface: #ffffff;
+	--cp-border: #d6e3ef;
+	--cp-border-strong: #b7cadb;
+	--cp-primary: #1a4c77;
+	--cp-primary-soft: #e7f0f8;
+	--cp-success: #157347;
+	--cp-warning: #9a6a00;
+	--cp-danger: #b4232a;
+	--cp-text: #1d2b36;
+	--cp-text-soft: #5d7285;
+	--cp-shadow-sm: 0 4px 10px rgba(16, 76, 119, 0.08);
+	--cp-shadow-md: 0 10px 24px rgba(16, 76, 119, 0.12);
+}
+
+ion-content {
+	--background: linear-gradient(180deg, #edf4fa 0%, #e6eff7 100%);
+}
+
+.contenido-scrollable {
+	padding: 12px 10px 22px;
+
+	@media (min-width: 768px) {
+		padding: 14px 18px 24px;
+	}
+
+	@media (min-width: 1024px) {
+		max-width: 1100px;
+		margin: 0 auto;
+		padding: 16px 24px 28px;
+	}
+}
+
+.panel {
+	background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(247, 251, 255, 0.95) 100%);
+	border: 1px solid var(--cp-border);
+	border-radius: 18px;
+	box-shadow: var(--cp-shadow-sm);
+	padding: 14px;
+	margin-bottom: 12px;
+
+	@media (min-width: 768px) {
+		padding: 16px;
+	}
+}
+
+.panel__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 10px;
+	margin-bottom: 12px;
+
+	h2 {
+		margin: 0;
+		color: var(--cp-primary);
+		font-size: 0.95rem;
+		font-weight: 800;
+		letter-spacing: 0.2px;
+	}
+}
+
+.btn-scan,
+.btn-disconnect,
+.btn-showcase {
+	--border-radius: 12px;
+	text-transform: none;
+	font-weight: 700;
+}
+
+.status-pills {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 8px 10px;
+	border-radius: 999px;
+	border: 1px solid var(--cp-border-strong);
+	background: #f4f8fc;
+	color: var(--cp-text-soft);
+	font-size: 0.8rem;
+	font-weight: 700;
+
+	ion-icon {
+		font-size: 0.95rem;
+	}
+}
+
+.pill--ok {
+	background: #eaf8ef;
+	border-color: #88d2a1;
+	color: var(--cp-success);
+}
+
+.pill--warn {
+	background: #fff4e5;
+	border-color: #f0c47d;
+	color: var(--cp-warning);
+}
+
+.pill--scan {
+	background: #eaf3fb;
+	border-color: #9ec4e3;
+	color: var(--cp-primary);
+
+	ion-icon {
+		animation: pulse-spin 1.2s linear infinite;
+	}
+}
+
+.pill--saved {
+	background: #eef3ff;
+	border-color: #a3b8f0;
+	color: #2f4f9f;
+}
+
+.saved-printer-info {
+	margin-top: 10px;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	color: var(--cp-text-soft);
+	font-size: 0.8rem;
+	font-weight: 600;
+	padding: 6px 10px;
+	border-radius: 10px;
+	background: rgba(231, 240, 248, 0.9);
+}
+
+@keyframes pulse-spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.scan-loader {
+	margin-top: 10px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	color: var(--cp-text-soft);
+	font-weight: 600;
+}
+
+.btn-disconnect {
+	margin-top: 10px;
+}
+
+.device-count {
+	min-width: 28px;
+	height: 28px;
+	border-radius: 999px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--cp-primary-soft);
+	color: var(--cp-primary);
+	font-size: 0.82rem;
+	font-weight: 800;
+}
+
+.empty-state {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	gap: 8px;
+	color: var(--cp-text-soft);
+	border: 1px dashed var(--cp-border-strong);
+	border-radius: 12px;
+	padding: 16px;
+	margin-bottom: 10px;
+
+	ion-icon {
+		font-size: 1.6rem;
+		color: var(--cp-primary);
+	}
+
+	p {
+		margin: 0;
+		font-size: 0.86rem;
+		font-weight: 600;
+	}
+}
+
+.devices {
+	background: transparent;
+	max-height: 240px;
+	overflow-y: auto;
+}
+
+.device {
+	--background: #ffffff;
+	--border-radius: 12px;
+	--padding-top: 10px;
+	--padding-bottom: 10px;
+	--inner-padding-end: 8px;
+	margin-bottom: 8px;
+	border: 1px solid var(--cp-border);
+	box-shadow: 0 2px 8px rgba(16, 76, 119, 0.06);
+
+	ion-icon[slot='start'] {
+		color: var(--cp-primary);
+		font-size: 1.1rem;
+	}
+}
+
+.device-wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+
+	ion-label {
+		color: var(--cp-text);
+		font-weight: 700;
+	}
+
+	ion-note {
+		color: var(--cp-text-soft);
+		font-size: 0.75rem;
+	}
+}
+
+.actions-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 8px;
+
+	@media (min-width: 768px) {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	ion-button {
+		margin: 0;
+		--border-radius: 12px;
+		text-transform: none;
+		font-weight: 700;
+	}
+}
+
+.btn-showcase {
+	margin-top: 10px;
+}

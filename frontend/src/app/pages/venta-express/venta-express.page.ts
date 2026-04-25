@@ -1,5 +1,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 
@@ -70,17 +76,14 @@ export class VentaExpressPage implements OnInit {
   showBuscador = false;
   esCaja = false;
   barras: any[] = [];
+  router: any;
 
   constructor(
     private ventaService: VentaService,
     private tarjetaService: TarjetaService,
     private stockService: StockService,
     private platform: Platform,
-<<<<<<< Updated upstream
-    private router: Router,
-=======
     private cdr: ChangeDetectorRef,
->>>>>>> Stashed changes
   ) {}
 
   // ══════════════════════════════════════════════════════════
