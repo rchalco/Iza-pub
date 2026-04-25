@@ -1,0 +1,26 @@
+.filtros-reporte {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(180px, 1fr));
+  gap: 12px;
+  align-items: end;
+}
+
+.campo-filtro {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.btn-consultar {
+  height: 38px;
+}
+
+.contenedor-grid {
+  margin-top: 16px;
+}
+
+@media (max-width: 768px) {
+  .filtros-reporte {
+    grid-template-columns: 1fr;
+  }
+}

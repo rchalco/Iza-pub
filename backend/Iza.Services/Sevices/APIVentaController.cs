@@ -167,6 +167,19 @@ namespace Iza.Services.Sevices
         }
         #endregion
 
+        #region Reportes
+
+        [HttpPost("DetalleVentasXDiaXMenu")]
+        [EnableCors()]
+        public ResponseQuery<ResponseVentasXDiaXMenu> DetalleVentasXDiaXMenu(GeneralRequestRangoFecha request)
+        {
+            EngineVentas mgrVentas = new EngineVentas();
+            return mgrVentas.DetalleVentasXDiaXMenu(request);
+        }
+
+
+        #endregion
+
         #region Reportes Cola
         [HttpPost("GetDocumentPending")]
         [EnableCors()]

@@ -628,6 +628,41 @@ export class VentaService extends BaseService {
       );
   }
 
+async detalleVentasXDiaXMenu(fecha:Date, fechaFin:Date) {
+
+    console.log('FECHA ENVIADA',fecha);
+    const dateValue = new Date(fecha.getFullYear(), fecha.getMonth(), fecha.getDate());
+    const dateValueFin = new Date(fechaFin.getFullYear(), fechaFin.getMonth(), fechaFin.getDate());
+
+    const urlQuery = urlMicroventa + 'DetalleVentasXDiaXMenu';
+    const dataRequest = {
+      idSesion: 0,
+      idFechaProceso: 0,
+      fechaProceso:dateValue,
+      fechaProcesoFin:dateValueFin
+    };
+    await this.getInfoEviroment().then((env) => {
+      dataRequest.idSesion = env.session;
+      dataRequest.idFechaProceso = env.idFechaProceso;
+    });
+
+    this.presentLoader();
+
+    return this.httpClient
+      .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
+      .pipe(
+        finalize(() => {
+          console.log('**se termino la llamada obtieneReporteCierreTotal');
+          this.dismissLoader();
+        }),
+        catchError((error) => {
+          console.error(error);
+          this.showMessageError('No se tiene comunicacion con el servidor');
+          return throwError(() => new Error(error.status));
+        })
+      );
+  }
+
   async anulaPedido(_idPedidoMaster) {
     const urlQuery = urlMicroventa + 'AnulaPedido';
     const dataRequest = {

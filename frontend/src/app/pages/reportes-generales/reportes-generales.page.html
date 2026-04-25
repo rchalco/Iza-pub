@@ -1,0 +1,236 @@
+<app-custom-header title="Reportes de Ventas"></app-custom-header>
+
+<ion-content fullscreen>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Filtros de Reporte</ion-card-title>
+
+      <div class="filtros-reporte">
+
+        <div class="campo-filtro">
+          <label>Fecha Inicial</label>
+          <dx-date-box
+            [(value)]="fechaInicio"
+            displayFormat="dd/MM/yyyy"
+            [max]="now">
+          </dx-date-box>
+        </div>
+
+        <div class="campo-filtro">
+          <label>Fecha Final</label>
+          <dx-date-box
+            [(value)]="fechaFin"
+            displayFormat="dd/MM/yyyy"
+            [max]="now">
+          </dx-date-box>
+        </div>
+
+        <div class="campo-filtro">
+          <label>Reporte</label>
+          <dx-select-box
+            [items]="tiposReporte"
+            displayExpr="nombre"
+            valueExpr="id"
+            [(value)]="reporteSeleccionado"
+            placeholder="Seleccione reporte">
+          </dx-select-box>
+        </div>
+
+        <ion-button class="btn-consultar" (click)="consultarReportes()">
+          Consultar
+        </ion-button>
+
+      </div>
+    </ion-card-header>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+
+      <dx-tabs
+        [items]="tabsReportes"
+        keyExpr="id"
+        [selectedIndex]="tabSeleccionadoIndex"
+        (onItemClick)="seleccionarTab($event)">
+          <div *dxTemplate="let item of 'item'">
+            {{ item.nombre }}
+          </div>
+      </dx-tabs>
+
+      <!-- VENTAS POR DIA -->
+      <div *ngIf="tabActivo?.id === 1" class="contenedor-grid">
+        <dx-data-grid
+            [dataSource]="ventasPorDiaMenu"
+            [showBorders]="true"
+            [rowAlternationEnabled]="true"
+            [columnAutoWidth]="true"
+            [allowColumnReordering]="true"
+            [allowColumnResizing]="true"
+            [wordWrapEnabled]="true"
+            (onExporting)="onExportingVentasPorDiaMenu($event)">
+
+            <dxo-export [enabled]="true"></dxo-export>
+
+            <dxo-paging [pageSize]="100"></dxo-paging>
+            <dxo-pager
+              [showPageSizeSelector]="true"
+              [allowedPageSizes]="[100, 200]">
+            </dxo-pager>
+
+            <dxo-search-panel
+              [visible]="true"
+              [width]="240"
+              placeholder="Buscar...">
+            </dxo-search-panel>
+
+            <dxo-group-panel [visible]="true"></dxo-group-panel>
+
+            <dxo-grouping
+              [autoExpandAll]="false"
+              expandMode="rowClick">
+            </dxo-grouping>
+
+            <dxo-header-filter [visible]="true"></dxo-header-filter>
+            <dxo-filter-row [visible]="true"></dxo-filter-row>
+
+            <dxi-column
+              dataField="fechaProceso"
+              caption="Fecha"
+              dataType="date"
+              format="dd/MM/yyyy"
+              [width]="120">
+            </dxi-column>
+
+            <dxi-column
+              dataField="descripcion"
+              caption="Barra"
+              dataType="string"
+              [groupIndex]="0">
+            </dxi-column>
+
+            <dxi-column
+              dataField="menu"
+              caption="Menú"
+              dataType="string"
+              [minWidth]="180">
+            </dxi-column>
+
+            <dxi-column
+              dataField="cantidad"
+              caption="Cantidad"
+              dataType="number"
+              [width]="120">
+            </dxi-column>
+
+            <dxi-column
+              dataField="monto"
+              caption="Monto"
+              dataType="number"
+              [width]="130"
+              [format]="{ type: 'fixedPoint', precision: 2 }">
+            </dxi-column>
+
+            <dxo-summary>
+
+              <!-- Texto en cabecera del grupo -->
+              <dxi-group-item
+                column="cantidad"
+                summaryType="sum"
+                displayFormat="Cantidad: {0}"
+                [showInGroupFooter]="false"
+                [alignByColumn]="false">
+              </dxi-group-item>
+
+              <dxi-group-item
+                column="monto"
+                summaryType="sum"
+                displayFormat="Monto: {0}"
+                [valueFormat]="{ type: 'fixedPoint', precision: 2 }"
+                [showInGroupFooter]="false"
+                [alignByColumn]="false">
+              </dxi-group-item>
+
+              <!-- Totales generales -->
+              <dxi-total-item
+                column="cantidad"
+                summaryType="sum"
+                displayFormat="Cantidad Total: {0}">
+              </dxi-total-item>
+
+              <dxi-total-item
+                column="monto"
+                summaryType="sum"
+                displayFormat="Total: {0}"
+                [valueFormat]="{ type: 'fixedPoint', precision: 2 }">
+              </dxi-total-item>
+
+            </dxo-summary>
+
+          </dx-data-grid>
+      </div>
+
+      <!-- VENTAS POR DIA CANTIDAD -->
+      <div *ngIf="tabActivo?.id === 2" class="contenedor-grid">
+        <dx-data-grid
+          [dataSource]="ventasPorDiaCantidad"
+          [showBorders]="true"
+          [rowAlternationEnabled]="true"
+          [columnAutoWidth]="true"
+          (onExporting)="onExporting($event)">
+
+          <dxo-export [enabled]="true"></dxo-export>
+          <dxo-paging [pageSize]="100"></dxo-paging>
+          <dxo-search-panel [visible]="true"></dxo-search-panel>
+          <dxo-group-panel [visible]="true"></dxo-group-panel>
+
+          <dxi-column dataField="fecha" caption="Fecha" dataType="date" format="dd/MM/yyyy"></dxi-column>
+          <dxi-column dataField="cantidad" caption="Cantidad" dataType="number"></dxi-column>
+
+          <dxo-summary>
+            <dxi-total-item
+              column="cantidad"
+              summaryType="sum"
+              displayFormat="Total: {0}">
+            </dxi-total-item>
+          </dxo-summary>
+
+        </dx-data-grid>
+      </div>
+
+      <!-- VARIOS -->
+      <div *ngIf="tabActivo?.id === 3" class="contenedor-grid">
+        <dx-data-grid
+          [dataSource]="reporteVarios"
+          [showBorders]="true"
+          [rowAlternationEnabled]="true"
+          [columnAutoWidth]="true"
+          (onExporting)="onExporting($event)">
+
+          <dxo-export [enabled]="true"></dxo-export>
+          <dxo-paging [pageSize]="100"></dxo-paging>
+          <dxo-search-panel [visible]="true"></dxo-search-panel>
+          <dxo-group-panel [visible]="true"></dxo-group-panel>
+
+          <dxi-column dataField="categoria" caption="Categoría" dataType="string"></dxi-column>
+          <dxi-column dataField="descripcion" caption="Descripción" dataType="string"></dxi-column>
+          <dxi-column dataField="monto" caption="Monto" dataType="number"
+            [format]="{ type: 'fixedPoint', precision: 2 }">
+          </dxi-column>
+
+          <dxo-summary>
+            <dxi-total-item
+              column="monto"
+              summaryType="sum"
+              displayFormat="Total: {0}"
+              [valueFormat]="{ type: 'fixedPoint', precision: 2 }">
+            </dxi-total-item>
+          </dxo-summary>
+
+        </dx-data-grid>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

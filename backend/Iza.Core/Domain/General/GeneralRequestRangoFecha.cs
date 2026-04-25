@@ -12,5 +12,6 @@ namespace Iza.Core.Domain.General
         public long idFechaProceso { get; set; }
         public DateTime fechaProceso { get; set; }
         public DateTime fechaProcesoFin { get; set; }
+
     }
 }

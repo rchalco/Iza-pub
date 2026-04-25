@@ -830,6 +830,31 @@ namespace Iza.Core.Engine.Ventas
 
         #endregion
 
+        #region Reportes
+        public ResponseQuery<ResponseVentasXDiaXMenu> DetalleVentasXDiaXMenu(GeneralRequestRangoFecha requestGeneral)
+        {
+            ResponseQuery<ResponseVentasXDiaXMenu> response = new ResponseQuery<ResponseVentasXDiaXMenu> { Message = "Detalle obtenido", State = ResponseType.Success };
+            try
+            {
+                ParamOut paramOutLogRespuesta = new ParamOut("");
+                paramOutLogRespuesta.Size = 100;
+
+                response.ListEntities = repositoryPub.GetDataByProcedure<ResponseVentasXDiaXMenu>("[reportes].[spObtVentasXDiaXMenu]",
+                    requestGeneral.idSesion,
+                    requestGeneral.idFechaProceso,
+                    requestGeneral.idFechaProceso,
+                    paramOutLogRespuesta);
+
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
+        #endregion
+
         #region Reportes Cola
         public ResponseQuery<PrinterLineResponse> GetDocumentPending(PrinterLineRequest printerLineRequest)
         {
