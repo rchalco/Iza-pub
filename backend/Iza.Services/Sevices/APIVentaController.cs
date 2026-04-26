@@ -177,6 +177,13 @@ namespace Iza.Services.Sevices
             return mgrVentas.DetalleVentasXDiaXMenu(request);
         }
 
+        [HttpPost("DetalleVentasXDia")]
+        [EnableCors()]
+        public ResponseQuery<ResponseVentasXDiaXMenu> DetalleVentasXDia(GeneralRequestRangoFecha request)
+        {
+            EngineVentas mgrVentas = new EngineVentas();
+            return mgrVentas.DetalleVentasXDia(request);
+        }
 
         #endregion
 

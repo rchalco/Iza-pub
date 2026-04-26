@@ -841,8 +841,8 @@ namespace Iza.Core.Engine.Ventas
 
                 response.ListEntities = repositoryPub.GetDataByProcedure<ResponseVentasXDiaXMenu>("[reportes].[spObtVentasXDiaXMenu]",
                     requestGeneral.idSesion,
-                    requestGeneral.idFechaProceso,
-                    requestGeneral.idFechaProceso,
+                    requestGeneral.fechaProceso.Date,
+                    requestGeneral.fechaProcesoFin.Date,
                     paramOutLogRespuesta);
 
             }
@@ -853,6 +853,27 @@ namespace Iza.Core.Engine.Ventas
             return response;
         }
 
+        public ResponseQuery<ResponseVentasXDiaXMenu> DetalleVentasXDia(GeneralRequestRangoFecha requestGeneral)
+        {
+            ResponseQuery<ResponseVentasXDiaXMenu> response = new ResponseQuery<ResponseVentasXDiaXMenu> { Message = "Detalle obtenido", State = ResponseType.Success };
+            try
+            {
+                ParamOut paramOutLogRespuesta = new ParamOut("");
+                paramOutLogRespuesta.Size = 100;
+
+                response.ListEntities = repositoryPub.GetDataByProcedure<ResponseVentasXDiaXMenu>("[reportes].[spObtVentasXDia]",
+                    requestGeneral.idSesion,
+                    requestGeneral.fechaProceso.Date,
+                    requestGeneral.fechaProcesoFin.Date,
+                    paramOutLogRespuesta);
+
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
         #endregion
 
         #region Reportes Cola

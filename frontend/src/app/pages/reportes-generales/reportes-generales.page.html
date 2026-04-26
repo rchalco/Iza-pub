@@ -173,29 +173,89 @@
       <!-- VENTAS POR DIA CANTIDAD -->
       <div *ngIf="tabActivo?.id === 2" class="contenedor-grid">
         <dx-data-grid
-          [dataSource]="ventasPorDiaCantidad"
-          [showBorders]="true"
-          [rowAlternationEnabled]="true"
-          [columnAutoWidth]="true"
-          (onExporting)="onExporting($event)">
+            [dataSource]="ventasPorDiaCantidad"
+            [showBorders]="true"
+            [rowAlternationEnabled]="true"
+            [columnAutoWidth]="true"
+            [allowColumnReordering]="true"
+            [allowColumnResizing]="true"
+            [wordWrapEnabled]="true"
+            (onExporting)="onExportingVentasPorCantidad($event)">
 
-          <dxo-export [enabled]="true"></dxo-export>
-          <dxo-paging [pageSize]="100"></dxo-paging>
-          <dxo-search-panel [visible]="true"></dxo-search-panel>
-          <dxo-group-panel [visible]="true"></dxo-group-panel>
+            <dxo-export [enabled]="true"></dxo-export>
 
-          <dxi-column dataField="fecha" caption="Fecha" dataType="date" format="dd/MM/yyyy"></dxi-column>
-          <dxi-column dataField="cantidad" caption="Cantidad" dataType="number"></dxi-column>
+            <dxo-paging [pageSize]="100"></dxo-paging>
+            <dxo-pager
+              [showPageSizeSelector]="true"
+              [allowedPageSizes]="[100, 200]">
+            </dxo-pager>
 
-          <dxo-summary>
-            <dxi-total-item
-              column="cantidad"
-              summaryType="sum"
-              displayFormat="Total: {0}">
-            </dxi-total-item>
-          </dxo-summary>
+            <dxo-search-panel
+              [visible]="true"
+              [width]="240"
+              placeholder="Buscar...">
+            </dxo-search-panel>
 
-        </dx-data-grid>
+            <dxo-group-panel [visible]="true"></dxo-group-panel>
+
+            <dxo-grouping
+              [autoExpandAll]="false"
+              expandMode="rowClick">
+            </dxo-grouping>
+
+            <dxo-header-filter [visible]="true"></dxo-header-filter>
+            <dxo-filter-row [visible]="true"></dxo-filter-row>
+
+            <dxi-column
+              dataField="fechaProceso"
+              caption="Fecha"
+              dataType="date"
+              format="dd/MM/yyyy"
+              [width]="120">
+            </dxi-column>
+
+            <dxi-column
+              dataField="descripcion"
+              caption="Barra"
+              dataType="string"
+              [groupIndex]="0">
+            </dxi-column>
+
+            <dxi-column
+              dataField="menu"
+              caption="Menú"
+              dataType="string"
+              [minWidth]="180">
+            </dxi-column>
+            <dxi-column
+              dataField="cantidad"
+              caption="Cantidad"
+              dataType="number"
+              [width]="130"
+              [format]="{ type: 'fixedPoint', precision: 2 }">
+            </dxi-column>
+
+            <dxo-summary>
+
+              <!-- Texto en cabecera del grupo -->
+              <dxi-group-item
+                column="cantidad"
+                summaryType="sum"
+                displayFormat="Cantidad: {0}"
+                [valueFormat]="{ type: 'fixedPoint', precision: 2 }"
+                [showInGroupFooter]="false"
+                [alignByColumn]="false">
+              </dxi-group-item>
+              <!-- Totales generales -->
+              <dxi-total-item
+                column="cantidad"
+                summaryType="sum"
+                displayFormat="Cantidad Total: {0}"
+                [valueFormat]="{ type: 'fixedPoint', precision: 2 }">
+              </dxi-total-item>
+            </dxo-summary>
+
+          </dx-data-grid>
       </div>
 
       <!-- VARIOS -->

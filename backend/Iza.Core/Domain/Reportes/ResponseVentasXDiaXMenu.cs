@@ -11,7 +11,7 @@ namespace Iza.Core.Domain.Reportes
         public long idPrecio { get; set; }
         public string menu { get; set; } = string.Empty;
 
-        public int cantidad { get; set; }
+        public decimal cantidad { get; set; }
         public decimal monto { get; set; }
     }
 }
