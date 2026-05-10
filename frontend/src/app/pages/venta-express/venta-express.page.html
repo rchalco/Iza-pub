@@ -162,11 +162,28 @@
                               >
                               <ion-col size="3">
                                 @if (det.precioDerecha > 0) {
-                                  <ion-button
-                                    class="btn-precio"
-                                    (click)="registroVenta(det, det.idPrecioDerecha, det.precioDerecha, det.etiquetaDerecha)"
-                                    >Bs. {{ det.precioDerecha }}</ion-button
-                                    >
+                                  <div class="precio-col">
+                                    <div class="stepper">
+                                      <button
+                                        class="stepper__btn"
+                                        (click)="decrementarCantidad(det.idPrecioDerecha); $event.stopPropagation()"
+                                      >
+                                        <ion-icon name="chevron-back-outline"></ion-icon>
+                                      </button>
+                                      <span class="stepper__count">{{ getCantidad(det.idPrecioDerecha) }}</span>
+                                      <button
+                                        class="stepper__btn"
+                                        (click)="incrementarCantidad(det.idPrecioDerecha); $event.stopPropagation()"
+                                      >
+                                        <ion-icon name="chevron-forward-outline"></ion-icon>
+                                      </button>
+                                    </div>
+                                    <ion-button
+                                      class="btn-precio"
+                                      (click)="registroVenta(det, det.idPrecioDerecha, det.precioDerecha, det.etiquetaDerecha, getCantidad(det.idPrecioDerecha))"
+                                      >Bs. {{ det.precioDerecha }}</ion-button
+                                      >
+                                  </div>
                                   }
                                 </ion-col>
                               </ion-row>
@@ -194,20 +211,54 @@
                                   >
                                   <ion-col size="3">
                                     @if (det.precioIzquierda > 0) {
-                                      <ion-button
-                                        class="btn-precio"
-                                        (click)="registroVenta(det, det.idPrecioIzquierda, det.precioIzquierda, det.etiquetaIzquierda)"
-                                        >Bs. {{ det.precioIzquierda }}</ion-button
-                                        >
+                                      <div class="precio-col">
+                                        <div class="stepper">
+                                          <button
+                                            class="stepper__btn"
+                                            (click)="decrementarCantidad(det.idPrecioIzquierda); $event.stopPropagation()"
+                                          >
+                                            <ion-icon name="chevron-back-outline"></ion-icon>
+                                          </button>
+                                          <span class="stepper__count">{{ getCantidad(det.idPrecioIzquierda) }}</span>
+                                          <button
+                                            class="stepper__btn"
+                                            (click)="incrementarCantidad(det.idPrecioIzquierda); $event.stopPropagation()"
+                                          >
+                                            <ion-icon name="chevron-forward-outline"></ion-icon>
+                                          </button>
+                                        </div>
+                                        <ion-button
+                                          class="btn-precio"
+                                          (click)="registroVenta(det, det.idPrecioIzquierda, det.precioIzquierda, det.etiquetaIzquierda, getCantidad(det.idPrecioIzquierda))"
+                                          >Bs. {{ det.precioIzquierda }}</ion-button
+                                          >
+                                      </div>
                                       }
                                     </ion-col>
                                     <ion-col size="3">
                                       @if (det.precioDerecha > 0) {
-                                        <ion-button
-                                          class="btn-precio"
-                                          (click)="registroVenta(det, det.idPrecioDerecha, det.precioDerecha, det.etiquetaDerecha)"
-                                          >Bs. {{ det.precioDerecha }}</ion-button
-                                          >
+                                        <div class="precio-col">
+                                          <div class="stepper">
+                                            <button
+                                              class="stepper__btn"
+                                              (click)="decrementarCantidad(det.idPrecioDerecha); $event.stopPropagation()"
+                                            >
+                                              <ion-icon name="chevron-back-outline"></ion-icon>
+                                            </button>
+                                            <span class="stepper__count">{{ getCantidad(det.idPrecioDerecha) }}</span>
+                                            <button
+                                              class="stepper__btn"
+                                              (click)="incrementarCantidad(det.idPrecioDerecha); $event.stopPropagation()"
+                                            >
+                                              <ion-icon name="chevron-forward-outline"></ion-icon>
+                                            </button>
+                                          </div>
+                                          <ion-button
+                                            class="btn-precio"
+                                            (click)="registroVenta(det, det.idPrecioDerecha, det.precioDerecha, det.etiquetaDerecha, getCantidad(det.idPrecioDerecha))"
+                                            >Bs. {{ det.precioDerecha }}</ion-button
+                                            >
+                                        </div>
                                         }
                                       </ion-col>
                                     </ion-row>
@@ -235,20 +286,54 @@
                                         >
                                         <ion-col size="3">
                                           @if (det.precioIzquierda > 0) {
-                                            <ion-button
-                                              class="btn-precio"
-                                              (click)="registroVenta(det, det.idPrecioIzquierda, det.precioIzquierda, det.etiquetaIzquierda)"
-                                              >Bs. {{ det.precioIzquierda }}</ion-button
-                                              >
+                                            <div class="precio-col">
+                                              <div class="stepper">
+                                                <button
+                                                  class="stepper__btn"
+                                                  (click)="decrementarCantidad(det.idPrecioIzquierda); $event.stopPropagation()"
+                                                >
+                                                  <ion-icon name="chevron-back-outline"></ion-icon>
+                                                </button>
+                                                <span class="stepper__count">{{ getCantidad(det.idPrecioIzquierda) }}</span>
+                                                <button
+                                                  class="stepper__btn"
+                                                  (click)="incrementarCantidad(det.idPrecioIzquierda); $event.stopPropagation()"
+                                                >
+                                                  <ion-icon name="chevron-forward-outline"></ion-icon>
+                                                </button>
+                                              </div>
+                                              <ion-button
+                                                class="btn-precio"
+                                                (click)="registroVenta(det, det.idPrecioIzquierda, det.precioIzquierda, det.etiquetaIzquierda, getCantidad(det.idPrecioIzquierda))"
+                                                >Bs. {{ det.precioIzquierda }}</ion-button
+                                                >
+                                            </div>
                                             }
                                           </ion-col>
                                           <ion-col size="3">
                                             @if (det.precioDerecha > 0) {
-                                              <ion-button
-                                                class="btn-precio"
-                                                (click)="registroVenta(det, det.idPrecioDerecha, det.precioDerecha, det.etiquetaDerecha)"
-                                                >Bs. {{ det.precioDerecha }}</ion-button
-                                                >
+                                              <div class="precio-col">
+                                                <div class="stepper">
+                                                  <button
+                                                    class="stepper__btn"
+                                                    (click)="decrementarCantidad(det.idPrecioDerecha); $event.stopPropagation()"
+                                                  >
+                                                    <ion-icon name="chevron-back-outline"></ion-icon>
+                                                  </button>
+                                                  <span class="stepper__count">{{ getCantidad(det.idPrecioDerecha) }}</span>
+                                                  <button
+                                                    class="stepper__btn"
+                                                    (click)="incrementarCantidad(det.idPrecioDerecha); $event.stopPropagation()"
+                                                  >
+                                                    <ion-icon name="chevron-forward-outline"></ion-icon>
+                                                  </button>
+                                                </div>
+                                                <ion-button
+                                                  class="btn-precio"
+                                                  (click)="registroVenta(det, det.idPrecioDerecha, det.precioDerecha, det.etiquetaDerecha, getCantidad(det.idPrecioDerecha))"
+                                                  >Bs. {{ det.precioDerecha }}</ion-button
+                                                  >
+                                              </div>
                                               }
                                             </ion-col>
                                           </ion-row>
