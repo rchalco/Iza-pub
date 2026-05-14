@@ -145,119 +145,139 @@
               <div class="catalogo">
                 <!-- Slide 1: una columna de precio -->
                 @if (productsSlides1?.length > 0) {
-                  <ion-list class="catalogo__lista">
+                  <div class="catalogo__lista">
                     @for (producto of productos | filtro: textoBusacar:'categoria':'detalle':'nombreProducto'; track producto) {
-                      <ion-grid
-                        fixed
-                        class="catalogo__grupo"
-                        >
-                        <ion-row class="catalogo__header">
-                          <ion-col size="9">{{ producto.categoria }}</ion-col>
-                          <ion-col size="3">{{ producto.etiquetaDerecha }}</ion-col>
-                        </ion-row>
+                      <div class="catalogo__grupo">
+                        <div class="catalogo__header">
+                          <span class="header-cat">{{ producto.categoria }}</span>
+                          <span class="header-etiqueta">{{ producto.etiquetaDerecha }}</span>
+                        </div>
                         @for (det of producto.detalle; track det) {
-                          <ion-row class="catalogo__item">
-                            <ion-col size="6" class="celda-producto"
-                              >{{ det.nombreProducto }}</ion-col
-                              >
-                              <ion-col size="3">
-                                @if (det.precioDerecha > 0) {
-                                  <ion-button
-                                    class="btn-precio"
-                                    (click)="registroVenta(det, det.idPrecioDerecha, det.precioDerecha, det.etiquetaDerecha)"
-                                    >Bs. {{ det.precioDerecha }}</ion-button
-                                    >
-                                  }
-                                </ion-col>
-                              </ion-row>
-                            }
-                          </ion-grid>
-                        }
-                      </ion-list>
-                    }
-                    <!-- Slide 2: dos columnas de precio -->
-                    @if (productsSlides2?.length > 0) {
-                      <ion-list class="catalogo__lista">
-                        @for (producto of productsSlides2 | filtro: textoBusacar:'categoria':'detalle':'nombreProducto'; track producto) {
-                          <ion-grid
-                            fixed
-                            class="catalogo__grupo"
-                            >
-                            <ion-row class="catalogo__header">
-                              <ion-col size="9">{{ producto.categoria }}</ion-col>
-                              <ion-col size="3">{{ producto.etiquetaIzquierda }}</ion-col>
-                            </ion-row>
-                            @for (det of producto.detalle; track det) {
-                              <ion-row class="catalogo__item">
-                                <ion-col size="6" class="celda-producto"
-                                  >{{ det.nombreProducto }}</ion-col
-                                  >
-                                  <ion-col size="3">
-                                    @if (det.precioIzquierda > 0) {
-                                      <ion-button
-                                        class="btn-precio"
-                                        (click)="registroVenta(det, det.idPrecioIzquierda, det.precioIzquierda, det.etiquetaIzquierda)"
-                                        >Bs. {{ det.precioIzquierda }}</ion-button
-                                        >
-                                      }
-                                    </ion-col>
-                                    <ion-col size="3">
-                                      @if (det.precioDerecha > 0) {
-                                        <ion-button
-                                          class="btn-precio"
-                                          (click)="registroVenta(det, det.idPrecioDerecha, det.precioDerecha, det.etiquetaDerecha)"
-                                          >Bs. {{ det.precioDerecha }}</ion-button
-                                          >
-                                        }
-                                      </ion-col>
-                                    </ion-row>
-                                  }
-                                </ion-grid>
-                              }
-                            </ion-list>
-                          }
-                          <!-- Slide 3: dos columnas de precio -->
-                          @if (productsSlides3?.length > 0) {
-                            <ion-list class="catalogo__lista">
-                              @for (producto of productsSlides3 | filtro: textoBusacar:'categoria':'detalle':'nombreProducto'; track producto) {
-                                <ion-grid
-                                  fixed
-                                  class="catalogo__grupo"
-                                  >
-                                  <ion-row class="catalogo__header">
-                                    <ion-col size="9">{{ producto.categoria }}</ion-col>
-                                    <ion-col size="3">{{ producto.etiquetaIzquierda }}</ion-col>
-                                  </ion-row>
-                                  @for (det of producto.detalle; track det) {
-                                    <ion-row class="catalogo__item">
-                                      <ion-col size="6" class="celda-producto"
-                                        >{{ det.nombreProducto }}</ion-col
-                                        >
-                                        <ion-col size="3">
-                                          @if (det.precioIzquierda > 0) {
-                                            <ion-button
-                                              class="btn-precio"
-                                              (click)="registroVenta(det, det.idPrecioIzquierda, det.precioIzquierda, det.etiquetaIzquierda)"
-                                              >Bs. {{ det.precioIzquierda }}</ion-button
-                                              >
-                                            }
-                                          </ion-col>
-                                          <ion-col size="3">
-                                            @if (det.precioDerecha > 0) {
-                                              <ion-button
-                                                class="btn-precio"
-                                                (click)="registroVenta(det, det.idPrecioDerecha, det.precioDerecha, det.etiquetaDerecha)"
-                                                >Bs. {{ det.precioDerecha }}</ion-button
-                                                >
-                                              }
-                                            </ion-col>
-                                          </ion-row>
-                                        }
-                                      </ion-grid>
-                                    }
-                                  </ion-list>
-                                }
+                          <div class="catalogo__item">
+                            <div class="celda-producto">{{ det.nombreProducto }}</div>
+                            @if (det.precioDerecha > 0) {
+                              <div class="celda-precio">
+                                <div class="stepper">
+                                  <button class="stepper__btn" (click)="decrementarCantidad(det.idPrecioDerecha); $event.stopPropagation()">
+                                    <ion-icon name="chevron-back-outline"></ion-icon>
+                                  </button>
+                                  <span class="stepper__count">{{ getCantidad(det.idPrecioDerecha) }}</span>
+                                  <button class="stepper__btn" (click)="incrementarCantidad(det.idPrecioDerecha); $event.stopPropagation()">
+                                    <ion-icon name="chevron-forward-outline"></ion-icon>
+                                  </button>
+                                </div>
+                                <ion-button class="btn-precio" (click)="registroVenta(det, det.idPrecioDerecha, det.precioDerecha, det.etiquetaDerecha, getCantidad(det.idPrecioDerecha))">
+                                  Bs. {{ det.precioDerecha }}
+                                </ion-button>
                               </div>
+                            }
+                          </div>
+                        }
+                      </div>
+                    }
+                  </div>
+                }
+                <!-- Slide 2: dos columnas de precio -->
+                @if (productsSlides2?.length > 0) {
+                  <div class="catalogo__lista">
+                    @for (producto of productsSlides2 | filtro: textoBusacar:'categoria':'detalle':'nombreProducto'; track producto) {
+                      <div class="catalogo__grupo">
+                        <div class="catalogo__header">
+                          <span class="header-cat">{{ producto.categoria }}</span>
+                          <span class="header-etiqueta">{{ producto.etiquetaIzquierda }}</span>
+                        </div>
+                        @for (det of producto.detalle; track det) {
+                          <div class="catalogo__item">
+                            <div class="celda-producto">{{ det.nombreProducto }}</div>
+                            @if (det.precioIzquierda > 0) {
+                              <div class="celda-precio">
+                                <div class="stepper">
+                                  <button class="stepper__btn" (click)="decrementarCantidad(det.idPrecioIzquierda); $event.stopPropagation()">
+                                    <ion-icon name="chevron-back-outline"></ion-icon>
+                                  </button>
+                                  <span class="stepper__count">{{ getCantidad(det.idPrecioIzquierda) }}</span>
+                                  <button class="stepper__btn" (click)="incrementarCantidad(det.idPrecioIzquierda); $event.stopPropagation()">
+                                    <ion-icon name="chevron-forward-outline"></ion-icon>
+                                  </button>
+                                </div>
+                                <ion-button class="btn-precio" (click)="registroVenta(det, det.idPrecioIzquierda, det.precioIzquierda, det.etiquetaIzquierda, getCantidad(det.idPrecioIzquierda))">
+                                  Bs. {{ det.precioIzquierda }}
+                                </ion-button>
+                              </div>
+                            }
+                            @if (det.precioDerecha > 0) {
+                              <div class="celda-precio">
+                                <div class="stepper">
+                                  <button class="stepper__btn" (click)="decrementarCantidad(det.idPrecioDerecha); $event.stopPropagation()">
+                                    <ion-icon name="chevron-back-outline"></ion-icon>
+                                  </button>
+                                  <span class="stepper__count">{{ getCantidad(det.idPrecioDerecha) }}</span>
+                                  <button class="stepper__btn" (click)="incrementarCantidad(det.idPrecioDerecha); $event.stopPropagation()">
+                                    <ion-icon name="chevron-forward-outline"></ion-icon>
+                                  </button>
+                                </div>
+                                <ion-button class="btn-precio" (click)="registroVenta(det, det.idPrecioDerecha, det.precioDerecha, det.etiquetaDerecha, getCantidad(det.idPrecioDerecha))">
+                                  Bs. {{ det.precioDerecha }}
+                                </ion-button>
+                              </div>
+                            }
+                          </div>
+                        }
+                      </div>
+                    }
+                  </div>
+                }
+                <!-- Slide 3: dos columnas de precio -->
+                @if (productsSlides3?.length > 0) {
+                  <div class="catalogo__lista">
+                    @for (producto of productsSlides3 | filtro: textoBusacar:'categoria':'detalle':'nombreProducto'; track producto) {
+                      <div class="catalogo__grupo">
+                        <div class="catalogo__header">
+                          <span class="header-cat">{{ producto.categoria }}</span>
+                          <span class="header-etiqueta">{{ producto.etiquetaIzquierda }}</span>
+                        </div>
+                        @for (det of producto.detalle; track det) {
+                          <div class="catalogo__item">
+                            <div class="celda-producto">{{ det.nombreProducto }}</div>
+                            @if (det.precioIzquierda > 0) {
+                              <div class="celda-precio">
+                                <div class="stepper">
+                                  <button class="stepper__btn" (click)="decrementarCantidad(det.idPrecioIzquierda); $event.stopPropagation()">
+                                    <ion-icon name="chevron-back-outline"></ion-icon>
+                                  </button>
+                                  <span class="stepper__count">{{ getCantidad(det.idPrecioIzquierda) }}</span>
+                                  <button class="stepper__btn" (click)="incrementarCantidad(det.idPrecioIzquierda); $event.stopPropagation()">
+                                    <ion-icon name="chevron-forward-outline"></ion-icon>
+                                  </button>
+                                </div>
+                                <ion-button class="btn-precio" (click)="registroVenta(det, det.idPrecioIzquierda, det.precioIzquierda, det.etiquetaIzquierda, getCantidad(det.idPrecioIzquierda))">
+                                  Bs. {{ det.precioIzquierda }}
+                                </ion-button>
+                              </div>
+                            }
+                            @if (det.precioDerecha > 0) {
+                              <div class="celda-precio">
+                                <div class="stepper">
+                                  <button class="stepper__btn" (click)="decrementarCantidad(det.idPrecioDerecha); $event.stopPropagation()">
+                                    <ion-icon name="chevron-back-outline"></ion-icon>
+                                  </button>
+                                  <span class="stepper__count">{{ getCantidad(det.idPrecioDerecha) }}</span>
+                                  <button class="stepper__btn" (click)="incrementarCantidad(det.idPrecioDerecha); $event.stopPropagation()">
+                                    <ion-icon name="chevron-forward-outline"></ion-icon>
+                                  </button>
+                                </div>
+                                <ion-button class="btn-precio" (click)="registroVenta(det, det.idPrecioDerecha, det.precioDerecha, det.etiquetaDerecha, getCantidad(det.idPrecioDerecha))">
+                                  Bs. {{ det.precioDerecha }}
+                                </ion-button>
+                              </div>
+                            }
+                          </div>
+                        }
+                      </div>
+                    }
+                  </div>
+                }
+              </div>
                             </div>
                           }
 

@@ -48,6 +48,9 @@ export class VentaExpressPage implements OnInit {
   selectedProducto: ProductoCarrito = null;
   textoBusacar = '';
 
+  /** Cantidad deseada por idPrecio antes de agregar al carrito. */
+  cantidadesDeseadas = new Map<number, number>();
+
   // ── Venta ─────────────────────────────────────────────────
   listaDetalleVentas: DetalleVenta[] = [];
   listFormasDePago: FormaPagoItem[] = [];
@@ -119,6 +122,23 @@ export class VentaExpressPage implements OnInit {
   //  Carrito de venta
   // ══════════════════════════════════════════════════════════
 
+  // ── Stepper de cantidad ───────────────────────────────────
+
+  getCantidad(idPrecio: number): number {
+    return this.cantidadesDeseadas.get(idPrecio) ?? 1;
+  }
+
+  incrementarCantidad(idPrecio: number): void {
+    this.cantidadesDeseadas.set(idPrecio, this.getCantidad(idPrecio) + 1);
+  }
+
+  decrementarCantidad(idPrecio: number): void {
+    const actual = this.getCantidad(idPrecio);
+    if (actual > 1) {
+      this.cantidadesDeseadas.set(idPrecio, actual - 1);
+    }
+  }
+
   buscar(event: any): void {
     this.textoBusacar = event.detail.value ?? '';
     if (!this.textoBusacar) {
@@ -149,6 +169,7 @@ export class VentaExpressPage implements OnInit {
     idPrecio: number,
     precio: number,
     unidad: string,
+    cantidad = 1,
   ): void {
     if (this.showBuscador) {
       this.textoBusacar = '';
@@ -160,13 +181,13 @@ export class VentaExpressPage implements OnInit {
     );
 
     if (existente) {
-      existente.cantidadVendida++;
+      existente.cantidadVendida += cantidad;
       existente.total = existente.cantidadVendida * precio;
     } else {
       const nuevo: ProductoCarrito = {
         idPrecio,
-        cantidadVendida: 1,
-        total: precio,
+        cantidadVendida: cantidad,
+        total: precio * cantidad,
         precio,
         unidad,
         nombreProducto: producto.nombreProducto,
@@ -175,7 +196,8 @@ export class VentaExpressPage implements OnInit {
       this.productosAvender.push(nuevo);
     }
 
-    this.totalVenta += precio;
+    this.totalVenta += precio * cantidad;
+    this.cantidadesDeseadas.set(idPrecio, 1);
   }
 
   quitarProducto(producto: ProductoCarrito): void {
