@@ -26,10 +26,12 @@ npm-debug.log*
 /.vscode
 /coverage
 /dist
+/android/build
+/android/app/build
 /node_modules
+
 /platforms
 /plugins
 /www
-/android
 www.zip
 package-lock.json

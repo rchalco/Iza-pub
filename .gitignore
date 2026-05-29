@@ -12,6 +12,7 @@ project.lock.json
 
 # Visual Studio
 **/.vs/
+**/.vscode/
 *.user
 *.suo
 *.userosscache
@@ -24,6 +25,11 @@ project.lock.json
 # Angular / Ionic / Node
 # ──────────────────────────────────────────────
 **/node_modules/
+# !frontend/node_modules/@capacitor-community/file-opener/android/build.gradle
+# !frontend/node_modules/@capacitor/camera/android/build.gradle
+# !frontend/node_modules/@capacitor/filesystem/android/build.gradle
+# !frontend/node_modules/@capacitor/share/android/build.gradle
+
 **/.angular/
 **/dist/
 **/www/
@@ -36,7 +42,9 @@ yarn-error.log*
 package-lock.json
 
 # Electron build output
-**/app/
+# Modified to not block Android app folder
+# app/
+!frontend/android/app/
 !frontend/src/app/
 **/build/
 

@@ -12,8 +12,6 @@ import { DataSource } from 'devextreme/common/data';
   styleUrls: ['./reportes-generales.page.scss'],
 })
 export class ReportesGeneralesPage implements OnInit {
-
-
   fechaInicio: Date = new Date();
   fechaFin: Date = new Date();
   now: Date = new Date();
@@ -23,7 +21,7 @@ export class ReportesGeneralesPage implements OnInit {
   tiposReporte = [
     { id: 1, nombre: 'Ventas Por Dia - Menu' },
     { id: 2, nombre: 'Ventas por Dia - Cantidad' },
-    { id: 3, nombre: 'Varios' }
+    { id: 3, nombre: 'Varios' },
   ];
 
   tabsReportes: any[] = [];
@@ -34,11 +32,13 @@ export class ReportesGeneralesPage implements OnInit {
   dataSourceVentasPorDia: DataSource = new DataSource(this.ventasPorDiaMenu);
 
   ventasPorDiaCantidad: ResponseVentasXDiaXMenu[] = [];
-  dataSourceVentasPorCantidad: DataSource = new DataSource(this.ventasPorDiaCantidad);
+  dataSourceVentasPorCantidad: DataSource = new DataSource(
+    this.ventasPorDiaCantidad,
+  );
 
   reporteVarios: any[] = [];
 
-  constructor(private ventaService: VentaService) { }
+  constructor(private ventaService: VentaService) {}
 
   ngOnInit() {
     this.reporteSeleccionado = 1;
@@ -46,15 +46,17 @@ export class ReportesGeneralesPage implements OnInit {
   }
 
   consultarReportes(): void {
-    const reporte = this.tiposReporte.find(x => x.id === this.reporteSeleccionado);
+    const reporte = this.tiposReporte.find(
+      (x) => x.id === this.reporteSeleccionado,
+    );
 
     if (!reporte) return;
 
-    if (!this.tabsReportes.some(x => x.id === reporte.id)) {
+    if (!this.tabsReportes.some((x) => x.id === reporte.id)) {
       this.tabsReportes = [...this.tabsReportes, reporte];
     }
 
-    this.tabActivo = this.tabsReportes.find(x => x.id === reporte.id);
+    this.tabActivo = this.tabsReportes.find((x) => x.id === reporte.id);
 
     this.cargarReporte(reporte.id);
   }
@@ -80,28 +82,32 @@ export class ReportesGeneralesPage implements OnInit {
 
   cargarVentasPorDia(): void {
     this.ventasPorDiaMenu = [];
-    this.ventaService.detalleVentasXDiaXMenu(this.fechaInicio, this.fechaFin).then((service) => {
-      service.subscribe((resul) => {
-        this.ventasPorDiaMenu = resul.listEntities;
-        this.dataSourceVentasPorDia = new DataSource(this.ventasPorDiaMenu);
-        this.ventaService.showMessageResponse(resul);
-
+    this.ventaService
+      .detalleVentasXDiaXMenu(this.fechaInicio, this.fechaFin)
+      .then((service) => {
+        service.subscribe((resul) => {
+          this.ventasPorDiaMenu = resul.listEntities;
+          this.dataSourceVentasPorDia = new DataSource(this.ventasPorDiaMenu);
+          this.ventaService.showMessageResponse(resul);
+        });
       });
-    });
     // Aquí llamas tu servicio/API
   }
 
   cargarVentasPorDiaCantidad(): void {
     this.ventasPorDiaCantidad = [];
 
-    this.ventaService.detalleVentasXDiaCantidad(this.fechaInicio, this.fechaFin).then((service) => {
-      service.subscribe((resul) => {
-        this.ventasPorDiaCantidad = resul.listEntities;
-        this.dataSourceVentasPorCantidad = new DataSource(this.ventasPorDiaCantidad);
-        this.ventaService.showMessageResponse(resul);
-
+    this.ventaService
+      .detalleVentasXDiaCantidad(this.fechaInicio, this.fechaFin)
+      .then((service) => {
+        service.subscribe((resul) => {
+          this.ventasPorDiaCantidad = resul.listEntities;
+          this.dataSourceVentasPorCantidad = new DataSource(
+            this.ventasPorDiaCantidad,
+          );
+          this.ventaService.showMessageResponse(resul);
+        });
       });
-    });
     // Aquí llamas tu servicio/API
     // Aquí llamas tu servicio/API
   }
@@ -113,15 +119,15 @@ export class ReportesGeneralesPage implements OnInit {
 
   onExportingVentasPorDiaMenu(e: any) {
     //this.fechaPedido = Date.now();
-    var fecha =  new Date(this.fechaInicio);
-    var year  = fecha.getFullYear();
-    var month = (fecha.getMonth() + 1).toString().padStart(2, "0");
-    var day   = fecha.getDate().toString().padStart(2, "0");
+    var fecha = new Date(this.fechaInicio);
+    var year = fecha.getFullYear();
+    var month = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    var day = fecha.getDate().toString().padStart(2, '0');
 
-    var fechaFin =  new Date(this.fechaFin);
-    var year1  = fechaFin.getFullYear();
-    var month1 = (fechaFin.getMonth() + 1).toString().padStart(2, "0");
-    var day1   = fecha.getDate().toString().padStart(2, "0");
+    var fechaFin = new Date(this.fechaFin);
+    var year1 = fechaFin.getFullYear();
+    var month1 = (fechaFin.getMonth() + 1).toString().padStart(2, '0');
+    var day1 = fecha.getDate().toString().padStart(2, '0');
 
     //console.log('fecha inicial',  new Date(this.fechaPedido).getFullYear());
     //console.log('fecha inicial',  fecha.getFullYear());
@@ -133,51 +139,66 @@ export class ReportesGeneralesPage implements OnInit {
       component: e.component,
       worksheet,
       topLeftCell: { row: 4, column: 1 },
-    }).then((cellRange) => {
-      // header
-      const headerRow = worksheet.getRow(2);
-      headerRow.height = 30;
-      worksheet.mergeCells(2, 1, 2, 5);
+    })
+      .then((cellRange) => {
+        // header
+        const headerRow = worksheet.getRow(2);
+        headerRow.height = 30;
+        worksheet.mergeCells(2, 1, 2, 5);
 
-      headerRow.getCell(1).value = 'DETALLE DE VENTAS DEL DIA';
-      headerRow.getCell(1).font = { name: 'Segoe UI Light', size: 22 };
-      headerRow.getCell(1).alignment = { horizontal: 'center' };
+        headerRow.getCell(1).value = 'DETALLE DE VENTAS DEL DIA';
+        headerRow.getCell(1).font = { name: 'Segoe UI Light', size: 22 };
+        headerRow.getCell(1).alignment = { horizontal: 'center' };
 
-      const headerRow1 = worksheet.getRow(3);
-      headerRow1.height = 30;
-      worksheet.mergeCells(3, 1, 3, 5);
+        const headerRow1 = worksheet.getRow(3);
+        headerRow1.height = 30;
+        worksheet.mergeCells(3, 1, 3, 5);
 
-
-
-      headerRow1.getCell(1).value = 'DESDE ' +fecha.getFullYear() + "/"
-        + (fecha.getMonth() + 1)
-        + "/" + fecha.getDate()
-        + ' HASTA ' +fechaFin.getFullYear() + "/"
-        + (fechaFin.getMonth() + 1)
-        + "/" + fechaFin.getDate() ;
-      headerRow1.getCell(1).font = { name: 'Segoe UI Light', size: 18 };
-      headerRow1.getCell(1).alignment = { horizontal: 'center' };
-
-
-    }).then(() => {
-      workbook.xlsx.writeBuffer().then((buffer) => {
-        saveAs(new Blob([buffer], { type: 'application/octet-stream' }), year + month + day + '_al_'+ year1 + month1 + day1 +'_Ventas_de_Dia_Menu.xlsx');
+        headerRow1.getCell(1).value =
+          'DESDE ' +
+          fecha.getFullYear() +
+          '/' +
+          (fecha.getMonth() + 1) +
+          '/' +
+          fecha.getDate() +
+          ' HASTA ' +
+          fechaFin.getFullYear() +
+          '/' +
+          (fechaFin.getMonth() + 1) +
+          '/' +
+          fechaFin.getDate();
+        headerRow1.getCell(1).font = { name: 'Segoe UI Light', size: 18 };
+        headerRow1.getCell(1).alignment = { horizontal: 'center' };
+      })
+      .then(() => {
+        workbook.xlsx.writeBuffer().then((buffer) => {
+          saveAs(
+            new Blob([buffer], { type: 'application/octet-stream' }),
+            year +
+              month +
+              day +
+              '_al_' +
+              year1 +
+              month1 +
+              day1 +
+              '_Ventas_de_Dia_Menu.xlsx',
+          );
+        });
       });
-    });
     //e.cancel = true;
   }
 
   onExportingVentasPorCantidad(e: any) {
     //this.fechaPedido = Date.now();
-    var fecha =  new Date(this.fechaInicio);
-    var year  = fecha.getFullYear();
-    var month = (fecha.getMonth() + 1).toString().padStart(2, "0");
-    var day   = fecha.getDate().toString().padStart(2, "0");
+    var fecha = new Date(this.fechaInicio);
+    var year = fecha.getFullYear();
+    var month = (fecha.getMonth() + 1).toString().padStart(2, '0');
+    var day = fecha.getDate().toString().padStart(2, '0');
 
-    var fechaFin =  new Date(this.fechaFin);
-    var year1  = fechaFin.getFullYear();
-    var month1 = (fechaFin.getMonth() + 1).toString().padStart(2, "0");
-    var day1   = fecha.getDate().toString().padStart(2, "0");
+    var fechaFin = new Date(this.fechaFin);
+    var year1 = fechaFin.getFullYear();
+    var month1 = (fechaFin.getMonth() + 1).toString().padStart(2, '0');
+    var day1 = fecha.getDate().toString().padStart(2, '0');
 
     //console.log('fecha inicial',  new Date(this.fechaPedido).getFullYear());
     //console.log('fecha inicial',  fecha.getFullYear());
@@ -189,38 +210,52 @@ export class ReportesGeneralesPage implements OnInit {
       component: e.component,
       worksheet,
       topLeftCell: { row: 4, column: 1 },
-    }).then((cellRange) => {
-      // header
-      const headerRow = worksheet.getRow(2);
-      headerRow.height = 30;
-      worksheet.mergeCells(2, 1, 2, 5);
+    })
+      .then((cellRange) => {
+        // header
+        const headerRow = worksheet.getRow(2);
+        headerRow.height = 30;
+        worksheet.mergeCells(2, 1, 2, 5);
 
-      headerRow.getCell(1).value = 'DETALLE DE VENTAS DEL DIA (CANTIDAD)';
-      headerRow.getCell(1).font = { name: 'Segoe UI Light', size: 22 };
-      headerRow.getCell(1).alignment = { horizontal: 'center' };
+        headerRow.getCell(1).value = 'DETALLE DE VENTAS DEL DIA (CANTIDAD)';
+        headerRow.getCell(1).font = { name: 'Segoe UI Light', size: 22 };
+        headerRow.getCell(1).alignment = { horizontal: 'center' };
 
-      const headerRow1 = worksheet.getRow(3);
-      headerRow1.height = 30;
-      worksheet.mergeCells(3, 1, 3, 5);
+        const headerRow1 = worksheet.getRow(3);
+        headerRow1.height = 30;
+        worksheet.mergeCells(3, 1, 3, 5);
 
-
-
-      headerRow1.getCell(1).value = 'DESDE ' +fecha.getFullYear() + "/"
-        + (fecha.getMonth() + 1)
-        + "/" + fecha.getDate()
-        + ' HASTA ' +fechaFin.getFullYear() + "/"
-        + (fechaFin.getMonth() + 1)
-        + "/" + fechaFin.getDate() ;
-      headerRow1.getCell(1).font = { name: 'Segoe UI Light', size: 18 };
-      headerRow1.getCell(1).alignment = { horizontal: 'center' };
-
-
-    }).then(() => {
-      workbook.xlsx.writeBuffer().then((buffer) => {
-        saveAs(new Blob([buffer], { type: 'application/octet-stream' }), year + month + day + '_al_'+ year1 + month1 + day1 +'_Ventas_de_Dia_Cantidad.xlsx');
+        headerRow1.getCell(1).value =
+          'DESDE ' +
+          fecha.getFullYear() +
+          '/' +
+          (fecha.getMonth() + 1) +
+          '/' +
+          fecha.getDate() +
+          ' HASTA ' +
+          fechaFin.getFullYear() +
+          '/' +
+          (fechaFin.getMonth() + 1) +
+          '/' +
+          fechaFin.getDate();
+        headerRow1.getCell(1).font = { name: 'Segoe UI Light', size: 18 };
+        headerRow1.getCell(1).alignment = { horizontal: 'center' };
+      })
+      .then(() => {
+        workbook.xlsx.writeBuffer().then((buffer) => {
+          saveAs(
+            new Blob([buffer], { type: 'application/octet-stream' }),
+            year +
+              month +
+              day +
+              '_al_' +
+              year1 +
+              month1 +
+              day1 +
+              '_Ventas_de_Dia_Cantidad.xlsx',
+          );
+        });
       });
-    });
     //e.cancel = true;
   }
-
 }
