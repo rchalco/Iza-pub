@@ -1,151 +1,200 @@
-# microventas-ui / iza-discoteca
+# gamatek-discoteca
 
-Aplicación móvil y de escritorio construida con **Ionic + Angular + Capacitor**.
+Aplicacion Ionic + Angular + Capacitor orientada a ventas e impresion termica en Android.
 
----
+## Stack principal
+
+- Angular 18
+- Ionic 8
+- Capacitor
+- Jest
+- Android Studio para compilacion nativa
 
 ## Requisitos previos
+
+Antes de instalar dependencias, verifica que tengas disponible:
+
+- Node.js 18 o superior
+- npm
+- Ionic CLI
+- Angular CLI
+- Capacitor CLI
+- Android Studio si vas a compilar o ejecutar Android
 
 ```bash
 npm install -g @ionic/cli @angular/cli @capacitor/cli
 ```
 
----
-
-## Instalación
+## Instalacion inicial
 
 ```bash
 npm install
 ```
 
----
+## Plugin de impresion termica
+
+Este proyecto utiliza el plugin `capacitor-thermal-printer` para impresion Bluetooth en Android.
+
+Importante:
+
+- Aunque trabajes con plugins de Capacitor compatibles con la linea 7, el plugin de impresion debe estar instalado en `node_modules` antes de sincronizar la plataforma nativa.
+- En instalaciones limpias o cuando haya problemas de resolucion de dependencias, reinstalalo de forma explicita.
+- Despues de instalar o reinstalar el plugin, ejecuta `npx cap sync android`.
+
+```bash
+npm install capacitor-thermal-printer
+npx cap sync android
+```
+
+Si el proyecto ya fue instalado correctamente, este paquete tambien queda registrado en [package.json](package.json).
+
+## Arranque rapido
+
+Para levantar el proyecto en web:
+
+```bash
+npm install
+npm start
+```
+
+Para preparar Android desde cero:
+
+```bash
+npm install
+npm install capacitor-thermal-printer
+npx cap sync android
+npx cap open android
+```
 
 ## Desarrollo web
 
 ```bash
 # Servidor de desarrollo
 npm start
-# o equivalente
+
+# Alternativa con Ionic
 ionic serve
 
 # Build de desarrollo
 npm run build
 
-# Build de producción
-ionic build --prod
-# o
+# Build de produccion
 ng build --configuration production
 ```
 
----
-
-## Tests
+## Tests y calidad
 
 ```bash
-# Ejecutar tests unitarios (Jest)
+# Ejecutar tests unitarios
 npm test
 
 # Tests en modo watch
 npm run test:watch
 
-# Reporte de cobertura
+# Cobertura
 npm run test:coverage
 
 # Lint
 npm run lint
 ```
 
----
-
 ## Capacitor
 
-### Sincronizar web build con plataformas nativas
+### Comandos base
 
 ```bash
-# Copia el build web (www/) y actualiza plugins en todas las plataformas
+# Copia el build web y actualiza plugins nativos
 npx cap sync
 
-# Solo copiar archivos web sin actualizar plugins
+# Copia solo archivos web
 npx cap copy
 
-# Solo actualizar plugins nativos
+# Actualiza plugins nativos sin copiar assets web
 npx cap update
 ```
 
-### Plataforma Android
+### Flujo recomendado para Android
+
+Cada vez que cambies codigo web y necesites probar en Android:
 
 ```bash
-# Agregar plataforma Android (solo la primera vez)
+# 1. Compilar web
+npm run build
+
+# 2. Sincronizar con Android
+npx cap sync android
+
+# 3. Abrir proyecto nativo
+npx cap open android
+```
+
+### Primera configuracion de Android
+
+```bash
+# Solo si la plataforma no existe aun
 npx cap add android
+
+# Sincronizar plugins y assets
+npx cap sync android
 
 # Abrir en Android Studio
 npx cap open android
+```
 
-# Ejecutar en dispositivo/emulador Android (requiere Android Studio)
+### Ejecutar en dispositivo o emulador
+
+```bash
 ionic capacitor run android
 ionic capacitor run android --livereload --external
 ```
 
-### Plataforma iOS
+## Impresion en Android
 
-```bash
-# Agregar plataforma iOS (solo la primera vez, requiere macOS)
-npx cap add ios
+La aplicacion usa una impresora Bluetooth configurada desde la pantalla `config-printer`.
 
-# Abrir en Xcode
-npx cap open ios
+Consideraciones utiles:
 
-# Ejecutar en simulador/dispositivo iOS
-ionic capacitor run ios
-ionic capacitor run ios --livereload --external
+- La impresion depende del plugin `capacitor-thermal-printer` instalado y sincronizado.
+- Si Android Studio o Gradle no detectan el modulo nativo del plugin, vuelve a correr `npx cap sync android`.
+- Si el proyecto Android fue regenerado o limpiado, valida nuevamente la instalacion del plugin antes de compilar.
+
+## Estructura del proyecto
+
+```text
+src/
+  app/
+    components/   # Componentes reutilizables
+    guards/       # Guards de rutas
+    helpers/      # Utilidades como impresion
+    interfaces/   # Interfaces TypeScript
+    pages/        # Paginas de la aplicacion
+    pipes/        # Pipes personalizados
+    services/     # Servicios e inyectables
+  assets/         # Recursos estaticos
+  environments/   # Configuracion por entorno
+  theme/          # Variables globales de estilos
+android/          # Proyecto nativo Android
+resources/        # Iconos y splash screens
+www/              # Build web generado para Capacitor
 ```
 
-### Flujo completo de build nativo
+## Variables de entorno
+
+| Archivo                                | Uso        |
+| -------------------------------------- | ---------- |
+| `src/environments/environment.ts`      | Desarrollo |
+| `src/environments/environment.prod.ts` | Produccion |
+
+## Comandos utiles
 
 ```bash
-# 1. Compilar la app web
-ionic build --prod
-
-# 2. Sincronizar con Capacitor
-npx cap sync
-
-# 3. Abrir IDE nativo
-npx cap open android   # Android Studio
-npx cap open ios       # Xcode (solo macOS)
-```
-
----
-
-## Electron
-
-```bash
-cd electron
-
-# Instalar dependencias de Electron
-npm install
-
-# Ejecutar en modo desarrollo con live-reload
-npm run electron:start-live
-
-# Ejecutar sin live-reload
-npm run electron:start
-
-# Empaquetar (sin instalador)
-npm run electron:pack
-
-# Generar instalador distribuible
-npm run electron:make
-```
-
----
-
-## Ionic CLI — comandos útiles
-
-```bash
-# Ver info del entorno
+# Ver informacion del entorno Ionic
 ionic info
 
-# Generar página
+# Ver dispositivos Android disponibles
+ionic capacitor run android --list
+
+# Generar pagina
 ionic generate page pages/nombre-pagina
 
 # Generar componente
@@ -153,69 +202,35 @@ ionic generate component components/nombre-componente
 
 # Generar servicio
 ionic generate service services/nombre-servicio
-
-# Generar guardia de ruta
-ionic generate guard guards/nombre-guard
-
-# Ver dispositivos conectados
-ionic capacitor run android --list
 ```
 
----
-
-## Angular CLI — comandos útiles
+## Generar iconos y splash screens
 
 ```bash
-# Generar módulo con routing
-ng generate module pages/nombre --routing
-
-# Generar componente standalone
-ng generate component components/nombre
-
-# Generar servicio
-ng generate service services/nombre
-
-# Analizar bundle
-ng build --stats-json
-npx webpack-bundle-analyzer www/browser/stats.json
-```
-
----
-
-## Variables de entorno
-
-| Archivo | Uso |
-|---|---|
-| `src/environments/environment.ts` | Desarrollo |
-| `src/environments/environment.prod.ts` | Producción |
-
----
-
-## Estructura del proyecto
-
-```
-src/
-  app/
-    components/   # Componentes reutilizables
-    guards/       # Guards de rutas
-    interfaces/   # Interfaces TypeScript
-    pages/        # Páginas de la aplicación
-    pipes/        # Pipes personalizados
-    services/     # Servicios e inyectables
-  assets/         # Recursos estáticos
-  environments/   # Configuración por entorno
-  theme/          # Variables de estilos globales
-electron/         # Configuración de Electron
-resources/        # Íconos y splash screens
-```
-
----
-
-## Generar íconos y splash screens
-
-```bash
-# Requiere @capacitor/assets
 npm install -D @capacitor/assets
-
 npx capacitor-assets generate
 ```
+
+## Problemas comunes
+
+### El plugin de impresora no aparece en Android
+
+```bash
+npm install capacitor-thermal-printer
+npx cap sync android
+```
+
+### Android no refleja cambios recientes del frontend
+
+```bash
+npm run build
+npx cap sync android
+```
+
+### El proyecto Android compila, pero la impresion falla
+
+Verifica:
+
+- que la impresora Bluetooth este emparejada
+- que exista una impresora configurada en la pantalla `config-printer`
+- que el plugin siga instalado y sincronizado en `android/`
