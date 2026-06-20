@@ -494,7 +494,7 @@ public partial class DbpubIzaContext : DbContext
         {
             entity.HasKey(e => e.IdFechaProceso).HasName("PK__tFechasP__C5F93068E9386656");
 
-            entity.ToTable("tFechasProceso", "shFabula");
+            entity.ToTable("tFechasProceso", "ventas");
 
             entity.Property(e => e.IdFechaProceso).HasColumnName("idFechaProceso");
             entity.Property(e => e.FechaCierre)

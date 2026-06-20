@@ -253,8 +253,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/config-printer/config-printer.module').then(m => m.ConfigPrinterPageModule),
     canActivate: [SessioninitGuard],
   },  {
-    path: 'reportes-generales',
+path: 'reportes-generales',
     loadChildren: () => import('./pages/reportes-generales/reportes-generales.module').then( m => m.ReportesGeneralesPageModule)
+  },
+  {
+    path: 'reporte-ventas-proceso',
+    loadChildren: () => import('./pages/reporte-ventas-proceso/reporte-ventas-proceso.module').then( m => m.ReporteVentasProcesoPageModule)
   },
 
 ];

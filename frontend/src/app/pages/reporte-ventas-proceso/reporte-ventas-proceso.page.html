@@ -1,0 +1,112 @@
+<app-custom-header title="Reporte Ventas x Fecha Proceso"></app-custom-header>
+
+<ion-content>
+  <ion-grid fixed>
+    <ion-row class="fila-filtros no-print">
+      <ion-col size="9">
+        <ion-item>
+          <ion-label position="stacked">Fecha Proceso</ion-label>
+          <ion-select [(ngModel)]="idFechaProceso" (ionChange)="fechaSeleccionada()" interface="action-sheet">
+            @for (fp of listFechasProceso; track fp.idFechaProceso) {
+              <ion-select-option [value]="fp.idFechaProceso">
+                {{fp.fechaDeProceso | date:'dd/MM/yyyy'}} (ID: {{fp.idFechaProceso}})
+              </ion-select-option>
+            }
+          </ion-select>
+        </ion-item>
+      </ion-col>
+      <ion-col size="3" class="no-print boton-imprimir-col">
+        <ion-button color="success" (click)="imprimir()" class="boton-imprimir">
+          <ion-icon slot="icon-only" name="print" size="large"></ion-icon>
+        </ion-button>
+        <ion-note class="impresoraInfo" color="medium">
+          @if (preferredPrinterName) {
+            {{preferredPrinterName}}
+          } @else {
+            Sin impresora
+          }
+        </ion-note>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="no-print">
+      <ion-col size="12">
+        <ion-item class="filtroBarra">
+          <ion-label position="stacked">Filtrar por Barra / Almacén</ion-label>
+          <ion-select [(ngModel)]="filtroDescripcion" (ionChange)="cambiarFiltro()" interface="action-sheet">
+            <ion-select-option value="">Todos</ion-select-option>
+            @for (barra of listBarras; track barra) {
+              <ion-select-option [value]="barra">{{barra}}</ion-select-option>
+            }
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="fecha-resumen">
+      <ion-col size="12" class="ion-text-center">
+        <h2>{{ fechaSeleccionadaTexto() }}</h2>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="no-print">
+      <ion-col size="12">
+        <ion-segment value="producto" (ionChange)="cambiarSegmento($event)">
+          <ion-segment-button value="producto">
+            <ion-label>Por Producto</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="menu">
+            <ion-label>Por Menú</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+    </ion-row>
+
+    @if (segmento === 'producto') {
+      <ion-row class="cabeceraTabla">
+        <ion-col size="4">Barra</ion-col>
+        <ion-col size="5">Producto</ion-col>
+        <ion-col size="3" class="numeroTabla">Cantidad</ion-col>
+      </ion-row>
+      @for (item of listVentasXDiaFiltrada; track item) {
+        <ion-row class="detalleTabla">
+          <ion-col size="4">{{item.descripcion}}</ion-col>
+          <ion-col size="5">{{item.menu}}</ion-col>
+          <ion-col size="3" class="numeroTabla">{{item.cantidad}}</ion-col>
+        </ion-row>
+      }
+      @if (listVentasXDiaFiltrada.length === 0) {
+        <ion-row class="detalleTabla">
+          <ion-col size="12" class="numeroTabla">Sin datos</ion-col>
+        </ion-row>
+      }
+    }
+
+    @if (segmento === 'menu') {
+      <ion-row class="cabeceraTabla">
+        <ion-col size="4">Barra</ion-col>
+        <ion-col size="3">Menú</ion-col>
+        <ion-col size="2" class="numeroTabla">Cantidad</ion-col>
+        <ion-col size="3" class="numeroTabla">Monto</ion-col>
+      </ion-row>
+      @for (item of listVentasXDiaXMenuFiltrada; track item) {
+        <ion-row class="detalleTabla">
+          <ion-col size="4">{{item.descripcion}}</ion-col>
+          <ion-col size="3">{{item.menu}}</ion-col>
+          <ion-col size="2" class="numeroTabla">{{item.cantidad | number : '1.2-2'}}</ion-col>
+          <ion-col size="3" class="numeroTabla">{{item.monto | number : '1.2-2'}}</ion-col>
+        </ion-row>
+      }
+      <ion-row class="detalleTabla">
+        <ion-col size="7"></ion-col>
+        <ion-col size="2" class="numeroTabla">{{totalCantidad | number : '1.2-2'}}</ion-col>
+        <ion-col size="3" class="numeroTabla">{{totalMonto | number : '1.2-2'}}</ion-col>
+      </ion-row>
+      @if (listVentasXDiaXMenuFiltrada.length === 0) {
+        <ion-row class="detalleTabla">
+          <ion-col size="12" class="numeroTabla">Sin datos</ion-col>
+        </ion-row>
+      }
+    }
+  </ion-grid>
+</ion-content>

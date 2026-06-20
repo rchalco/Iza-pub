@@ -698,6 +698,78 @@ async detalleVentasXDiaXMenu(fecha:Date, fechaFin:Date) {
       );
   }
 
+  async detalleVentasXDiaFechaProceso(_idFechaProceso) {
+    const urlQuery = urlMicroventa + 'DetalleVentasXDiaFechaProceso';
+    const dataRequest = {
+      idSesion: 0,
+      idFechaProceso: _idFechaProceso,
+      fechaProceso: new Date(),
+    };
+    await this.getInfoEviroment().then((env) => {
+      dataRequest.idSesion = env.session;
+    });
+
+    this.presentLoader();
+
+    return this.httpClient
+      .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
+      .pipe(
+        finalize(() => {
+          this.dismissLoader();
+        }),
+        catchError((error) => {
+          console.error(error);
+          this.showMessageError('No se tiene comunicacion con el servidor');
+          return throwError(() => new Error(error.status));
+        })
+      );
+  }
+
+  async obtenerUltimasFechasProceso() {
+    const urlQuery = urlMicroventa + 'ObtenerUltimasFechasProceso';
+
+    this.presentLoader();
+
+    return this.httpClient
+      .post<any>(urlQuery, {}, { headers })
+      .pipe(
+        finalize(() => {
+          this.dismissLoader();
+        }),
+        catchError((error) => {
+          console.error(error);
+          this.showMessageError('No se tiene comunicacion con el servidor');
+          return throwError(() => new Error(error.status));
+        })
+      );
+  }
+
+  async detalleVentasXDiaXMenuFechaProceso(_idFechaProceso) {
+    const urlQuery = urlMicroventa + 'DetalleVentasXDiaXMenuFechaProceso';
+    const dataRequest = {
+      idSesion: 0,
+      idFechaProceso: _idFechaProceso,
+      fechaProceso: new Date(),
+    };
+    await this.getInfoEviroment().then((env) => {
+      dataRequest.idSesion = env.session;
+    });
+
+    this.presentLoader();
+
+    return this.httpClient
+      .post<any>(urlQuery, JSON.stringify(dataRequest), { headers })
+      .pipe(
+        finalize(() => {
+          this.dismissLoader();
+        }),
+        catchError((error) => {
+          console.error(error);
+          this.showMessageError('No se tiene comunicacion con el servidor');
+          return throwError(() => new Error(error.status));
+        })
+      );
+  }
 
   async anulaPedido(_idPedidoMaster) {
     const urlQuery = urlMicroventa + 'AnulaPedido';

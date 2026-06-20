@@ -4,6 +4,7 @@ using DevExpress.XtraReports;
 using DevExpress.XtraReports.UI;
 using iText.Layout.Element;
 using Iza.Core.Base;
+using Iza.Core.DBEntities;
 using Iza.Core.Domain.General;
 using Iza.Core.Domain.Iventario;
 using Iza.Core.Domain.Reportes;
@@ -567,7 +568,8 @@ namespace Iza.Core.Engine.Ventas
                     requestSPObtFormasDePago.idSesion,
                     requestSPObtFormasDePago.idFechaProceso,
                     paramOutRespuesta,
-                    paramOutLogRespuesta);
+paramOutLogRespuesta);
+
             }
             catch (Exception ex)
             {
@@ -576,6 +578,47 @@ namespace Iza.Core.Engine.Ventas
             return response;
         }
 
+        public ResponseQuery<ResponseVentasXDiaFechaProceso> DetalleVentasXDiaFechaProceso(GeneralRequestFecha requestGeneral)
+        {
+            ResponseQuery<ResponseVentasXDiaFechaProceso> response = new ResponseQuery<ResponseVentasXDiaFechaProceso> { Message = "Detalle obtenido", State = ResponseType.Success };
+            try
+            {
+                ParamOut paramOutLogRespuesta = new ParamOut("");
+                paramOutLogRespuesta.Size = 100;
+
+                response.ListEntities = repositoryPub.GetDataByProcedure<ResponseVentasXDiaFechaProceso>("[reportes].[spObtVentasXDiaFechaProceso]",
+                    requestGeneral.idSesion,
+                    requestGeneral.idFechaProceso,
+                    paramOutLogRespuesta);
+
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
+        public ResponseQuery<ResponseVentasXDiaXMenu> DetalleVentasXDiaXMenuFechaProceso(GeneralRequestFecha requestGeneral)
+        {
+            ResponseQuery<ResponseVentasXDiaXMenu> response = new ResponseQuery<ResponseVentasXDiaXMenu> { Message = "Detalle obtenido", State = ResponseType.Success };
+            try
+            {
+                ParamOut paramOutLogRespuesta = new ParamOut("");
+                paramOutLogRespuesta.Size = 100;
+
+                response.ListEntities = repositoryPub.GetDataByProcedure<ResponseVentasXDiaXMenu>("[reportes].[spObtVentasXDiaXMenuFechaProceso]",
+                    requestGeneral.idSesion,
+                    requestGeneral.idFechaProceso,
+                    paramOutLogRespuesta);
+
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
         public ResponseQuery<DetallePedidosDTO> DetallePedidoPorFormaPago(GeneralRequestRangoFecha requestGeneral)
         {
             ResponseQuery<DetallePedidosDTO> response = new ResponseQuery<DetallePedidosDTO> { Message = "Detalle de pedidos del dia obtenidos", State = ResponseType.Success };
@@ -875,6 +918,31 @@ namespace Iza.Core.Engine.Ventas
             return response;
         }
         #endregion
+
+        public ResponseQuery<FechaProcesoDTO> ObtenerUltimasFechasProceso()
+        {
+            ResponseQuery<FechaProcesoDTO> response = new ResponseQuery<FechaProcesoDTO> { Message = "Fechas obtenidas", State = ResponseType.Success };
+            try
+            {
+                response.ListEntities = repositoryPub.Getall<TFechasProceso>()
+                    .OrderByDescending(x => x.IdFechaProceso)
+                    .Take(20)
+                    .Select(x => new FechaProcesoDTO
+                    {
+                        idFechaProceso = x.IdFechaProceso,
+                        idSesion = x.IdSesion,
+                        FechaDeProceso = x.FechaDeProceso,
+                        FechaRegistro = x.FechaRegistro,
+                        FechaCierre = x.FechaCierre
+                    })
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
 
         #region Reportes Cola
         public ResponseQuery<PrinterLineResponse> GetDocumentPending(PrinterLineRequest printerLineRequest)

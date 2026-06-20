@@ -185,6 +185,32 @@ namespace Iza.Services.Sevices
             return mgrVentas.DetalleVentasXDia(request);
         }
 
+        [HttpPost("DetalleVentasXDiaFechaProceso")]
+        [EnableCors()]
+        public ResponseQuery<ResponseVentasXDiaFechaProceso> DetalleVentasXDiaFechaProceso(GeneralRequestFecha request)
+        {
+            EngineVentas mgrVentas = new EngineVentas();
+            return mgrVentas.DetalleVentasXDiaFechaProceso(request);
+        }
+
+        [HttpPost("DetalleVentasXDiaXMenuFechaProceso")]
+        [EnableCors()]
+        public ResponseQuery<ResponseVentasXDiaXMenu> DetalleVentasXDiaXMenuFechaProceso(GeneralRequestFecha request)
+        {
+            EngineVentas mgrVentas = new EngineVentas();
+            return mgrVentas.DetalleVentasXDiaXMenuFechaProceso(request);
+        }
+
+        #endregion
+
+        #region Fechas Proceso
+        [HttpPost("ObtenerUltimasFechasProceso")]
+        [EnableCors()]
+        public ResponseQuery<FechaProcesoDTO> ObtenerUltimasFechasProceso()
+        {
+            EngineVentas mgrVentas = new EngineVentas();
+            return mgrVentas.ObtenerUltimasFechasProceso();
+        }
         #endregion
 
         #region Reportes Cola

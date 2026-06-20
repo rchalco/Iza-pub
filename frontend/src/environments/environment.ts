@@ -4,6 +4,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 import { HttpHeaders } from '@angular/common/http';
+import { buildProtocolAwareUrl, getTransportProtocol } from '../app/helpers/protocol.helper';
 
 ///Configuraciones:
 ///Lavanderia Jeffry: idEmpresa: 1 BD: DBTintoreriaGamaFac
@@ -34,7 +35,8 @@ export const HEADERS_SERVICE = new HttpHeaders({
 });
 
 // Create our number formatter.
-export const customFormatter = (data) => {
+export const customFormatter = (data: number | string) => {
+  const value = typeof data === 'string' ? Number(data) : data;
   const format = new Intl.NumberFormat('es-BO', {
     style: 'currency',
     currency: 'USD',
@@ -42,7 +44,7 @@ export const customFormatter = (data) => {
     //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
     //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
   });
-  return format.format(data).replace('USD', 'Bs.');
+  return format.format(value).replace('USD', 'Bs.');
 };
 
 //DEV
@@ -106,6 +108,12 @@ export const LogoVoucher = '';
 // export const URL_PERSON = 'http://localhost:8001/api/Person/';
 // export const URL_CARDS = 'http://localhost:8001/api/Tarjeta/';
 // export const URL_FINGERS = 'http://localhost:8001/api/Biometric/';
+
+// const isSecureContext = typeof window !== 'undefined' && window.location?.protocol === 'https:';
+// export const WEBSOCKET_BASE_URL = buildProtocolAwareUrl(
+//   URL_MIROVENTA,
+//   getTransportProtocol(isSecureContext, 'ws')
+// );
 
 //SERVER PRUEBA
 

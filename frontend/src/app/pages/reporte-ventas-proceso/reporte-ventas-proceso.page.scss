@@ -1,0 +1,192 @@
+.cabeceraTabla {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  color: #ffffff;
+  font-weight: 700;
+  align-items: center;
+  font-size: 13px;
+  padding: 10px 6px;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.detalleTabla {
+  align-items: center;
+  font-size: 13px;
+  background-color: #ffffff;
+  color: #1f2937;
+  padding: 8px 6px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.detalleTabla:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+.detalleTabla:active {
+  background-color: #eff6ff;
+}
+
+.numeroTabla {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: #111827;
+}
+
+.segmentoActivo {
+  background-color: #1d048b;
+  color: white;
+}
+
+.filtroBarra {
+  --background: #ffffff;
+  border-radius: 10px;
+  padding: 4px 8px;
+  margin: 8px 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.fila-filtros ion-item {
+  --background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.fila-filtros ion-select,
+.filtroBarra ion-select {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1f2937;
+}
+
+.fecha-resumen {
+  margin: 4px 0 8px;
+  padding: 8px;
+  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+  border-radius: 10px;
+  color: #1e40af;
+
+  h2 {
+    font-size: 15px;
+    font-weight: 700;
+    margin: 0;
+    text-transform: capitalize;
+  }
+}
+
+.fila-filtros {
+  align-items: flex-end;
+}
+
+.boton-imprimir-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding-bottom: 0;
+}
+
+.boton-imprimir-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.boton-imprimir {
+  width: 52px;
+  height: 52px;
+  --border-radius: 50%;
+  --padding-start: 0;
+  --padding-end: 0;
+  --padding-top: 0;
+  --padding-bottom: 0;
+  margin: 0;
+  --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  ion-icon {
+    font-size: 26px;
+  }
+}
+
+.impresoraInfo {
+  display: block;
+  margin-top: 6px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  color: #6b7280;
+}
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  app-custom-header {
+    display: none !important;
+  }
+
+  ion-content {
+    --background: white;
+    height: auto !important;
+  }
+
+  ion-content::part(scroll) {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    position: static !important;
+  }
+
+  .inner-scroll,
+  .scroll-y,
+  .scroll-content {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+    position: static !important;
+  }
+
+  ion-grid {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  .cabeceraTabla {
+    background-color: #333 !important;
+    color: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    font-size: 9px !important;
+  }
+
+  .detalleTabla {
+    background-color: white !important;
+    color: black !important;
+    border-color: #999 !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    font-size: 9px !important;
+  }
+
+  ion-col {
+    padding: 2px 4px !important;
+  }
+
+  .fecha-resumen {
+    margin: 0 0 10px !important;
+    padding: 6px !important;
+    background: #ffffff !important;
+    color: #111827 !important;
+    border: 1px solid #d1d5db !important;
+  }
+
+  .fecha-resumen h2 {
+    font-size: 12px !important;
+    margin: 0 !important;
+  }
+}
