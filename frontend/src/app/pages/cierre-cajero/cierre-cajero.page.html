@@ -20,6 +20,20 @@
             <ion-button (click)="realizarCierre()" expand="block">
               Realizar Cierre
             </ion-button>
+            @if (hasPendingPrint) {
+              <ion-button
+                color="danger"
+                expand="block"
+                class="pending-print-btn"
+                (click)="reintentarImpresion()"
+              >
+                <ion-icon name="refresh-circle" slot="start"></ion-icon>
+                Reintentar impresion pendiente
+                @if (preferredPrinterName) {
+                  ({{preferredPrinterName}})
+                }
+              </ion-button>
+            }
           </ion-item>
         </ion-list>
         @if (currentCajero) {

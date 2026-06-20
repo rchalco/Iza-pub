@@ -21,3 +21,15 @@
 .numeroTabla {
   text-align: right;
 }
+
+.pending-print-btn {
+  margin-top: 8px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  --border-radius: 10px;
+  --box-shadow: 0 8px 16px -8px rgba(220, 38, 38, 0.7);
+}
+
+.pending-print-btn ion-icon {
+  font-size: 18px;
+}

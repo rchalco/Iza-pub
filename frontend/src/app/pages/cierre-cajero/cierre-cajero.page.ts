@@ -1,6 +1,8 @@
 import { environment } from './../../../environments/environment.prod';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Platform } from '@ionic/angular';
+import { PrinterHelper } from 'src/app/helpers/printer.helper';
 import { DataDocumento } from 'src/app/interfaces/general/documento';
 import { DocumentoService } from 'src/app/services/documento.service';
 import { VentaService } from 'src/app/services/venta.service';
@@ -20,20 +22,35 @@ export class CierreCajeroPage implements OnInit {
   cajeros = [];
   currentCajero;
   observaciones = '';
+  hasPendingPrint = false;
+  preferredPrinterName = '';
 
   constructor(
     private ventaService: VentaService,
     private documentoService: DocumentoService,
+    private platform: Platform,
     private router: Router
   ) { }
 
   ngOnInit() {
+    this.actualizarEstadoImpresionPendiente();
     this.obtieneCajeros();
+  }
+
+  ionViewWillEnter() {
+    this.actualizarEstadoImpresionPendiente();
+  }
+
+  actualizarEstadoImpresionPendiente() {
+    const pendingPdfBase64 = PrinterHelper.getPendingSalePrint();
+    const preferredPrinter = PrinterHelper.getPreferredPrinter();
+    this.hasPendingPrint = !!pendingPdfBase64;
+    this.preferredPrinterName = preferredPrinter.name || preferredPrinter.address || '';
   }
 
   obtieneCajeros() {
 
-    
+
     this.ventaService.obtenerCajeros().then((service) => {
       service.subscribe((resul) => {
         console.log('obtenerCajeros', resul);
@@ -159,5 +176,37 @@ export class CierreCajeroPage implements OnInit {
     console.log('Documento', doc);
 
     this.documentoService.generarDocumentoMultiPlataforma(doc);
+  }
+
+  async reintentarImpresion(): Promise<void> {
+    const pendingPdfBase64 = PrinterHelper.getPendingSalePrint();
+
+    if (!pendingPdfBase64) {
+      this.hasPendingPrint = false;
+      this.ventaService.showMessageWarning('No hay una impresion pendiente para reintentar.');
+      return;
+    }
+
+    if (!(this.platform.is('android') || this.platform.is('ios'))) {
+      this.ventaService.showMessageWarning('El reintento de impresion aplica en dispositivos moviles.');
+      return;
+    }
+
+    const preferredPrinter = PrinterHelper.getPreferredPrinter().address;
+    if (!preferredPrinter) {
+      this.ventaService.showMessageWarning('Configura una impresora para reintentar la impresion.');
+      this.router.navigate(['/config-printer']);
+      return;
+    }
+
+    try {
+      await PrinterHelper.printPdfBase64(pendingPdfBase64, preferredPrinter);
+      PrinterHelper.clearPendingSalePrint();
+      this.hasPendingPrint = false;
+      this.ventaService.showMessageSucess('Impresion realizada correctamente.');
+    } catch (error) {
+      console.error('Error al reintentar impresion en cierre-cajero:', error);
+      this.ventaService.showMessageWarning('No se pudo reintentar la impresion. Verifica la impresora.');
+    }
   }
 }
