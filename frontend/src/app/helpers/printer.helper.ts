@@ -8,6 +8,8 @@ export interface StoredPrinterConfig {
   name: string | null;
 }
 
+const PRINTER_TIMEOUT_MS = 10000;
+
 export class PrinterHelper {
   static readonly PRINTER_STORAGE_KEY = 'preferredPrinter';
   static readonly PRINTER_NAME_STORAGE_KEY = 'preferredPrinterName';
@@ -58,9 +60,24 @@ export class PrinterHelper {
     );
   }
 
+  static async timeoutPromise<T>(promise: Promise<T>, label: string): Promise<T> {
+    let timer: ReturnType<typeof setTimeout>;
+    const timeout = new Promise<never>((_, reject) => {
+      timer = setTimeout(() => reject(new Error(`Timeout (${PRINTER_TIMEOUT_MS}ms) en operación: ${label}`)), PRINTER_TIMEOUT_MS);
+    });
+    try {
+      return await Promise.race([promise, timeout]);
+    } finally {
+      clearTimeout(timer!);
+    }
+  }
+
   static async connectToPrinter(address: string): Promise<void> {
     try {
-      await CapacitorThermalPrinter.connect({ address });
+      await PrinterHelper.timeoutPromise(
+        CapacitorThermalPrinter.connect({ address }),
+        `connect(${address})`,
+      );
       return;
     } catch (error: unknown) {
       if (PrinterHelper.isAlreadyConnectedError(error)) {
@@ -68,13 +85,25 @@ export class PrinterHelper {
       }
     }
 
-    await CapacitorThermalPrinter.disconnect().catch(() => undefined);
-    await CapacitorThermalPrinter.connect({ address });
+    await PrinterHelper.timeoutPromise(
+      CapacitorThermalPrinter.disconnect(),
+      'disconnect(retry)',
+    ).catch(() => undefined);
+    await PrinterHelper.timeoutPromise(
+      CapacitorThermalPrinter.connect({ address }),
+      `connect-retry(${address})`,
+    );
   }
 
   static async reconnectToPrinter(address: string): Promise<void> {
-    await CapacitorThermalPrinter.disconnect().catch(() => undefined);
-    await CapacitorThermalPrinter.connect({ address });
+    await PrinterHelper.timeoutPromise(
+      CapacitorThermalPrinter.disconnect(),
+      'disconnect(reconnect)',
+    ).catch(() => undefined);
+    await PrinterHelper.timeoutPromise(
+      CapacitorThermalPrinter.connect({ address }),
+      `connect-reconnect(${address})`,
+    );
   }
 
   static async printPdfBase64(base64: string, printerAddress: string): Promise<void> {
@@ -157,6 +186,9 @@ export class PrinterHelper {
       }
     }
 
-    await CapacitorThermalPrinter.write();
+    await PrinterHelper.timeoutPromise(
+      CapacitorThermalPrinter.write(),
+      'writeImageBlobs',
+    );
   }
 }

@@ -167,7 +167,7 @@ export class BandejaPedidosCajeroPage implements OnInit {
       console.error('Error al reimprimir comprobante:', error);
       PrinterHelper.savePendingSalePrint(base64);
       this.ventaService.showMessageWarning(
-        'No se pudo imprimir. Verifica la impresora y vuelve a configurar.',
+        'Impresora desconectada apague y prenda su bluetooth nuevamente\n\nNo se pudo imprimir. Verifica la impresora y vuelve a configurar.',
       );
       this.router.navigate(['/config-printer']);
     }

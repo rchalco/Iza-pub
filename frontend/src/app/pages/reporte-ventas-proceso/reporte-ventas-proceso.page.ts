@@ -205,7 +205,7 @@ export class ReporteVentasProcesoPage implements OnInit {
         console.error('Error al imprimir reporte de ventas por proceso:', error);
         PrinterHelper.savePendingSalePrint(base64String);
         this.ventaService.showMessageWarning(
-          'No se pudo imprimir. Verifica la impresora y vuelve a configurar.',
+          'Impresora desconectada apague y prenda su bluetooth nuevamente\n\nNo se pudo imprimir. Verifica la impresora y vuelve a configurar.',
         );
         this.router.navigate(['/config-printer']);
       }

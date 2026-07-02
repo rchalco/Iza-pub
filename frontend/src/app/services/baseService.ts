@@ -5,6 +5,9 @@ import notify from 'devextreme/ui/notify';
 
 export class BaseService {
   static isLoading = false;
+  private static pendingCount = 0;
+  private static presentPromise: Promise<void> | null = null;
+  private static currentLoader: HTMLIonLoadingElement | null = null;
 
   constructor(
     public databaseService: DatabaseService,
@@ -14,28 +17,53 @@ export class BaseService {
   ) { }
 
   public async presentLoader() {
+    BaseService.pendingCount++;
     BaseService.isLoading = true;
-    return await this.loadingController
-      .create({
-        duration: 5000,
+
+    if (BaseService.currentLoader || BaseService.presentPromise) {
+      return;
+    }
+
+    BaseService.presentPromise = (async () => {
+      const loader = await this.loadingController.create({
         message: 'Procesando...',
-      })
-      .then((a) => {
-        a.present().then(() => {
-          console.log('presented');
-          if (!BaseService.isLoading) {
-            a.dismiss().then(() => console.log('abort presenting'));
-          }
-        });
       });
+
+      if (BaseService.pendingCount === 0) {
+        await loader.dismiss().catch(() => {});
+        BaseService.currentLoader = null;
+        return;
+      }
+
+      BaseService.currentLoader = loader;
+      await loader.present();
+    })().finally(() => {
+      BaseService.presentPromise = null;
+    });
+
+    await BaseService.presentPromise;
   }
 
   public async dismissLoader() {
+    if (BaseService.pendingCount > 0) {
+      BaseService.pendingCount--;
+    }
+
+    if (BaseService.pendingCount > 0) {
+      return;
+    }
+
     BaseService.isLoading = false;
-    return await this.loadingController
-      .dismiss()
-      .then(() => console.log('dismissed'))
-      .catch((error) => console.log('error en dismiss loader', error));
+
+    if (BaseService.presentPromise) {
+      await BaseService.presentPromise;
+    }
+
+    if (BaseService.currentLoader) {
+      const loader = BaseService.currentLoader;
+      BaseService.currentLoader = null;
+      await loader.dismiss().catch(() => {});
+    }
   }
 
   public async showMessageResponse(response) {
