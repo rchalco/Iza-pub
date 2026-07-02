@@ -71,3 +71,20 @@
   justify-content: center;
   padding: 60px 0;
 }
+
+.error-state {
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--ion-color-medium);
+
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+}
+
+// ── Network test button ───────────────────────────────────────
+.network-test-btn {
+  margin: 16px;
+}

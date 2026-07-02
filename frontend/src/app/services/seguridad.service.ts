@@ -52,7 +52,7 @@ export class SeguridadService extends BaseService {
         }),
         catchError((error) => {
           console.error('error del login', error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -77,7 +77,7 @@ export class SeguridadService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -125,7 +125,7 @@ export class SeguridadService extends BaseService {
         tap((resul) => { this.menuCache = resul.listEntities; }),
         finalize(() => { this.dismissLoader(); }),
         catchError((error) => {
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -153,7 +153,7 @@ export class SeguridadService extends BaseService {
   //       }),
   //       catchError((error) => {
   //         console.error('error del login', error);
-  //         this.showMessageError('No se tiene comunicacion con el servidor');
+  //         this.showMessageError(this.extractErrorMessage(error));
   //         return throwError(() => new Error(error.status));
   //       })
   //     );

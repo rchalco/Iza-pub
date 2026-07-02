@@ -98,7 +98,7 @@ export class DocumentoService extends BaseService {
           this.dismissLoader();
         }),
         catchError((error) => {
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       )
@@ -132,7 +132,7 @@ export class DocumentoService extends BaseService {
           this.dismissLoader();
         }),
         catchError((error) => {
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           console.error(
             'error en generarDocumentoPartial',
             JSON.stringify(error)

@@ -8,22 +8,38 @@
   </div>
 
   <ion-grid class="menu-grid">
-    <ion-row>
-      @for (item of menuItems; track item.idMenuOpcion) {
-        <ion-col size="6" size-sm="4" size-md="3" size-lg="2">
-          <ion-card button class="menu-card" (click)="navigateTo(item.url)">
-            <ion-card-content class="menu-card__content">
-              <ion-icon [name]="item.icon" class="menu-card__icon"></ion-icon>
-              <p class="menu-card__label">{{ item.title }}</p>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      }
-    </ion-row>
+    @if (!menuCargado) {
+      <div class="empty-state">
+        <ion-spinner name="crescent"></ion-spinner>
+      </div>
+    } @else if (menuError) {
+      <div class="empty-state error-state">
+        <ion-icon name="cloud-offline-outline" size="large" color="medium"></ion-icon>
+        <p>No se pudo cargar el menú</p>
+        <ion-button fill="clear" size="small" (click)="cargarMenu()">
+          <ion-icon slot="start" name="refresh-outline"></ion-icon>
+          Reintentar
+        </ion-button>
+      </div>
+    } @else {
+      <ion-row>
+        @for (item of menuItems; track item.idMenuOpcion) {
+          <ion-col size="6" size-sm="4" size-md="3" size-lg="2">
+            <ion-card button class="menu-card" (click)="navigateTo(item.url)">
+              <ion-card-content class="menu-card__content">
+                <ion-icon [name]="item.icon" class="menu-card__icon"></ion-icon>
+                <p class="menu-card__label">{{ item.title }}</p>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        }
+      </ion-row>
+    }
   </ion-grid>
 
-  <div *ngIf="menuItems.length === 0" class="empty-state">
-    <ion-spinner name="crescent"></ion-spinner>
-  </div>
+  <ion-button expand="block" fill="outline" color="medium" class="network-test-btn" (click)="medirRed()">
+    <ion-icon slot="start" name="wifi-outline"></ion-icon>
+    Medir calidad de red
+  </ion-button>
 
 </ion-content>

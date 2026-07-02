@@ -8,16 +8,29 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ComponentsModule } from './components/components.module';
 import { PipesModule } from './pipes/pipes.module';
-import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, withInterceptors } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage-angular';
-@NgModule({ declarations: [AppComponent],
-    bootstrap: [AppComponent], imports: [BrowserModule,
-        IonicModule.forRoot(),
-        AppRoutingModule,
-        ComponentsModule,
-        PipesModule,
-        IonicStorageModule.forRoot()], providers: [
-        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-        provideHttpClient(withInterceptorsFromDi()),
-    ] })
+import { httpTimeoutInterceptor } from './interceptors/http-timeout.interceptor';
+import { NetworkQualityService } from './services/network-quality.service';
+
+@NgModule({
+  declarations: [AppComponent],
+  bootstrap: [AppComponent],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    ComponentsModule,
+    PipesModule,
+    IonicStorageModule.forRoot()
+  ],
+  providers: [
+    {
+      provide: RouteReuseStrategy,
+      useClass: IonicRouteStrategy
+    },
+    provideHttpClient(withInterceptorsFromDi(), withInterceptors([httpTimeoutInterceptor])),
+    NetworkQualityService
+  ]
+})
 export class AppModule {}

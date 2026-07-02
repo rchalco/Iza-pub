@@ -51,7 +51,7 @@ export class VentaService extends BaseService {
           }),
           catchError((error) => {
             console.error(error);
-            this.showMessageError('No se tiene comunicacion con el servidor');
+            this.showMessageError(this.extractErrorMessage(error));
             return throwError(() => new Error(error.status));
           })
         );
@@ -87,7 +87,7 @@ export class VentaService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -121,7 +121,7 @@ export class VentaService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -143,8 +143,6 @@ export class VentaService extends BaseService {
         usuario: env.Usuario
       };
 
-
-
       this.presentLoader();
       console.log('registrarVenta reqYYYYYYY', dataRequest);
       return this.httpClient
@@ -157,7 +155,7 @@ export class VentaService extends BaseService {
           }),
           catchError((error) => {
             console.error(error);
-            this.showMessageError('No se tiene comunicacion con el servidor');
+            this.showMessageError(this.extractErrorMessage(error));
             return throwError(() => new Error(error.status));
           })
         )
@@ -187,7 +185,7 @@ export class VentaService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -220,7 +218,7 @@ export class VentaService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -252,7 +250,7 @@ export class VentaService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -280,7 +278,7 @@ export class VentaService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -311,7 +309,7 @@ export class VentaService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -339,7 +337,7 @@ export class VentaService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -367,7 +365,7 @@ export class VentaService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -395,7 +393,7 @@ export class VentaService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -427,7 +425,7 @@ export class VentaService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -466,7 +464,7 @@ export class VentaService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -494,7 +492,7 @@ export class VentaService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -521,7 +519,7 @@ export class VentaService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -556,7 +554,7 @@ export class VentaService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -591,7 +589,7 @@ export class VentaService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -622,7 +620,7 @@ export class VentaService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -657,7 +655,7 @@ async detalleVentasXDiaXMenu(fecha:Date, fechaFin:Date) {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -692,7 +690,7 @@ async detalleVentasXDiaXMenu(fecha:Date, fechaFin:Date) {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -719,7 +717,7 @@ async detalleVentasXDiaXMenu(fecha:Date, fechaFin:Date) {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -738,7 +736,7 @@ async detalleVentasXDiaXMenu(fecha:Date, fechaFin:Date) {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -765,7 +763,7 @@ async detalleVentasXDiaXMenu(fecha:Date, fechaFin:Date) {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -799,7 +797,7 @@ async detalleVentasXDiaXMenu(fecha:Date, fechaFin:Date) {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -829,11 +827,12 @@ async detalleVentasXDiaXMenu(fecha:Date, fechaFin:Date) {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
   }
+
 
 
   downLoadFile(data: any, _type: string) {
@@ -857,6 +856,23 @@ async detalleVentasXDiaXMenu(fecha:Date, fechaFin:Date) {
 
 
 
+  downLoadFilePdf(data: any) {
+    //const blob = new Blob([data], { type: 'application/pdf' });
 
+    const binaryData = atob(data);
+    const byteArray = new Uint8Array(binaryData.length);
+    for (let i = 0; i < binaryData.length; i++) {
+      byteArray[i] = binaryData.charCodeAt(i);
+    }
+    const blob = new Blob([byteArray], { type: 'application/pdf' });
+    const url = window.URL.createObjectURL(blob);
+    const pwa = window.open(url);
+    console.log('IMPRIME PDF',blob);
+    if (!pwa || pwa.closed || typeof pwa.closed == 'undefined') {
+      alert(
+        'Por favor deshabilite los bloqueadores de descarga para continuar.'
+      );
+    }
+  }
 
-}
+  }

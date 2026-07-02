@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { SeguridadService } from 'src/app/services/seguridad.service';
+import { ToastController } from '@ionic/angular';
 
 
 @Component({
@@ -14,7 +15,7 @@ export class CustomCameraComponent implements OnInit {
   clickedImage: string;
 
 
-  constructor(baseService: SeguridadService) { }
+  constructor(baseService: SeguridadService, private toastController: ToastController) { }
 
   pickPhotos = async () => {
     const photo = await Camera.getPhoto({
@@ -26,8 +27,15 @@ export class CustomCameraComponent implements OnInit {
       const base64Image = 'data:image/jpeg;base64,' + imageData.base64String;
       this.clickedImage = base64Image;
       this.eventPhoto.emit(base64Image);
-    }, (err) => {
+    }, async (err) => {
       console.error(err);
+      const toast = await this.toastController.create({
+        message: 'Error al capturar la foto: ' + (err.message || 'Error desconocido'),
+        duration: 3000,
+        position: 'top',
+        color: 'danger',
+      });
+      toast.present();
     });
     return photo;
   };

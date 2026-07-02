@@ -50,7 +50,7 @@ export class PersonaService extends BaseService {
           }),
           catchError((error) => {
             console.error(error);
-            this.showMessageError('No se tiene comunicacion con el servidor');
+            this.showMessageError(this.extractErrorMessage(error));
             return throwError(() => new Error(error.status));
           })
         );
@@ -76,7 +76,7 @@ export class PersonaService extends BaseService {
           }),
           catchError((error) => {
             console.error(error);
-            this.showMessageError('No se tiene comunicacion con el servidor');
+            this.showMessageError(this.extractErrorMessage(error));
             return throwError(() => new Error(error.status));
           })
         );

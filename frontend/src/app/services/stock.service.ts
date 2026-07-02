@@ -52,7 +52,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -90,7 +90,7 @@ export class StockService extends BaseService {
         catchError((error) => {
           console.error('dataRequest', dataRequest);
           console.error('error', error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -123,7 +123,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -155,7 +155,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -188,7 +188,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -237,7 +237,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -267,7 +267,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -297,7 +297,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -327,7 +327,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -365,7 +365,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -393,7 +393,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -423,7 +423,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -452,7 +452,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -475,7 +475,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -508,7 +508,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -548,7 +548,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -578,7 +578,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -609,7 +609,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -641,7 +641,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -677,7 +677,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -704,7 +704,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -733,7 +733,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -760,7 +760,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -787,7 +787,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -822,7 +822,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -849,7 +849,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -880,7 +880,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -910,7 +910,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -939,7 +939,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       );
@@ -972,7 +972,7 @@ export class StockService extends BaseService {
         }),
         catchError((error) => {
           console.error(error);
-          this.showMessageError('No se tiene comunicacion con el servidor');
+          this.showMessageError(this.extractErrorMessage(error));
           return throwError(() => new Error(error.status));
         })
       ).subscribe(resul => {
