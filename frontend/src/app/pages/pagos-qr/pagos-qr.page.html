@@ -1,0 +1,91 @@
+<app-custom-header title="Pagos QR"></app-custom-header>
+<ion-content fullscreen class="pagos-qr-page">
+  <div class="pagos-qr">
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!--  Filtro de fecha y resumen                             -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="barra-filtro">
+      <app-custom-calendar
+        class="barra-filtro__fecha"
+        label="Fecha"
+        id="fechaPagosQr"
+        [_value]="fecha"
+        (getValueEmmiter)="cambiarFecha($event)"
+      ></app-custom-calendar>
+
+      <div class="barra-filtro__resumen">
+        <span class="resumen-label">Cobrado</span>
+        <span class="resumen-monto"
+          >{{ moneda }} {{ totalCobrado | number:'1.2-2' }}</span
+        >
+        <span class="resumen-cantidad"
+          >{{ pagos.length }} movimiento{{ pagos.length === 1 ? '' : 's' }}</span
+        >
+      </div>
+
+      <ion-button
+        fill="clear"
+        class="btn-refresh"
+        (click)="consultar()"
+        [disabled]="cargando"
+      >
+        <ion-icon name="refresh-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!--  Estados                                               -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <div class="estado-vacio" *ngIf="cargando">
+      <ion-spinner name="crescent"></ion-spinner>
+      <span>Consultando cobros...</span>
+    </div>
+
+    <div class="estado-vacio" *ngIf="!cargando && pagos.length === 0">
+      <ion-icon name="receipt-outline" class="estado-vacio__icon"></ion-icon>
+      <span>{{ mensaje || 'Sin cobros por QR en la fecha seleccionada' }}</span>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!--  Movimientos                                           -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <ion-grid fixed class="tabla-pagos" *ngIf="!cargando && pagos.length > 0">
+      <ion-row class="tabla-pagos__header">
+        <ion-col size="2">Hora</ion-col>
+        <ion-col size="4">Pagador</ion-col>
+        <ion-col size="3">QR</ion-col>
+        <ion-col size="3">Monto</ion-col>
+      </ion-row>
+      <ion-row class="tabla-pagos__row" *ngFor="let pago of pagos">
+        <ion-col size="2" class="celda-dato">{{ pago.horaPago || '-' }}</ion-col>
+        <ion-col size="4" class="celda-dato celda-nombre">
+          <div class="celda-pagador">
+            <span class="celda-pagador__nombre"
+              >{{ pago.nombrePagador || pago.cuentaPagador || '-' }}</span
+            >
+            <span class="celda-pagador__banco" *ngIf="pago.codigoBancoOrigen"
+              >Banco {{ pago.codigoBancoOrigen }}</span
+            >
+          </div>
+        </ion-col>
+        <ion-col size="3" class="celda-dato celda-qr">{{ pago.qrId }}</ion-col>
+        <ion-col size="3" class="celda-dato celda-monto"
+          >{{ pago.moneda }} {{ pago.monto | number:'1.2-2' }}</ion-col
+        >
+      </ion-row>
+
+      <ion-row class="tabla-pagos__total">
+        <ion-col size="6" class="celda-nombre">Total del dia</ion-col>
+        <ion-col size="3"></ion-col>
+        <ion-col size="3" class="celda-monto"
+          >{{ moneda }} {{ totalCobrado | number:'1.2-2' }}</ion-col
+        >
+      </ion-row>
+    </ion-grid>
+
+    <p class="pagos-qr__nota" *ngIf="!cargando && pagos.length > 0">
+      Reporte del banco para la fecha consultada. Es la fuente para cruzar los cobros
+      por QR contra el cierre de caja.
+    </p>
+  </div>
+</ion-content>

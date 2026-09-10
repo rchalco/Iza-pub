@@ -1,0 +1,136 @@
+<div class="qr-panel">
+  <ion-card class="qr-card">
+    <ion-card-header class="qr-card__header">
+      <ion-card-subtitle>Cobro por QR</ion-card-subtitle>
+      <div class="qr-monto">
+        <span class="qr-monto__label">Monto fijo del QR</span>
+        <span class="qr-monto__valor"
+          >Bs {{ montoEsperado | number:'1.2-2' }}</span
+        >
+      </div>
+    </ion-card-header>
+
+    <ion-card-content class="qr-card__content">
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  QR de esta venta                                  -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="qr-imagen">
+        <div class="qr-imagen__caja" *ngIf="qr && !generandoQr">
+          <img [src]="qrImagenSrc" alt="QR de cobro" class="qr-imagen__img" />
+        </div>
+
+        <div class="qr-imagen__caja qr-imagen__caja--vacia" *ngIf="generandoQr">
+          <ion-spinner name="crescent"></ion-spinner>
+          <span class="qr-imagen__texto">Generando QR...</span>
+        </div>
+
+        <div
+          class="qr-imagen__caja qr-imagen__caja--vacia"
+          *ngIf="!qr && !generandoQr"
+        >
+          <ion-icon name="qr-code-outline" class="qr-imagen__icon"></ion-icon>
+          <span class="qr-imagen__texto">{{ errorQr || 'QR no disponible' }}</span>
+        </div>
+
+        <div class="qr-datos" *ngIf="qr">
+          <span class="qr-datos__item">
+            <ion-icon name="lock-closed-outline"></ion-icon>
+            Monto fijo, no editable
+          </span>
+          <span class="qr-datos__item">
+            <ion-icon name="checkmark-done-outline"></ion-icon>
+            Un solo uso
+          </span>
+          <span class="qr-datos__item">
+            <ion-icon name="business-outline"></ion-icon>
+            Sucursal {{ qr.codigoSucursal }}
+          </span>
+          <span class="qr-datos__item">
+            <ion-icon name="calendar-outline"></ion-icon>
+            Vence {{ qr.fechaVencimiento | date:'dd/MM/yyyy' }}
+          </span>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  Ciclo de verificacion                             -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="qr-ciclo" *ngIf="qr">
+        <div class="qr-ciclo__timer">
+          <span class="qr-ciclo__segundos">{{ segundosRestantes }}</span>
+          <span class="qr-ciclo__unidad">seg</span>
+        </div>
+
+        <div class="qr-ciclo__estado">
+          <ion-spinner
+            name="crescent"
+            class="qr-ciclo__spinner"
+            *ngIf="verificando"
+          ></ion-spinner>
+          <ion-icon
+            name="checkmark-circle"
+            class="qr-ciclo__ok"
+            *ngIf="pagoConfirmado"
+          ></ion-icon>
+          <ion-icon
+            name="time-outline"
+            class="qr-ciclo__idle"
+            *ngIf="!verificando && !pagoConfirmado"
+          ></ion-icon>
+          <span class="qr-ciclo__mensaje">{{ mensajeEstado }}</span>
+        </div>
+      </div>
+
+      <p class="qr-nota" *ngIf="qr && !pagoConfirmado">
+        Al terminar la cuenta regresiva se consulta si este QR ya fue cobrado. Si aun
+        no llega el pago, se vuelve a consultar 60 segundos despues.
+      </p>
+
+      <p class="qr-error" *ngIf="errorVerificacion">
+        <ion-icon name="alert-circle-outline"></ion-icon>
+        {{ errorVerificacion }}
+      </p>
+
+      <!-- ═══════════════════════════════════════════════════ -->
+      <!--  Acciones                                          -->
+      <!-- ═══════════════════════════════════════════════════ -->
+      <div class="qr-acciones">
+        <ion-button
+          class="qr-btn qr-btn--verificar"
+          (click)="verificarAhora()"
+          [disabled]="verificando || !!pagoConfirmado || !qr"
+        >
+          <ion-icon name="refresh-outline" slot="start"></ion-icon>
+          Verificar ahora
+        </ion-button>
+
+        <ion-button
+          class="qr-btn qr-btn--reintentar"
+          fill="outline"
+          (click)="generarQr()"
+          *ngIf="!qr && !generandoQr"
+        >
+          <ion-icon name="qr-code-outline" slot="start"></ion-icon>
+          Reintentar generacion
+        </ion-button>
+
+        <ion-button
+          class="qr-btn qr-btn--cancelar"
+          fill="outline"
+          color="medium"
+          (click)="cancelar()"
+          [disabled]="!!pagoConfirmado"
+        >
+          <ion-icon name="arrow-back-outline" slot="start"></ion-icon>
+          Cancelar cobro
+        </ion-button>
+      </div>
+
+      <p class="qr-aviso" *ngIf="qr && !pagoConfirmado">
+        <ion-icon name="warning-outline"></ion-icon>
+        Si cancela, este QR sigue siendo cobrable hasta su vencimiento. Verifique el
+        movimiento en <strong>Pagos QR</strong> antes de volver a cobrar la venta.
+      </p>
+    </ion-card-content>
+  </ion-card>
+</div>

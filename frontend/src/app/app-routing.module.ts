@@ -43,6 +43,22 @@ const routes: Routes = [
     canActivate: [SessioninitGuard],
   },
   {
+    path: 'funcionalidades',
+    loadChildren: () =>
+      import('./pages/funcionalidades/funcionalidades.module').then(
+        (m) => m.FuncionalidadesPageModule
+      ),
+    canActivate: [SessioninitGuard],
+  },
+  {
+    path: 'pagos-qr',
+    loadChildren: () =>
+      import('./pages/pagos-qr/pagos-qr.module').then(
+        (m) => m.PagosQrPageModule
+      ),
+    canActivate: [SessioninitGuard],
+  },
+  {
     path: 'login',
     loadChildren: () =>
       import('./pages/login/login.module').then((m) => m.LoginPageModule),
@@ -252,7 +268,8 @@ const routes: Routes = [
     path: 'config-printer',
     loadChildren: () => import('./pages/config-printer/config-printer.module').then(m => m.ConfigPrinterPageModule),
     canActivate: [SessioninitGuard],
-  },  {
+  },
+  {
 path: 'reportes-generales',
     loadChildren: () => import('./pages/reportes-generales/reportes-generales.module').then( m => m.ReportesGeneralesPageModule)
   },

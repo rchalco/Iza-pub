@@ -6,7 +6,9 @@ import { Router } from '@angular/router';
 import { ReaderCardComponent } from 'src/app/components/reader-card/reader-card.component';
 import { PrinterHelper } from 'src/app/helpers/printer.helper';
 import { DatosTarjetaDTO } from 'src/app/interfaces/tarjeta/DatosTarjeta';
+import { QrPagadoDTO } from 'src/app/interfaces/pagos/QrPagado';
 import { DetalleVenta } from 'src/app/interfaces/venta/detalleVenta';
+import { FeatureFlagsService } from 'src/app/services/feature-flags.service';
 import { StockService } from 'src/app/services/stock.service';
 import { TarjetaService } from 'src/app/services/tarjeta.service';
 import { VentaService } from 'src/app/services/venta.service';
@@ -29,6 +31,9 @@ interface FormaPagoItem {
   montoCubierto: number;
   Diferencia: number;
 }
+
+/** Forma de pago QR. Debe coincidir con el id que devuelve ObtenerFormasDePago. */
+const FORMA_PAGO_QR = 3;
 
 @Component({
   standalone: false,
@@ -67,6 +72,7 @@ export class VentaExpressPage implements OnInit {
   showMain = true;
   showCobrar = false;
   showPOS = false;
+  showQR = false;
   showCardProductoSelect = false;
   showMessageErrorNOCajaAbierta = false;
   showButtonVolver = false;
@@ -78,6 +84,7 @@ export class VentaExpressPage implements OnInit {
     private ventaService: VentaService,
     private tarjetaService: TarjetaService,
     private stockService: StockService,
+    private featureFlags: FeatureFlagsService,
     private platform: Platform,
     private router: Router,
   ) {}
@@ -88,6 +95,7 @@ export class VentaExpressPage implements OnInit {
 
   ngOnInit(): void {
     this.resetUI();
+    this.featureFlags.cargar();
     this.initAlmacen();
   }
 
@@ -231,6 +239,15 @@ export class VentaExpressPage implements OnInit {
       return;
     }
 
+    // Pago por QR → generar el QR de la venta y esperar la acreditacion.
+    // Con la feature apagada el boton sigue cobrando, pero como el efectivo: registra la
+    // venta al instante. Deshabilitarlo dejaria a la caja sin esa forma de pago.
+    if (idFormaPago === FORMA_PAGO_QR && this.featureFlags.pagoQr) {
+      this.formaPagoActual = idFormaPago;
+      this.mostrarVista('qr');
+      return;
+    }
+
     // Pago con tarjeta/POS → leer tarjeta
     if (idFormaPago === 5) {
       this.mostrarVista('pos');
@@ -265,6 +282,31 @@ export class VentaExpressPage implements OnInit {
   }
 
   cancelarPago(): void {
+    this.resetUI();
+  }
+
+  // ══════════════════════════════════════════════════════════
+  //  Pago por QR
+  // ══════════════════════════════════════════════════════════
+
+  /**
+   * El componente detecto un cobro acreditado por el monto de la venta: recien ahi se
+   * registra. Antes de la acreditacion no hay venta, porque el QR es de monto editable
+   * y el cliente puede pagar de menos o no pagar.
+   */
+  pagoQrConfirmado(pago: QrPagadoDTO): void {
+    console.log('Cobro QR acreditado', pago.qrId, pago.horaPago);
+
+    const formasDePago = [this.crearFormaPago(FORMA_PAGO_QR, this.totalVenta)];
+    const detalles = this.buildDetalleVentas();
+
+    // La vista QR se mantiene hasta que la venta quede registrada: si el registro falla,
+    // el cajero tiene que ver que la plata ya entro y no volver a cobrar.
+    this.ejecutarVenta(detalles, formasDePago, '');
+  }
+
+  /** Vuelve al pedido dejando el carrito intacto: el cobro no llego a ocurrir. */
+  cancelarPagoQr(): void {
     this.resetUI();
   }
 
@@ -332,15 +374,17 @@ export class VentaExpressPage implements OnInit {
     this.showMain = true;
     this.showCobrar = false;
     this.showPOS = false;
+    this.showQR = false;
     this.showButtonVolver = false;
     this.formaPagoActual = 0;
   }
 
-  /** Cambia la vista activa: 'main', 'cobrar' o 'pos'. */
-  private mostrarVista(vista: 'main' | 'cobrar' | 'pos'): void {
+  /** Cambia la vista activa: 'main', 'cobrar', 'pos' o 'qr'. */
+  private mostrarVista(vista: 'main' | 'cobrar' | 'pos' | 'qr'): void {
     this.showMain = vista === 'main';
     this.showCobrar = vista === 'cobrar';
     this.showPOS = vista === 'pos';
+    this.showQR = vista === 'qr';
   }
 
   /** Crea un objeto de forma de pago. */

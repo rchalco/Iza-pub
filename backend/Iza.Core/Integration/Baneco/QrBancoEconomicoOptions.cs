@@ -22,14 +22,11 @@ namespace Iza.Core.Integration.Baneco
         public string Moneda { get; private set; } = "BOB";
         public string CodigoSucursal { get; private set; } = string.Empty;
 
-        /// <summary>Vigencia del QR en dias. 30 = "el QR del mes".</summary>
-        public int DiasVigencia { get; private set; } = 30;
-
         /// <summary>
-        /// Dias antes del vencimiento en que la cache deja de entregar el QR y emite el siguiente.
-        /// Evita que un QR se entregue el mismo dia en que deja de aceptar pagos.
+        /// Vigencia del QR en dias, contada desde su emision. Cada venta emite el suyo, asi que 1 basta:
+        /// un margen amplio solo deja codigos cobrables sueltos despues de cerrada la caja.
         /// </summary>
-        public int DiasMargenRenovacion { get; private set; } = 1;
+        public int DiasVigencia { get; private set; } = 1;
 
         public int TimeoutSegundos { get; private set; } = 30;
 
@@ -55,18 +52,10 @@ namespace Iza.Core.Integration.Baneco
                 ApiKey = (Environment.GetEnvironmentVariable(VariableApiKey) ?? seccion["ApiKey"] ?? string.Empty).Trim(),
                 Moneda = Texto(seccion["Moneda"], "BOB"),
                 CodigoSucursal = (seccion["CodigoSucursal"] ?? string.Empty).Trim(),
-                DiasVigencia = Entero(seccion["DiasVigencia"], 30, 1, 365),
-                DiasMargenRenovacion = Entero(seccion["DiasMargenRenovacion"], 1, 0, 30),
+                DiasVigencia = Entero(seccion["DiasVigencia"], 1, 1, 365),
                 TimeoutSegundos = Entero(seccion["TimeoutSegundos"], 30, 5, 300),
                 CuentaBaneco = (seccion["CuentaBaneco"] ?? string.Empty).Trim()
             };
-
-            if (opciones.DiasMargenRenovacion >= opciones.DiasVigencia)
-            {
-                // Un margen mayor que la vigencia dejaria la cache siempre vencida: cada solicitud
-                // emitiria un QR nuevo contra el banco.
-                opciones.DiasMargenRenovacion = 0;
-            }
 
             return opciones;
         }

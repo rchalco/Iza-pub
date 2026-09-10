@@ -1,0 +1,69 @@
+<app-custom-header title="Funcionalidades"></app-custom-header>
+<ion-content fullscreen class="funcionalidades-page">
+  <div class="funcionalidades">
+    <p class="funcionalidades__intro">
+      Funciones que se pueden activar o desactivar en este equipo. El cambio se guarda
+      localmente y aplica de inmediato, sin reiniciar la aplicacion.
+    </p>
+
+    <div class="estado-carga" *ngIf="cargando">
+      <ion-spinner name="crescent"></ion-spinner>
+      <span>Cargando configuracion...</span>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!--  Cobro por QR                                          -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <ion-card class="feature-card" *ngIf="!cargando">
+      <ion-card-content class="feature-card__content">
+        <div class="feature-card__cabecera">
+          <div class="feature-card__icono">
+            <ion-icon name="qr-code-outline"></ion-icon>
+          </div>
+          <div class="feature-card__titulo">
+            <span class="feature-card__nombre">Cobro por QR</span>
+            <span
+              class="feature-card__estado"
+              [class.feature-card__estado--on]="pagoQr"
+              >{{ pagoQr ? 'Habilitado' : 'Deshabilitado' }}</span
+            >
+          </div>
+          <ion-toggle
+            class="feature-card__toggle"
+            [(ngModel)]="pagoQr"
+            [disabled]="guardando"
+            (ionChange)="cambiarPagoQr($event.detail.checked)"
+          ></ion-toggle>
+        </div>
+
+        <p class="feature-card__descripcion">
+          Genera un QR de un solo uso y monto fijo por cada venta, y espera la
+          acreditacion del banco antes de registrarla.
+        </p>
+
+        <div class="feature-card__efecto">
+          <div class="efecto">
+            <ion-icon name="checkmark-circle-outline" class="efecto__on"></ion-icon>
+            <span
+              ><strong>Habilitado:</strong> el boton QR abre la pantalla de cobro y el
+              menu muestra <strong>Pagos QR</strong>.</span
+            >
+          </div>
+          <div class="efecto">
+            <ion-icon name="cash-outline" class="efecto__off"></ion-icon>
+            <span
+              ><strong>Deshabilitado:</strong> el boton QR sigue disponible y cobra como
+              el efectivo, registrando la venta al instante.</span
+            >
+          </div>
+        </div>
+
+        <p class="feature-card__aviso">
+          <ion-icon name="information-circle-outline"></ion-icon>
+          La configuracion es de este equipo. No afecta a otras cajas ni a los QR ya
+          emitidos, que siguen siendo cobrables hasta su vencimiento.
+        </p>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

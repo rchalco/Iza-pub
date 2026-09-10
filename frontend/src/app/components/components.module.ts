@@ -18,6 +18,7 @@ import { CustomCameraComponent } from './custom-camera/custom-camera.component';
 import { FingerCaptureComponent } from './finger-capture/finger-capture.component';
 import { DxBulletModule, DxDataGridModule, DxDrawerModule, DxListModule, DxTemplateModule, DxToolbarModule } from 'devextreme-angular';
 import { DetalleIngredientesComponent } from './detalle-ingredientes/detalle-ingredientes.component';
+import { PagoQrComponent } from './pago-qr/pago-qr.component';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { DetalleIngredientesComponent } from './detalle-ingredientes/detalle-ing
     CustomCameraComponent,
     FingerCaptureComponent,
     DetalleIngredientesComponent,
+    PagoQrComponent,
   ],
   exports: [
     CustomHeaderComponent,
@@ -50,6 +52,7 @@ import { DetalleIngredientesComponent } from './detalle-ingredientes/detalle-ing
     CustomCameraComponent,
     FingerCaptureComponent,
     DetalleIngredientesComponent,
+    PagoQrComponent,
   ],
   imports: [CommonModule, IonicModule, RouterModule, PipesModule, FormsModule, DxDrawerModule, DxToolbarModule, DxListModule, DxDataGridModule,
     DxTemplateModule, DxBulletModule],

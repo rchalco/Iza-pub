@@ -9,8 +9,9 @@ export class DatabaseService {
     this.storage.create();
   }
 
+  /** Devuelve la promesa para poder esperar la escritura; los llamadores que no la usan no cambian. */
   setItem(key, _object) {
-    this.storage.set(key, _object).then();
+    return this.storage.set(key, _object);
   }
 
   getItem(key) {

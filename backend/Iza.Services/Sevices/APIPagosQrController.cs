@@ -8,22 +8,34 @@ namespace Iza.Services.Sevices
 {
     /// <summary>
     /// Cobros por QR de Banco Economico. Toda la conversacion con el banco pasa por el proxy
-    /// qr-banco-economico: Iza solo emite el QR del mes y consulta que se cobro.
+    /// qr-banco-economico: Iza emite un QR por venta y verifica su cobro.
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class APIPagosQrController : ControllerBase
     {
         /// <summary>
-        /// Devuelve el QR de cobro vigente de la sucursal. Se emite una vez por periodo y se sirve desde
-        /// cache el resto del mes; <c>forzarRenovacion</c> emite uno nuevo aunque el vigente no haya vencido.
+        /// Emite el QR de cobro de una venta. Es de un solo uso y de monto fijo: el pagador no puede
+        /// alterar el importe ni reutilizar el codigo.
         /// </summary>
-        [HttpPost("ObtieneQrMensual")]
+        [HttpPost("GeneraQrTransaccion")]
         [EnableCors()]
-        public async Task<ResponseObject<QrMensualDTO>> ObtieneQrMensual(RequestQrMensual requestQrMensual, CancellationToken ct)
+        public async Task<ResponseObject<QrTransaccionDTO>> GeneraQrTransaccion(RequestQrTransaccion requestQrTransaccion, CancellationToken ct)
         {
             EnginePagosQr mgrPagosQr = new EnginePagosQr();
-            return await mgrPagosQr.ObtieneQrMensual(requestQrMensual, ct);
+            return await mgrPagosQr.GeneraQrTransaccion(requestQrTransaccion, ct);
+        }
+
+        /// <summary>
+        /// Verifica si un QR puntual ya fue cobrado. Devuelve estado <c>NoData</c> mientras el pago no
+        /// se acredite: es la respuesta normal mientras la caja espera, no un error.
+        /// </summary>
+        [HttpPost("ConsultaPagoQr")]
+        [EnableCors()]
+        public async Task<ResponseObject<QrPagadoDTO>> ConsultaPagoQr(RequestConsultaPagoQr requestConsultaPagoQr, CancellationToken ct)
+        {
+            EnginePagosQr mgrPagosQr = new EnginePagosQr();
+            return await mgrPagosQr.ConsultaPagoQr(requestConsultaPagoQr, ct);
         }
 
         /// <summary>Lista los cobros por QR acreditados en una fecha. El banco reporta por dia, no por rango.</summary>

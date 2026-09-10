@@ -204,6 +204,17 @@
   ></app-forma-pago>
 
   <!-- ═══════════════════════════════════════════════════════ -->
+  <!--  Pago por QR                                           -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <app-pago-qr
+    *ngIf="showQR"
+    [montoEsperado]="totalVenta"
+    descripcion="Venta express"
+    (eventPagoConfirmado)="pagoQrConfirmado($event)"
+    (eventCancelar)="cancelarPagoQr()"
+  ></app-pago-qr>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
   <!--  Pago con tarjeta / POS                                -->
   <!-- ═══════════════════════════════════════════════════════ -->
   <div *ngIf="showPOS" class="pos-panel">

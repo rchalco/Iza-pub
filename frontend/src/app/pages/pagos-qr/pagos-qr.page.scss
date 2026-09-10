@@ -1,0 +1,247 @@
+/* -----------------------------------------------------------
+   Pagos QR – mismo lenguaje visual que Venta Express.
+   ----------------------------------------------------------- */
+
+:host {
+  --pos-primary: #104c77;
+  --pos-secondary: #009ba2;
+
+  --pos-bg-card-strong: #ffffff;
+
+  --pos-border: rgba(16, 76, 119, 0.12);
+  --pos-border-soft: rgba(16, 76, 119, 0.06);
+
+  --pos-text: #1c2b36;
+  --pos-text-soft: #6b7c8a;
+
+  --pos-success: #1a7a32;
+  --pos-shadow-sm: 0 4px 12px rgba(16, 76, 119, 0.06);
+  --pos-shadow-md: 0 10px 25px rgba(16, 76, 119, 0.08);
+}
+
+.pagos-qr-page {
+  --background:
+    radial-gradient(circle at top left, rgba(0, 155, 162, 0.1), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(16, 76, 119, 0.08), transparent 30%),
+    linear-gradient(180deg, #f4f7fb 0%, #e9eff5 100%);
+}
+
+.pagos-qr {
+  padding: 12px 10px 24px;
+  max-width: 860px;
+  margin: 0 auto;
+
+  @media (min-width: 768px) {
+    padding: 16px 20px 28px;
+  }
+
+  &__nota {
+    margin: 12px 4px 0;
+    font-size: 0.72rem;
+    line-height: 1.35;
+    text-align: center;
+    color: var(--pos-text-soft);
+  }
+}
+
+/* -----------------------------------------------------------
+   Filtro y resumen
+   ----------------------------------------------------------- */
+.barra-filtro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  background: rgba(255, 255, 255, 0.86);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--pos-border);
+  border-radius: 18px;
+  box-shadow: var(--pos-shadow-md);
+
+  &__fecha {
+    flex: 1 1 220px;
+    min-width: 200px;
+
+    ion-item {
+      --background: transparent;
+      --padding-start: 0;
+      --inner-padding-end: 0;
+    }
+  }
+
+  &__resumen {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    line-height: 1.15;
+  }
+}
+
+.resumen-label {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--pos-text-soft);
+}
+
+.resumen-monto {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--pos-success);
+}
+
+.resumen-cantidad {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--pos-text-soft);
+}
+
+.btn-refresh {
+  --color: var(--pos-primary);
+  margin: 0;
+}
+
+/* -----------------------------------------------------------
+   Estados
+   ----------------------------------------------------------- */
+.estado-vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 46px 16px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--pos-text-soft);
+
+  &__icon {
+    font-size: 2.2rem;
+    color: var(--pos-primary);
+    opacity: 0.6;
+  }
+}
+
+/* -----------------------------------------------------------
+   Tabla de movimientos
+   ----------------------------------------------------------- */
+.tabla-pagos {
+  background: var(--pos-bg-card-strong);
+  border: 1px solid var(--pos-border-soft);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: var(--pos-shadow-sm);
+  padding: 0;
+
+  ion-row {
+    align-items: center;
+    justify-content: center;
+  }
+
+  ion-col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 6px 8px;
+  }
+
+  &__header {
+    background: linear-gradient(180deg, #eef5fb 0%, #e3edf6 100%);
+    color: var(--pos-primary);
+    font-weight: 800;
+    font-size: 0.72em;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--pos-border);
+  }
+
+  &__row {
+    min-height: 46px;
+    border-bottom: 1px solid rgba(16, 76, 119, 0.05);
+
+    &:nth-child(even) {
+      background: rgba(16, 76, 119, 0.015);
+    }
+  }
+
+  &__total {
+    background: linear-gradient(180deg, #f4f9fd 0%, #eaf2f9 100%);
+    border-top: 1px solid var(--pos-border);
+    min-height: 46px;
+    font-weight: 800;
+  }
+}
+
+.celda-dato {
+  font-size: 0.86em;
+  font-weight: 500;
+  color: var(--pos-text);
+}
+
+.celda-nombre {
+  justify-content: flex-start;
+  text-align: left;
+  font-weight: 600;
+}
+
+.celda-monto {
+  font-weight: 800;
+  color: var(--pos-success);
+  justify-content: flex-end;
+  text-align: right;
+}
+
+/* El qrId es largo: se recorta antes de romper la fila. */
+.celda-qr {
+  font-size: 0.72em;
+  font-family: monospace;
+  color: var(--pos-text-soft);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+  line-height: 34px;
+}
+
+.celda-pagador {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+
+  &__nombre {
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__banco {
+    font-size: 0.72em;
+    font-weight: 500;
+    color: var(--pos-text-soft);
+  }
+}
+
+/* -----------------------------------------------------------
+   Responsive
+   ----------------------------------------------------------- */
+@media (max-width: 767px) {
+  .barra-filtro {
+    &__resumen {
+      align-items: flex-start;
+    }
+  }
+
+  .celda-dato {
+    font-size: 0.78em;
+  }
+
+  .celda-qr {
+    font-size: 0.64em;
+  }
+}

@@ -11,8 +11,9 @@ namespace Iza.Core.Integration.Baneco
 {
     /// <summary>
     /// Cliente del proxy qr-banco-economico. Expone solo lo que el proxy expone a un suscriptor:
-    /// emitir un QR y listar los cobros de un dia. Iza nunca habla directo con Baneco ni maneja el
-    /// token del banco: eso queda del lado del proxy.
+    /// emitir un QR de cobro y listar los cobros de un dia. El proxy no tiene consulta de estado por
+    /// QR, asi que verificar un cobro puntual es filtrar el reporte del dia por qrId.
+    /// Iza nunca habla directo con Baneco ni maneja el token del banco: eso queda del lado del proxy.
     /// </summary>
     public sealed class QrBancoEconomicoClient
     {
@@ -49,21 +50,25 @@ namespace Iza.Core.Integration.Baneco
             return new HttpClient(handler);
         }
 
-        /// <summary>Emite un QR contra el proxy. Devuelve el identificador del banco y la imagen en Base64.</summary>
+        /// <summary>
+        /// Emite un QR de cobro para una venta contra el proxy. Devuelve el identificador del banco y la
+        /// imagen en Base64.
+        /// </summary>
         public async Task<(string QrId, string QrImageBase64)> GenerarQrAsync(
-            string transactionId, string moneda, DateOnly fechaVencimiento, string? descripcion,
-            string? codigoSucursal, CancellationToken ct = default)
+            string transactionId, string moneda, decimal monto, DateOnly fechaVencimiento,
+            string? descripcion, string? codigoSucursal, CancellationToken ct = default)
         {
-            // Reutilizable y de monto editable: es la unica combinacion que permite que un mismo codigo
-            // cobre todos los pedidos del mes. Con modifyAmount = true el proxy exige amount = 0.
+            // De un solo uso y de monto fijo. Es lo que hace que el cobro sea verificable por qrId: con
+            // modifyAmount = true el pagador podria alterar el importe, y con singleUse = false un mismo
+            // codigo acumularia cobros de varias ventas y el qrId dejaria de identificar a una sola.
             var cuerpo = new GenerarQrRequest(
                 TransactionId: transactionId,
                 Currency: moneda,
-                Amount: 0m,
+                Amount: monto,
                 Description: descripcion,
                 DueDate: fechaVencimiento,
-                SingleUse: false,
-                ModifyAmount: true,
+                SingleUse: true,
+                ModifyAmount: false,
                 BranchCode: string.IsNullOrWhiteSpace(codigoSucursal) ? null : codigoSucursal);
 
             using var solicitud = Solicitud(HttpMethod.Post, "api/baneco/qrs");
