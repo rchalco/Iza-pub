@@ -20,6 +20,19 @@
             <ion-button (click)="realizarCierre()" expand="block">
               Realizar Cierre
             </ion-button>
+            <ion-button
+              expand="block"
+              fill="outline"
+              color="primary"
+              class="reimpresion-btn"
+              (click)="abrirReimpresionCierres()"
+            >
+              <ion-icon name="print" slot="start"></ion-icon>
+              Reimprimir cierres
+              @if (cierresPendientes > 0) {
+                <ion-badge color="danger" slot="end">{{cierresPendientes}}</ion-badge>
+              }
+            </ion-button>
             @if (hasPendingPrint) {
               <ion-button
                 color="danger"

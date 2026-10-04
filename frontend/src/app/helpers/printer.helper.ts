@@ -161,6 +161,19 @@ export class PrinterHelper {
     return error instanceof Error ? error.message : String(error);
   }
 
+  /** Convierte por bloques para no desbordar la pila con documentos grandes. */
+  static arrayBufferToBase64(buffer: ArrayBuffer): string {
+    const bytes = new Uint8Array(buffer);
+    const CHUNK_SIZE = 8192;
+    let binary = '';
+
+    for (let i = 0; i < bytes.length; i += CHUNK_SIZE) {
+      binary += String.fromCharCode(...bytes.subarray(i, i + CHUNK_SIZE));
+    }
+
+    return btoa(binary);
+  }
+
   static base64ToUint8Array(base64: string): Uint8Array {
     const cleanBase64 = base64.includes(',') ? base64.split(',')[1] : base64;
     const binaryData = atob(cleanBase64);

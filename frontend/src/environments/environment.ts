@@ -4,7 +4,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 import { HttpHeaders } from '@angular/common/http';
-import { buildProtocolAwareUrl, getTransportProtocol } from '../app/helpers/protocol.helper';
+import {
+  buildProtocolAwareUrl,
+  getTransportProtocol,
+} from '../app/helpers/protocol.helper';
 
 ///Configuraciones:
 ///Lavanderia Jeffry: idEmpresa: 1 BD: DBTintoreriaGamaFac
@@ -111,15 +114,16 @@ export const LogoVoucher = '';
 // export const URL_FINGERS = 'http://localhost:8001/api/Biometric/';
 
 //SERVER PROD MANTRA
-// export const URL_MIROVENTAOPERACION ='http://localhost:8001/api/MicroventaOperacion/';
-// export const URL_TINTORERIA = 'http://localhost:8001/api/Tintoreria/';
-// export const URL_SECURITY = 'http://155.138.212.216:8034/api/APISeguridad/';
-// export const URL_INVENTARIO = 'http://155.138.212.216:8034/api/APIIventario/';
-// export const URL_MIROVENTA = 'http://155.138.212.216:8034/api/APIVenta/';
-// export const URL_PERSON = 'http://localhost:8001/api/Person/';
-// export const URL_CARDS = 'http://localhost:8001/api/Tarjeta/';
-// export const URL_FINGERS = 'http://localhost:8001/api/Biometric/';
-// export const URL_PAGOSQR = 'http://155.138.212.216:8034/api/APIPagosQr/';
+export const URL_MIROVENTAOPERACION =
+  'http://localhost:8001/api/MicroventaOperacion/';
+export const URL_TINTORERIA = 'http://localhost:8001/api/Tintoreria/';
+export const URL_SECURITY = 'http://155.138.212.216:8034/api/APISeguridad/';
+export const URL_INVENTARIO = 'http://155.138.212.216:8034/api/APIIventario/';
+export const URL_MIROVENTA = 'http://155.138.212.216:8034/api/APIVenta/';
+export const URL_PERSON = 'http://localhost:8001/api/Person/';
+export const URL_CARDS = 'http://localhost:8001/api/Tarjeta/';
+export const URL_FINGERS = 'http://localhost:8001/api/Biometric/';
+export const URL_PAGOSQR = 'http://155.138.212.216:8034/api/APIPagosQr/';
 
 // const isSecureContext = typeof window !== 'undefined' && window.location?.protocol === 'https:';
 // export const WEBSOCKET_BASE_URL = buildProtocolAwareUrl(
@@ -129,16 +133,16 @@ export const LogoVoucher = '';
 
 //SERVER PRUEBA
 
-export const URL_MIROVENTAOPERACION = 'http://localhost:8001/api/MicroventaOperacion/';
-export const URL_TINTORERIA = 'http://localhost:8001/api/Tintoreria/';
-export const URL_SECURITY = 'http://localhost:5294/api/APISeguridad/';
-export const URL_INVENTARIO = 'http://localhost:5294/api/APIIventario/';
-export const URL_MIROVENTA = 'http://localhost:5294/api/APIVenta/';
-//export const URL_SECURITY = 'http://localhost:5294/api/APISeguridad/';
-export const URL_PERSON = 'http://localhost:8001/api/Person/';
-export const URL_CARDS = 'http://localhost:8001/api/Tarjeta/';
-export const URL_FINGERS = 'http://localhost:8001/api/Biometric/';
-export const URL_PAGOSQR = 'http://localhost:5294/api/APIPagosQr/';
+// export const URL_MIROVENTAOPERACION = 'http://localhost:8001/api/MicroventaOperacion/';
+// export const URL_TINTORERIA = 'http://localhost:8001/api/Tintoreria/';
+// export const URL_SECURITY = 'http://localhost:5294/api/APISeguridad/';
+// export const URL_INVENTARIO = 'http://localhost:5294/api/APIIventario/';
+// export const URL_MIROVENTA = 'http://localhost:5294/api/APIVenta/';
+// //export const URL_SECURITY = 'http://localhost:5294/api/APISeguridad/';
+// export const URL_PERSON = 'http://localhost:8001/api/Person/';
+// export const URL_CARDS = 'http://localhost:8001/api/Tarjeta/';
+// export const URL_FINGERS = 'http://localhost:8001/api/Biometric/';
+// export const URL_PAGOSQR = 'http://localhost:5294/api/APIPagosQr/';
 
 // /*
 //  * For easier debugging in development mode, you can import the following file
