@@ -227,7 +227,9 @@ namespace Iza.Services.Sevices
         public IActionResult GenerarDocumento(DataDocumento dataDocumento)
         {
             EngineImpresion mangerPrinter = new EngineImpresion();
-            var resulMgr = mangerPrinter.GenerarDocumento(dataDocumento);
+            var resulMgr = dataDocumento.isThermalTable == true
+                ? mangerPrinter.GenerarDocumentoTablaTermica(dataDocumento)
+                : mangerPrinter.GenerarDocumento(dataDocumento);
             if (resulMgr.State == ResponseType.Success)
             {
                 string fileName = resulMgr.Message;

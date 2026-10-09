@@ -1,136 +1,158 @@
 <app-custom-header title="Cierre Caja"></app-custom-header>
 <ion-content>
-  <ion-card>
-    <ion-card-content>
-      <ion-list>
-        <ion-item>
-          <ion-item>
-            <ion-label>Elija Un Cajero</ion-label>
-            <ion-select
-              [value]="currentCajero"
-              (ionChange)="obtieneArqueo($event)"
-              >
-              @for (cajero of cajeros; track cajero) {
-                <ion-select-option [value]="cajero"
-                  >{{cajero.usuario}}</ion-select-option
-                  >
-                }
-              </ion-select>
-            </ion-item>
-            <ion-button (click)="realizarCierre()" expand="block">
-              Realizar Cierre
-            </ion-button>
-            <ion-button
-              expand="block"
-              fill="outline"
-              color="primary"
-              class="reimpresion-btn"
-              (click)="abrirReimpresionCierres()"
-            >
-              <ion-icon name="print" slot="start"></ion-icon>
-              Reimprimir cierres
-              @if (cierresPendientes > 0) {
-                <ion-badge color="danger" slot="end">{{cierresPendientes}}</ion-badge>
+  <div class="contenido">
+    <section class="panel">
+      <ion-item class="selector-cajero" lines="none">
+        <ion-select
+          label="Cajero"
+          labelPlacement="stacked"
+          placeholder="Elija un cajero"
+          interface="popover"
+          [value]="currentCajero"
+          (ionChange)="obtieneArqueo($event)"
+        >
+          @for (cajero of cajeros; track cajero) {
+            <ion-select-option [value]="cajero">{{cajero.usuario}}</ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+
+      <div class="acciones">
+        <ion-button class="accion" (click)="realizarCierre()" expand="block">
+          <ion-icon name="lock-closed" slot="start"></ion-icon>
+          Realizar cierre
+        </ion-button>
+        <ion-button
+          expand="block"
+          fill="outline"
+          color="primary"
+          class="accion"
+          (click)="abrirReimpresionCierres()"
+        >
+          <ion-icon name="print" slot="start"></ion-icon>
+          Reimprimir cierres
+          @if (cierresPendientes > 0) {
+            <ion-badge color="danger" slot="end">{{cierresPendientes}}</ion-badge>
+          }
+        </ion-button>
+        @if (hasPendingPrint) {
+          <ion-button
+            color="danger"
+            expand="block"
+            class="accion accion--pendiente"
+            (click)="reintentarImpresion()"
+          >
+            <ion-icon name="refresh-circle" slot="start"></ion-icon>
+            <span class="accion__texto">
+              Reintentar impresión pendiente
+              @if (preferredPrinterName) {
+                ({{preferredPrinterName}})
               }
-            </ion-button>
-            @if (hasPendingPrint) {
-              <ion-button
-                color="danger"
-                expand="block"
-                class="pending-print-btn"
-                (click)="reintentarImpresion()"
-              >
-                <ion-icon name="refresh-circle" slot="start"></ion-icon>
-                Reintentar impresion pendiente
-                @if (preferredPrinterName) {
-                  ({{preferredPrinterName}})
-                }
-              </ion-button>
-            }
-          </ion-item>
-        </ion-list>
-        @if (currentCajero) {
-          <ion-list>
-            <ion-item>
-              <ion-label>Monto Apertura</ion-label>
-              <ion-label>{{montoApertura | number : '1.2-2'}}</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Total Ventas </ion-label>
-              <ion-label>{{montoTotalVenta | number : '1.2-2'}}</ion-label>
-            </ion-item>
-            <ion-item>
-              <ion-label>Datos Cajero </ion-label>
-              <ion-label
-                >{{currentCajero.ci}} {{currentCajero.nombreCompleto}}</ion-label
-                >
-              </ion-item>
-              <ion-item>
-                <ion-label>Almacen </ion-label>
-                <ion-label>{{currentCajero.barra}}</ion-label>
-              </ion-item>
-              <ion-item>
+            </span>
+          </ion-button>
+        }
+      </div>
+    </section>
+
+    @if (currentCajero) {
+      <section class="panel">
+        <h2 class="panel__titulo">Resumen</h2>
+        <div class="resumen">
+          <div class="dato">
+            <span class="dato__label">Monto apertura</span>
+            <span class="dato__valor">{{montoApertura | number : '1.2-2'}}</span>
+          </div>
+          <div class="dato">
+            <span class="dato__label">Total ventas</span>
+            <span class="dato__valor">{{montoTotalVenta | number : '1.2-2'}}</span>
+          </div>
+          <div class="dato dato--ancho">
+            <span class="dato__label">Cajero</span>
+            <span class="dato__valor dato__valor--texto">
+              {{currentCajero.ci}} {{currentCajero.nombreCompleto}}
+            </span>
+          </div>
+          <div class="dato">
+            <span class="dato__label">Almacén</span>
+            <span class="dato__valor dato__valor--texto">{{currentCajero.barra}}</span>
+          </div>
+        </div>
+
+        <ion-item class="observaciones" lines="none">
+          <ion-textarea
+            label="Observaciones"
+            labelPlacement="stacked"
+            placeholder="Opcional"
+            [autoGrow]="true"
+            rows="2"
+            [(ngModel)]="observaciones"
+          ></ion-textarea>
+        </ion-item>
+      </section>
+
+      <section class="panel">
+        <h2 class="panel__titulo">Totales por método de pago</h2>
+        <div class="tabla tabla--totales" role="table">
+          <div class="tabla__cabecera" role="row">
+            <span role="columnheader">Forma de pago</span>
+            <span role="columnheader" class="num">Total</span>
+            <span role="columnheader" class="num">Entregado</span>
+            <span role="columnheader" class="num">Diferencia</span>
+          </div>
+          @for (formaPago of formasPagosTotales; track formaPago) {
+            <div class="tabla__fila" role="row">
+              <span role="cell" class="celda celda--titulo">{{formaPago.formaDePago}}</span>
+              <span role="cell" class="celda num" data-label="Total">
+                {{formaPago.totalVendido | number : '1.2-2'}}
+              </span>
+              <span role="cell" class="celda num" data-label="Entregado">
                 <ion-input
+                  class="input-entregado"
                   type="text"
-                  placeholder="Observaciones"
-                  [(ngModel)]="observaciones"
+                  inputmode="decimal"
+                  placeholder="0.00"
+                  aria-label="Monto entregado"
+                  [(ngModel)]="formaPago.entregado"
+                  (change)="calcularDiferencia(formaPago)"
                 ></ion-input>
-              </ion-item>
-              <ion-list-header>
-                <h2 class="tituloInner">Totales por metodo de pago</h2>
-              </ion-list-header>
-              <ion-item>
-                <ion-grid fixed>
-                  <ion-row class="cabeceraTabla">
-                    <ion-col>Forma de Pago</ion-col>
-                    <ion-col>Total</ion-col>
-                    <ion-col>Entregado</ion-col>
-                    <ion-col>Diferencia</ion-col>
-                  </ion-row>
-                  @for (formaPago of formasPagosTotales; track formaPago) {
-                    <ion-row
-                      class="detalleTabla"
-                      >
-                      <ion-col>{{formaPago.formaDePago}}</ion-col>
-                      <ion-col>{{formaPago.totalVendido | number : '1.2-2'}}</ion-col>
-                      <ion-col>
-                        <ion-input
-                          type="text"
-                          placeholder="0.00"
-                          [(ngModel)]="formaPago.entregado"
-                          (change)="calcularDiferencia(formaPago)"
-                        ></ion-input>
-                      </ion-col>
-                      <ion-col>{{formaPago.diferencia | number : '1.2-2'}}</ion-col>
-                    </ion-row>
-                  }
-                </ion-grid>
-              </ion-item>
-              <ion-list-header>
-                <h2 class="tituloInner">Detalle por metodo de pago</h2>
-              </ion-list-header>
-              <ion-item>
-                <ion-grid fixed>
-                  <ion-row class="cabeceraTabla">
-                    <ion-col size="3">#Pedido</ion-col>
-                    <ion-col size="3">Forma Pago</ion-col>
-                    <ion-col size="3">Monto</ion-col>
-                    <ion-col size="3">Fecha</ion-col>
-                  </ion-row>
-                  @for (formaPago of formasPagos; track formaPago) {
-                    <ion-row class="detalleTabla">
-                      <ion-col size="3">{{formaPago.idPedMaster}}</ion-col>
-                      <ion-col size="3">{{formaPago.formaDePago}}</ion-col>
-                      <ion-col size="3"
-                        >{{formaPago.montoCubierto | number : '1.2-2'}}</ion-col
-                        >
-                        <ion-col size="3">{{formaPago.fechaTransaccion}}</ion-col>
-                      </ion-row>
-                    }
-                  </ion-grid>
-                </ion-item>
-              </ion-list>
-            }
-          </ion-card-content>
-        </ion-card>
-      </ion-content>
+              </span>
+              <span
+                role="cell"
+                class="celda num"
+                data-label="Diferencia"
+                [class.negativo]="formaPago.diferencia < 0"
+                [class.positivo]="formaPago.diferencia > 0"
+              >
+                {{formaPago.diferencia | number : '1.2-2'}}
+              </span>
+            </div>
+          }
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2 class="panel__titulo">Detalle por método de pago</h2>
+        <div class="tabla tabla--detalle" role="table">
+          <div class="tabla__cabecera" role="row">
+            <span role="columnheader">#Pedido</span>
+            <span role="columnheader">Forma de pago</span>
+            <span role="columnheader" class="num">Monto</span>
+            <span role="columnheader">Fecha</span>
+          </div>
+          @for (formaPago of formasPagos; track formaPago) {
+            <div class="tabla__fila" role="row">
+              <span role="cell" class="celda" data-label="#Pedido">{{formaPago.idPedMaster}}</span>
+              <span role="cell" class="celda" data-label="Forma de pago">{{formaPago.formaDePago}}</span>
+              <span role="cell" class="celda num" data-label="Monto">
+                {{formaPago.montoCubierto | number : '1.2-2'}}
+              </span>
+              <span role="cell" class="celda" data-label="Fecha">{{formaPago.fechaTransaccion}}</span>
+            </div>
+          } @empty {
+            <p class="vacio">Sin transacciones para este cajero.</p>
+          }
+        </div>
+      </section>
+    }
+  </div>
+</ion-content>

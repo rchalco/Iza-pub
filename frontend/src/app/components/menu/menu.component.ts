@@ -1,12 +1,10 @@
 import { SeguridadService } from './../../services/seguridad.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 import { environment, verionsApp } from 'src/environments/environment';
 import { MenuGeneralDTO } from 'src/app/interfaces/general/MenuGeneral';
-import { FeatureFlagsService } from 'src/app/services/feature-flags.service';
 
 @Component({
   standalone: false,
@@ -14,7 +12,7 @@ import { FeatureFlagsService } from 'src/app/services/feature-flags.service';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
 })
-export class MenuComponent implements OnInit, OnDestroy {
+export class MenuComponent implements OnInit {
   appPages: MenuGeneralDTO[] = [];
   private readonly configPrinterMenuOption: MenuGeneralDTO = {
     idMenuOpcion: -1,
@@ -22,48 +20,19 @@ export class MenuComponent implements OnInit, OnDestroy {
     url: '/config-printer',
     icon: 'print-outline',
   };
-  /** Reporte de cobros por QR. Se oculta junto con la funcionalidad. */
-  private readonly pagosQrMenuOption: MenuGeneralDTO = {
-    idMenuOpcion: -2,
-    title: 'Pagos QR',
-    url: '/pagos-qr',
-    icon: 'qr-code-outline',
-  };
-  /** Pantalla que controla los flags. Siempre visible: es la unica forma de reactivarlos. */
-  private readonly funcionalidadesMenuOption: MenuGeneralDTO = {
-    idMenuOpcion: -3,
-    title: 'Funcionalidades',
-    url: '/funcionalidades',
-    icon: 'options-outline',
-  };
   version = verionsApp;
   usuario = environment.UsuarioLabel || environment.Usuario;
   rol = environment.rol;
-
-  /** Menu que devolvio el backend, sin las opciones locales. */
-  private menuBase: MenuGeneralDTO[] = [];
-  private suscripcionFlags: Subscription = null;
 
   constructor(
     private baseService: SeguridadService,
     private menuCtrl: MenuController,
     private router: Router,
-    private http: HttpClient,
-    private featureFlags: FeatureFlagsService
+    private http: HttpClient
   ) {}
 
   ngOnInit() {
-    // Rearma el menu cuando cambian los flags, para no obligar a reiniciar la app
-    // despues de apagar o encender una funcionalidad.
-    this.suscripcionFlags = this.featureFlags.cambios$.subscribe(() => {
-      this.appPages = this.addDefaultMenuOptions(this.menuBase);
-    });
-    this.featureFlags.cargar();
     this.initMenu();
-  }
-
-  ngOnDestroy() {
-    this.suscripcionFlags?.unsubscribe();
   }
 
   initMenu() {
@@ -71,8 +40,7 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.rol = environment.rol;
     this.baseService.obtieneMenuPorUsuario().then((resulPromise) => {
       resulPromise.subscribe((resul) => {
-        this.menuBase = resul.listEntities || [];
-        this.appPages = this.addDefaultMenuOptions(this.menuBase);
+        this.appPages = this.addDefaultMenuOptions(resul.listEntities || []);
         console.log('menu por usuario', resul.listEntities);
       });
     });
@@ -81,18 +49,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   private addDefaultMenuOptions(menuItems: MenuGeneralDTO[]): MenuGeneralDTO[] {
     const opciones = [...menuItems];
 
-    // Estas opciones no viven en el menu de la base: se agregan aqui.
-    if (
-      this.featureFlags.pagoQr &&
-      !this.tieneOpcion(opciones, this.pagosQrMenuOption)
-    ) {
-      opciones.push(this.pagosQrMenuOption);
-    }
-
-    if (!this.tieneOpcion(opciones, this.funcionalidadesMenuOption)) {
-      opciones.push(this.funcionalidadesMenuOption);
-    }
-
+    // La configuracion de impresora es del equipo, no del perfil: no vive en la base.
     if (!this.tieneOpcion(opciones, this.configPrinterMenuOption)) {
       opciones.push(this.configPrinterMenuOption);
     }

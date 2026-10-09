@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Platform } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 import { Router } from '@angular/router';
 
 import { ReaderCardComponent } from 'src/app/components/reader-card/reader-card.component';
@@ -87,6 +87,7 @@ export class VentaExpressPage implements OnInit {
     private featureFlags: FeatureFlagsService,
     private platform: Platform,
     private router: Router,
+    private alertController: AlertController,
   ) {}
 
   // ══════════════════════════════════════════════════════════
@@ -463,10 +464,9 @@ export class VentaExpressPage implements OnInit {
 
     if (!preferredPrinter) {
       this.guardarImpresionPendiente(base64);
-      this.ventaService.showMessageWarning(
-        'Configura una impresora para continuar con la impresion.',
+      await this.avisarVentaSinImpresion(
+        'No hay una impresora configurada en este dispositivo.',
       );
-      this.router.navigate(['/config-printer']);
       return;
     }
 
@@ -475,11 +475,35 @@ export class VentaExpressPage implements OnInit {
     } catch (e) {
       console.error('Error al imprimir comprobante:', e);
       this.guardarImpresionPendiente(base64);
-      this.ventaService.showMessageWarning(
-        'Impresora desconectada apague y prenda su bluetooth nuevamente\n\nNo se pudo imprimir. Verifica la impresora y vuelve a configurar.',
+      await this.avisarVentaSinImpresion(
+        'No se pudo conectar con la impresora. Verifica que esté encendida y que el Bluetooth esté activo.',
       );
-      this.router.navigate(['/config-printer']);
     }
+  }
+
+  /**
+   * Informa que la venta quedó registrada aunque el comprobante no se imprimió,
+   * para evitar que el cajero vuelva a cobrar. Requiere confirmación explícita.
+   */
+  private async avisarVentaSinImpresion(motivo: string): Promise<void> {
+    const alert = await this.alertController.create({
+      header: 'Venta registrada',
+      subHeader: 'El comprobante no se imprimió',
+      message:
+        `${motivo} La venta se guardó correctamente: no vuelvas a cobrarla. ` +
+        'El comprobante quedó pendiente y se imprimirá al configurar la impresora.',
+      backdropDismiss: false,
+      buttons: [
+        { text: 'Seguir vendiendo', role: 'cancel' },
+        {
+          text: 'Configurar impresora',
+          handler: () => {
+            this.router.navigate(['/config-printer']);
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 
   private guardarImpresionPendiente(base64: string): void {

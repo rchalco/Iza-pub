@@ -264,5 +264,167 @@ namespace Iza.Core.Engine.Impresion
             return response;
         }
 
+        /// <summary>Ancho imprimible del papel de 80mm (72mm) en puntos PDF.</summary>
+        private const float ANCHO_TERMICO_PT = 204f;
+        private const float MARGEN_TERMICO_PT = 4f;
+        /// <summary>Alto maximo de pagina PDF; un reporte mas largo continua en otra pagina.</summary>
+        private const float ALTO_MAXIMO_PT = 14400f;
+
+        /// <summary>
+        /// Genera una tabla para impresora termica de 80mm, en una sola pagina del alto del contenido.
+        /// Convenciones de cada linea de <c>contenido</c> (celdas separadas por '|'):
+        /// una linea sin '|' es un titulo de grupo que ocupa toda la fila, y una linea que empieza
+        /// con '*' es un subtotal o total y va en negrita. Las celdas numericas se alinean a la derecha.
+        /// </summary>
+        public Response GenerarDocumentoTablaTermica(DataDocumento dataDocumento)
+        {
+            Response response = new Response();
+            try
+            {
+                List<string> titulos = dataDocumento.titulosTabla ?? new List<string>();
+                if (titulos.Count == 0)
+                {
+                    throw new ArgumentException("La tabla termica requiere al menos un titulo de columna.");
+                }
+
+                int columnas = titulos.Count;
+                List<float> anchos = dataDocumento.anchosColumnas?.Count == columnas
+                    ? dataDocumento.anchosColumnas
+                    : Enumerable.Repeat(1f, columnas).ToList();
+
+                List<string[]> filas = (dataDocumento.contenido ?? new List<string>())
+                    .Select(x => (x ?? string.Empty).Split('|'))
+                    .ToList();
+
+                NumberStyles estiloNumero = NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands | NumberStyles.AllowLeadingSign;
+                CultureInfo cultura = CultureInfo.CreateSpecificCulture("en-US");
+                bool EsNumero(string valor) => decimal.TryParse(valor.Trim().TrimStart('*'), estiloNumero, cultura, out _);
+
+                // Una columna es numerica si alguna de sus celdas lo es; asi la cabecera se alinea con sus datos.
+                bool[] columnaNumerica = new bool[columnas];
+                filas.Where(f => f.Length > 1).ToList().ForEach(f =>
+                {
+                    for (int c = 0; c < Math.Min(columnas, f.Length); c++)
+                    {
+                        columnaNumerica[c] = columnaNumerica[c] || (f[c].Trim().Length > 0 && EsNumero(f[c]));
+                    }
+                });
+
+                FontProgram fontProgram = FontProgramFactory.CreateFont(@"c:\fonts\arial.ttf");
+                PdfFont fuente = PdfFontFactory.CreateFont(fontProgram, PdfEncodings.WINANSI);
+                Div contenedor = new Div().SetFont(fuente).SetFontSize(8);
+
+                string pathLogo = string.IsNullOrEmpty(dataDocumento.pathLogo) ? @"c:\fonts\Logo.jpg" : dataDocumento.pathLogo;
+                if (File.Exists(pathLogo))
+                {
+                    contenedor.Add(new Image(ImageDataFactory.Create(pathLogo))
+                        .SetHeight(40)
+                        .SetWidth(100)
+                        .SetHorizontalAlignment(HorizontalAlignment.CENTER));
+                }
+
+                contenedor.Add(new Paragraph(dataDocumento.titulo ?? string.Empty)
+                    .SetBold()
+                    .SetFontSize(10)
+                    .SetTextAlignment(TextAlignment.CENTER)
+                    .SetMarginBottom(4));
+
+                Table tabla = new Table(UnitValue.CreatePercentArray(anchos.ToArray()))
+                    .SetWidth(UnitValue.CreatePercentValue(100))
+                    .SetFixedLayout();
+
+                Border lineaFina = new SolidBorder(ColorConstants.BLACK, 0.5f);
+                for (int c = 0; c < columnas; c++)
+                {
+                    tabla.AddHeaderCell(new Cell()
+                        .Add(new Paragraph(titulos[c]).SetBold())
+                        .SetTextAlignment(columnaNumerica[c] ? TextAlignment.RIGHT : TextAlignment.LEFT)
+                        .SetBorder(Border.NO_BORDER)
+                        .SetBorderTop(lineaFina)
+                        .SetBorderBottom(lineaFina)
+                        .SetPadding(1));
+                }
+
+                foreach (string[] fila in filas)
+                {
+                    if (fila.Length == 1)
+                    {
+                        tabla.AddCell(new Cell(1, columnas)
+                            .Add(new Paragraph(fila[0].Trim()).SetBold())
+                            .SetBorder(Border.NO_BORDER)
+                            .SetPaddingTop(4)
+                            .SetPaddingBottom(1)
+                            .SetPaddingLeft(1));
+                        continue;
+                    }
+
+                    bool esTotal = fila[0].StartsWith("*");
+                    for (int c = 0; c < columnas; c++)
+                    {
+                        string valor = c < fila.Length ? fila[c].Trim() : string.Empty;
+                        if (c == 0 && esTotal)
+                        {
+                            valor = valor.TrimStart('*').Trim();
+                        }
+
+                        Paragraph parrafo = new Paragraph(valor);
+                        if (esTotal)
+                        {
+                            parrafo.SetBold();
+                        }
+
+                        Cell celda = new Cell()
+                            .Add(parrafo)
+                            .SetTextAlignment(columnaNumerica[c] && valor.Length > 0 && EsNumero(valor) ? TextAlignment.RIGHT : TextAlignment.LEFT)
+                            .SetBorder(Border.NO_BORDER)
+                            .SetPadding(1);
+                        if (esTotal)
+                        {
+                            celda.SetBorderTop(lineaFina);
+                        }
+                        tabla.AddCell(celda);
+                    }
+                }
+
+                contenedor.Add(tabla);
+                contenedor.Add(new Paragraph(dataDocumento.pie ?? string.Empty)
+                    .SetFontSize(7)
+                    .SetTextAlignment(TextAlignment.CENTER)
+                    .SetMarginTop(6));
+
+                string pathRootDocument = "c:\\documentosGMF\\";
+                if (!Directory.Exists(pathRootDocument))
+                {
+                    Directory.CreateDirectory(pathRootDocument);
+                }
+                string fileName = pathRootDocument + Guid.NewGuid() + ".pdf";
+
+                using (PdfDocument pdf = new PdfDocument(new PdfWriter(fileName)))
+                {
+                    // Se mide el contenido para que la pagina tenga el alto exacto del ticket.
+                    float anchoUtil = ANCHO_TERMICO_PT - (2 * MARGEN_TERMICO_PT);
+                    Document medicion = new Document(pdf);
+                    IRenderer renderer = contenedor.CreateRendererSubTree().SetParent(medicion.GetRenderer());
+                    LayoutResult resultado = renderer.Layout(new LayoutContext(new LayoutArea(1, new Rectangle(anchoUtil, ALTO_MAXIMO_PT))));
+                    float alto = resultado.GetStatus() == LayoutResult.FULL
+                        ? resultado.GetOccupiedArea().GetBBox().GetHeight() + (2 * MARGEN_TERMICO_PT)
+                        : ALTO_MAXIMO_PT;
+
+                    Document document = new Document(pdf, new PageSize(ANCHO_TERMICO_PT, Math.Min(alto, ALTO_MAXIMO_PT)));
+                    document.SetMargins(MARGEN_TERMICO_PT, MARGEN_TERMICO_PT, MARGEN_TERMICO_PT, MARGEN_TERMICO_PT);
+                    document.Add(contenedor);
+                    document.Close();
+                }
+
+                response.State = ResponseType.Success;
+                response.Message = fileName;
+            }
+            catch (Exception ex)
+            {
+                ProcessError(ex, response);
+            }
+            return response;
+        }
+
     }
 }

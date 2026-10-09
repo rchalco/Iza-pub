@@ -16,13 +16,13 @@ export const verionsApp = '2.2';
 
 /**
  * Estado inicial del cobro por QR en un equipo que nunca guardo configuracion. A partir
- * de ahi manda la pantalla Funcionalidades del menu, que persiste el valor localmente:
+ * de ahi manda la pantalla Funcionalidades, que persiste el valor localmente:
  * este const solo decide como arranca una instalacion nueva.
  *
  * Apagado, el boton QR de venta express cobra como el efectivo (registra la venta al
- * instante) y la pantalla de Pagos QR sale del menu. El boton nunca se bloquea.
+ * instante). El boton nunca se bloquea. El menu lo define la base segun el perfil.
  */
-export const FEATURE_PAGO_QR = true;
+export const FEATURE_PAGO_QR = false;
 
 export const environment = {
   production: false,

@@ -5,7 +5,7 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { NetworkQualityService } from '../services/network-quality.service';
 
-const DEFAULT_TIMEOUT_MS = 5000;
+const DEFAULT_TIMEOUT_MS = 20000;
 
 export const httpTimeoutInterceptor: HttpInterceptorFn = (
   req: HttpRequest<unknown>,

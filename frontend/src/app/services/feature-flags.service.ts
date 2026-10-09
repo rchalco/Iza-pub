@@ -11,7 +11,7 @@ const CLAVE_FLAGS = 'featureFlags';
 export interface FeatureFlags {
   /**
    * Interfaz de cobro por QR. En false el boton QR de venta express cobra como el
-   * efectivo y la pantalla de Pagos QR sale del menu. El boton nunca se bloquea.
+   * efectivo. El boton nunca se bloquea.
    */
   pagoQr: boolean;
 }
@@ -33,7 +33,7 @@ export class FeatureFlagsService {
 
   constructor(private databaseService: DatabaseService) {}
 
-  /** Emite en cada cambio para que el menu se rearme sin recargar la aplicacion. */
+  /** Emite en cada cambio para que las pantallas reaccionen sin recargar la aplicacion. */
   get cambios$(): Observable<FeatureFlags> {
     return this.cambios.asObservable();
   }
